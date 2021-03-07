@@ -1,10 +1,9 @@
 package com.cnpm.fashion_shop.entity;
 
-
-import java.time.LocalDate;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -16,27 +15,21 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
+import java.util.HashSet;
+import java.util.Set;
 
-//import com.mgm.easy_inventory.entity.DeviceEmployee;
-//import com.mgm.easy_inventory.entity.Role;
-
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "employee")
-public class Employee {
+public class Employee  {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Column(name = "id_employee")
-    private Long id;
+    private int id;
 
     @Column(unique = true, length = 30, name = "username", nullable = false)
     private String username;
@@ -53,8 +46,8 @@ public class Employee {
     @Column(name = "phone_number")
     private String phone_number;
 
-    public Employee(Long id, String fullName, String username, String password, String address, String phone_number,
-                    String id_role) {
+    public Employee(int id, String fullName, String username, String password, String address, String phone_number,
+                    int id_role) {
         super();
         this.id = id;
         this.fullName = fullName;
@@ -65,11 +58,11 @@ public class Employee {
         this.id_role = id_role;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -113,16 +106,16 @@ public class Employee {
         this.phone_number = phone_number;
     }
 
-    public String getId_role() {
+    public int getId_role() {
         return id_role;
     }
 
-    public void setId_role(String id_role) {
+    public void setId_role(int id_role) {
         this.id_role = id_role;
     }
 
     @Column(name = "id_role")
-    private String id_role;
+    private int id_role;
 
     @ManyToMany(
             fetch = FetchType.EAGER,
@@ -130,10 +123,10 @@ public class Employee {
     )
     @JoinTable(
             name = "employees_roles",
-            joinColumns = {@JoinColumn(name = "employee_id", referencedColumnName = "id", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "role_id", referencedColumnName = "id", nullable = false, updatable = false)}
+            joinColumns = {@JoinColumn(name = "id_employee", referencedColumnName = "id_employee", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id_role", nullable = false, updatable = false)}
     )
-    private Set<Role> roles = new HashSet<>();
+    private Set<Role> role = new HashSet<>();
 
 //    @OneToMany(mappedBy = "employee", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 //    private List<DeviceEmployee> deviceEmployeeList;

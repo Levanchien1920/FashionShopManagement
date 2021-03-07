@@ -1,26 +1,32 @@
 package com.cnpm.fashion_shop.core.employee.service;
 
 import com.cnpm.fashion_shop.core.employee.repository.EmployeeRepository;
+import com.cnpm.fashion_shop.core.role.service.RoleService;
 import com.cnpm.fashion_shop.entity.Employee;
+import com.cnpm.fashion_shop.entity.Role;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.lang.invoke.MethodHandles;
+import java.util.List;
+import java.util.Optional;
+import java.util.Set;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
-    private static final Logger LOG = (Logger) LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+   // private static final Logger LOG = (Logger) LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
-//    @Autowired
-//    private RoleService roleService;
-//    @Autowired
-//    private BCryptPasswordEncoder encoder;
+    @Autowired
+    private RoleService roleService;
+  //  @Autowired
+   // private BCryptPasswordEncoder encoder;
 
 //    public Page<EmployeeDetailDto> getEmployees(int page, int size, String order, String keyword) {
 //        List<String> columnsAllow = Arrays.asList("id", "employeeName", "project", "assignedDevice");
@@ -216,16 +222,16 @@ public class EmployeeService {
     public Employee findByUsername(String username) {
         return this.employeeRepository.findByUsername(username);
     }
-//
-//    public List<String> mappingRolesToName(Set<Role> roles) {
-//        return roles
-//                .stream().map(Role::getName)
-//                .collect(Collectors.toList());
-//    }
-//
-//    public Optional<Employee> findByIdOptional(Long id) {
-//        return this.employeeRepository.findById(id);
-//    }
+
+    public List<String> mappingRolesToName(Set<Role> roles) {
+        return roles
+                .stream().map(Role::getName)
+                .collect(Collectors.toList());
+    }
+
+    public Optional<Employee> findByIdOptional(Long id) {
+        return this.employeeRepository.findById(id);
+    }
 //
 //    public EmployeeAndAssignedDevicesDetailDto getAllAssignedDeviceByEmployeeId(Long employeeId) {
 //        EmployeeAndAssignedDevicesDetailDto result = employeeCustomRepository.getEmployeeDevicesBy(employeeId);

@@ -16,9 +16,6 @@ public class EmployeeDetailDto {
 
     String employeeName;
 
-    String project;
-
-    BigInteger assignedDevice;
 
 //    List<RoleDto> roles = new ArrayList<>();
 }

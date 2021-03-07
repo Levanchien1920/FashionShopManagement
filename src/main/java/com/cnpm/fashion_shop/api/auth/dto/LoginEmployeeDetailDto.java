@@ -8,7 +8,7 @@ import java.util.List;
 public class LoginEmployeeDetailDto {
     @Getter
     @Setter
-    private Long id;
+    private int id;
 
     @Getter
     @Setter
@@ -27,7 +27,7 @@ public class LoginEmployeeDetailDto {
     private String phone_number;
 
 
-    public LoginEmployeeDetailDto(Long id, String username, String fullName, String address, String phone_number
+    public LoginEmployeeDetailDto(int id, String username, String fullName, String address, String phone_number
     ) {
         super();
         this.id = id;
@@ -38,11 +38,11 @@ public class LoginEmployeeDetailDto {
 //		this.email = email;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

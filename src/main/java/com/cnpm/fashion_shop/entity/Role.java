@@ -6,14 +6,13 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
-import javax.persistence.Column;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.FetchType;
-
 import java.util.HashSet;
 import java.util.Set;
 
@@ -21,23 +20,24 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "employees"})
-@Entity(name = "roles")
-public class Role extends BaseEntity {
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "employee"})
+@Entity(name = "role")
+public class Role  {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Column(name = "id")
-    private Long id;
+    @Column(name = "id_role")
+    private int id_role;
 
     @Column(name = "name", nullable = false)
     private String name;
 
     @ManyToMany(
             fetch = FetchType.LAZY,
-            mappedBy = "roles"
+            mappedBy = "role"
     )
-    private Set<Employee> employees = new HashSet<>();
-
+    private Set<Employee> employee = new HashSet<>();
+   /* @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Employee> employeeList;*/
 }
