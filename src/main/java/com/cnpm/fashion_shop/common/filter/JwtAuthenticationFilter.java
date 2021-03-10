@@ -33,24 +33,24 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             HttpServletResponse response,
             FilterChain chain
     ) throws IOException, ServletException {
-        String token = getJwtTokenFromReq(request);
-
-        if (token != null && jwtProvider.validateToken(token) != null) {
-            Long userId = jwtProvider.getUserIdFromJWT(token);
-
-            EmployeeDetail detail = (EmployeeDetail) employeeDetailService.loadUserById(userId);
-
-            if (detail != null) {
-                UsernamePasswordAuthenticationToken authentication =
-                        new UsernamePasswordAuthenticationToken(detail, null, detail.getAuthorities());
-
-                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-
-                SecurityContextHolder.getContext().setAuthentication(authentication);
-            }
-        }
-
-        chain.doFilter(request, response);
+//        String token = getJwtTokenFromReq(request);
+//
+//        if (token != null && jwtProvider.validateToken(token) != null) {
+//            Long userId = jwtProvider.getUserIdFromJWT(token);
+//
+//            EmployeeDetail detail = (EmployeeDetail) employeeDetailService.loadUserById(userId);
+//
+//            if (detail != null) {
+//                UsernamePasswordAuthenticationToken authentication =
+//                        new UsernamePasswordAuthenticationToken(detail, null, detail.getAuthorities());
+//
+//                authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+//
+//                SecurityContextHolder.getContext().setAuthentication(authentication);
+//            }
+//        }
+//
+//        chain.doFilter(request, response);
     }
 
     String getJwtTokenFromReq(HttpServletRequest req) {

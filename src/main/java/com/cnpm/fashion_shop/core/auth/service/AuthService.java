@@ -17,8 +17,8 @@ public class AuthService {
     @Autowired
     private EmployeeService employeeService;
 
-    @Autowired
-    private BCryptPasswordEncoder encoder ;
+//    @Autowired
+//    private BCryptPasswordEncoder encoder ;
 
     @Autowired
     private JwtProvider jwtProvider;
@@ -26,7 +26,11 @@ public class AuthService {
     public AuthResponseDto login(LoginDto dto) {
         Employee user = employeeService.findByUsername(dto.getUsername());
 
-        if (user == null || !encoder.matches(dto.getPassword(), user.getPassword())) {
+//        if (user == null || !encoder.matches(dto.getPassword(), user.getPassword())) {
+//            //throw new UnAuthorizedException();
+//        }
+
+        if (user == null ) {
             //throw new UnAuthorizedException();
         }
 
@@ -35,13 +39,13 @@ public class AuthService {
                 user.getUsername(),
                 user.getFullName(),
                 user.getAddress(),
-                user.getPhone_number()
-//                employeeService.mappingRolesToName(user.getRoles())
+                user.getPhone_number(),
+                employeeService.mappingRolesToName(user.getRole())
         );
         String token = jwtProvider.generateToken(user);
 
         return new AuthResponseDto(
-                token,
+                //token,
                 info
         );
     }

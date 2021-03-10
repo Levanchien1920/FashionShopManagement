@@ -19,7 +19,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @Embeddable
 @Entity(name = "gender")
-public class Gender {
+public class Gender extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter

@@ -5,12 +5,14 @@ import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
+import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.Column;
 import java.io.Serializable;
 import java.time.Instant;
 
 @MappedSuperclass
+//@Entity(name = "base")
 public abstract class BaseEntity implements Serializable {
 
     @Getter

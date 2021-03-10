@@ -24,7 +24,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "employee")
-public class Employee  {
+public class Employee  extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -116,6 +116,14 @@ public class Employee  {
 
     @Column(name = "id_role")
     private int id_role;
+
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    public void setRole(Set<Role> role) {
+        this.role = role;
+    }
 
     @ManyToMany(
             fetch = FetchType.EAGER,

@@ -49,20 +49,20 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-        if (token.startsWith(TOKEN_PREFIX)) {
-            token = token.replace(TOKEN_PREFIX, "");
-        }
-
-        String userId = jwtProvider.validateToken(token);
-
-        if (userId != null) {
-            return new UsernamePasswordAuthenticationToken(
-                    userId,
-                    null,
-                    new ArrayList<>()
-            );
-        }
-
+//        if (token.startsWith(TOKEN_PREFIX)) {
+//            token = token.replace(TOKEN_PREFIX, "");
+//        }
+//
+//        String userId = jwtProvider.validateToken(token);
+//
+//        if (userId != null) {
+//            return new UsernamePasswordAuthenticationToken(
+//                    userId,
+//                    null,
+//                    new ArrayList<>()
+//            );
+//        }
+//
         return null;
     }
 }

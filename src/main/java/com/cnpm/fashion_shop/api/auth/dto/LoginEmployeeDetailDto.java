@@ -27,15 +27,15 @@ public class LoginEmployeeDetailDto {
     private String phone_number;
 
 
-    public LoginEmployeeDetailDto(int id, String username, String fullName, String address, String phone_number
-    ) {
-        super();
+
+
+    public LoginEmployeeDetailDto(int id, String username, String fullName, String address, String phone_number, List<String> roleNames) {
         this.id = id;
         this.username = username;
         this.fullName = fullName;
         this.address = address;
         this.phone_number = phone_number;
-//		this.email = email;
+        this.roleNames = roleNames;
     }
 
     public int getId() {
