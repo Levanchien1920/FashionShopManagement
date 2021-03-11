@@ -1,4 +1,5 @@
 package com.cnpm.fashion_shop.api.brand.controller;
+
 import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
@@ -24,7 +25,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.validation.Valid;
 
 
-
 @RestController
 @RequestMapping(path = "/api/v1/brands")
 public class BrandController {
@@ -38,13 +38,12 @@ public class BrandController {
     @GetMapping
     public PaginationResponse<BrandResponseDto> getBrands(RequestParamsForGettingList requestParamsForGettingList) {
         Page<BrandResponseDto> data = brandService.findAllBrandDetails(requestParamsForGettingList.getPage(),
-                        requestParamsForGettingList.getSize(),
-                        requestParamsForGettingList.getSort(),
-                        requestParamsForGettingList.getSearch());
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
 
         return new PaginationResponse<>(data);
     }
-
 
 
     @ApiOperation(value = "Create brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})

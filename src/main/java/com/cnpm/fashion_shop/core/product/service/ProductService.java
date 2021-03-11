@@ -1,15 +1,15 @@
-package com.cnpm.fashion_shop.core.category.service;
+package com.cnpm.fashion_shop.core.product.service;
 
 import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
-import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
+import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
 import com.cnpm.fashion_shop.entity.Brand;
-import com.cnpm.fashion_shop.entity.Category;
-import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
+import com.cnpm.fashion_shop.entity.Product;
 import org.springframework.stereotype.Service;
+import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
@@ -31,48 +31,48 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class CategoryService {
+public class ProductService {
 //    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 //    @Autowired
-//    private CategoryRepository categoryRepository;
+//    private ProductRepository productRepository;
 //
 //    @Transactional
-//    public Page<CategoryResponseDto> findAllCategoryDetails(int size, int page, String sort, String search) {
+//    public Page<ProductResponseDto> findAllBrandDetails(int size, int page, String sort, String search) {
 //        List<String> columnsAllow = Arrays.asList(
-//                "id_cate",
+//                "id_brand",
 //                "name"
 //        );
 //        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
 //        orderFilterHelperImpl.validate();
 //
 //        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-//        return categoryRepository.findAllByName(pageable, search);
+//        return productRepository.findAllByName(pageable, search);
 //    }
 //
 //    public ResponseEntity getOne(Long id) {
-//        Optional<Category> optionalCategory = categoryRepository.findById(id);
-//        Category category;
+//        Optional<Brand> optionalBrand = productRepository.findById(id);
+//        Brand brand;
 //
-//        if (optionalCategory.isEmpty()) {
+//        if (optionalBrand.isEmpty()) {
 //            return ResponseEntity
 //                    .status(HttpStatus.NOT_FOUND)
 //                    .body(Response.notFound("Cannot find this brand with id = " + id));
 //        }
 //
-//        category = optionalCategory.get();
+//        brand = optionalBrand.get();
 //
-//        if (category.getIsDeleted()) {
+//        if (brand.getIsDeleted()) {
 //            return ResponseEntity
 //                    .status(HttpStatus.CONFLICT)
 //                    .body(Response.conflict("Brand with id = " + id + " is deleted"));
 //        }
-//        return ResponseEntity.ok(new CategoryDto(category.getId_category(), category.getName()));
+//        return ResponseEntity.ok(new BrandDto(brand.getId_brand(), brand.getName()));
 //    }
 //
 //    @Transactional
-//    public ResponseEntity<Response> createCategoryDto(CategoryDto dto) {
-//        Category category;
-//        Category existing_category = categoryRepository.findByName(StringUtils.trim(dto.getName()));
+//    public ResponseEntity<Response> createBrandDto(BrandDto dto) {
+//        Brand brand;
+//        Brand existing_brand = brandRepository.findByName(StringUtils.trim(dto.getName()));
 //        if (StringUtils.trim(dto.getName()).equals("")) {
 //            return ResponseEntity
 //                    .badRequest()

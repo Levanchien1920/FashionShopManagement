@@ -127,11 +127,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-            <version>${io.springfox.version}</version>
-        </dependency>
+
         <!-- https://mvnrepository.com/artifact/org.springframework/spring-beans -->
         <dependency>
             <groupId>org.springframework</groupId>
@@ -139,11 +135,7 @@
             <version>5.3.4</version>
         </dependency>
 
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-            <version>${io.springfox.version}</version>
-        </dependency>
+
 
         <!--Database driver-->
         <dependency>

@@ -7,6 +7,7 @@ import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
 import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
