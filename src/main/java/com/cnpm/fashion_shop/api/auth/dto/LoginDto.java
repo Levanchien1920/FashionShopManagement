@@ -1,30 +1,16 @@
 package com.cnpm.fashion_shop.api.auth.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+
+@AllArgsConstructor
 public class LoginDto {
-    private String username;
+    @Getter
+    @Setter
+    private final String username;
 
+    @Getter
+    @Setter
     private String password;
-
-    public LoginDto(String username, String password) {
-        super();
-        this.username = username;
-        this.password = password;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
 }

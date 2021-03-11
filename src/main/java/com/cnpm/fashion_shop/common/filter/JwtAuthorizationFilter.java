@@ -13,7 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import static com.cnpm.fashion_shop.common.constant.SecurityConstants.*;
+import static com.cnpm.fashion_shop.common.constant.SecurityConstants.HEADER_STRING;
+import static com.cnpm.fashion_shop.common.constant.SecurityConstants.TOKEN_PREFIX;
+
 
 public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     private final JwtProvider jwtProvider;
@@ -49,20 +51,20 @@ public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
     }
 
     private UsernamePasswordAuthenticationToken getAuthentication(String token) {
-//        if (token.startsWith(TOKEN_PREFIX)) {
-//            token = token.replace(TOKEN_PREFIX, "");
-//        }
-//
-//        String userId = jwtProvider.validateToken(token);
-//
-//        if (userId != null) {
-//            return new UsernamePasswordAuthenticationToken(
-//                    userId,
-//                    null,
-//                    new ArrayList<>()
-//            );
-//        }
-//
+        if (token.startsWith(TOKEN_PREFIX)) {
+            token = token.replace(TOKEN_PREFIX, "");
+        }
+
+        String userId = jwtProvider.validateToken(token);
+
+        if (userId != null) {
+            return new UsernamePasswordAuthenticationToken(
+                    userId,
+                    null,
+                    new ArrayList<>()
+            );
+        }
+
         return null;
     }
 }

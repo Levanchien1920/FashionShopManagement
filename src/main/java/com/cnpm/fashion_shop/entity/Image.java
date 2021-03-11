@@ -14,7 +14,7 @@ import javax.persistence.Id;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Image extends BaseEntity{
+public class Image{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter

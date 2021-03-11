@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "invoice")
-public class Invoice extends BaseEntity{
+public class Invoice{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter

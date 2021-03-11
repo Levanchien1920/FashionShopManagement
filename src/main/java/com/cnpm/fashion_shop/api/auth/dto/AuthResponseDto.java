@@ -1,12 +1,11 @@
 package com.cnpm.fashion_shop.api.auth.dto;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+
+@Getter
+@AllArgsConstructor
 public class AuthResponseDto {
-    final private String token ;
-    final private LoginEmployeeDetailDto info ;
-
-    public AuthResponseDto(String token, LoginEmployeeDetailDto info) {
-        this.token = token;
-        this.info = info;
-    }
+    private final String token;
+    private final LoginEmployeeDetailDto info;
 }
-

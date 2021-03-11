@@ -12,7 +12,6 @@ import java.io.Serializable;
 import java.time.Instant;
 
 @MappedSuperclass
-//@Entity(name = "base")
 public abstract class BaseEntity implements Serializable {
 
     @Getter

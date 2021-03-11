@@ -1,8 +1,5 @@
 package com.cnpm.fashion_shop.api.auth.controller;
 
-import java.rmi.UnexpectedException;
-import javax.validation.Valid;
-
 import com.cnpm.fashion_shop.api.auth.dto.AuthResponseDto;
 import com.cnpm.fashion_shop.api.auth.dto.LoginDto;
 import com.cnpm.fashion_shop.core.auth.service.AuthService;
@@ -12,6 +9,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
+
 @RestController
 @RequestMapping(path = "api/v1/auth")
 public class AuthController {
@@ -19,7 +19,9 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public AuthResponseDto login(@Valid @RequestBody LoginDto dto) throws UnexpectedException {
+    public AuthResponseDto login(
+            @Valid @RequestBody LoginDto dto
+    ) {
         return authService.login(dto);
     }
 }
