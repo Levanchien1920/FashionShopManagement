@@ -19,9 +19,7 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/login")
-    public AuthResponseDto login(
-            @Valid @RequestBody LoginDto dto
-    ) throws UnexpectedException {
+    public AuthResponseDto login(@Valid @RequestBody LoginDto dto) throws UnexpectedException {
         return authService.login(dto);
     }
 }
