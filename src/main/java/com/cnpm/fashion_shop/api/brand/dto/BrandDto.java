@@ -13,7 +13,7 @@ import javax.validation.constraints.Size;
 public class BrandDto {
     @Getter
     @Setter
-    private Long id;
+    private int id;
 
     @Getter
     @Setter
@@ -21,23 +21,9 @@ public class BrandDto {
     @NotNull
     private String name;
 
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public BrandDto(Long id, @Size(max = 50) @NotNull String name) {
+    public BrandDto(int id, @Size(max = 50) @NotNull String name) {
         this.id = id;
         this.name = name;
     }

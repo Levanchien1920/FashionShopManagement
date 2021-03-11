@@ -5,6 +5,7 @@ package com.cnpm.fashion_shop.core.auth.service;
 import com.cnpm.fashion_shop.api.auth.dto.AuthResponseDto;
 import com.cnpm.fashion_shop.api.auth.dto.LoginDto;
 import com.cnpm.fashion_shop.api.auth.dto.LoginEmployeeDetailDto;
+import com.cnpm.fashion_shop.common.exception.UnAuthorizedException;
 import com.cnpm.fashion_shop.core.employee.service.EmployeeService;
 import com.cnpm.fashion_shop.entity.Employee;
 import com.cnpm.fashion_shop.shared.JwtProvider;
@@ -31,7 +32,7 @@ public class AuthService {
 //        }
 
         if (user == null ) {
-            //throw new UnAuthorizedException();
+            throw new UnAuthorizedException();
         }
 
         LoginEmployeeDetailDto info = new LoginEmployeeDetailDto(
@@ -45,7 +46,7 @@ public class AuthService {
         String token = jwtProvider.generateToken(user);
 
         return new AuthResponseDto(
-                //token,
+                token,
                 info
         );
     }
