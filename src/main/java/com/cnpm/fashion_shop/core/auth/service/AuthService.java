@@ -43,8 +43,4 @@ public class AuthService {
                 info
         );
     }
-    @Bean
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 }
