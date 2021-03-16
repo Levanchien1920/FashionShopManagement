@@ -9,9 +9,14 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
+
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long> {
-    @Query(value = "SELECT * FROM brands b WHERE LOWER(b.name) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
+    @Query(value = "SELECT * FROM brand b WHERE LOWER(b.name) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
     Page<BrandResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
     Brand findByName(String name);
+    @Query(value = "SELECT * FROM brand b WHERE b.id_brand = :id AND b.is_deleted = FALSE", nativeQuery = true)
+    Optional<Brand> findById_brand(@Param("id") Integer id);
 }

@@ -35,7 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = getJwtTokenFromReq(request);
 
         if (token != null && jwtProvider.validateToken(token) != null) {
-            Long userId = jwtProvider.getUserIdFromJWT(token);
+            Integer userId = Math.toIntExact(jwtProvider.getUserIdFromJWT(token));
 
             EmployeeDetail detail = (EmployeeDetail) employeeDetailService.loadUserById(userId);
 

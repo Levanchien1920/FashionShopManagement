@@ -13,6 +13,6 @@ public class RoleService {
     RoleRepository roleRepository;
 
     public Role getDefaultRole() {
-        return roleRepository.findByName(RoleEnum.EMPLOYEE.name());
+        return roleRepository.findByName(RoleEnum.employee.name());
     }
 }

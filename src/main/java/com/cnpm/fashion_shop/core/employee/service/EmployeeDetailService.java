@@ -15,7 +15,7 @@ public class EmployeeDetailService implements UserDetailsService {
     @Autowired
     private EmployeeService employeeService;
 
-    public UserDetails loadUserById(Long id) throws UsernameNotFoundException {
+    public UserDetails loadUserById(Integer id) throws UsernameNotFoundException {
         Optional<Employee> employee = employeeService.findByIdOptional(id);
 
         if (employee.isEmpty()) {

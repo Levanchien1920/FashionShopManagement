@@ -43,8 +43,8 @@ public class BrandService {
         return brandRepository.findAllByName(pageable, search);
     }
 
-    public ResponseEntity getOne(Long id) {
-        Optional<Brand> optionalBrand = brandRepository.findById(id);
+    public ResponseEntity getOne(Integer id) {
+        Optional<Brand> optionalBrand = brandRepository.findById_brand(id);
         Brand brand;
 
         if (optionalBrand.isEmpty()) {
@@ -60,7 +60,7 @@ public class BrandService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Brand with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new BrandDto(brand.getId_brand(), brand.getName()));
+        return ResponseEntity.ok(new BrandDto(brand.getId(), brand.getName()));
     }
 
     @Transactional
@@ -109,8 +109,8 @@ public class BrandService {
     }
 
     @Transactional
-    public ResponseEntity<Response> updateBrandDto(Long id, BrandDto dto) {
-        Optional<Brand> brandOpt = brandRepository.findById(id);
+    public ResponseEntity<Response> updateBrandDto(Integer id, BrandDto dto) {
+        Optional<Brand> brandOpt = brandRepository.findById_brand(id);
         Brand brand;
         Brand existing_brand = brandRepository.findByName(StringUtils.trim(dto.getName()));
 
@@ -152,9 +152,9 @@ public class BrandService {
     }
 
     @Transactional
-    public ResponseEntity<Response> deleteBrandDto(Long id) {
+    public ResponseEntity<Response> deleteBrandDto(Integer id) {
         Brand brand;
-        Optional<Brand> brandOpt = brandRepository.findById(id);
+        Optional<Brand> brandOpt = brandRepository.findById_brand(id);
 
         if (brandOpt.isEmpty()) {
             return ResponseEntity.badRequest()
@@ -181,7 +181,7 @@ public class BrandService {
     }
 
     @Transactional
-    public Optional<Brand> findByIdOptional(Long id) {
-        return brandRepository.findById(id);
+    public Optional<Brand> findByIdOptional(Integer id) {
+        return brandRepository.findById_brand(id);
     }
 }

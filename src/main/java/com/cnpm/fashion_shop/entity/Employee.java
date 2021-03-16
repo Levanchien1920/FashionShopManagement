@@ -29,7 +29,7 @@ public class Employee  extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Column(name = "id_employee")
-    private int id;
+    private Integer id;
 
     @Column(unique = true, length = 30, name = "username", nullable = false)
     private String username;
@@ -46,7 +46,7 @@ public class Employee  extends BaseEntity{
     @Column(name = "phone_number")
     private String phone_number;
 
-    public Employee(int id, String fullName, String username, String password, String address, String phone_number,
+    public Employee(Integer id, String fullName, String username, String password, String address, String phone_number,
                     int id_role) {
         super();
         this.id = id;

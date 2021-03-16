@@ -8,7 +8,6 @@ import com.cnpm.fashion_shop.core.employee.service.EmployeeService;
 import com.cnpm.fashion_shop.entity.Employee;
 import com.cnpm.fashion_shop.shared.JwtProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -31,7 +30,7 @@ public class AuthService {
         }
 
         LoginEmployeeDetailDto info = new LoginEmployeeDetailDto(
-                (long) user.getId(),
+                user.getId(),
                 user.getUsername(),
                 user.getFullName(),
                 employeeService.mappingRolesToName(user.getRole())

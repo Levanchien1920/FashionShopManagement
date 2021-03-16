@@ -11,7 +11,7 @@ import java.util.List;
 public class LoginEmployeeDetailDto {
     @Getter
     @Setter
-    private Long id;
+    private Integer id;
 
     @Getter
     @Setter

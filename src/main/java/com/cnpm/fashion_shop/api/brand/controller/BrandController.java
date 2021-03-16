@@ -26,13 +26,12 @@ import javax.validation.Valid;
 
 
 @RestController
-@RequestMapping(path = "/api/v1/brands")
+@RequestMapping(path = "/api/v1/brand")
 public class BrandController {
 
 
     @Autowired
     private BrandService brandService;
-
 
     @ApiOperation(value = "Get all brands", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping
@@ -55,23 +54,23 @@ public class BrandController {
     }
 
     @ApiOperation(value = "Update brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @PatchMapping("/{brand_id}")
+    @PatchMapping("/{id_brand}")
     public ResponseEntity<Response> updateBrand(
-            @PathVariable("brand_id") Long id,
+            @PathVariable("id_brand") Integer id,
             @Valid @RequestBody BrandDto dto
     ) {
         return this.brandService.updateBrandDto(id, dto);
     }
 
     @ApiOperation(value = "Delete brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @DeleteMapping("/{brand_id}")
-    public ResponseEntity<Response> deleteBrand(@PathVariable("brand_id") Long id) {
+    @DeleteMapping("/{id_brand}")
+    public ResponseEntity<Response> deleteBrand(@PathVariable("id_brand") Integer id) {
         return this.brandService.deleteBrandDto(id);
     }
 
     @ApiOperation(value = "Get brand by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping("/{brand_id}")
-    public ResponseEntity getOneBrand(@PathVariable("brand_id") Long id) {
+    @GetMapping("/{id_brand}")
+    public ResponseEntity getOneBrand(@PathVariable("id_brand") Integer id) {
         return brandService.getOne(id);
     }
 }

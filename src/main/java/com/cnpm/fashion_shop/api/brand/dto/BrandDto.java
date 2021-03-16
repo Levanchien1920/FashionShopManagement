@@ -1,7 +1,6 @@
 package com.cnpm.fashion_shop.api.brand.dto;
 
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -13,7 +12,7 @@ import javax.validation.constraints.Size;
 public class BrandDto {
     @Getter
     @Setter
-    private int id;
+    private Integer id;
 
     @Getter
     @Setter

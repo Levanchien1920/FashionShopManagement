@@ -11,7 +11,6 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
@@ -25,15 +24,12 @@ import java.util.List;
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
     private static final List<String> LIST_METHOD_ALLOW = Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE");
 
+
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
 
     @Bean
     public JwtAuthenticationFilter jwtAuthenticationFilter() {
@@ -54,12 +50,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors()
                 .and()
-                .authorizeRequests()
-                .antMatchers("/api/v1/employees/**", "/api/v1/devices/**", "/api/v1/storage/**", "/api/v1/brands/**")
-                .hasAnyAuthority(RoleEnum.ADMIN.name())
-                .anyRequest().permitAll()
-                .and()
                 .csrf().disable()
+                .authorizeRequests()
+                .antMatchers("/api/v1/employee/**",  "/api/v1/brand/**")
+             /*   .hasAnyAuthority(RoleEnum.admin.name())
+                .anyRequest()*/
+                .permitAll()
+                .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

@@ -1,10 +1,13 @@
 package com.cnpm.fashion_shop.core.employee.repository;
 
+import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.entity.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface EmployeeRepository extends JpaRepository<Employee, Long> {
@@ -20,6 +23,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 //            "GROUP BY e.id, r.name";
 
     Employee findByUsername(String username);
+
+    @Query(value = "SELECT * FROM employee e WHERE e.id_employee = :id AND e.is_deleted = FALSE", nativeQuery = true)
+    Optional<Employee> findById(@Param("id") Integer id);
 
     Employee findByUsernameIgnoreCase(String username);
 

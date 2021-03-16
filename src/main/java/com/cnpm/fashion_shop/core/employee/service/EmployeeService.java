@@ -229,22 +229,8 @@ public class EmployeeService {
                 .collect(Collectors.toList());
     }
 
-    public Optional<Employee> findByIdOptional(Long id) {
+    public Optional<Employee> findByIdOptional(Integer id) {
         return this.employeeRepository.findById(id);
     }
-//
-//    public EmployeeAndAssignedDevicesDetailDto getAllAssignedDeviceByEmployeeId(Long employeeId) {
-//        EmployeeAndAssignedDevicesDetailDto result = employeeCustomRepository.getEmployeeDevicesBy(employeeId);
-//
-//        if (result.getEmployeeDto() == null) {
-//            throw new NotfoundException("Not found this employee with their own devices");
-//        }
-//
-//        return result;
-//    }
-//
-//    private String randomPassword() {
-//        return RandomStringUtils.random(15);
-//    }
 }
 
