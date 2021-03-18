@@ -17,6 +17,6 @@ public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Query(value = "SELECT * FROM brand b WHERE LOWER(b.name) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
     Page<BrandResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
     Brand findByName(String name);
-    @Query(value = "SELECT * FROM brand b WHERE b.id_brand = :id AND b.is_deleted = FALSE", nativeQuery = true)
+    @Query(value = "SELECT * FROM brand b WHERE b.id = :id AND b.is_deleted = FALSE", nativeQuery = true)
     Optional<Brand> findById_brand(@Param("id") Integer id);
 }

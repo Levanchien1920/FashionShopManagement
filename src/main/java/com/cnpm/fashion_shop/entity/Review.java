@@ -24,8 +24,8 @@ public class Review extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Column(name = "id_review")
-    private int id_review;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "content")
     private String content;

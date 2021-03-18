@@ -23,7 +23,7 @@ public class Gender{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Column(name = "id_gender")
+    @Column(name = "id")
     private int id_gender;
 
     @Column(name = "name")

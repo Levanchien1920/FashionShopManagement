@@ -24,7 +24,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     Employee findByUsername(String username);
 
-    @Query(value = "SELECT * FROM employee e WHERE e.id_employee = :id AND e.is_deleted = FALSE", nativeQuery = true)
+    @Query(value = "SELECT * FROM employee e WHERE e.id = :id AND e.is_deleted = FALSE", nativeQuery = true)
     Optional<Employee> findById(@Param("id") Integer id);
 
     Employee findByUsernameIgnoreCase(String username);

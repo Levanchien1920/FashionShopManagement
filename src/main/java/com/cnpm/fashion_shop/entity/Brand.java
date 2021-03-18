@@ -23,7 +23,7 @@ public class Brand extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Column(name = "id_brand")
+    @Column(name = "id")
     private Integer id;
 
     @Column(name = "name")

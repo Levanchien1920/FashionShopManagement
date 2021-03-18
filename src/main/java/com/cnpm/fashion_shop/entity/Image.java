@@ -18,8 +18,8 @@ public class Image{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Column(name = "id_image")
-    private int id_image;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "name")
     private String name;

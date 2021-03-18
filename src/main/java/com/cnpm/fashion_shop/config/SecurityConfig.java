@@ -1,6 +1,5 @@
 package com.cnpm.fashion_shop.config;
 
-import com.cnpm.fashion_shop.common.enums.RoleEnum;
 import com.cnpm.fashion_shop.common.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

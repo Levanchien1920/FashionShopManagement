@@ -33,7 +33,7 @@ public class BrandService {
     @Transactional
     public Page<BrandResponseDto> findAllBrandDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
-                "id_brand",
+                "id",
                 "name"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
@@ -66,25 +66,25 @@ public class BrandService {
     @Transactional
     public ResponseEntity<Response> createBrandDto(BrandDto dto) {
         Brand brand;
-        Brand existing_brand = brandRepository.findByName(StringUtils.trim(dto.getName()));
+        Brand existingBrand = brandRepository.findByName(StringUtils.trim(dto.getName()));
         if (StringUtils.trim(dto.getName()).equals("")) {
             return ResponseEntity
                     .badRequest()
                     .body(Response.badRequest("Brand name cannot be empty or contain only space"));
         }
 
-        if (existing_brand != null) {
-            if (!existing_brand.getIsDeleted()) {
+        if (existingBrand != null) {
+            if (!existingBrand.getIsDeleted()) {
                 return ResponseEntity
                         .status(HttpStatus.CONFLICT.value())
                         .body(Response.conflict("This brand name existed already"));
 
             }
 
-            existing_brand.setIsDeleted(false);
+            existingBrand.setIsDeleted(false);
 
             try {
-                brandRepository.save(existing_brand);
+                brandRepository.save(existingBrand);
                 return ResponseEntity.ok(SuccessfulResponse.CREATED);
             } catch (Exception e) {
                 LOG.error(e.getMessage());

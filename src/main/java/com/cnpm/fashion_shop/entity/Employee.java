@@ -28,7 +28,7 @@ public class Employee  extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Column(name = "id_employee")
+    @Column(name = "id")
     private Integer id;
 
     @Column(unique = true, length = 30, name = "username", nullable = false)
@@ -131,8 +131,8 @@ public class Employee  extends BaseEntity{
     )
     @JoinTable(
             name = "employees_roles",
-            joinColumns = {@JoinColumn(name = "id_employee", referencedColumnName = "id_employee", nullable = false, updatable = false)},
-            inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id_role", nullable = false, updatable = false)}
+            joinColumns = {@JoinColumn(name = "id_employee", referencedColumnName = "id", nullable = false, updatable = false)},
+            inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false, updatable = false)}
     )
     private Set<Role> role = new HashSet<>();
 

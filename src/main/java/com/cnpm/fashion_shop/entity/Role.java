@@ -27,8 +27,8 @@ public class Role  extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
-    @Column(name = "id_role")
-    private int id_role;
+    @Column(name = "id")
+    private int id;
 
     @Column(name = "name", nullable = false)
     private String name;
