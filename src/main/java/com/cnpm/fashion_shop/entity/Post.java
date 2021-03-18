@@ -5,24 +5,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "category")
-public class Category extends BaseEntity{
+@Entity(name = "post")
+public class Post extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Column(name = "id")
     private Integer id;
 
-    @Column(name = "name")
+    @Column(name = "content")
     private String name;
+
+    @Column(name = "id_image")
+    private Integer id_image;
+
+//    @OneToOne
+//    @JoinColumn(name = "image_id", nullable = false)
+//    private Image image;
+
 }

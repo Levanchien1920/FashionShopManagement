@@ -1,15 +1,19 @@
-package com.cnpm.fashion_shop.core.category.service;
-
+package com.cnpm.fashion_shop.core.post.service;
 import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
+import com.cnpm.fashion_shop.api.post.dto.PostDto;
+import com.cnpm.fashion_shop.api.post.dto.PostResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
 import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
+import com.cnpm.fashion_shop.core.post.repository.PostRepository;
 import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.entity.Category;
+
+import com.cnpm.fashion_shop.entity.Post;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.springframework.stereotype.Service;
 import org.slf4j.LoggerFactory;
@@ -34,66 +38,68 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CategoryService {
+public class PostService {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Autowired
-    private CategoryRepository categoryRepository;
+    private PostRepository postRepository;
 
     @Transactional
-    public Page<CategoryResponseDto> findAllCategoryDetails(int size, int page, String sort, String search) {
+    public Page<PostResponseDto> findAllPostDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
-                "name"
+                "content",
+                "name",
+                "link"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return categoryRepository.findAllByName(pageable, search);
+        return postRepository.findAllByName(pageable, search);
     }
 
     public ResponseEntity getOne(Integer id) {
-        Optional<Category> optionalCategory = categoryRepository.findById(id);
-        Category category;
+        Optional<Post> optionalPost = postRepository.findById(id);
+        Post post;
 
-        if (optionalCategory.isEmpty()) {
+        if (optionalPost.isEmpty()) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(Response.notFound("Cannot find this category with id = " + id));
+                    .body(Response.notFound("Cannot find this post with id = " + id));
         }
 
-        category = optionalCategory.get();
+        post = optionalPost.get();
 
-        if (category.getIsDeleted()) {
+        if (post.getIsDeleted()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(Response.conflict("Category with id = " + id + " is deleted"));
+                    .body(Response.conflict("post with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new CategoryDto(category.getId(), category.getName()));
+        return ResponseEntity.ok(new PostDto(post.getId(), post.getName(),post.getId_image()));
     }
 
     @Transactional
-    public ResponseEntity<Response> createCategoryDto(CategoryDto dto) {
-        Category category;
-        Category existing_category = categoryRepository.findByName(StringUtils.trim(dto.getName()));
-        if (StringUtils.trim(dto.getName()).equals("")) {
+    public ResponseEntity<Response> createPostDto(PostDto dto) {
+        Post post;
+        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getContent()));
+        if (StringUtils.trim(dto.getContent()).equals("")) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Category name cannot be empty or contain only space"));
+                    .body(Response.badRequest("Post name cannot be empty or contain only space"));
         }
 
-        if (existing_category != null) {
-            if (!existing_category.getIsDeleted()) {
+        if (existing_post != null) {
+            if (!existing_post.getIsDeleted()) {
                 return ResponseEntity
                         .status(HttpStatus.CONFLICT.value())
-                        .body(Response.conflict("This category name existed already"));
+                        .body(Response.conflict("This post name existed already"));
 
             }
 
-            existing_category.setIsDeleted(false);
+            existing_post.setIsDeleted(false);
 
             try {
-                categoryRepository.save(existing_category);
+                postRepository.save(existing_post);
                 return ResponseEntity.ok(SuccessfulResponse.CREATED);
             } catch (Exception e) {
                 LOG.error(e.getMessage());
@@ -103,11 +109,11 @@ public class CategoryService {
             }
         }
 
-        category = new Category();
-        category.setName(dto.getName().trim());
+        post = new Post();
+        post.setName(dto.getContent().trim());
 
         try {
-            categoryRepository.save(category);
+            postRepository.save(post);
             return ResponseEntity.ok(SuccessfulResponse.CREATED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -118,39 +124,39 @@ public class CategoryService {
     }
 
     @Transactional
-    public ResponseEntity<Response> updateCategoryDto(Integer id, CategoryDto dto) {
-        Optional<Category> categoryOpt = categoryRepository.findById(id);
-        Category category;
-        Category existing_category = categoryRepository.findByName(StringUtils.trim(dto.getName()));
+    public ResponseEntity<Response> updatePostDto(Integer id, PostDto dto) {
+        Optional<Post> postOpt = postRepository.findById(id);
+        Post post;
+        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getContent()));
 
-        if (StringUtils.equals(StringUtils.trim(dto.getName()), "")) {
+        if (StringUtils.equals(StringUtils.trim(dto.getContent()), "")) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Category's name cannot be empty"));
+                    .body(Response.badRequest("Post's name cannot be empty"));
         }
 
-        if (categoryOpt.isEmpty() || categoryOpt.get().getIsDeleted()) {
+        if (postOpt.isEmpty() || postOpt.get().getIsDeleted()) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Not found category to be updated"));
+                    .body(Response.badRequest("Not found post to be updated"));
         }
 
         // Compare old and new name
-        if (categoryOpt.get().getName().equals(StringUtils.trim(dto.getName()))) {
+        if (postOpt.get().getName().equals(StringUtils.trim(dto.getContent()))) {
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);
         }
 
-        if (existing_category != null) {
+        if (existing_post != null) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("This category already exists"));
+                    .body(Response.badRequest("This post already exists"));
         }
 
-        category = categoryOpt.get();
-        category.setName(dto.getName().trim());
+        post = postOpt.get();
+        post.setName(dto.getContent().trim());
 
         try {
-            categoryRepository.save(category);
+            postRepository.save(post);
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -161,26 +167,26 @@ public class CategoryService {
     }
 
     @Transactional
-    public ResponseEntity<Response> deleteCategoryDto(Integer id) {
-        Category category;
-        Optional<Category> categoryOpt = categoryRepository.findById(id);
+    public ResponseEntity<Response> deletePostDto(Integer id) {
+        Post post;
+        Optional<Post> postOpt = postRepository.findById(id);
 
-        if (categoryOpt.isEmpty()) {
+        if (postOpt.isEmpty()) {
             return ResponseEntity.badRequest()
-                    .body(Response.badRequest("This category does not exist"));
+                    .body(Response.badRequest("This post does not exist"));
         }
 
-        category = categoryOpt.get();
+        post = postOpt.get();
 
-        if (category.getIsDeleted()) {
+        if (post.getIsDeleted()) {
             return ResponseEntity.badRequest()
-                    .body(Response.badRequest("This category has been deleted"));
+                    .body(Response.badRequest("This post has been deleted"));
         }
 
-        category.setIsDeleted(true);
+        post.setIsDeleted(true);
 
         try {
-            categoryRepository.save(category);
+            postRepository.save(post);
             return ResponseEntity.ok(SuccessfulResponse.DELETED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -190,7 +196,7 @@ public class CategoryService {
     }
 
     @Transactional
-    public Optional<Category> findByIdOptional(Integer id) {
-        return categoryRepository.findById(id);
+    public Optional<Post> findByIdOptional(Integer id) {
+        return postRepository.findById(id);
     }
 }

@@ -2,6 +2,7 @@ package com.cnpm.fashion_shop.api.product.controller;
 import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
@@ -35,8 +36,8 @@ public class ProductController {
 //
 //    @ApiOperation(value = "Get all product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
 //    @GetMapping
-//    public PaginationResponse<BrandResponseDto> getBrands(RequestParamsForGettingList requestParamsForGettingList) {
-//        Page<BrandResponseDto> data = productService.findAllProductDetails(requestParamsForGettingList.getPage(),
+//    public PaginationResponse<ProductResponseDto> getProducts(RequestParamsForGettingList requestParamsForGettingList) {
+//        Page<ProductResponseDto> data = productService.findAllProductDetails(requestParamsForGettingList.getPage(),
 //                requestParamsForGettingList.getSize(),
 //                requestParamsForGettingList.getSort(),
 //                requestParamsForGettingList.getSearch());
@@ -46,31 +47,31 @@ public class ProductController {
 //
 //
 //
-//    @ApiOperation(value = "Create brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+//    @ApiOperation(value = "Create product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
 //    @PostMapping
-//    public ResponseEntity<Response> createBrandDto(@Valid @RequestBody BrandDto dto) {
+//    public ResponseEntity<Response> createBrandDto(@Valid @RequestBody ProductDto dto) {
 //        return productService.createProductDto(dto);
 //    }
 //
-//    @ApiOperation(value = "Update brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+//    @ApiOperation(value = "Update product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
 //    @PatchMapping("/{product_id}")
-//    public ResponseEntity<Response> updateBrand(@PathVariable("product_id") Long id,@Valid @RequestBody BrandDto dto) {
+//    public ResponseEntity<Response> updateBrand(@PathVariable("product_id") Integer id,@Valid @RequestBody ProductDto dto) {
 //        return this.productService.updateProductDto(id, dto);
 //    }
 //
-//    @ApiOperation(value = "Delete brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+//    @ApiOperation(value = "Delete product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
 //    @DeleteMapping("/{product_id}")
-//    public ResponseEntity<Response> deleteBrand(@PathVariable("product_id") Long id) {
+//    public ResponseEntity<Response> deleteBrand(@PathVariable("product_id") Integer id) {
 //        return this.productService.deleteProductDto(id);
 //    }
 //
-//    @ApiOperation(value = "Get brand by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+//    @ApiOperation(value = "Get product by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
 //    @GetMapping("/{product_id}")
-//    public ResponseEntity getOneBrand(@PathVariable("product_id") Long id) {
+//    public ResponseEntity getOneBrand(@PathVariable("product_id") Integer id) {
 //        return productService.getOne(id);
 //    }
-//
-////    admin end
+
+//    admin end
 //
 //    @ApiOperation(value = "Get details product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
 //    @PatchMapping("/{product_id}")
