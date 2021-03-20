@@ -21,7 +21,7 @@ public class Invoice{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Column(name = "id")
-    private int id;
+    private Integer id;
 
     @Column(name = "total_money")
     private Long totalMoney;

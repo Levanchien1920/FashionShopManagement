@@ -2,6 +2,7 @@ package com.cnpm.fashion_shop.core.review.service;
 
 import com.cnpm.fashion_shop.api.category.dto.CategoryDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.review.dto.ReviewDto;
 import com.cnpm.fashion_shop.api.review.dto.ReviewResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
@@ -51,25 +52,34 @@ public class ReviewService {
         return reviewRepository.findAll(pageable, search);
     }
 
-//    public ResponseEntity getOne(Integer id) {
-//        Optional<Review> optionalReview = reviewRepository.findById(id);
-//        Review review;
-//
-//        if (optionalReview.isEmpty()) {
-//            return ResponseEntity
-//                    .status(HttpStatus.NOT_FOUND)
-//                    .body(Response.notFound("Cannot find this Review with id = " + id));
-//        }
-//
-//        review = optionalReview.get();
-//
-//        if (review.getIsDeleted()) {
-//            return ResponseEntity
-//                    .status(HttpStatus.CONFLICT)
-//                    .body(Response.conflict("Review with id = " + id + " is deleted"));
-//        }
-//        return ResponseEntity.ok(new ReviewDto(review.getId(), review.getContent()));
-//    }
+    public ResponseEntity getOne(Integer id) {
+        Optional<Review> optionalReview = reviewRepository.findById(id);
+        Review review;
+
+        if (optionalReview.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(Response.notFound("Cannot find this Review with id = " + id));
+        }
+
+        review = optionalReview.get();
+
+        ReviewDto reviewDto= new ReviewDto();
+        reviewDto.setId(review.getId());
+        reviewDto.setId_product(review.getId_product());
+        reviewDto.setId_user(review.getId_user());
+        reviewDto.setContent(review.getContent());
+        reviewDto.setNumber_of_star(review.getNumberOfStar());
+
+        if (review.getIsDeleted()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Response.conflict("Review with id = " + id + " is deleted"));
+        }
+
+
+        return ResponseEntity.ok(reviewDto);
+    }
 
     @Transactional
     public ResponseEntity<Response> createReviewDto(ReviewDto dto) {
@@ -82,6 +92,7 @@ public class ReviewService {
         }
 
         review = new Review();
+        review.setId(dto.getId());
         review.setContent(dto.getContent().trim());
         review.setNumberOfStar(dto.getNumber_of_star());
         review.setId_product(dto.getId_product());
@@ -98,48 +109,48 @@ public class ReviewService {
         }
     }
 
-    @Transactional
-    public ResponseEntity<Response> updateReviewDto(Integer id, ReviewDto dto) {
-        Optional<Review> reviewOpt = reviewRepository.findById(id);
-        Review review;
-        Review existing_review = reviewRepository.findByContent(StringUtils.trim(dto.getContent()));
-
-//        if (StringUtils.equals(StringUtils.trim(dto.getName()), "")) {
+//    @Transactional
+//    public ResponseEntity<Response> updateReviewDto(Integer id, ReviewDto dto) {
+//        Optional<Review> reviewOpt = reviewRepository.findById(id);
+//        Review review;
+//        Review existing_review = reviewRepository.findByContent(StringUtils.trim(dto.getContent()));
+//
+////        if (StringUtils.equals(StringUtils.trim(dto.getName()), "")) {
+////            return ResponseEntity
+////                    .badRequest()
+////                    .body(Response.badRequest("Review's name cannot be empty"));
+////        }
+//
+//        if (reviewOpt.isEmpty() || reviewOpt.get().getIsDeleted()) {
 //            return ResponseEntity
 //                    .badRequest()
-//                    .body(Response.badRequest("Review's name cannot be empty"));
+//                    .body(Response.badRequest("Not found review to be updated"));
 //        }
-
-        if (reviewOpt.isEmpty() || reviewOpt.get().getIsDeleted()) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Response.badRequest("Not found review to be updated"));
-        }
-
-        // Compare old and new name
-        if (reviewOpt.get().getContent().equals(StringUtils.trim(dto.getContent()))) {
-            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
-        }
-
-//        if (existing_review != null) {
+//
+//        // Compare old and new name
+//        if (reviewOpt.get().getContent().equals(StringUtils.trim(dto.getContent()))) {
+//            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
+//        }
+//
+////        if (existing_review != null) {
+////            return ResponseEntity
+////                    .badRequest()
+////                    .body(Response.badRequest("This category already exists"));
+////        }
+//
+//        review = reviewOpt.get();
+////        review.setCon(dto.getName().trim());
+//
+//        try {
+//            reviewRepository.save(review);
+//            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
+//        } catch (Exception e) {
+//            LOG.error(e.getMessage());
 //            return ResponseEntity
-//                    .badRequest()
-//                    .body(Response.badRequest("This category already exists"));
+//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+//                    .body(Response.internalError(e.getMessage()));
 //        }
-
-        review = reviewOpt.get();
-//        review.setCon(dto.getName().trim());
-
-        try {
-            reviewRepository.save(review);
-            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
-        } catch (Exception e) {
-            LOG.error(e.getMessage());
-            return ResponseEntity
-                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body(Response.internalError(e.getMessage()));
-        }
-    }
+//    }
 
     @Transactional
     public ResponseEntity<Response> deleteReviewDto(Integer id) {

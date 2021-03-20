@@ -21,7 +21,7 @@ public class Post extends BaseEntity{
     private Integer id;
 
     @Column(name = "content")
-    private String name;
+    private String content;
 
     @Column(name = "id_image")
     private Integer id_image;

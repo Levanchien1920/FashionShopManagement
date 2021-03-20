@@ -44,13 +44,13 @@ public class ReviewController {
         return reviewService.createReviewDto(dto);
     }
 
-    @ApiOperation(value = "Update review", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @PatchMapping("/{review_id}")
-    public ResponseEntity<Response> updateReview(@PathVariable("review_id") Integer id,
-                                                   @Valid @RequestBody ReviewDto dto
-    ) {
-        return this.reviewService.updateReviewDto(id, dto);
-    }
+//    @ApiOperation(value = "Update review", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+//    @PatchMapping("/{review_id}")
+//    public ResponseEntity<Response> updateReview(@PathVariable("review_id") Integer id,
+//                                                   @Valid @RequestBody ReviewDto dto
+//    ) {
+//        return this.reviewService.updateReviewDto(id, dto);
+//    }
 
     @ApiOperation(value = "Delete review", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @DeleteMapping("/{review_id}")
@@ -58,9 +58,9 @@ public class ReviewController {
         return this.reviewService.deleteReviewDto(id);
     }
 
-//    @ApiOperation(value = "Get review by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @GetMapping("/{review_id}")
-//    public ResponseEntity getOneReview(@PathVariable("review_id") Integer id) {
-//        return reviewService.getOne(id);
-//    }
+    @ApiOperation(value = "Get review by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/{review_id}")
+    public ResponseEntity getOneReview(@PathVariable("review_id") Integer id) {
+        return reviewService.getOne(id);
+    }
 }

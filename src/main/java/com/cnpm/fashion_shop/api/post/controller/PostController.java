@@ -43,26 +43,26 @@ public class PostController {
     }
 
 
-//    @ApiOperation(value = "Create post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @PostMapping
-//    public ResponseEntity<Response> createPostDto(@Valid @RequestBody PostDto dto) {
-//        return postService.createPostDto(dto);
-//    }
-//
-//    @ApiOperation(value = "Update post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @PatchMapping("/{post_id}")
-//    public ResponseEntity<Response> updatePost(@PathVariable("post_id") Integer id,
-//                                                   @Valid @RequestBody PostDto dto
-//    ) {
-//        return this.postService.updatePostDto(id, dto);
-//    }
-//
-//    @ApiOperation(value = "Delete post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @DeleteMapping("/{post_id}")
-//    public ResponseEntity<Response> deleteCategory(@PathVariable("post_id") Integer id) {
-//        return this.postService.deletePostDto(id);
-//    }
-//
+    @ApiOperation(value = "Create post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @PostMapping
+    public ResponseEntity<Response> createPostDto(@Valid @RequestBody PostDto dto) {
+        return postService.createPostDto(dto);
+    }
+
+    @ApiOperation(value = "Update post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @PatchMapping("/{post_id}")
+    public ResponseEntity<Response> updatePost(@PathVariable("post_id") Integer id,
+                                                   @Valid @RequestBody PostDto dto
+    ) {
+        return this.postService.updatePostDto(id, dto);
+    }
+
+    @ApiOperation(value = "Delete post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @DeleteMapping("/{post_id}")
+    public ResponseEntity<Response> deleteCategory(@PathVariable("post_id") Integer id) {
+        return this.postService.deletePostDto(id);
+    }
+
     @ApiOperation(value = "Get post by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping("/{post_id}")
     public ResponseEntity getOneBrand(@PathVariable("post_id") Integer id) {

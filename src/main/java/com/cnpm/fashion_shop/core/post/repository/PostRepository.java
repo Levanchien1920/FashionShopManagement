@@ -20,10 +20,10 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     @Query(value = "SELECT p.content,p.id,i.link,i.name FROM post p inner join image i on p.id_image=i.id ", nativeQuery = true)
     Page<PostResponseDto> findAll(Pageable pageable, @Param("keyword") String keyword);
 
-//    @Query(value = "SELECT * FROM post inner join image on post.id=image.id WHERE post.id = :id AND b.is_deleted = FALSE", nativeQuery = true)
-//    Post findByContent(@Param("content") String content);
 
-    @Query(value = "SELECT new PostDto(p.id,p.content,i.id,i.name,i.link) FROM post p inner join image i on p.id_image=i.id  where p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
-    Optional<PostDto> findById(@Param("id") Integer id);
+    Post findByContent(String content);
+
+    @Query(value = "SELECT * FROM post p where p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
+    Optional<Post> findById(@Param("id") Integer id);
 
 }

@@ -22,7 +22,7 @@ public class Customer extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Column(name = "id")
-    private int id_cus;
+    private Integer id_cus;
 
     @Column(name = "username")
     private String username;
