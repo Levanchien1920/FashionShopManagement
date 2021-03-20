@@ -61,7 +61,7 @@ public class CategoryController {
 
     @ApiOperation(value = "Get category by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping("/{category_id}")
-    public ResponseEntity getOneBrand(@PathVariable("category_id") Integer id) {
+    public ResponseEntity getOneCategory(@PathVariable("category_id") Integer id) {
         return categoryService.getOne(id);
     }
 }

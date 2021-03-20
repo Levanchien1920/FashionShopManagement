@@ -28,54 +28,54 @@ import org.springframework.web.bind.annotation.PathVariable;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping(path = "/api/v1/products")
+@RequestMapping(path = "/api/v1/product")
 public class ProductController {
 
-//    @Autowired
-//    private ProductService productService;
-//
-//    @ApiOperation(value = "Get all product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @GetMapping
-//    public PaginationResponse<ProductResponseDto> getProducts(RequestParamsForGettingList requestParamsForGettingList) {
-//        Page<ProductResponseDto> data = productService.findAllProductDetails(requestParamsForGettingList.getPage(),
-//                requestParamsForGettingList.getSize(),
-//                requestParamsForGettingList.getSort(),
-//                requestParamsForGettingList.getSearch());
-//
-//        return new PaginationResponse<>(data);
-//    }
-//
-//
-//
-//    @ApiOperation(value = "Create product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @PostMapping
-//    public ResponseEntity<Response> createBrandDto(@Valid @RequestBody ProductDto dto) {
-//        return productService.createProductDto(dto);
-//    }
-//
-//    @ApiOperation(value = "Update product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @PatchMapping("/{product_id}")
-//    public ResponseEntity<Response> updateBrand(@PathVariable("product_id") Integer id,@Valid @RequestBody ProductDto dto) {
-//        return this.productService.updateProductDto(id, dto);
-//    }
-//
-//    @ApiOperation(value = "Delete product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @DeleteMapping("/{product_id}")
-//    public ResponseEntity<Response> deleteBrand(@PathVariable("product_id") Integer id) {
-//        return this.productService.deleteProductDto(id);
-//    }
-//
-//    @ApiOperation(value = "Get product by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @GetMapping("/{product_id}")
-//    public ResponseEntity getOneBrand(@PathVariable("product_id") Integer id) {
-//        return productService.getOne(id);
-//    }
+    @Autowired
+    private ProductService productService;
+
+    @ApiOperation(value = "Get all product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping
+    public PaginationResponse<ProductResponseDto> getProducts(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<ProductResponseDto> data = productService.findAllProductDetails(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
+
+
+
+    @ApiOperation(value = "Create product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @PostMapping
+    public ResponseEntity<Response> createDto(@Valid @RequestBody ProductDto dto) {
+        return productService.createProductDto(dto);
+    }
+
+    @ApiOperation(value = "Update product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @PatchMapping("/{product_id}")
+    public ResponseEntity<Response> updateProductProduct(@PathVariable("product_id") Integer id,@Valid @RequestBody ProductDto dto) {
+        return this.productService.updateProductDto(id, dto);
+    }
+
+    @ApiOperation(value = "Delete product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @DeleteMapping("/{product_id}")
+    public ResponseEntity<Response> deleteProduct(@PathVariable("product_id") Integer id) {
+        return this.productService.deleteProductDto(id);
+    }
+
+    @ApiOperation(value = "Get product by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/{product_id}")
+    public ResponseEntity getOneProduct(@PathVariable("product_id") Integer id) {
+        return productService.getOne(id);
+    }
 
 //    admin end
-//
+
 //    @ApiOperation(value = "Get details product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
 //    @PatchMapping("/{product_id}")
-//    public ResponseEntity<Response> updateBrand(@PathVariable("product_id") Long id, @Valid @RequestBody ProductDto dto) {
+//    public ResponseEntity<Response> detailsProduct(@PathVariable("product_id") Integer id, @Valid @RequestBody ProductDto dto) {
 //        return this.productService.detailsProductDto(id);
 //    }
 

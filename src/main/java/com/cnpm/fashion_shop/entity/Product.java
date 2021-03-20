@@ -24,7 +24,7 @@ public class Product extends BaseEntity{
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
     @Column(name = "id")
-    private int id_product;
+    private Integer id_product;
 
     @ManyToOne()
     @JoinColumn(name = "id_brand", insertable = false, updatable = false)
@@ -39,29 +39,32 @@ public class Product extends BaseEntity{
     private Gender gender;
 
     @Column(name = "id_brand")
-    private int idBrand;
+    private Integer idBrand;
 
     @Column(name = "id_cate")
-    private int idCategory;
+    private Integer idCategory;
 
     @Column(name = "id_gender")
-    private int idGender;
+    private Integer idGender;
 
-    @Column(name = "id_review")
-    private int idReview;
-
-    @ManyToOne()
-    @JoinColumn(name = "id_review", insertable = false, updatable = false)
-    private Review review;
+//    @Column(name = "id_review")
+//    private Integer idReview;
+//
+//    @ManyToOne()
+//    @JoinColumn(name = "id_review", insertable = false, updatable = false)
+//    private Review review;
 
     @Column(name = "id_image")
-    private int idImage;
+    private Integer idImage;
 
     @Column(name = "name")
     private String name;
 
     @Column(name = "price")
     private Long price;
+
+    @Column(name = "number")
+    private Integer number;
 
     @Column(name = "des")
     private String description;

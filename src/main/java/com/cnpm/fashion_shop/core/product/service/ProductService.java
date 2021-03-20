@@ -38,14 +38,22 @@ public class ProductService {
     @Transactional
     public Page<ProductResponseDto> findAllProductDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
-                "id_product",
-                "name"
+                "id",
+                "name",
+                "price",
+                "number",
+                "des",
+                "Name_Brand",
+                "Name_Category",
+                "Name_Gender",
+                "Name_Image",
+                "link"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return productRepository.findAllByName(pageable, search);
+        return productRepository.findAll(pageable, search);
     }
 
     public ResponseEntity getOne(Integer id) {
@@ -60,12 +68,23 @@ public class ProductService {
 
         product = optionalProduct.get();
 
+        ProductDto productDto= new ProductDto();
+        productDto.setId(product.getId_product());
+        productDto.setId_brand(product.getIdBrand());
+        productDto.setId_cate(product.getIdCategory());
+        productDto.setId_gender(product.getIdGender());
+        productDto.setId_image(product.getIdImage());
+        productDto.setName(product.getName());
+        productDto.setPrice(product.getPrice());
+        productDto.setDes(product.getDescription());
+        productDto.setNumber(product.getNumber());
+
         if (product.getIsDeleted()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Product with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new ProductDto(product.getId_product(), product.getName()));
+        return ResponseEntity.ok(productDto);
     }
 
     @Transactional
@@ -100,7 +119,15 @@ public class ProductService {
         }
 
         product = new Product();
+        product.setIdCategory(dto.getId_cate());
+        product.setIdBrand(dto.getId_brand());
+        product.setIdGender(dto.getId_gender());
+        product.setIdImage(dto.getId_image());
+        product.setNumber(dto.getNumber());
         product.setName(dto.getName().trim());
+        product.setDescription(dto.getDes());
+        product.setPrice(dto.getPrice());
+
 
         try {
             productRepository.save(product);
@@ -143,7 +170,14 @@ public class ProductService {
         }
 
         product = productOpt.get();
+        product.setIdCategory(dto.getId_cate());
+        product.setIdBrand(dto.getId_brand());
+        product.setIdGender(dto.getId_gender());
+        product.setIdImage(dto.getId_image());
+        product.setNumber(dto.getNumber());
         product.setName(dto.getName().trim());
+        product.setDescription(dto.getDes());
+        product.setPrice(dto.getPrice());
 
         try {
             productRepository.save(product);
@@ -188,5 +222,30 @@ public class ProductService {
     @Transactional
     public Optional<Product> findByIdOptional(Integer id) {
         return productRepository.findById(id);
+    }
+
+
+//    end admin
+
+
+    @Transactional
+    public Page<ProductResponseDto> detailsProductDto(Integer id, int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name",
+                "price",
+                "number",
+                "des",
+                "Name_Brand",
+                "Name_Category",
+                "Name_Gender",
+                "Name_Image",
+                "link"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return productRepository.findAll(pageable, search);
     }
 }

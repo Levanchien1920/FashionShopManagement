@@ -63,9 +63,9 @@ public class PostController {
 //        return this.postService.deletePostDto(id);
 //    }
 //
-//    @ApiOperation(value = "Get post by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-//    @GetMapping("/{post_id}")
-//    public ResponseEntity getOneBrand(@PathVariable("post_id") Integer id) {
-//        return postService.getOne(id);
-//    }
+    @ApiOperation(value = "Get post by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/{post_id}")
+    public ResponseEntity getOneBrand(@PathVariable("post_id") Integer id) {
+        return postService.getOne(id);
+    }
 }

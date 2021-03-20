@@ -1,4 +1,5 @@
 package com.cnpm.fashion_shop.core.post.service;
+
 import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryDto;
@@ -13,6 +14,7 @@ import com.cnpm.fashion_shop.core.post.repository.PostRepository;
 import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.entity.Category;
 
+import com.cnpm.fashion_shop.entity.Image;
 import com.cnpm.fashion_shop.entity.Post;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.springframework.stereotype.Service;
@@ -58,26 +60,28 @@ public class PostService {
         return postRepository.findAll(pageable, search);
     }
 
-//    public ResponseEntity getOne(Integer id) {
-//        Optional<Post> optionalPost = postRepository.findById(id);
-//        Post post;
-//
-//        if (optionalPost.isEmpty()) {
-//            return ResponseEntity
-//                    .status(HttpStatus.NOT_FOUND)
-//                    .body(Response.notFound("Cannot find this post with id = " + id));
-//        }
-//
-//        post = optionalPost.get();
-//
-//        if (post.getIsDeleted()) {
-//            return ResponseEntity
-//                    .status(HttpStatus.CONFLICT)
-//                    .body(Response.conflict("post with id = " + id + " is deleted"));
-//        }
-//        return ResponseEntity.ok(new PostDto(post.getId(), post.getName(),post.getId_image()));
-//    }
-//
+    public ResponseEntity getOne(Integer id) {
+        //lay ra id, content va id_image
+        Optional<PostDto> optionalPost = postRepository.findById(id);
+        PostDto postdto;
+
+
+        if (optionalPost.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(Response.notFound("Cannot find this post with id = " + id));
+        }
+
+        postdto = optionalPost.get();
+
+        if (postdto.getIsDeleted()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Response.conflict("post with id = " + id + " is deleted"));
+        }
+        return ResponseEntity.ok(new PostDto(postdto.getId(), postdto.getContent(), postdto.getId_image(), postdto.getName(), postdto.getLink()));
+    }
+
 //    @Transactional
 //    public ResponseEntity<Response> createPostDto(PostDto dto) {
 //        Post post;
@@ -122,7 +126,7 @@ public class PostService {
 //                    .body(Response.internalError(e.getMessage()));
 //        }
 //    }
-//
+
 //    @Transactional
 //    public ResponseEntity<Response> updatePostDto(Integer id, PostDto dto) {
 //        Optional<Post> postOpt = postRepository.findById(id);
