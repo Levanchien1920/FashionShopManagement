@@ -13,12 +13,22 @@ const LoginContextProvider =({children}) =>{
         setUsername(localStorage.getItem('username'));
         setfullname(localStorage.getItem('fullname'));
     }
+    const LogoutDispatch = () =>{
+        setId("");
+        setUsername("");
+        setfullname("");
+        localStorage.removeItem('id');
+        localStorage.removeItem('username');
+        localStorage.removeItem('fullname');
+        localStorage.removeItem('token');
+    }
     //context data
     const LoginContextData = {
         Id : Id,
         Username :Username , 
         Fullname :Fullname , 
         LoginDispatch,
+        LogoutDispatch,
     }
     
     //return provider

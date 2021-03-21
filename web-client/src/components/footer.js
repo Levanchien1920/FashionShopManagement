@@ -36,9 +36,9 @@ function footer() {
                             <div class="footer-widget">
                                 <h2>Company Info</h2>
                                 <ul>
-                                    <li><a href="#">About Us</a></li>
-                                    <li><a href="#">Privacy Policy</a></li>
-                                    <li><a href="#">Terms Condition</a></li>
+                                    <li><a href="abc">About Us</a></li>
+                                    <li><a href="abc">Privacy Policy</a></li>
+                                    <li><a href="abc">Terms Condition</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -47,9 +47,9 @@ function footer() {
                             <div class="footer-widget">
                                 <h2>Purchase Info</h2>
                                 <ul>
-                                    <li><a href="#">Pyament Policy</a></li>
-                                    <li><a href="#">Shipping Policy</a></li>
-                                    <li><a href="#">Return Policy</a></li>
+                                    <li><a href="abc">Pyament Policy</a></li>
+                                    <li><a href="a">Shipping Policy</a></li>
+                                    <li><a href="a">Return Policy</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -81,16 +81,9 @@ function footer() {
                     </div>
                 </div>
             </div>
-            <a href="#" className="back-to-top"><i class="fa fa-chevron-up"></i></a>
-            
-            <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-            <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
-            <script src="lib/easing/easing.min.js"></script>
-            <script src="lib/slick/slick.min.js"></script>
-            
-            <script src="js/main.js"></script>
+            <a href="a" className="back-to-top"><i class="fa fa-chevron-up"></i></a>
+           
         </div>
     )
 }
-
 export default footer

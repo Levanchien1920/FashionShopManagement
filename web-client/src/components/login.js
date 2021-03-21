@@ -5,9 +5,9 @@ import {useHistory} from 'react-router'
 function Login() {
     const [userInput , setuserInput] = useState({username:"", password:""});
     const [errorMessage, setErrorMessage] = useState(null);
-    const [user, setuser]= useState("")
     const { LoginDispatch} = useContext(LoginContext);
     const history = useHistory();
+    console.log("nfejknvkrj");
     const OnSubmitHandle =  (e) =>{
         axios.post("http://localhost:9090/api/v1/auth/login", userInput).then((response)=> {
             setErrorMessage(null);
@@ -17,47 +17,48 @@ function Login() {
             localStorage.setItem("username", info.username);
             localStorage.setItem("fullname", info.fullName);
             LoginDispatch();
+            history.push("/");
         }).catch((error) =>{
             setErrorMessage(error.response.data.message);
         });
     }
     return (
         <div>
-            <div class="breadcrumb-wrap">
-                <div class="container-fluid">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Products</a></li>
-                        <li class="breadcrumb-item active">Login</li>
+            <div className="breadcrumb-wrap">
+                <div className="container-fluid">
+                    <ul className="breadcrumb">
+                        <li className="breadcrumb-item"><a href="#">Home</a></li>
+                        <li className="breadcrumb-item"><a href="#">Products</a></li>
+                        <li className="breadcrumb-item active">Login</li>
                     </ul>
                 </div>
             </div>
-            <div class="login">
-                <div class="container-fluid">
-                        <div class="col-lg-6">
-                            <div class="login-form">
-                                <div class="col">
-                                    <div class="col-md-6">
+            <div className="login">
+                <div className="container-fluid">
+                        <div className="col-lg-6">
+                            <div className="login-form">
+                                <div className="col">
+                                    <div className="col-md-6">
                                         <label>Username</label>
-                                        <input class="form-control" type="text"  name="username" placeholder="Username" 
+                                        <input className="form-control" type="text"  name="username" placeholder="Username" 
                                         onChange={e => setuserInput({...userInput ,username : e.target.value})} value={userInput.username}></input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div className="col-md-6">
                                         <label>Password</label>
-                                        <input class="form-control" type="text"  name="password" placeholder="Password"  
+                                        <input className="form-control" type="text"  name="password" placeholder="Password"  
                                         onChange={e => setuserInput({...userInput ,password : e.target.value})} value={userInput.password}></input>
                                     </div>
-                                    <div class="col-md-12">
-                                        <div class="custom-control custom-checkbox">
-                                            <input type="checkbox" class="custom-control-input" id="newaccount"></input>
-                                            <label class="custom-control-label" for="newaccount">Keep me signed in</label>
+                                    <div className="col-md-12">
+                                        <div className="custom-control custom-checkbox">
+                                            <input type="checkbox" className="custom-control-input" id="newaccount"></input>
+                                            <label className="custom-control-label" for="newaccount">Keep me signed in</label>
                                         </div>
                                     </div>
                                     {errorMessage && (
-                                        <div className="error-mesage">{errorMessage}</div>
+                                        <div classNameName="error-mesage">{errorMessage}</div>
                                     )}
-                                    <div class="col-md-12">
-                                        <button class="btn" onClick={OnSubmitHandle}>Submit</button>
+                                    <div className="col-md-12">
+                                        <button className="btn" onClick={OnSubmitHandle}>Submit</button>
                                     </div>
                                 </div>
                             </div>

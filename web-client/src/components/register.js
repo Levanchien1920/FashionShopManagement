@@ -3,47 +3,47 @@ import React from 'react'
 function register() {
     return (
         <div>
-            <div class="breadcrumb-wrap">
-                <div class="container-fluid">
-                    <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Products</a></li>
-                        <li class="breadcrumb-item active">Register</li>
+            <div className="breadcrumb-wrap">
+                <div className="container-fluid">
+                    <ul className="breadcrumb">
+                        <li className="breadcrumb-item"><a href="#">Home</a></li>
+                        <li className="breadcrumb-item"><a href="#">Products</a></li>
+                        <li className="breadcrumb-item active">Register</li>
                     </ul>
                 </div>
             </div>
-            <div class="login">
-                <div class="container-fluid">
-                    <div class="row">
-                        <div class="col-lg-12">    
-                            <div class="register-form">
-                                <div class="row">
-                                    <div class="col-md-12">
+            <div className="login">
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col-lg-12">    
+                            <div className="register-form">
+                                <div className="row">
+                                    <div className="col-md-12">
                                         <label>First Name</label>
-                                        <input class="form-control" type="text" placeholder="First Name"></input>
+                                        <input className="form-control" type="text" placeholder="First Name"></input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div className="col-md-6">
                                         <label>Last Name"</label>
-                                        <input class="form-control" type="text" placeholder="Last Name"></input>
+                                        <input className="form-control" type="text" placeholder="Last Name"></input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div className="col-md-6">
                                         <label>E-mail</label>
-                                        <input class="form-control" type="text" placeholder="E-mail"></input>
+                                        <input className="form-control" type="text" placeholder="E-mail"></input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div className="col-md-6">
                                         <label>Mobile No</label>
-                                        <input class="form-control" type="text" placeholder="Mobile No"></input>
+                                        <input className="form-control" type="text" placeholder="Mobile No"></input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div className="col-md-6">
                                         <label>Password</label>
-                                        <input class="form-control" type="text" placeholder="Password"></input>
+                                        <input className="form-control" type="text" placeholder="Password"></input>
                                     </div>
-                                    <div class="col-md-6">
+                                    <div className="col-md-6">
                                         <label>Retype Password</label>
-                                        <input class="form-control" type="text" placeholder="Password"></input>
+                                        <input className="form-control" type="text" placeholder="Password"></input>
                                     </div>
-                                    <div class="col-md-12">
-                                        <button class="btn">Submit</button>
+                                    <div className="col-md-12">
+                                        <button className="btn">Submit</button>
                                     </div>
                                 </div>
                             </div>
