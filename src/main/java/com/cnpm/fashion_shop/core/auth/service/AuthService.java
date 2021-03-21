@@ -24,7 +24,6 @@ public class AuthService {
 
     public AuthResponseDto login(LoginDto dto) {
         Employee user = employeeService.findByUsername(dto.getUsername());
-        System.out.println(dto.getUsername());
         if (user == null || !encoder.matches(dto.getPassword(), user.getPassword())) {
             throw new UnAuthorizedException();
         }
