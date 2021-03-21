@@ -5,16 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Image{
+@Entity(name = "image")
+public class Image extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -26,4 +24,14 @@ public class Image{
 
     @Column(name = "link")
     private String link;
+
+//    public Image(String link) {
+//
+//        this.link = link;
+//    }
+//
+//
+//    public Image(String name) {
+//        this.name = name;
+//    }
 }

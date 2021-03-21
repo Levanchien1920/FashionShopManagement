@@ -4,6 +4,7 @@ import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
@@ -50,6 +51,27 @@ public class CategoryService {
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return categoryRepository.findAllByName(pageable, search);
+    }
+
+    @Transactional
+    public Page<ProductResponseDto> findAllProductbyCategory(Integer id, int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name",
+                "price",
+                "number",
+                "des",
+                "Name_Brand",
+                "Name_Category",
+                "Name_Gender",
+                "Name_Image",
+                "link"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return categoryRepository.findAllByNameCategory(pageable, search,id);
     }
 
     public ResponseEntity getOne(Integer id) {

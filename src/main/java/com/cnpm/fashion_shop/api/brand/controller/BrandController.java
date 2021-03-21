@@ -2,6 +2,8 @@ package com.cnpm.fashion_shop.api.brand.controller;
 
 import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
@@ -73,4 +75,10 @@ public class BrandController {
     public ResponseEntity getOneBrand(@PathVariable("id_brand") Integer id) {
         return brandService.getOne(id);
     }
+
+    //    end admin
+
+
+
+
 }

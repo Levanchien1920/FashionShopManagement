@@ -1,11 +1,16 @@
 package com.cnpm.fashion_shop.core.product.service;
 
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductRes;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
+import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
+import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
+import com.cnpm.fashion_shop.core.product.repository.GenderRepository;
+import com.cnpm.fashion_shop.core.product.repository.ImageRepository;
 import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
-import com.cnpm.fashion_shop.entity.Product;
+import com.cnpm.fashion_shop.entity.*;
 import org.springframework.stereotype.Service;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.slf4j.LoggerFactory;
@@ -35,6 +40,18 @@ public class ProductService {
     @Autowired
     private ProductRepository productRepository;
 
+    @Autowired
+    private BrandRepository brandRepository;
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ImageRepository imageRepository;
+
+    @Autowired
+    private GenderRepository genderRepository;
+
     @Transactional
     public Page<ProductResponseDto> findAllProductDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
@@ -59,6 +76,10 @@ public class ProductService {
     public ResponseEntity getOne(Integer id) {
         Optional<Product> optionalProduct = productRepository.findById(id);
         Product product;
+        Brand brand;
+        Category category;
+        Gender gender;
+        Image image1;
 
         if (optionalProduct.isEmpty()) {
             return ResponseEntity
@@ -67,24 +88,34 @@ public class ProductService {
         }
 
         product = optionalProduct.get();
+        Optional<Category> optionalCategory = categoryRepository.findById(product.getIdCategory());
+        Optional<Brand> optionalBrand = brandRepository.findById_brand(product.getIdBrand());
+        gender = genderRepository.findById_gender(product.getIdGender());
+        image1 = imageRepository.findByName_image(product.getIdImage());
 
-        ProductDto productDto= new ProductDto();
-        productDto.setId(product.getId_product());
-        productDto.setId_brand(product.getIdBrand());
-        productDto.setId_cate(product.getIdCategory());
-        productDto.setId_gender(product.getIdGender());
-        productDto.setId_image(product.getIdImage());
-        productDto.setName(product.getName());
-        productDto.setPrice(product.getPrice());
-        productDto.setDes(product.getDescription());
-        productDto.setNumber(product.getNumber());
+        category=optionalCategory.get();
+        brand=optionalBrand.get();
 
-        if (product.getIsDeleted()) {
+
+        ProductRes productRes= new ProductRes();
+        productRes.setId(product.getId_product());
+        productRes.setName_Brand(brand.getName());
+        productRes.setName_Category(category.getName());
+        productRes.setName_Gender(gender.getName());
+        productRes.setName_Image(image1.getName());
+        productRes.setName(product.getName());
+        productRes.setPrice(product.getPrice());
+        productRes.setDes(product.getDescription());
+        productRes.setNumber(product.getNumber());
+        productRes.setLink(image1.getLink());
+
+
+        if (productRes.getIsDeleted()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Product with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(productDto);
+        return ResponseEntity.ok(productRes);
     }
 
     @Transactional
@@ -228,24 +259,24 @@ public class ProductService {
 //    end admin
 
 
-    @Transactional
-    public Page<ProductResponseDto> detailsProductDto(Integer id, int size, int page, String sort, String search) {
-        List<String> columnsAllow = Arrays.asList(
-                "id",
-                "name",
-                "price",
-                "number",
-                "des",
-                "Name_Brand",
-                "Name_Category",
-                "Name_Gender",
-                "Name_Image",
-                "link"
-        );
-        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
-        orderFilterHelperImpl.validate();
-
-        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return productRepository.findAll(pageable, search);
-    }
+//    @Transactional
+//    public Page<ProductResponseDto> RelateProductDto(Integer id, int size, int page, String sort, String search) {
+//        List<String> columnsAllow = Arrays.asList(
+//                "id",
+//                "name",
+//                "price",
+//                "number",
+//                "des",
+//                "Name_Brand",
+//                "Name_Category",
+//                "Name_Gender",
+//                "Name_Image",
+//                "link"
+//        );
+//        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+//        orderFilterHelperImpl.validate();
+//
+//        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+//        return productRepository.findAllRelate(pageable, search);
+//    }
 }

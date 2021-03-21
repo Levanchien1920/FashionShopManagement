@@ -57,6 +57,10 @@ public class Product extends BaseEntity{
     @Column(name = "id_image")
     private Integer idImage;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_image", insertable = false, updatable = false)
+    private Image image;
+
     @Column(name = "name")
     private String name;
 
