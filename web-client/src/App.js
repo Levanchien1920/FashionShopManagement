@@ -1,22 +1,26 @@
 import './App.css';
-import { BrowserRouter, Route, Link } from "react-router-dom";
-import Header from "./components/header"
-import Fouter from "./components/footer"
-import Login from "./components/login"
-import Register from "./components/register"
-import Contact from "./components/contact"
-import Cart from "./components/cart"
+import { BrowserRouter, Route, } from "react-router-dom";
+import Header from "./components/Header"
+import Fouter from "./components/Footer"
+import Login from "./components/Login"
+import Register from "./components/Register"
+import Contact from "./components/Contact"
+import LoginContextProvider from './context/LoginContext'
+import Card from './components/Card'
+import Cart from "./components/Cart"
 function App() {
   return (
     <div >
       <BrowserRouter>
-        <Header/>
-        <Route path='/' component={Cart} /> 
-        <Route path='/register' component={Register} /> 
-        <Route path='/login' component={Login} /> 
-        <Fouter/>
+        <LoginContextProvider>
+          <Header/>
+            <Route path='/login' component={Cart} /> 
+            <Route path='/register' component={Register} /> 
+            <Route path='/' component={Login} />
+            <Route path='/Contact' component={Contact} />  
+          <Fouter/>
+          </LoginContextProvider>
       </BrowserRouter>
-       
     </div>
   );
 }

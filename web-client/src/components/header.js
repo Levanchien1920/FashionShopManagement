@@ -1,6 +1,16 @@
-import React from 'react'
+import React, {useContext, useEffect} from 'react'
+import {LoginContext} from '../context/LoginContext'
+function Header() {
+    const login = useContext(LoginContext);
+    var fullname = login.Fullname;
 
-function header() {
+    // useEffect(() => {
+    // //   if (localStorage.getItem("token") === "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjMiLCJpZCI6MTIzLCJleHAiOjE2MTYzNTgxMDZ9.nrBW8a6fTlrJG18BVM1B6TYhiMSL2ViP-VdNkCYa5s8H8lwcYoRP-paSH-GI1oVPPZD1a2c23DdiMSLshzXj2g"){
+    //        login.LoginDispatch();
+    //        let x = localStorage.getItem("token");
+    //        console.log(x);
+    // //   }
+    // }, [])
     return (
         <div>
             <div className="top-bar">
@@ -33,7 +43,7 @@ function header() {
                                 <a href="product-detail.html" className="nav-item nav-link">Product Detail</a>
                                 <a href="cart.html" className="nav-item nav-link">Cart</a>
                                 <a href="checkout.html" className="nav-item nav-link">Checkout</a>
-                                <a href="my-account.html" className="nav-item nav-link">My Account</a>
+                                <a href="my-account.html" className="nav-item nav-link">abcm</a>
                                 <div className="nav-item dropdown">
                                     <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">More Pages</a>
                                     <div className="dropdown-menu">
@@ -43,14 +53,25 @@ function header() {
                                     </div>
                                 </div>
                             </div>
-                            <div className="navbar-nav ml-auto">
-                                <div className="nav-item dropdown">
-                                    <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">User Account</a>
-                                    <div className="dropdown-menu">
-                                        <a href="#" className="dropdown-item">Login</a>
-                                        <a href="#" className="dropdown-item">Register</a>
-                                    </div>
-                                </div>
+                            <div className="navbar-nav ml-auto">                               
+                                {(fullname !="") ? ( 
+                                        <div className="nav-item dropdown">
+                                            <a href="#" className="nav-link dropdown-toggle" data-toggle="dropdown">{fullname}</a>
+                                                <div className="dropdown-menu">
+                                                    <a href="#" className="dropdown-item">Login</a>
+                                                    <a href="#" className="dropdown-item">Register</a>
+                                                </div>
+                                        </div>
+                                    ) : (
+                                        <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
+                                            <div className="navbar-nav mr-auto">
+                                                    <a href="#" className="dropdown-item color">Login</a>
+                                                    <a href="#" className="dropdown-item color">Register</a>
+                                            </div>
+                                        </div>
+                                    )}
+                                    
+                                
                             </div>
                         </div>
                     </nav>
@@ -91,4 +112,4 @@ function header() {
     )
 }
 
-export default header
+export default Header
