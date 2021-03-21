@@ -1,6 +1,6 @@
 import React from 'react'
 
-function cart() {
+function Cart() {
     return (
         <div>
              <div class="breadcrumb-wrap">
@@ -158,4 +158,4 @@ function cart() {
     )
 }
 
-export default cart
+export default Cart
