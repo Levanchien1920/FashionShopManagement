@@ -2,6 +2,7 @@ import React, {useState , useContext } from 'react'
 import {LoginContext} from '../context/LoginContext'
 import axios from 'axios'
 import {useHistory} from 'react-router'
+import {Link} from 'react-router-dom'
 function Login() {
     const [userInput , setuserInput] = useState({username:"", password:""});
     const [errorMessage, setErrorMessage] = useState(null);
@@ -27,8 +28,8 @@ function Login() {
             <div className="breadcrumb-wrap">
                 <div className="container-fluid">
                     <ul className="breadcrumb">
-                        <li className="breadcrumb-item"><a href="#">Home</a></li>
-                        <li className="breadcrumb-item"><a href="#">Products</a></li>
+                        <li className="breadcrumb-item"><Link to="/">Home</Link></li>
+                        <li className="breadcrumb-item"><Link to="/products">Products</Link></li>
                         <li className="breadcrumb-item active">Login</li>
                     </ul>
                 </div>

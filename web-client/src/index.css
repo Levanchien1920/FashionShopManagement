@@ -60,7 +60,16 @@ code {
 .dropdown:hover .dropbtn {
   background-color:black;
 }
-
+/*form loading*/
+.isloading {
+  display: block;
+  width: 100%;
+  height: 40rem;
+  color: red;
+  text-align: center;
+  font-size: 2rem;
+}
+/* end form loading*/
 /* product item */
 .product-item{
   margin: 1rem;

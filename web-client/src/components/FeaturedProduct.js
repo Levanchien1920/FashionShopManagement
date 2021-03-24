@@ -8,8 +8,14 @@ function FeaturedProduct() {
             setlistProduct(response.data.content);
         }).catch((error) =>{
         });
-    }, [])
+    },[])
     return (
+    <div>
+        {( listProduct.length === 0 ) ? (
+            <div class="isloading">
+                Loading....
+            </div>
+        ) : (
         <div class="featured-product product">
             <div class="container-fluid">
                 <div class="section-header">
@@ -22,6 +28,8 @@ function FeaturedProduct() {
                 </div>
             </div>
         </div> 
+        )}
+    </div>
     )
 }
 

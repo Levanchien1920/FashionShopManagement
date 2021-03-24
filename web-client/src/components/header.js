@@ -1,5 +1,6 @@
 import React, {useContext} from 'react'
 // import {useHistory} from 'react-router'
+import {Link} from 'react-router-dom'
 import {LoginContext} from '../context/LoginContext'
 function Header() {
     const login = useContext(LoginContext);
@@ -37,9 +38,9 @@ function Header() {
                     <nav className="navbar navbar-expand-md bg-dark navbar-dark">
                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div className="navbar-nav mr-auto">
-                                <a href="/" className="nav-item nav-link active">Home</a>
-                                <a href="product-list.html" className="nav-item nav-link">Products</a>
-                                <a href="product-detail.html" className="nav-item nav-link">Product Detail</a>
+                                <Link to='/'className="nav-item nav-link active" >Home</Link>
+                                <Link to='/products'className="nav-item nav-link active" >Products</Link>
+                                <Link to='/account'className="nav-item nav-link active" >Account</Link>
                                 <a href="cart.html" className="nav-item nav-link">Cart</a>
                                 <a href="checkout.html" className="nav-item nav-link">Checkout</a>
                                 <a href="my-account.html" className="nav-item nav-link">abcm</a>

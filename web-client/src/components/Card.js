@@ -29,7 +29,7 @@ function Card(props) {
                     </div>
                     <div className="product-price">
                         <h3><span>$</span>{product.price}</h3>
-                        <a className="btn" href="a"><i className="fa fa-shopping-cart"></i>Buy Now</a>
+                        <a className="btn" href="/cart"><i className="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
                
             </div>
