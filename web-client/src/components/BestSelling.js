@@ -1,7 +1,7 @@
 import axios from 'axios';
 import React , {useState , useEffect} from 'react'
 import Card from './Card'
-function FeaturedProduct() {
+function BestSelling() {
     const [listProduct , setlistProduct] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:9090/api/v1/product').then((response)=> {
@@ -19,7 +19,7 @@ function FeaturedProduct() {
         <div class="featured-product product">
             <div class="container-fluid">
                 <div class="section-header">
-                    <h1>Featured Product</h1>
+                    <h1>Best-Selling</h1>
                 </div>
                 <div class="row align-items-center product-slider product-slider-4">
                     {listProduct.map((product) => (
@@ -33,4 +33,4 @@ function FeaturedProduct() {
     )
 }
 
-export default FeaturedProduct
+export default BestSelling

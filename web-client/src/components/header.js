@@ -1,18 +1,16 @@
-import React, {useContext} from 'react'
-// import {useHistory} from 'react-router'
+import React, {useContext, useEffect} from 'react'
+import {useHistory} from 'react-router'
 import {Link} from 'react-router-dom'
 import {LoginContext} from '../context/LoginContext'
 function Header() {
     const login = useContext(LoginContext);
     var fullname = login.Fullname;
-    // const history = useHistory();
-    // useEffect(() => {
-    // //   if (localStorage.getItem("token") === "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiIxMjMiLCJpZCI6MTIzLCJleHAiOjE2MTYzNTgxMDZ9.nrBW8a6fTlrJG18BVM1B6TYhiMSL2ViP-VdNkCYa5s8H8lwcYoRP-paSH-GI1oVPPZD1a2c23DdiMSLshzXj2g"){
-    //        login.LoginDispatch();
-    //        let x = localStorage.getItem("token");
-    //        console.log(x);
-    // //   }
-    // }, [])
+    const history = useHistory();
+    useEffect(() => {
+           login.LoginDispatch();
+           console.log(fullname);
+           localStorage.removeItem("fulln");
+    }, [fullname])
     const LogoutHandle = () =>{
         login.LogoutDispatch();
     }
@@ -41,12 +39,11 @@ function Header() {
                                 <Link to='/'className="nav-item nav-link active" >Home</Link>
                                 <Link to='/products'className="nav-item nav-link active" >Products</Link>
                                 <Link to='/account'className="nav-item nav-link active" >Account</Link>
-                                <a href="cart.html" className="nav-item nav-link">Cart</a>
-                                <a href="checkout.html" className="nav-item nav-link">Checkout</a>
-                                <a href="my-account.html" className="nav-item nav-link">abcm</a>
+                                <Link to='/cart'className="nav-item nav-link active" >Cart</Link>
+                                <Link to='/contact'className="nav-item nav-link active" >Contact</Link>
                             </div>
                             <div className="navbar-nav ml-auto">                               
-                                {(fullname !=="") ? ( 
+                                {(fullname != null) ? ( 
                                         <div className="dropdown">
                                             <button className="dropbtn">Xin chào {fullname}</button>
                                             <div className="dropdown-content">
@@ -58,7 +55,7 @@ function Header() {
                                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                                             <div className="navbar-nav mr-auto">
                                                     <a href="/login" className="dropdown-item color">Login</a>
-                                                    <a href="as" className="dropdown-item color">Register</a>
+                                                    <a href="/register" className="dropdown-item color">Register</a>
                                             </div>
                                         </div>
                                     )}
@@ -87,11 +84,7 @@ function Header() {
                         </div>
                         <div className="col-md-3">
                             <div className="user">
-                                <a href="wishlist.html" className="btn wishlist">
-                                    <i className="fa fa-heart"></i>
-                                    <span>(0)</span>
-                                </a>
-                                <a href="cart.html" className="btn cart">
+                                <a href="/cart" className="btn cart">
                                     <i className="fa fa-shopping-cart"></i>
                                     <span>(0)</span>
                                 </a>
