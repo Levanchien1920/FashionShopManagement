@@ -1,223 +1,224 @@
 package com.cnpm.fashion_shop.core.employee.service;
 
+import com.cnpm.fashion_shop.api.employee.dto.EmployeeDetailDto;
+import com.cnpm.fashion_shop.api.employee.dto.EmployeeDto;
+import com.cnpm.fashion_shop.api.employee.dto.EmployeeResponseDto;
+import com.cnpm.fashion_shop.common.enums.RoleEnum;
+import com.cnpm.fashion_shop.common.response.Response;
+import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.employee.repository.EmployeeRepository;
 import com.cnpm.fashion_shop.core.role.service.RoleService;
+import com.cnpm.fashion_shop.entity.Customer;
 import com.cnpm.fashion_shop.entity.Employee;
 import com.cnpm.fashion_shop.entity.Role;
+import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
+import org.apache.commons.lang3.RandomStringUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.lang.invoke.MethodHandles;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Service
 public class EmployeeService {
-   // private static final Logger LOG = (Logger) LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
 
     @Autowired
     private EmployeeRepository employeeRepository;
 
     @Autowired
     private RoleService roleService;
-  //  @Autowired
-   // private BCryptPasswordEncoder encoder;
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
-//    public Page<EmployeeDetailDto> getEmployees(int page, int size, String order, String keyword) {
-//        List<String> columnsAllow = Arrays.asList("id", "employeeName", "project", "assignedDevice");
-//        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(order, columnsAllow);
-//
-//        orderFilterHelperImpl.validate();
-//        Sort sort = orderFilterHelperImpl.getSort();
-//
-//        Pageable pageable = PageRequest.of(page, size, sort);
-//        return employeeCustomRepository.getEmployees(keyword, pageable);
-//    }
-//
-//    /**
-//     * create new employee record in employee table
-//     * notice: password field is not used, just use for logging by admin so password will be set is DEFAULT_PASSWORD
-//     *
-//     * @return employee id after save it into database
-//     * if cannot create return null
-//     */
-//    @Transactional
-//    public EmployeeResponse createEmployee(EmployeeDto dto) {
-//        // handle input data
-//        dto.setFirstName(StringUtils.trim(dto.getFirstName()));
-//        dto.setLastName(StringUtils.trim(dto.getLastName()));
-//        dto.setProject(StringUtils.trim(dto.getProject()));
-//        dto.setUsername(StringUtils.trim(dto.getUsername()));
-//
-//        // check inputted data is valid or not
-//        if (StringUtils.isBlank(dto.getFirstName())) {
-//            return EmployeeResponse.fail("First name is not valid");
-//        }
-//        if (StringUtils.isBlank(dto.getLastName())) {
-//            return EmployeeResponse.fail("Last name is not valid");
-//        }
-//        if (StringUtils.isBlank(dto.getProject())) {
-//            return EmployeeResponse.fail("Project is not valid");
-//        }
-//        if (StringUtils.isBlank(dto.getUsername()) || dto.getUsername().contains(" ")) {
-//            return EmployeeResponse.fail("Username is not valid");
-//        }
-//
-//        Employee sameUsernameEmployee = employeeRepository.findByUsernameIgnoreCase(dto.getUsername());
-//        if (sameUsernameEmployee != null && !sameUsernameEmployee.getIsDeleted()) {
-//            return EmployeeResponse.fail("This username already existed");
-//        }
-//
-//        // if have a deleted employee with same username -> replace this employee with new employee which want to create
-//        if (sameUsernameEmployee != null) {
-//            sameUsernameEmployee.setFirstName(dto.getFirstName());
-//            sameUsernameEmployee.setLastName(dto.getLastName());
-//            sameUsernameEmployee.setProject(dto.getProject());
-//            sameUsernameEmployee.setPassword(encoder.encode(randomPassword()));
-//            sameUsernameEmployee.setIsDeleted(false);
-//            sameUsernameEmployee.setRoles(new HashSet<>(Collections.singletonList(roleService.getDefaultRole())));
-//
-//            try {
-//                employeeRepository.save(sameUsernameEmployee);
-//                return EmployeeResponse.success(sameUsernameEmployee.getId());
-//            } catch (Exception e) {
-//                LOG.error(e.getMessage());
-//                return EmployeeResponse.fail(e.getMessage());
-//            }
-//        }
-//
-//        // create new record in employee table
-//        Employee newEmployee = new Employee();
-//        newEmployee.setFirstName(dto.getFirstName());
-//        newEmployee.setLastName(dto.getLastName());
-//        newEmployee.setProject(dto.getProject());
-//        newEmployee.setUsername(dto.getUsername());
-//        newEmployee.setPassword(encoder.encode(randomPassword()));
-//        newEmployee.setRoles(new HashSet<>(Collections.singletonList(roleService.getDefaultRole())));
-//
-//        try {
-//            Employee createdEmployee = employeeRepository.save(newEmployee);
-//            return EmployeeResponse.success(createdEmployee.getId());
-//        } catch (Exception e) {
-//            LOG.error(e.getMessage());
-//            return EmployeeResponse.fail(e.getMessage());
-//        }
-//
-//    }
-//
-//    @Transactional
-//    public EmployeeResponse updateEmployee(EmployeeDto dto) {
-//        // handle input data
-//        dto.setFirstName(StringUtils.trim(dto.getFirstName()));
-//        dto.setLastName(StringUtils.trim(dto.getLastName()));
-//        dto.setProject(StringUtils.trim(dto.getProject()));
-//        dto.setUsername(StringUtils.trim(dto.getUsername()));
-//
-//        // check inputted data is valid or not
-//        if (StringUtils.isBlank(dto.getFirstName())) {
-//            return EmployeeResponse.fail("First name is not valid");
-//        }
-//        if (StringUtils.isBlank(dto.getLastName())) {
-//            return EmployeeResponse.fail("Last name is not valid");
-//        }
-//        if (StringUtils.isBlank(dto.getProject())) {
-//            return EmployeeResponse.fail("Project is not valid");
-//        }
-//        if (StringUtils.isBlank(dto.getUsername()) || dto.getUsername().contains(" ")) {
-//            return EmployeeResponse.fail("Username is not valid");
-//        }
-//
-//        // check this user is valid: existed/deleted
-//        Optional<Employee> employeeOpt = employeeRepository.findById(dto.getId());
-//        if (employeeOpt.isEmpty()) {
-//            return EmployeeResponse.fail("This employee does not exist");
-//        }
-//        if (employeeOpt.get().getIsDeleted()) {
-//            return EmployeeResponse.fail("This employee already deleted");
-//        }
-//
-//        Employee sameUsernameEmployee = employeeRepository.findByUsernameIgnoreCase(dto.getUsername());
-//
-//        // check this username is valid or not
-//        if (sameUsernameEmployee != null && !sameUsernameEmployee.getId().equals(dto.getId())) {
-//            return EmployeeResponse.fail("This username has existed already");
-//        }
-//
-//        // update employee
-//        Employee updatedEmp = employeeOpt.get();
-//        updatedEmp.setFirstName(dto.getFirstName());
-//        updatedEmp.setLastName(dto.getLastName());
-//        updatedEmp.setProject(dto.getProject());
-//        updatedEmp.setUsername(dto.getUsername());
-//
-//        try {
-//            this.employeeRepository.save(updatedEmp);
-//            return EmployeeResponse.success(dto.getId());
-//        } catch (Exception e) {
-//            LOG.error(e.getMessage());
-//            return EmployeeResponse.fail(e.getMessage());
-//        }
-//
-//    }
-//
-//    public ResponseEntity<Response> deleteEmployee(Long id) {
-//        Optional<Employee> employeeOpt = employeeRepository.findById(id);
-//        if (employeeOpt.isEmpty()) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(Response.badRequest("This employee does not exist"));
-//        }
-//
-//        Employee employee = employeeOpt.get();
-//
-//        if (employee.getIsDeleted()) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(Response.badRequest("This employee is deleted already"));
-//        }
-//        EmployeeDetailDto employeeRole = employeeRepository.getEmployeeDetailsWithRoleUser(employee.getId(), RoleEnum.ADMIN.name());
-//        if (employeeRole != null) {
-//            return ResponseEntity
-//                    .badRequest()
-//                    .body(Response.badRequest("Cannot delete employee with role Admin"));
-//        }
-//
-//        List<DeviceEmployee> deviceEmployees = deviceEmployeeRepository.findAllByEmployeeId(employee.getId());
-//        if (deviceEmployees.size() != 0) {
-//            if (deviceEmployees.stream().anyMatch(deviceEmployee -> deviceEmployee.getReturnedDate() == null)) {
-//                return ResponseEntity
-//                        .badRequest()
-//                        .body(Response.badRequest("This employee cannot be deleted because the device has not been returned"));
-//            } else {
-//                deviceEmployees.forEach(deviceEmployee -> deviceEmployee.setIsDeleted(true));
-//                try {
-//                    deviceEmployeeRepository.saveAll(deviceEmployees);
-//                } catch (Exception e) {
-//                    return ResponseEntity
-//                            .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                            .body(Response.internalError(e.getMessage()));
-//                }
-//
-//            }
-//        }
-//
-//        employee.setIsDeleted(true);
-//
-//        try {
-//
-//            this.employeeRepository.save(employee);
-//            return ResponseEntity.ok(SuccessfulResponse.DELETED);
-//        } catch (Exception e) {
-//            return ResponseEntity
-//                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
-//                    .body(Response.internalError(e.getMessage()));
-//        }
-//    }
+    private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
+
+    @Transactional
+    public Page<EmployeeResponseDto> findAllEmployeeDetails(int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "employeeName",
+                "phoneNumber",
+                "address"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return employeeRepository.findAllByUsername(pageable, search);
+    }
+
+    /**
+     * create new employee record in employee table
+     * notice: password field is not used, just use for logging by admin so password will be set is DEFAULT_PASSWORD
+     *
+     * @return employee id after save it into database
+     * if cannot create return null
+     */
+    public ResponseEntity getOne(Integer id) {
+        Optional<Employee> optionalEmployee = employeeRepository.findById(id);
+        Customer customer;
+
+        if (optionalEmployee.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(Response.notFound("Cannot find this employee with id = " + id));
+        }
+
+        Employee employee = optionalEmployee.get();
+
+        if (employee.getIsDeleted()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Response.conflict("Employee with id = " + id + " is deleted"));
+        }
+        return ResponseEntity.ok(new EmployeeDto(employee.getId(), employee.getFullName(), employee.getPhone_number(), employee.getUsername(), employee.getAddress(), mappingRolesToName(employee.getRole())));
+    }
+
+    @Transactional(rollbackOn = {Exception.class})
+    public ResponseEntity<Response> createEmployee(EmployeeDto dto) {
+        Employee employee;
+        Employee existingEmployee = employeeRepository.findByUsername(StringUtils.trim(dto.getUsername()));
+        if (StringUtils.trim(dto.getFullname()).equals("")) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Employee name cannot be empty or contain only space"));
+        }
+
+        if (existingEmployee != null) {
+            if (!existingEmployee.getIsDeleted()) {
+                return ResponseEntity
+                        .status(HttpStatus.CONFLICT.value())
+                        .body(Response.conflict("This username existed already"));
+
+            }
+
+            existingEmployee.setIsDeleted(false);
+
+            try {
+                employeeRepository.save(existingEmployee);
+                return ResponseEntity.ok(SuccessfulResponse.CREATED);
+            } catch (Exception e) {
+                LOG.error(e.getMessage());
+                return ResponseEntity
+                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                        .body(Response.internalError(e.getMessage()));
+            }
+        }
+
+        employee = new Employee();
+        employee.setPassword(encoder.encode(randomPassword()));
+        employee.setUsername(dto.getUsername());
+        employee.setFullName(dto.getFullname().trim());
+        employee.setAddress(dto.getAddress());
+        employee.setRole(new HashSet<>(Collections.singletonList(roleService.getDefaultRole())));
+
+        try {
+            employeeRepository.save(employee);
+            return ResponseEntity.ok(SuccessfulResponse.CREATED);
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.internalError(e.getMessage()));
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<Response> updateEmployee(Integer id, EmployeeDto dto) {
+        Optional<Employee> employeeOpt = employeeRepository.findById(id);
+        Employee employee;
+        Employee existingEmployee = employeeRepository.findByUsername(StringUtils.trim(dto.getUsername()));
+
+        if (StringUtils.equals(StringUtils.trim(dto.getFullname()), "")) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Customer's name cannot be empty"));
+        }
+
+        if (employeeOpt.isEmpty() || employeeOpt.get().getIsDeleted()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Not found Customer to be updated"));
+        }
+
+        // Compare old and new name
+        if (employeeOpt.get().getUsername().equals(StringUtils.trim(dto.getUsername()))) {
+            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
+        }
+
+        if (existingEmployee != null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This email customer already exists"));
+        }
+
+        employee = employeeOpt.get();
+        employee.setUsername(dto.getUsername());
+        employee.setFullName(dto.getFullname().trim());
+        employee.setAddress(dto.getAddress());
+        employee.setPhone_number(dto.getPhoneNumber());
+
+
+        try {
+            employeeRepository.save(employee);
+            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.internalError(e.getMessage()));
+        }
+    }
+
+    public ResponseEntity<Response> deleteEmployee(Integer id) {
+        Optional<Employee> employeeOpt = employeeRepository.findById(id);
+        if (employeeOpt.isEmpty()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This employee does not exist"));
+        }
+
+        Employee employee = employeeOpt.get();
+
+        if (employee.getIsDeleted()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This employee is deleted already"));
+        }
+        EmployeeDetailDto employeeRole = employeeRepository.getEmployeeDetailsWithRoleUser(employee.getId(), RoleEnum.admin.name());
+        if (employeeRole != null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Cannot delete employee with role Admin"));
+        }
+        employee.setIsDeleted(true);
+
+        try {
+
+            this.employeeRepository.save(employee);
+            return ResponseEntity.ok(SuccessfulResponse.DELETED);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.internalError(e.getMessage()));
+        }
+    }
 
     public Employee findByUsername(String username) {
         return this.employeeRepository.findByUsername(username);
@@ -231,6 +232,10 @@ public class EmployeeService {
 
     public Optional<Employee> findByIdOptional(Integer id) {
         return this.employeeRepository.findById(id);
+    }
+
+    private String randomPassword() {
+        return RandomStringUtils.random(15);
     }
 }
 

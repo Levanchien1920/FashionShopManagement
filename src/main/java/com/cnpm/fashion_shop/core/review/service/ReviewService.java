@@ -1,15 +1,10 @@
 package com.cnpm.fashion_shop.core.review.service;
 
-import com.cnpm.fashion_shop.api.category.dto.CategoryDto;
-import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
-import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.review.dto.ReviewDto;
 import com.cnpm.fashion_shop.api.review.dto.ReviewResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
-import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
 import com.cnpm.fashion_shop.core.review.repository.ReviewRepository;
-import com.cnpm.fashion_shop.entity.Category;
 import com.cnpm.fashion_shop.entity.Review;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.apache.commons.lang3.StringUtils;

@@ -1,10 +1,6 @@
 package com.cnpm.fashion_shop.core.review.repository;
 
-import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
 import com.cnpm.fashion_shop.api.review.dto.ReviewResponseDto;
-import com.cnpm.fashion_shop.entity.Category;
-import com.cnpm.fashion_shop.entity.Post;
-import com.cnpm.fashion_shop.entity.Product;
 import com.cnpm.fashion_shop.entity.Review;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,4 +21,5 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
     @Query(value = "SELECT * FROM review r WHERE r.id = :id AND r.is_deleted = FALSE", nativeQuery = true)
     Optional<Review> findById(@Param("id") Integer id);
+
 }

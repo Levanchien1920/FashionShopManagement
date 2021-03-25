@@ -35,7 +35,7 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-    @ApiOperation(value = "Get all brands", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Get all brands")
     @GetMapping
     public PaginationResponse<BrandResponseDto> getBrand(RequestParamsForGettingList requestParamsForGettingList) {
         Page<BrandResponseDto> data = brandService.findAllBrandDetails(requestParamsForGettingList.getPage(),
@@ -70,7 +70,7 @@ public class BrandController {
         return this.brandService.deleteBrandDto(id);
     }
 
-    @ApiOperation(value = "Get brand by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Get brand by id")
     @GetMapping("/{id_brand}")
     public ResponseEntity getOneBrand(@PathVariable("id_brand") Integer id) {
         return brandService.getOne(id);

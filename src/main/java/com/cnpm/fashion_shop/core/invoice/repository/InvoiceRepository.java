@@ -1,16 +1,9 @@
 package com.cnpm.fashion_shop.core.invoice.repository;
 
 
-import com.cnpm.fashion_shop.api.invoice.dto.InvoiceResponseDto;
 import com.cnpm.fashion_shop.entity.Invoice;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
-
-import java.util.Optional;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {

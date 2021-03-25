@@ -16,19 +16,19 @@ public class ProductRes extends BaseEntity {
 
     @Getter
     @Setter
-    private String Name_Category;
+    private String categoryName;
 
     @Getter
     @Setter
-    private String Name_Brand;
+    private String brandName;
 
     @Getter
     @Setter
-    private String Name_Gender;
+    private String genderName;
 
     @Getter
     @Setter
-    private String Name_Image;
+    private String iamgeName;
 
     @Getter
     @Setter
@@ -54,12 +54,12 @@ public class ProductRes extends BaseEntity {
     @NotNull
     private String des;
 
-    public ProductRes(Integer id, String name_Category, String name_Brand, String name_Gender, String name_Image, String link, Long price, @Size(max = 50) @NotNull String name, Integer number, @NotNull String des) {
+    public ProductRes(Integer id, String categoryName, String brandName, String genderName, String iamgeName, String link, Long price, @Size(max = 50) @NotNull String name, Integer number, @NotNull String des) {
         this.id = id;
-        this.Name_Category = name_Category;
-        this.Name_Brand = name_Brand;
-        this.Name_Gender = name_Gender;
-        this.Name_Image = name_Image;
+        this.categoryName = categoryName;
+        this.brandName = brandName;
+        this.genderName = genderName;
+        this.iamgeName = iamgeName;
         this.link = link;
         this.price = price;
         this.name = name;

@@ -1,9 +1,6 @@
 package com.cnpm.fashion_shop.core.customer.repository;
 
-import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.customer.dto.CustomerResponseDto;
-import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
-import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.entity.Customer;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

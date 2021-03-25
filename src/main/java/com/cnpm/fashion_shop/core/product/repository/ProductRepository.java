@@ -1,18 +1,13 @@
 package com.cnpm.fashion_shop.core.product.repository;
 
-import com.cnpm.fashion_shop.api.product.dto.ProductRes;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
-import com.cnpm.fashion_shop.entity.Brand;
-import com.cnpm.fashion_shop.entity.Gender;
-import com.cnpm.fashion_shop.entity.Image;
 import com.cnpm.fashion_shop.entity.Product;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
+import org.springframework.stereotype.Repository;
 
 import java.util.Optional;
 
@@ -47,7 +42,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
 //            "inner join image as i on p.id_image=i.id " +
 //            "inner join gender as g on p.id_gender=g.id WHERE p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
 //    Page<ProductResponseDto> findAllRelate(Pageable pageable, @Param("keyword") String keyword);
-
 
 
 }

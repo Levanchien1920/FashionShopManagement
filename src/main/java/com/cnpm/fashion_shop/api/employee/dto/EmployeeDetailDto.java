@@ -12,10 +12,13 @@ import java.util.List;
 @Getter
 @Setter
 public class EmployeeDetailDto {
-    Long id;
+    Integer id;
 
     String employeeName;
 
+    String phoneNumber;
 
-//    List<RoleDto> roles = new ArrayList<>();
+    String address;
+
+    List<RoleDto> roles = new ArrayList<>();
 }

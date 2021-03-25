@@ -9,17 +9,17 @@ public class EmployeeResponse {
 
     private boolean isSuccessful;
 
-    private Long id;
+    private Integer id;
 
     private String errorMessage;
 
-    private EmployeeResponse(boolean isSuccessful, Long id, String errorMessage){
+    private EmployeeResponse(boolean isSuccessful, Integer id, String errorMessage){
         this.isSuccessful = isSuccessful;
         this.id = id;
         this.errorMessage = errorMessage;
     }
 
-    public static EmployeeResponse success(Long id){
+    public static EmployeeResponse success(Integer id){
         return new EmployeeResponse(true, id, null);
     }
 

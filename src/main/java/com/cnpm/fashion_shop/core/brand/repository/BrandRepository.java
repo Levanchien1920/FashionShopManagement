@@ -3,7 +3,6 @@ package com.cnpm.fashion_shop.core.brand.repository;
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.entity.Brand;
-import org.springframework.stereotype.Repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -1,25 +1,16 @@
 package com.cnpm.fashion_shop.core.category.service;
 
-import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
-import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryDto;
 import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
-import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
 import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
-import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.entity.Category;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
-import org.springframework.stereotype.Service;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Service;
-
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

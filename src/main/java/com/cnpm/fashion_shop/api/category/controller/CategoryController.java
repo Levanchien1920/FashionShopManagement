@@ -27,7 +27,7 @@ public class CategoryController {
     private CategoryService categoryService;
 
 
-    @ApiOperation(value = "Get all categorys", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Get all category")
     @GetMapping
     public PaginationResponse<CategoryResponseDto> getCategorys(RequestParamsForGettingList requestParamsForGettingList) {
         Page<CategoryResponseDto> data = categoryService.findAllCategoryDetails(requestParamsForGettingList.getPage(),
@@ -59,7 +59,7 @@ public class CategoryController {
         return this.categoryService.deleteCategoryDto(id);
     }
 
-    @ApiOperation(value = "Get category by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Get category by id")
     @GetMapping("/{category_id}")
     public ResponseEntity getOneCategory(@PathVariable("category_id") Integer id) {
         return categoryService.getOne(id);

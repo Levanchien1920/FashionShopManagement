@@ -1,12 +1,10 @@
 package com.cnpm.fashion_shop.api.post.dto;
 
-import com.cnpm.fashion_shop.entity.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 
 @NoArgsConstructor

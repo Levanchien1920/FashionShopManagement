@@ -1,20 +1,8 @@
 package com.cnpm.fashion_shop.api.invoice.controller;
 
-import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
-import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
-import com.cnpm.fashion_shop.common.constant.SecurityConstants;
-import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
-import com.cnpm.fashion_shop.common.response.PaginationResponse;
-import com.cnpm.fashion_shop.common.response.Response;
-import com.cnpm.fashion_shop.core.brand.service.BrandService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.Authorization;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
 @RestController
 @RequestMapping(path = "/api/v1/invoice")
 public class InvoiceController {
