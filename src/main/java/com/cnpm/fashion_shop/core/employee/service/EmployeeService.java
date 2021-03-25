@@ -8,11 +8,9 @@ import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.employee.repository.EmployeeRepository;
 import com.cnpm.fashion_shop.core.role.service.RoleService;
-import com.cnpm.fashion_shop.entity.Customer;
 import com.cnpm.fashion_shop.entity.Employee;
 import com.cnpm.fashion_shop.entity.Role;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,8 +26,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
-import java.util.Collections;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -72,7 +68,6 @@ public class EmployeeService {
      */
     public ResponseEntity getOne(Integer id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        Customer customer;
 
         if (optionalEmployee.isEmpty()) {
             return ResponseEntity
@@ -87,10 +82,9 @@ public class EmployeeService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Employee with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new EmployeeDto(employee.getId(), employee.getFullName(), employee.getPhone_number(), employee.getUsername(), employee.getAddress(), mappingRolesToName(employee.getRole())));
+        return ResponseEntity.ok(new EmployeeDto(employee.getId(), employee.getFullName(), employee.getPhone_number(), employee.getUsername(), employee.getAddress(), employee.getId_role()));
     }
 
-    @Transactional(rollbackOn = {Exception.class})
     public ResponseEntity<Response> createEmployee(EmployeeDto dto) {
         Employee employee;
         Employee existingEmployee = employeeRepository.findByUsername(StringUtils.trim(dto.getUsername()));
@@ -122,11 +116,12 @@ public class EmployeeService {
         }
 
         employee = new Employee();
-        employee.setPassword(encoder.encode(randomPassword()));
+        employee.setPassword(encoder.encode(dto.getPassword()));
         employee.setUsername(dto.getUsername());
         employee.setFullName(dto.getFullname().trim());
         employee.setAddress(dto.getAddress());
-        employee.setRole(new HashSet<>(Collections.singletonList(roleService.getDefaultRole())));
+        employee.setPhone_number(dto.getPhoneNumber());
+        employee.setId_role(dto.getId_role());
 
         try {
             employeeRepository.save(employee);
@@ -171,6 +166,7 @@ public class EmployeeService {
         employee = employeeOpt.get();
         employee.setUsername(dto.getUsername());
         employee.setFullName(dto.getFullname().trim());
+        employee.setPassword(encoder.encode(dto.getPassword()));
         employee.setAddress(dto.getAddress());
         employee.setPhone_number(dto.getPhoneNumber());
 
@@ -234,8 +230,5 @@ public class EmployeeService {
         return this.employeeRepository.findById(id);
     }
 
-    private String randomPassword() {
-        return RandomStringUtils.random(15);
-    }
 }
 

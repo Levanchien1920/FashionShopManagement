@@ -35,23 +35,18 @@ public class EmployeeDto {
     @Size(max = 50)
     private String address;
 
+    private Integer id_role;
+
     List<RoleDto> roles = new ArrayList<>();
     List<String> role = new ArrayList<>();
 
-    public EmployeeDto(int id, String fullName, String phone_number, String username, String address) {
-        this.id = id;
-        this.username = username;
-        this.fullname = fullName;
-        this.address = address;
-        this.phoneNumber = phone_number;
-    }
 
-    public EmployeeDto(int id, String fullName, String phone_number, String username, String address, List<String> mappingRolesToName) {
+    public EmployeeDto(int id, String fullName, String phone_number, String username, String address, int id_role) {
         this.id = id;
         this.username = username;
         this.fullname = fullName;
         this.address = address;
         this.phoneNumber = phone_number;
-        this.role = mappingRolesToName;
+        this.id_role = id_role;
     }
 }

@@ -24,7 +24,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "employee")
-public class Employee  extends BaseEntity{
+public class Employee extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -57,6 +57,7 @@ public class Employee  extends BaseEntity{
         this.phone_number = phone_number;
         this.id_role = id_role;
     }
+
     @Column(name = "id_role")
     private int id_role;
 

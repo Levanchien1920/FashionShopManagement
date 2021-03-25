@@ -34,7 +34,7 @@ public class CustomerController {
     }
 
 
-    @ApiOperation(value = "Create customer", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Create customer")
     @PostMapping
     public ResponseEntity<Response> createCustomerDto(
             @Valid @RequestBody CustomerDto dto
