@@ -1,6 +1,6 @@
 import React from 'react'
 
-function Cart() {
+function CartAll() {
 
     return (
         <div>
@@ -159,4 +159,4 @@ function Cart() {
     )
 }
 
-export default Cart
+export default CartAll

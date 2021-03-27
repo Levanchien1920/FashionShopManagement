@@ -40,7 +40,7 @@ function Header() {
                                 <a href="/" className="nav-item nav-link active">Home</a>
                                 <a href="product-list.html" className="nav-item nav-link">Products</a>
                                 <a href="product-detail.html" className="nav-item nav-link">Product Detail</a>
-                                <a href="cart.html" className="nav-item nav-link">Cart</a>
+                                <a href="/cart" className="nav-item nav-link">Cart</a>
                                 <a href="checkout.html" className="nav-item nav-link">Checkout</a>
                                 <a href="my-account.html" className="nav-item nav-link">abcm</a>
                             </div>
@@ -90,7 +90,7 @@ function Header() {
                                     <i className="fa fa-heart"></i>
                                     <span>(0)</span>
                                 </a>
-                                <a href="cart.html" className="btn cart">
+                                <a href="/cart" className="btn cart">
                                     <i className="fa fa-shopping-cart"></i>
                                     <span>(0)</span>
                                 </a>

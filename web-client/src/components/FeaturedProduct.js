@@ -10,14 +10,14 @@ function FeaturedProduct() {
         });
     }, [])
     return (
-        <div class="featured-product product">
-            <div class="container-fluid">
-                <div class="section-header">
+        <div className="featured-product product">
+            <div className="container-fluid">
+                <div className="section-header">
                     <h1>Featured Product</h1>
                 </div>
-                <div class="row align-items-center product-slider product-slider-4">
+                <div className="row align-items-center product-slider product-slider-4">
                     {listProduct.map((product) => (
-                        <Card product={product}></Card>
+                        <Card product={product} key={product.id}></Card>
                     ))}
                 </div>
             </div>
