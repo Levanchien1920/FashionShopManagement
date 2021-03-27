@@ -28,7 +28,7 @@ function App() {
             <Route path='/login' component={Login} />
 
             <Route path='/Contact' component={Contact} />  
-            <Route path='/Cart' component={Cart} />  
+            {/* <Route path='/Cart' component={Cart} />   */}
             <Route path='/Cartall' component={CartAll} />  
             
             <Route path='/account' component={Account} />
