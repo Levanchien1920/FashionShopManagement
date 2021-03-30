@@ -39,7 +39,7 @@ public class CustomerController {
     public ResponseEntity<Response> createCustomerDto(
             @Valid @RequestBody CustomerDto dto
     ) {
-        return customerService.createCustomerDto(dto);
+        return customerService.createCustomer(dto);
     }
 //
     @ApiOperation(value = "Update customer", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})

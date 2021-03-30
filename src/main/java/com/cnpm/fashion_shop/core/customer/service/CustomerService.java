@@ -73,7 +73,7 @@ public class CustomerService {
     }
 
     @Transactional
-    public ResponseEntity<Response> createCustomerDto(CustomerDto dto) {
+    public ResponseEntity<Response> createCustomer(CustomerDto dto) {
         Customer customer;
         Customer existingCustomer = customerRepository.findByEmail(StringUtils.trim(dto.getEmail()));
         if (StringUtils.trim(dto.getFullname()).equals("")) {
@@ -199,7 +199,9 @@ public class CustomerService {
                     .body(Response.internalError(e.getMessage()));
         }
     }
-
+    public Customer findByUsername(String username) {
+        return this.customerRepository.findByUsername(username);
+    }
     @Transactional
     public Optional<Customer> findByIdOptional(Integer id) {
         return customerRepository.findById_customer(id);
