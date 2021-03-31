@@ -8,11 +8,13 @@ function Header() {
     const history = useHistory();
     useEffect(() => {
            login.LoginDispatch();
-           console.log(fullname);
            localStorage.removeItem("fulln");
     }, [fullname])
     const LogoutHandle = () =>{
         login.LogoutDispatch();
+    }
+    const ChangeToMyAccount = () => {
+        history.push("/myaccount");
     }
     return (
         <div>
@@ -36,17 +38,11 @@ function Header() {
                     <nav className="navbar navbar-expand-md bg-dark navbar-dark">
                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div className="navbar-nav mr-auto">
-
-                                <a href="product-list.html" className="nav-item nav-link">Products</a>
-                                <a href="product-detail.html" className="nav-item nav-link">Product Detail</a>
-                                <a href="/cart" className="nav-item nav-link">Cart</a>
-                                <a href="checkout.html" className="nav-item nav-link">Checkout</a>
-                                <a href="my-account.html" className="nav-item nav-link">abcm</a>
-
                                 <Link to='/'className="nav-item nav-link active" >Home</Link>
-                                <Link to='/products'className="nav-item nav-link active" >Products</Link>                                <a href="/" className="nav-item nav-link active">Home</a>
-
-                                <Link to='/account'className="nav-item nav-link active" >Account</Link>
+                                <Link to='/products'className="nav-item nav-link active" >Products</Link>  
+                                {fullname  &&                              
+                                <Link to='/myaccount'className="nav-item nav-link active" >account</Link>
+                                }
                                 <Link to='/cart'className="nav-item nav-link active" >Cart</Link>
                                 <Link to='/contact'className="nav-item nav-link active" >Contact</Link>
 
@@ -57,7 +53,7 @@ function Header() {
                                             <button className="dropbtn">Xin chào {fullname}</button>
                                             <div className="dropdown-content">
                                             <button onClick={LogoutHandle}>Logout</button>
-                                            <button >My accout</button>
+                                            <button onClick={ChangeToMyAccount} >My accout</button>
                                         </div>
                                       </div>
                                     ) : (
@@ -93,12 +89,6 @@ function Header() {
                         </div>
                         <div className="col-md-3">
                             <div className="user">
-
-                                <a href="wishlist.html" className="btn wishlist">
-                                    <i className="fa fa-heart"></i>
-                                    <span>(0)</span>
-                                </a>
-
                                 <a href="/cart" className="btn cart">
                                     <i className="fa fa-shopping-cart"></i>
                                     <span>(0)</span>

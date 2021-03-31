@@ -1,21 +1,52 @@
 import axios from 'axios';
 import React, {useEffect, useState} from 'react'
 import Card from './Card';
+import {Link} from 'react-router-dom'
 function Products() {
     const [listProduct , setlistProduct] = useState([]);
+    const [listCategory, setlistCategory] = useState([]);
+    const [listBrand, setlistBrand] = useState([]);
+    const [filter , setfilter] = useState({
+        check  : 0, 
+        id  : 0,
+    });
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/product').then((response)=> {
-            setlistProduct(response.data.content);
+        if (filter.check === 0) {
+            axios.get('http://localhost:9090/api/v1/product').then((response)=> {
+                setlistProduct(response.data.content);
+            }).catch((error) =>{
+            });
+        }
+        if (filter.check === 1){
+                axios.get(`http://localhost:9090/api/v1/client/category/${filter.id}`).then((response)=> {
+                    setlistProduct(response.data.content);
+                }).catch((error) =>{
+                });
+            }
+        if (filter.check === 2){
+                axios.get(`http://localhost:9090/api/v1/client/brand/${filter.id}`).then((response)=> {
+                    setlistProduct(response.data.content);
+                }).catch((error) =>{
+                });
+            }
+        
+        axios.get('http://localhost:9090/api/v1/category').then((response)=> {
+            setlistCategory(response.data.content);
         }).catch((error) =>{
         });
-    }, [])
+        axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
+            setlistBrand(response.data.content);
+        }).catch((error) =>{
+        });
+        console.log(filter);
+    }, [filter]);
     return (
         <div>
             <div class="breadcrumb-wrap">
                 <div class="container-fluid">
                     <ul class="breadcrumb">
-                        <li class="breadcrumb-item"><a href="#">Home</a></li>
-                        <li class="breadcrumb-item"><a href="#">Products</a></li>
+                        <Link to="/"  class="breadcrumb-item">Home</Link>
+                        <Link to="/products"  class="breadcrumb-item">Products</Link>
                         <li class="breadcrumb-item active">Product List</li>
                     </ul>
                 </div>
@@ -95,21 +126,11 @@ function Products() {
                             <h2 class="title">Category</h2>
                             <nav class="navbar bg-light">
                                 <ul class="navbar-nav">
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-female"></i>Fashion & Beauty</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-child"></i>Kids & Babies Clothes</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-tshirt"></i>Men & Women Clothes</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-mobile-alt"></i>Gadgets & Accessories</a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="#"><i class="fa fa-microchip"></i>Electronics & Accessories</a>
-                                    </li>
+                                {listCategory.map((category) => (
+                                     <li class="nav-item">
+                                     <button class="nav-link" onClick={() => (setfilter({check : 1 ,id: category.id }))}>{category.name}</button>
+                                 </li>
+                                ))} 
                                 </ul>
                             </nav>
                         </div>
@@ -148,14 +169,13 @@ function Products() {
                         </div>
                         
                         <div class="sidebar-widget brands">
-                            <h2 class="title">Our Brands</h2>
+                            <h2 class="title">Brands</h2>
                             <ul>
-                                <li><a href="#">Nulla </a><span>(45)</span></li>
-                                <li><a href="#">Curabitur </a><span>(34)</span></li>
-                                <li><a href="#">Nunc </a><span>(67)</span></li>
-                                <li><a href="#">Ullamcorper</a><span>(74)</span></li>
-                                <li><a href="#">Fusce </a><span>(89)</span></li>
-                                <li><a href="#">Sagittis</a><span>(28)</span></li>
+                                {listBrand.map((brand) => (
+                                    <li class="nav-item">
+                                        <button class="nav-link" onClick={() => (setfilter({check : 2 ,id: brand.id }))}>{brand.name}</button>
+                                    </li>
+                                ))} 
                             </ul>
                         </div>
                         

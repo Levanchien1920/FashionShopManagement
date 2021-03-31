@@ -6,34 +6,29 @@ import Login from "./components/Login"
 import Register from "./components/Register"
 import Contact from "./components/Contact"
 import LoginContextProvider from './context/LoginContext'
-
-import CartAll from "./components/CartAll"
 import Cart from './components/Cart/Cart'
 import Card from './components/Card'
-import BestSelling from './components/BestSelling'
-// import Cart from "./components/Cart"
+import Home from './components/Home'
 import ProductDetail from "./components/ProductDetail"
 import Products from './components/Products';
-import Account from './components/Account'
+import MyAccount from './components/MyAccount'
+import Order from './components/Orders'
+import UpdateAccount from './components/UpdateAccount'
 function App() {
   return (
     <div >
       <BrowserRouter>
         <LoginContextProvider>
           <Header/>
-            <Route path='/' exact component={BestSelling} /> 
+            <Route path='/' exact component={Home} /> 
             <Route path='/register' component={Register} /> 
             <Route path='/cart' component={Cart} /> 
             <Route path='/products' component={Products} />
             <Route path='/login' component={Login} />
-
-            <Route path='/Contact' component={Contact} />  
-            {/* <Route path='/Cart' component={Cart} />   */}
-            <Route path='/Cartall' component={CartAll} />  
-            
-            <Route path='/account' component={Account} />
+            <Route path='/order' component={Order} />
+            <Route path='/updateaccount' component={UpdateAccount} />
+            <Route path='/myaccount' component={MyAccount} />
             <Route path='/contact' component={Contact} />  
-
             <Route path='/productdetail/:id' component={ProductDetail} /> 
           <Footer/>
           </LoginContextProvider>

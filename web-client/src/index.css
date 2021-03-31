@@ -70,8 +70,16 @@ code {
   font-size: 2rem;
 }
 /* end form loading*/
+.dangnhap {
+  text-align: center;
+  font-size: 2rem;
+  height:25rem;
+  width: 100%;
+  color: red;
+}
 /* product item */
 .product-item{
   margin: 1rem;
   border-radius: 1rem;
 }
+

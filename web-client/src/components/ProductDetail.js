@@ -1,10 +1,40 @@
-//import axios from 'axios';
-import React, { useEffect } from 'react'
+import axios from 'axios';
+import React, { useEffect , useState } from 'react'
 import { useHistory } from 'react-router';
 
 function ProductDetail() {
     const history=useHistory();
-    
+    const [listProduct , setlistProduct] = useState([]);
+    const [listCategory, setlistCategory] = useState([]);
+    const [listBrand, setlistBrand] = useState([]);
+    const [filter , setfilter] = useState({
+        check  : 0, 
+        id  : 0,
+    });
+    useEffect(() => {
+        if (filter.check === 1){
+                axios.get(`http://localhost:9090/api/v1/client/category/${filter.id}`).then((response)=> {
+                    setlistProduct(response.data.content);
+                }).catch((error) =>{
+                });
+            }
+        if (filter.check === 2){
+                axios.get(`http://localhost:9090/api/v1/client/brand/${filter.id}`).then((response)=> {
+                    setlistProduct(response.data.content);
+                }).catch((error) =>{
+                });
+            }
+        
+        axios.get('http://localhost:9090/api/v1/category').then((response)=> {
+            setlistCategory(response.data.content);
+        }).catch((error) =>{
+        });
+        axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
+            setlistBrand(response.data.content);
+        }).catch((error) =>{
+        });
+        console.log(filter);
+    }, [filter]);
     useEffect(() => {
         const id = history.location.pathname.split("/")[2];
         // axios.get('http://localhost:9090/api/v1/product').then((response)=> {
@@ -16,7 +46,8 @@ function ProductDetail() {
         <div className="product-detail">
             <div className="container-fluid">
                 <div className="row">
-                    <div className="col-lg-8">
+                    { (filter.check === 0) ? (
+                        <div className="col-lg-8">
                         <div className="product-detail-top">
                             <div className="row align-items-center">
                                 <div className="col-md-5">
@@ -215,27 +246,20 @@ function ProductDetail() {
                             </div>
                         </div>
                     </div>
+                    ):(
+                        <div></div>
+                    )}
         
                     <div className="col-lg-4 sidebar">
                         <div className="sidebar-widget category">
                             <h2 className="title">Category</h2>
                             <nav className="navbar bg-light">
-                                <ul className="navbar-nav">
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#"><i className="fa fa-female"></i>Fashion & Beauty</a>
+                                <ul class="navbar-nav">
+                                    {listCategory.map((category) => (
+                                        <li class="nav-item">
+                                        <button class="nav-link" onClick={() => (setfilter({check : 1 ,id: category.id }))}>{category.name}</button>
                                     </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#"><i className="fa fa-child"></i>Kids & Babies Clothes</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#"><i className="fa fa-tshirt"></i>Men & Women Clothes</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#"><i className="fa fa-mobile-alt"></i>Gadgets & Accessories</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" href="#"><i className="fa fa-microchip"></i>Electronics & Accessories</a>
-                                    </li>
+                                    ))} 
                                 </ul>
                             </nav>
                         </div>
@@ -273,14 +297,13 @@ function ProductDetail() {
                         </div>
                         
                         <div className="sidebar-widget brands">
-                            <h2 className="title">Our Brands</h2>
+                            <h2 className="title">Brands</h2>
                             <ul>
-                                <li><a href="#">Nulla </a><span>(45)</span></li>
-                                <li><a href="#">Curabitur </a><span>(34)</span></li>
-                                <li><a href="#">Nunc </a><span>(67)</span></li>
-                                <li><a href="#">Ullamcorper</a><span>(74)</span></li>
-                                <li><a href="#">Fusce </a><span>(89)</span></li>
-                                <li><a href="#">Sagittis</a><span>(28)</span></li>
+                                {listBrand.map((brand) => (
+                                    <li class="nav-item">
+                                        <button class="nav-link" onClick={() => (setfilter({check : 2 ,id: brand.id }))}>{brand.name}</button>
+                                    </li>
+                                ))} 
                             </ul>
                         </div>
                         
