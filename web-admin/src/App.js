@@ -1,20 +1,19 @@
+import logo from './logo.svg';
 import './App.css';
-import Login from './components/Login'
-import Header from './components/Header'
-import Admin from './components/Admin'
-import Home from './components/Home'
-import {BrowserRouter,Route} from "react-router-dom";
-import LoginContextProvider from './context/LoginContext'
+import { BrowserRouter as Router, Route, NavLink, Switch } from 'react-router-dom';
+import Home from './components/Home/Home';
+import Header from './components/Header/Header';
+import Sidebar from './components/Sidebar/Sidebar';
 function App() {
   return (
-    <BrowserRouter>
-      <LoginContextProvider>
-          <Header/>
-          <Route path='/' exact component={Home} /> 
-          <Route path='/login'  component={Login} /> 
-          <Route path='/admin'  component={Admin} /> 
-      </LoginContextProvider>
-    </BrowserRouter>
+    <Router>
+        <div>
+          <Switch>
+              <Route path='/' exact component={Home}></Route>
+              <Route path='/home' component={Sidebar}></Route>
+          </Switch>
+      </div>
+    </Router>
   );
 }
 
