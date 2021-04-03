@@ -260,7 +260,7 @@ public class ProductService {
 
 
 //    @Transactional
-//    public Page<ProductResponseDto> RelateProductDto(Integer id, int size, int page, String sort, String search) {
+//    public Page<ProductResponseDto> findRelateProductDto(Integer id, Integer id_category,int size, int page, String sort, String search) {
 //        List<String> columnsAllow = Arrays.asList(
 //                "id",
 //                "name",
@@ -277,6 +277,6 @@ public class ProductService {
 //        orderFilterHelperImpl.validate();
 //
 //        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-//        return productRepository.findAllRelate(pageable, search);
+//        return productRepository.findAllRelate(pageable, search, id, id_category);
 //    }
 }

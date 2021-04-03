@@ -20,7 +20,7 @@ public class CategoryControllerClient {
     @Autowired
     private CategoryService categoryService;
 
-    @ApiOperation(value = "Get all products by category", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Get all products by category")
     @GetMapping("/{id_category}")
     public PaginationResponse<ProductResponseDto> findAllProductbyCategory(@PathVariable("id_category") Integer id, RequestParamsForGettingList requestParamsForGettingList) {
         Page<ProductResponseDto> data = categoryService.findAllProductbyCategory(id, requestParamsForGettingList.getPage(),

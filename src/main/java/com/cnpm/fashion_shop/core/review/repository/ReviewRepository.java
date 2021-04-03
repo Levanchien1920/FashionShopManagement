@@ -14,12 +14,16 @@ import java.util.Optional;
 @Repository
 public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query(value = "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product,c.fullname AS Name_User,c.email AS Email FROM review r inner join product p on r.id_product=p.id " +
-            "inner join customer c on r.id_user=c.id", nativeQuery = true)
+            "inner join customer c on r.id_user=c.id WHERE LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE", nativeQuery = true)
     Page<ReviewResponseDto> findAll(Pageable pageable, @Param("keyword") String keyword);
 
     Review findByContent(String content);
 
     @Query(value = "SELECT * FROM review r WHERE r.id = :id AND r.is_deleted = FALSE", nativeQuery = true)
     Optional<Review> findById(@Param("id") Integer id);
+
+    @Query(value = "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product,c.fullname AS Name_User,c.email AS Email FROM review r inner join product p on r.id_product=p.id " +
+            "inner join customer c on r.id_user=c.id WHERE r.id_product=:id and LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE", nativeQuery = true)
+    Page<ReviewResponseDto> findAllReviewByProduct(Pageable pageable, @Param("keyword") String keyword,@Param("id") Integer id);
 
 }

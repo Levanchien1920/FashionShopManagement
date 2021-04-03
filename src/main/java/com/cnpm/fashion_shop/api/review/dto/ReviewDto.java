@@ -28,10 +28,10 @@ public class ReviewDto {
 
     @Getter
     @Setter
-    private int number_of_star;
+    private float number_of_star;
 
 
-    public ReviewDto(int id, int id_product, int id_user, @NotNull String content, int number_of_star) {
+    public ReviewDto(int id, int id_product, int id_user, @NotNull String content, float number_of_star) {
         this.id = id;
         this.id_product = id_product;
         this.id_user = id_user;

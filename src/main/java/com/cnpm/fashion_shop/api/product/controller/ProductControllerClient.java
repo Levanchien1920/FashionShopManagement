@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -21,14 +22,22 @@ public class ProductControllerClient {
     @Autowired
     private ProductService productService;
 
-//    @ApiOperation(value = "Get all products for client", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+//    @ApiOperation(value = "Get relative products for client")
 //    @GetMapping("/{id_product}")
-//    public PaginationResponse<ProductResponseDto> findAllProductbyCategory(@PathVariable("id_category") Integer id, RequestParamsForGettingList requestParamsForGettingList) {
-//        Page<ProductResponseDto> data = productService.RelateProductDto(id, requestParamsForGettingList.getPage(),
+//    public PaginationResponse<ProductResponseDto> findAllProductbyCategory(@PathVariable("id_product") Integer id,@PathVariable("id_category") Integer id_category, RequestParamsForGettingList requestParamsForGettingList) {
+//        Page<ProductResponseDto> data = productService.findRelateProductDto(id, id_category  , requestParamsForGettingList.getPage(),
 //                requestParamsForGettingList.getSize(),
 //                requestParamsForGettingList.getSort(),
 //                requestParamsForGettingList.getSearch());
 //
 //        return new PaginationResponse<>(data);
 //    }
+
+
+    @ApiOperation(value = "Get product by id")
+    @GetMapping("/{product_id}")
+    public ResponseEntity getOneProduct(@PathVariable("product_id") Integer id) {
+        return productService.getOne(id);
+    }
+
 }

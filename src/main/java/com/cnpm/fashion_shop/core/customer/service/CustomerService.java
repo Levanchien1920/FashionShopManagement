@@ -157,8 +157,7 @@ public class CustomerService {
         customer.setAddress(dto.getAddress());
         customer.setEmail(dto.getEmail());
         customer.setPhoneNumber(dto.getPhone_number());
-        customer.setPassword((dto.getPassword()));
-
+        customer.setPassword(encoder.encode(dto.getPassword()));
 
         try {
             customerRepository.save(customer);

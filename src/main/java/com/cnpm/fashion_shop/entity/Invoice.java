@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "invoice")
-public class Invoice{
+public class Invoice extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -28,6 +28,12 @@ public class Invoice{
 
     @Column(name = "is_paid")
     private boolean is_paid;
+
+    @Column(name = "id_user")
+    private Integer id_user;
+
+    @Column(name = "id_employee")
+    private Integer id_employee;
 
   //  @Column(name = "id_for_each")
    //s private

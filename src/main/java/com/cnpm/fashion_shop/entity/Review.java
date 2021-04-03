@@ -31,11 +31,14 @@ public class Review extends BaseEntity{
     private String content;
 
     @Column(name = "number_of_star")
-    private Integer numberOfStar;
+    private Float numberOfStar;
 
     @Column(name = "id_product")
     private Integer id_product;
 
     @Column(name = "id_user")
     private Integer id_user;
+
+
+
 }

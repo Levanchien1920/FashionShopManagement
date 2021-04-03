@@ -20,7 +20,7 @@ public class BrandControllerClient {
     @Autowired
     private BrandService brandService;
 
-    @ApiOperation(value = "Get all products by brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Get all products by brand")
     @GetMapping("/{id_brand}")
     public PaginationResponse<ProductResponseDto> findAllProductbyBrand(@PathVariable("id_brand") Integer id, RequestParamsForGettingList requestParamsForGettingList) {
         Page<ProductResponseDto> data = brandService.findAllProductbyBrand(id, requestParamsForGettingList.getPage(),

@@ -47,34 +47,51 @@ public class ReviewService {
         return reviewRepository.findAll(pageable, search);
     }
 
-    public ResponseEntity getOne(Integer id) {
-        Optional<Review> optionalReview = reviewRepository.findById(id);
-        Review review;
+    @Transactional
+    public Page<ReviewResponseDto> findAllReviewByProduct(Integer id,int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "content",
+                "number_of_star",
+                "name_product",
+                "name_user",
+                "email"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
 
-        if (optionalReview.isEmpty()) {
-            return ResponseEntity
-                    .status(HttpStatus.NOT_FOUND)
-                    .body(Response.notFound("Cannot find this Review with id = " + id));
-        }
-
-        review = optionalReview.get();
-
-        ReviewDto reviewDto= new ReviewDto();
-        reviewDto.setId(review.getId());
-        reviewDto.setId_product(review.getId_product());
-        reviewDto.setId_user(review.getId_user());
-        reviewDto.setContent(review.getContent());
-        reviewDto.setNumber_of_star(review.getNumberOfStar());
-
-        if (review.getIsDeleted()) {
-            return ResponseEntity
-                    .status(HttpStatus.CONFLICT)
-                    .body(Response.conflict("Review with id = " + id + " is deleted"));
-        }
-
-
-        return ResponseEntity.ok(reviewDto);
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return reviewRepository.findAllReviewByProduct(pageable, search,id);
     }
+
+//    public ResponseEntity getOne(Integer id) {
+//        Optional<Review> optionalReview = reviewRepository.findById(id);
+//        Review review;
+//
+//        if (optionalReview.isEmpty()) {
+//            return ResponseEntity
+//                    .status(HttpStatus.NOT_FOUND)
+//                    .body(Response.notFound("Cannot find this Review with id = " + id));
+//        }
+//
+//        review = optionalReview.get();
+//
+//        ReviewDto reviewDto= new ReviewDto();
+////        reviewDto.setId(review.getId());
+//        reviewDto.setId_product(review.getId_product());
+//        reviewDto.setId_user(review.getId_user());
+//        reviewDto.setContent(review.getContent());
+//        reviewDto.setNumber_of_star(review.getNumberOfStar());
+//
+//        if (review.getIsDeleted()) {
+//            return ResponseEntity
+//                    .status(HttpStatus.CONFLICT)
+//                    .body(Response.conflict("Review with id = " + id + " is deleted"));
+//        }
+//
+//
+//        return ResponseEntity.ok(reviewDto);
+//    }
 
     @Transactional
     public ResponseEntity<Response> createReviewDto(ReviewDto dto) {
@@ -87,7 +104,7 @@ public class ReviewService {
         }
 
         review = new Review();
-        review.setId(dto.getId());
+//        review.setId(dto.getId());
         review.setContent(dto.getContent().trim());
         review.setNumberOfStar(dto.getNumber_of_star());
         review.setId_product(dto.getId_product());

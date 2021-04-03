@@ -1,7 +1,6 @@
 package com.cnpm.fashion_shop.api.review.controller;
 
-import com.cnpm.fashion_shop.api.category.dto.CategoryDto;
-import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
+
 import com.cnpm.fashion_shop.api.review.dto.ReviewDto;
 import com.cnpm.fashion_shop.api.review.dto.ReviewResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
@@ -9,6 +8,7 @@ import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.core.category.service.CategoryService;
+//import com.cnpm.fashion_shop.core.review.service.ReviewService;
 import com.cnpm.fashion_shop.core.review.service.ReviewService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
@@ -26,7 +26,7 @@ public class ReviewController {
     private ReviewService reviewService;
 
 
-    @ApiOperation(value = "Get all reviews", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Get all reviews")
     @GetMapping
     public PaginationResponse<ReviewResponseDto> getReviews(RequestParamsForGettingList requestParamsForGettingList) {
         Page<ReviewResponseDto> data = reviewService.findAllReviewDetails(requestParamsForGettingList.getPage(),
@@ -38,7 +38,7 @@ public class ReviewController {
     }
 
 
-    @ApiOperation(value = "Create review", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Create review")
     @PostMapping
     public ResponseEntity<Response> createReviewDto(@Valid @RequestBody ReviewDto dto) {
         return reviewService.createReviewDto(dto);
@@ -58,9 +58,20 @@ public class ReviewController {
         return this.reviewService.deleteReviewDto(id);
     }
 
-    @ApiOperation(value = "Get review by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping("/{review_id}")
-    public ResponseEntity getOneReview(@PathVariable("review_id") Integer id) {
-        return reviewService.getOne(id);
+//    @ApiOperation(value = "Get review by id_product")
+//    @GetMapping("/{product_id}")
+//    public ResponseEntity getOneReview(@PathVariable("product_id") Integer id) {
+//        return reviewService.getOne(id);
+//    }
+
+    @ApiOperation(value = "Get all reviews by id_product")
+    @GetMapping("/{product_id}")
+    public PaginationResponse<ReviewResponseDto> getReviewsbyProduct(@PathVariable("product_id") Integer id,RequestParamsForGettingList requestParamsForGettingList) {
+        Page<ReviewResponseDto> data = reviewService.findAllReviewByProduct(id,requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
     }
 }
