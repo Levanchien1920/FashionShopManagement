@@ -5,6 +5,7 @@ import { useHistory } from 'react-router';
 function ProductDetail() {
     const history=useHistory();
     const [listProduct , setlistProduct] = useState([]);
+    const [Product , setProduct] = useState([]);
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
     const [filter , setfilter] = useState({
@@ -37,10 +38,10 @@ function ProductDetail() {
     }, [filter]);
     useEffect(() => {
         const id = history.location.pathname.split("/")[2];
-        // axios.get('http://localhost:9090/api/v1/product').then((response)=> {
-        //     setlistProduct(response.data.content);
-        // }).catch((error) =>{
-        // });
+        axios.get(`http://localhost:9090/api/v1/product/${id}`).then((response)=> {
+            setProduct(response.data);
+        }).catch((error) =>{
+        });
     }, [])
     return (
         <div className="product-detail">
@@ -52,13 +53,13 @@ function ProductDetail() {
                             <div className="row align-items-center">
                                 <div className="col-md-5">
                                     <div className="product-slider-single-nav normal-slider">
-                                        <div className="slider-nav-img"><img src="img/product-1.jpg" alt="Product Image"></img></div>
+                                        <div className="slider-nav-img"><img src={Product.link} alt={Product.iamgeName}></img></div>
                                      
                                     </div>
                                 </div>
                                 <div className="col-md-7">
                                     <div className="product-content">
-                                        <div className="title"><h2>Product Name</h2></div>
+                                        <div className="title"><h2>{Product.name}</h2></div>
                                         <div className="ratting">
                                             <i className="fa fa-star"></i>
                                             <i className="fa fa-star"></i>
@@ -68,7 +69,7 @@ function ProductDetail() {
                                         </div>
                                         <div className="price">
                                             <h4>Price:</h4>
-                                            <p>$99 <span>$149</span></p>
+                                            <p>{Product.price} <span>$149</span></p>
                                         </div>
                                         <div className="quantity">
                                             <h4>Quantity:</h4>

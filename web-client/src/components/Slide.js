@@ -38,7 +38,7 @@ export default function Slide() {
                             <Carousel.Item>
                                 <img
                                 className="d-block w-100"
-                                src="img/slider-1.jpg"
+                                src="img/slider-2.jpg"
                                 alt="First slide"
                                 />
                                 <Carousel.Caption>
@@ -49,7 +49,7 @@ export default function Slide() {
                             <Carousel.Item>
                                 <img
                                 className="d-block w-100"
-                                src="img/slider-1.jpg"
+                                src="img/slider-3.jpg"
                                 alt="First slide"
                                 />
                                 <Carousel.Caption>
