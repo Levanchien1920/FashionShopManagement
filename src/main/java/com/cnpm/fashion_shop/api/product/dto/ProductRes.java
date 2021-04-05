@@ -54,7 +54,12 @@ public class ProductRes extends BaseEntity {
     @NotNull
     private String des;
 
-    public ProductRes(Integer id, String categoryName, String brandName, String genderName, String iamgeName, String link, Long price, @Size(max = 50) @NotNull String name, Integer number, @NotNull String des) {
+
+    @Getter
+    @Setter
+    private Float number_of_star;
+
+    public ProductRes(Integer id, String categoryName, String brandName, String genderName, String iamgeName, String link, Long price, @Size(max = 50) @NotNull String name, Integer number, @NotNull String des, @NotNull String des1, Float number_of_star) {
         this.id = id;
         this.categoryName = categoryName;
         this.brandName = brandName;
@@ -65,5 +70,7 @@ public class ProductRes extends BaseEntity {
         this.name = name;
         this.number = number;
         this.des = des;
+        this.des = des1;
+        this.number_of_star = number_of_star;
     }
 }

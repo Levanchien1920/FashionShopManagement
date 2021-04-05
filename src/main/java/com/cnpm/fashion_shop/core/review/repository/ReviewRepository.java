@@ -26,4 +26,7 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "inner join customer c on r.id_user=c.id WHERE r.id_product=:id and LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE", nativeQuery = true)
     Page<ReviewResponseDto> findAllReviewByProduct(Pageable pageable, @Param("keyword") String keyword,@Param("id") Integer id);
 
+
+    @Query(value = "SELECT r.id, r.content as content,  AVG(r.number_of_star) as number_of_star, r.id_product as id_product, r.id_user as id_user, r.created_at as created_at, r.is_deleted as is_deleted, r.updated_at  FROM review r inner join product p on r.id_product=p.id WHERE p.id = :id AND p.is_deleted = FALSE group by p.id", nativeQuery = true)
+    Review findById_Product(@Param("id") Integer id);
 }

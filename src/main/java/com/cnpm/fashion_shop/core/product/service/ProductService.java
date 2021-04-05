@@ -10,11 +10,8 @@ import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
 import com.cnpm.fashion_shop.core.product.repository.GenderRepository;
 import com.cnpm.fashion_shop.core.product.repository.ImageRepository;
 import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
-import com.cnpm.fashion_shop.entity.Brand;
-import com.cnpm.fashion_shop.entity.Category;
-import com.cnpm.fashion_shop.entity.Gender;
-import com.cnpm.fashion_shop.entity.Image;
-import com.cnpm.fashion_shop.entity.Product;
+import com.cnpm.fashion_shop.core.review.repository.ReviewRepository;
+import com.cnpm.fashion_shop.entity.*;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -51,6 +48,9 @@ public class ProductService {
     @Autowired
     private GenderRepository genderRepository;
 
+    @Autowired
+    private ReviewRepository reviewRepository;
+
     @Transactional
     public Page<ProductResponseDto> findAllProductDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
@@ -79,6 +79,7 @@ public class ProductService {
         Category category;
         Gender gender;
         Image image1;
+        Review review;
 
 
         if (optionalProduct.isEmpty()) {
@@ -92,6 +93,7 @@ public class ProductService {
         Optional<Brand> optionalBrand = brandRepository.findById_brand(product.getIdBrand());
         gender = genderRepository.findById_gender(product.getIdGender());
         image1 = imageRepository.findByName_image(product.getIdImage());
+        review = reviewRepository.findById_Product(product.getId_product());
 
         category=optionalCategory.get();
         brand=optionalBrand.get();
@@ -108,6 +110,7 @@ public class ProductService {
         productRes.setDes(product.getDescription());
         productRes.setNumber(product.getNumber());
         productRes.setLink(image1.getLink());
+        productRes.setNumber_of_star(review.getNumberOfStar());
 
 
         if (productRes.getIsDeleted()) {
@@ -250,8 +253,13 @@ public class ProductService {
         }
     }
 
+
+    public Product getOne_pro(Integer id) {
+        return productRepository.getOne_pro(id);
+    }
+
     @Transactional
-    public Optional<Product> findByIdOptional(Integer id) {
+    public Optional<Product>  findByIdOptional(Integer id) {
         return productRepository.findById(id);
     }
 
@@ -259,24 +267,24 @@ public class ProductService {
 //    end admin
 
 
-//    @Transactional
-//    public Page<ProductResponseDto> findRelateProductDto(Integer id, Integer id_category,int size, int page, String sort, String search) {
-//        List<String> columnsAllow = Arrays.asList(
-//                "id",
-//                "name",
-//                "price",
-//                "number",
-//                "des",
-//                "Name_Brand",
-//                "Name_Category",
-//                "Name_Gender",
-//                "Name_Image",
-//                "link"
-//        );
-//        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
-//        orderFilterHelperImpl.validate();
-//
-//        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-//        return productRepository.findAllRelate(pageable, search, id, id_category);
-//    }
+    @Transactional
+    public Page<ProductResponseDto> findRelateProductDto(Integer id,Integer id_brand, Integer id_category, Integer id_gender,int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name",
+                "price",
+                "number",
+                "des",
+                "Name_Brand",
+                "Name_Category",
+                "Name_Gender",
+                "Name_Image",
+                "link"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return productRepository.findAllRelate(pageable, search, id, id_brand, id_category, id_gender);
+    }
 }

@@ -7,6 +7,7 @@ import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.core.product.service.ProductService;
+import com.cnpm.fashion_shop.entity.Product;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,10 +62,13 @@ public class ProductController {
         return this.productService.deleteProductDto(id);
     }
 
+
+
     @ApiOperation(value = "Get product by id")
     @GetMapping("/{product_id}")
     public ResponseEntity getOneProduct(@PathVariable("product_id") Integer id) {
         return productService.getOne(id);
     }
+
 
 }

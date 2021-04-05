@@ -6,6 +6,7 @@ import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
 import com.cnpm.fashion_shop.core.category.service.CategoryService;
 import com.cnpm.fashion_shop.core.product.service.ProductService;
+import com.cnpm.fashion_shop.entity.Product;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,22 +23,31 @@ public class ProductControllerClient {
     @Autowired
     private ProductService productService;
 
-//    @ApiOperation(value = "Get relative products for client")
-//    @GetMapping("/{id_product}")
-//    public PaginationResponse<ProductResponseDto> findAllProductbyCategory(@PathVariable("id_product") Integer id,@PathVariable("id_category") Integer id_category, RequestParamsForGettingList requestParamsForGettingList) {
-//        Page<ProductResponseDto> data = productService.findRelateProductDto(id, id_category  , requestParamsForGettingList.getPage(),
-//                requestParamsForGettingList.getSize(),
-//                requestParamsForGettingList.getSort(),
-//                requestParamsForGettingList.getSearch());
-//
-//        return new PaginationResponse<>(data);
-//    }
+
 
 
     @ApiOperation(value = "Get product by id")
     @GetMapping("/{product_id}")
     public ResponseEntity getOneProduct(@PathVariable("product_id") Integer id) {
         return productService.getOne(id);
+    }
+
+
+    public Product getOne_pro(Integer id) {
+        return productService.getOne_pro(id);
+    }
+
+    @ApiOperation(value = "Get relative products for client")
+    @GetMapping("/relate/{id_product}")
+    public PaginationResponse<ProductResponseDto> findAllProductbyCategory(@PathVariable("id_product") Integer id, RequestParamsForGettingList requestParamsForGettingList) {
+
+        Product product=this.getOne_pro(id);
+        Page<ProductResponseDto> data = productService.findRelateProductDto(id, product.getIdBrand(), product.getIdCategory(), product.getIdGender(),requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
     }
 
 }
