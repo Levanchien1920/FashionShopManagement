@@ -109,24 +109,23 @@ function ProductDetail() {
                             <div className="col-lg-12">
                                 <ul className="nav nav-pills nav-justified">
                                     <li className="nav-item">
-                                        <a className="nav-link active" data-toggle="pill" href="#description">Description</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" data-toggle="pill" href="#specification">Specification</a>
-                                    </li>
-                                    <li className="nav-item">
-                                        <a className="nav-link" data-toggle="pill" href="#reviews">Reviews (1)</a>
+                                        <h3>Description</h3>
                                     </li>
                                 </ul>
-
                                 <div className="tab-content">
                                     <div id="description" className="container tab-pane active">
-                                        <h4>Product description</h4>
                                         <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipiscing elit. In condimentum quam ac mi viverra dictum. In efficitur ipsum diam, at dignissim lorem tempor in. Vivamus tempor hendrerit finibus. Nulla tristique viverra nisl, sit amet bibendum ante suscipit non. Praesent in faucibus tellus, sed gravida lacus. Vivamus eu diam eros. Aliquam et sapien eget arcu rhoncus scelerisque. Suspendisse sit amet neque neque. Praesent suscipit et magna eu iaculis. Donec arcu libero, commodo ac est a, malesuada finibus dolor. Aenean in ex eu velit semper fermentum. In leo dui, aliquet sit amet eleifend sit amet, varius in turpis. Maecenas fermentum ut ligula at consectetur. Nullam et tortor leo. 
+                                            {Product.des} 
                                         </p>
                                     </div>
-                                    <div id="specification" className="container tab-pane fade">
+                                </div>
+                                <ul className="nav nav-pills nav-justified">
+                                    <li className="nav-item">
+                                        <h3>Specification</h3>
+                                    </li>
+                                </ul>
+                                <div className="tab-content">
+                                    <div id="specification" className="container tab-pane active">
                                         <h4>Product specification</h4>
                                         <ul>
                                             <li>Lorem ipsum dolor sit amet</li>
@@ -136,7 +135,13 @@ function ProductDetail() {
                                             <li>Lorem ipsum dolor sit amet</li>
                                         </ul>
                                     </div>
-                                    <div id="reviews" className="container tab-pane fade">
+                                </div>
+                                <ul className="nav nav-pills nav-justified">
+                                    <li className="nav-item">
+                                        <h3>Reviews (1)</h3>
+                                    </li>
+                                </ul>
+                                <div id="reviews" className="container tab-pane active">
                                         <div className="reviews-submitted">
                                             <div className="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
                                             <div className="ratting">
@@ -150,32 +155,8 @@ function ProductDetail() {
                                                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
                                             </p>
                                         </div>
-                                        <div className="reviews-submit">
-                                            <h4>Give your Review:</h4>
-                                            <div className="ratting">
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                            </div>
-                                            <div className="row form">
-                                                <div className="col-sm-6">
-                                                    <input type="text" placeholder="Name"></input>
-                                                </div>
-                                                <div className="col-sm-6">
-                                                    <input type="email" placeholder="Email"></input>
-                                                </div>
-                                                <div className="col-sm-12">
-                                                    <textarea placeholder="Review"></textarea>
-                                                </div>
-                                                <div className="col-sm-12">
-                                                    <button>Submit</button>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        
                                     </div>
-                                </div>
                             </div>
                         </div>
                         

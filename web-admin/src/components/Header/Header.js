@@ -3,14 +3,6 @@ import React, { Component } from 'react';
 class Header extends Component{
     render(){
         return (
-            <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full" data-boxed-layout="full">
-                <div class="preloader">
-                    <div class="lds-ripple">
-                        <div class="lds-pos"></div>
-                        <div class="lds-pos"></div>
-                    </div>
-                </div>
-
                 <div>
                     <div class="topbar" data-navbarbg="skin6">
                         <nav class="navbar top-navbar navbar-expand-md navbar-light">
@@ -85,7 +77,6 @@ class Header extends Component{
                         </nav>
                     </div>
                 </div>
-            </div>
         )
     }
 }

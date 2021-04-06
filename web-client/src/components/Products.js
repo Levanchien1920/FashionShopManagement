@@ -29,7 +29,18 @@ function Products() {
                 }).catch((error) =>{
                 });
             }
-        
+        if (filter.check === 3){
+                listProduct.sort((a, b) => (a.name > b.name) ? 1 : -1);
+            }
+        if (filter.check === 4){
+                listProduct.sort((a, b) => (a.name < b.name) ? 1 : -1);
+            }
+        if (filter.check === 5){
+                listProduct.sort((a, b) => (a.price > b.price) ? 1 : -1);
+            }
+        if (filter.check === 6){
+                listProduct.sort((a, b) => (a.price < b.price) ? 1 : -1);
+            }
         axios.get('http://localhost:9090/api/v1/category').then((response)=> {
             setlistCategory(response.data.content);
         }).catch((error) =>{
@@ -38,8 +49,12 @@ function Products() {
             setlistBrand(response.data.content);
         }).catch((error) =>{
         });
-        console.log(filter);
     }, [filter]);
+    function SortName (c) {
+        setfilter({
+            ...filter, check : c
+        });
+    }
     return (
         <div>
             <div class="breadcrumb-wrap">
@@ -68,12 +83,14 @@ function Products() {
                                         <div class="col-md-4">
                                             <div class="product-short">
                                                 <div class="dropdown">
-                                                    <div class="dropdown-toggle" data-toggle="dropdown">Product short by</div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item">Newest</a>
-                                                        <a href="#" class="dropdown-item">Popular</a>
-                                                        <a href="#" class="dropdown-item">Most sale</a>
+                                                    <button className="dropdown-toggle">Product short by</button>
+                                                        <div className="dropdown-content">
+                                                        <button onClick={SortName.bind(this,3)}>Name (A-Z)</button>
+                                                        <button onClick={SortName.bind(this,4)}>Name (Z-A)</button>
+                                                        <button onClick={SortName.bind(this,5)}>Price (Low to High)</button>                                                        
+                                                        <button onClick={SortName.bind(this,6)}>Price (High to low)</button>
                                                     </div>
+                                                   
                                                 </div>
                                             </div>
                                         </div>

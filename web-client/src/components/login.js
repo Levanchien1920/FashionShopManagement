@@ -46,7 +46,7 @@ function Login() {
                                     </div>
                                     <div className="col-md-6">
                                         <label>Password</label>
-                                        <input className="form-control" type="text"  name="password" placeholder="Password"  
+                                        <input className="form-control" type="password"  name="password" placeholder="Password"  
                                         onChange={e => setuserInput({...userInput ,password : e.target.value})} value={userInput.password}></input>
                                     </div>
                                     <div className="col-md-12">

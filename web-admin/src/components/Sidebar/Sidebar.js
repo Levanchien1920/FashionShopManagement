@@ -1,55 +1,49 @@
 import React, { Component } from 'react';
-
+import {Link} from 'react-router-dom'
 class Sidebar extends Component{
     render(){
         return (
-            <div id="main-wrapper" data-navbarbg="skin6" data-theme="light" data-layout="vertical" data-sidebartype="full" data-boxed-layout="full">
-                <div class="left-sidebar" data-sidebarbg="skin5">
-                    <div class="scroll-sidebar">
+         
+                <div className="left-sidebar" data-sidebarbg="skin5">
+                    <div className="scroll-sidebar">
 
-                        <nav class="sidebar-nav">
+                        <nav className="sidebar-nav">
                             <ul id="sidebarnav">
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" aria-expanded="false">
-                                        <i class="mdi mdi-av-timer"></i>
-                                        <span class="hide-menu">Dashboard</span>
+                                <li className="sidebar-item">
+                                    <a className="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" >
+                                        <i className="mdi mdi-av-timer"></i>
+                                        <span className="hide-menu">Dashboard</span>
                                     </a>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="pages-profile.html" aria-expanded="false">
-                                        <i class="mdi mdi-account-network"></i>
-                                        <span class="hide-menu">Profile</span>
-                                    </a>
+                                <li className="sidebar-item">
+                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/products" aria-expanded="false">
+                                        <i className="mdi-account-network"></i>
+                                        <span className="hide-menu">Products</span>
+                                    </Link>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="form-basic.html" aria-expanded="false">
-                                        <i class="mdi mdi-arrange-bring-forward"></i>
-                                        <span class="hide-menu">Form Basic</span>
-                                    </a>
+                                <li className="sidebar-item">
+                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/brands" aria-expanded="false">
+                                        <i className="mdi-account-network"></i>
+                                        <span className="hide-menu">Brand</span>
+                                    </Link>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="table-basic.html" aria-expanded="false">
-                                        <i class="mdi mdi-border-none"></i>
-                                        <span class="hide-menu">Table</span>
-                                    </a>
+                                <li className="sidebar-item">
+                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/categorys" aria-expanded="false">
+                                        <i className="mdi-account-network"></i>
+                                        <span className="hide-menu">Category</span>
+                                    </Link>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="icon-material.html" aria-expanded="false">
-                                        <i class="mdi mdi-face"></i>
-                                        <span class="hide-menu">Icon</span>
-                                    </a>
+                                <li className="sidebar-item">
+                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/posts" aria-expanded="false">
+                                        <i className="mdi-account-network"></i>
+                                        <span className="hide-menu">Post</span>
+                                    </Link>
                                 </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="starter-kit.html" aria-expanded="false">
-                                        <i class="mdi mdi-file"></i>
-                                        <span class="hide-menu">Blank</span>
-                                    </a>
-                                </li>
-                                <li class="sidebar-item">
-                                    <a class="sidebar-link waves-effect waves-dark sidebar-link" href="error-404.html" aria-expanded="false">
-                                        <i class="mdi mdi-alert-outline"></i>
-                                        <span class="hide-menu">404</span>
-                                    </a>
+                                <li className="sidebar-item">
+                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/reviews" aria-expanded="false">
+                                        <i className="mdi-account-network"></i>
+                                        <span className="hide-menu">Reviews</span>
+                                    </Link>
                                 </li>
                             </ul>
                         </nav>
@@ -57,7 +51,7 @@ class Sidebar extends Component{
                     </div>
                 </div>
             
-            </div>
+         
             
         )
     }

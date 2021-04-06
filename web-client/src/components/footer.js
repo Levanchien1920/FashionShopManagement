@@ -10,9 +10,9 @@ function Footer() {
                             <div className="footer-widget">
                                 <h2>Get in Touch</h2>
                                 <div className="contact-info">
-                                    <p><i className="fa fa-map-marker"></i>123 E Store, Los Angeles, USA</p>
-                                    <p><i className="fa fa-envelope"></i>email@example.com</p>
-                                    <p><i className="fa fa-phone"></i>+123-456-7890</p>
+                                    <p><i className="fa fa-map-marker"></i>58,Nguyễn Lương Bằng, Đà Nẵng</p>
+                                    <p><i className="fa fa-envelope"></i>Hoangusa08@gmail.com</p>
+                                    <p><i className="fa fa-phone"></i>0339905697</p>
                                 </div>
                             </div>
                         </div>

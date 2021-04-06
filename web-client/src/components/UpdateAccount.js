@@ -22,16 +22,13 @@ export default function UpdateAccount() {
                         <div className="tab-pane fade show active" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
                             <h4>Account Details</h4>
                             <div className="row">
-                                <div className="col-md-6">
-                                    <input className="form-control" type="text" placeholder="First Name"></input>
+                                <div className="col-md-12">
+                                    <input className="form-control" type="text" placeholder="Name"></input>
                                 </div>
-                                <div className="col-md-6">
-                                    <input className="form-control" type="text" placeholder="Last Name"></input>
-                                </div>
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <input className="form-control" type="text" placeholder="Mobile"></input>
                                 </div>
-                                <div className="col-md-6">
+                                <div className="col-md-12">
                                     <input className="form-control" type="text" placeholder="Email"></input>
                                 </div>
                                 <div className="col-md-12">
@@ -45,13 +42,10 @@ export default function UpdateAccount() {
                             <h4>Password change</h4>
                             <div className="row">
                                 <div className="col-md-12">
-                                    <input className="form-control" type="password" placeholder="Current Password"></input>
+                                    <input className="form-control" type="text" placeholder="UserName"></input>
                                 </div>
-                                <div className="col-md-6">
-                                    <input className="form-control" type="text" placeholder="New Password"></input>
-                                </div>
-                                <div className="col-md-6">
-                                    <input className="form-control" type="text" placeholder="Confirm Password"></input>
+                                <div className="col-md-12">
+                                    <input className="form-control" type="text" placeholder="Password"></input>
                                 </div>
                                 <div className="col-md-12">
                                     <button className="btn">Save Changes</button>
