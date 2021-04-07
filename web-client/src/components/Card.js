@@ -19,7 +19,7 @@ function Card(props) {
             <div className="product-item">
                     <div class="product-title">
                         <Link to={`/productdetail/${product.id}`}>
-                            <a href="/productdetail">{product.name}</a>
+                           {product.name}
                         </Link>
                         <div className="ratting">
                             <i className="fa fa-star"></i>

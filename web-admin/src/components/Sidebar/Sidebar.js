@@ -10,10 +10,10 @@ class Sidebar extends Component{
                         <nav className="sidebar-nav">
                             <ul id="sidebarnav">
                                 <li className="sidebar-item">
-                                    <a className="sidebar-link waves-effect waves-dark sidebar-link" href="index.html" >
-                                        <i className="mdi mdi-av-timer"></i>
-                                        <span className="hide-menu">Dashboard</span>
-                                    </a>
+                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/login" aria-expanded="false">
+                                        <i className="mdi-account-network"></i>
+                                        <span className="hide-menu">Login</span>
+                                    </Link>
                                 </li>
                                 <li className="sidebar-item">
                                     <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/products" aria-expanded="false">
@@ -43,6 +43,12 @@ class Sidebar extends Component{
                                     <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/reviews" aria-expanded="false">
                                         <i className="mdi-account-network"></i>
                                         <span className="hide-menu">Reviews</span>
+                                    </Link>
+                                </li>
+                                <li className="sidebar-item">
+                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="customer" aria-expanded="false">
+                                        <i className="mdi-account-network"></i>
+                                        <span className="hide-menu">Customer</span>
                                     </Link>
                                 </li>
                             </ul>

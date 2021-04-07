@@ -149,13 +149,36 @@ function ProductDetail() {
                                                 <i className="fa fa-star"></i>
                                                 <i className="fa fa-star"></i>
                                                 <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
+                                                <i className="fa fa-star-half"></i>
                                             </div>
                                             <p>
                                                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
                                             </p>
                                         </div>
-                                        
+                                        <div className="reviews-submit">
+                                            <h4>Give your Review:</h4>
+                                            <div className="ratting">
+                                                <i className="far fa-star"></i>
+                                                <i className="far fa-star"></i>
+                                                <i className="far fa-star"></i>
+                                                <i className="far fa-star"></i>
+                                                <i className="far fa-star"></i>
+                                            </div>
+                                        </div>
+                                        <div className="row form">
+                                                <div className="col-sm-6">
+                                                    <input type="text" placeholder="Name"></input>
+                                                </div>
+                                                <div className="col-sm-6">
+                                                    <input type="email" placeholder="Email"></input>
+                                                </div>
+                                                <div className="col-sm-12">
+                                                    <textarea placeholder="Review"></textarea>
+                                                </div>
+                                                <div className="col-sm-12">
+                                                    <button>Submit</button>
+                                                </div>
+                                            </div>
                                     </div>
                             </div>
                         </div>

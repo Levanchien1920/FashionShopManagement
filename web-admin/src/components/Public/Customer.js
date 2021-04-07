@@ -1,14 +1,11 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
 import { Link } from 'react-router-dom';
-export default function Products() {
-    const [ListProduct , setListProduct] = useState([]);
+export default function Customer() {
+    const [ListCustomer , setListCustomer] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/product').then((response)=> {
-                console.log(ListProduct);
-                setListProduct(response.data.content);
-                console.log(response.data.content);
-                console.log(ListProduct);
+        axios.get('http://localhost:9090/api/v1/customer').then((response)=> {
+                setListCustomer(response.data.content);
             }).catch((error) =>{
             });
     }, [])
@@ -17,7 +14,7 @@ export default function Products() {
                 <div className="page-breadcrumb">
                     <div className="row">
                         <div className="col-5 align-self-center">
-                            <h4 className="page-title">Product</h4>
+                            <h4 className="page-title">Customer</h4>
                         </div>
                         <div className="col-7 align-self-center">
                             <div className="d-flex align-items-center justify-content-end">
@@ -26,7 +23,7 @@ export default function Products() {
                                         <li className="breadcrumb-item">
                                             <Link to="/">Home</Link>
                                         </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Product</li>
+                                        <li className="breadcrumb-item active" aria-current="page">Customer</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -38,34 +35,29 @@ export default function Products() {
                         <div class="col-12">
                             <div class="card">
                                 <div class="card-body">
-                                        <h4 class="card-title">List Product</h4>
+                                        <h4 class="card-title">List Customer</h4>
                                 </div>
                                 <div class="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
-                                            <th scope="col">Id</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Numeber</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Brand</th>
-                                            <th scope="col">Gender</th>
-                                            <th scope="col">Category</th>
+                                            <th scope="col">Id</th>                                            
+                                            <th scope="col">Full Name</th>
+                                            <th scope="col">User Name</th>
+                                            <th scope="col">Emali</th>
+                                            <th scope="col">Phone Number</th>
+                                            <th scope="col">Address</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        
-                                            {ListProduct.map((product) => (
+                                            {ListCustomer.map((Customer) => (
                                                 <tr>
-                                                    <th scope="row">{product.id}</th>
-                                                    <td>{product.name}</td>
-                                                    <td>{product.number}</td>
-                                                    <td>{product.des}</td>
-                                                    <td>{product.price}</td>
-                                                    <td>{product.name_Brand}</td>
-                                                    <td>{product.name_Gender}</td>
-                                                    <td>{product.name_Category}</td>
+                                                    <th scope="row">{Customer.id}</th>
+                                                    <td>{Customer.fullName}</td>
+                                                    <td>{Customer.userName}</td>
+                                                    <td>{Customer.email}</td>
+                                                    <td>{Customer.phone_Number}</td>
+                                                    <td>{Customer.address}</td>
                                                 </tr>
                                             ))}
                                         </tbody>
