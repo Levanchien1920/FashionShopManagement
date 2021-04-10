@@ -197,4 +197,22 @@ public class ReviewService {
     public Optional<Review> findByIdOptional(Integer id) {
         return reviewRepository.findById(id);
     }
+
+
+    @Transactional
+    public Page<ReviewResponseDto> findAllActiveReview(int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "content",
+                "number_of_star",
+                "name_product",
+                "name_user",
+                "email"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return reviewRepository.findAllActiveReview(pageable, search);
+    }
 }

@@ -14,11 +14,12 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {//phai tao repository cho moi Entity==>sai ngu mat thoi gian
 
-    @Query(value = "SELECT p.id,p.name as Name,p.price,p.number,p.des,b.name as Name_Brand,c.name as Name_Category,g.name as Name_Gender,i.name as Name_Image,i.link " +
+    @Query(value = "SELECT p.id,p.name as Name,p.price,si.number as Number ,si.sold_out as Sold_out,si.name as Name_Size,p.des,b.name as Name_Brand,c.name as Name_Category,g.name as Name_Gender,i.name as Name_Image,i.link " +
             "FROM product as p inner join brand as b on p.id_brand=b.id " +
             "inner join category as c on p.id_cate=c.id " +
             "inner join image as i on p.id_image=i.id " +
-            "inner join gender as g on p.id_gender=g.id", nativeQuery = true)
+            "inner join gender as g on p.id_gender=g.id " +
+            "inner join size as si on si.id_product=p.id", nativeQuery = true)
     Page<ProductResponseDto> findAll(Pageable pageable, @Param("keyword") String keyword);
 
     Product findByName(String name);
@@ -45,4 +46,18 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "inner join image as i on p.id_image=i.id " +
             "inner join gender as g on p.id_gender=g.id Where p.id_brand=:id_brand and p.id_cate=:id_category and p.id_gender=:id_gender and p.id <> :id and LOWER(p.name) LIKE %:keyword%", nativeQuery = true)
     Page<ProductResponseDto> findAllRelate(Pageable pageable, @Param("keyword") String keyword,@Param("id") Integer id, @Param("id_brand") Integer id_brand, @Param("id_category") Integer id_category, @Param("id_gender") Integer id_gender);
+
+//    @Query(value = "SELECT p.id,p.name as Name,p.price,p.number,p.des,b.name as Name_Brand,c.name as Name_Category,g.name as Name_Gender,i.name as Name_Image,i.link " +
+//            "FROM product as p inner join brand as b on p.id_brand=b.id " +
+//            "inner join category as c on p.id_cate=c.id " +
+//            "inner join image as i on p.id_image=i.id " +
+//            "inner join gender as g on p.id_gender=g.id where p.product_sold>=20 ", nativeQuery = true)
+//    Page<ProductResponseDto> findBestSelling(Pageable pageable, @Param("keyword") String keyword);
+
+    @Query(value = "SELECT p.id,p.name as Name,p.price,p.number,p.des,b.name as Name_Brand,c.name as Name_Category,g.name as Name_Gender,i.name as Name_Image,i.link " +
+            "FROM product as p inner join brand as b on p.id_brand=b.id " +
+            "inner join category as c on p.id_cate=c.id " +
+            "inner join image as i on p.id_image=i.id " +
+            "inner join gender as g on p.id_gender=g.id order by p.id limit 2 ", nativeQuery = true)
+    Page<ProductResponseDto> findNewProduct(Pageable pageable, @Param("keyword") String keyword);
 }

@@ -9,6 +9,10 @@ public interface ProductResponseDto {
 
     Integer getNumber();
 
+    Integer getSold_Out();
+
+    String getName_Size();
+
     String getDes();
 
     String getName_Brand();

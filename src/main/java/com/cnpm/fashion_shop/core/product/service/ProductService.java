@@ -3,6 +3,7 @@ package com.cnpm.fashion_shop.core.product.service;
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductRes;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
+import com.cnpm.fashion_shop.api.size.dto.SizeDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
@@ -10,6 +11,7 @@ import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
 import com.cnpm.fashion_shop.core.product.repository.GenderRepository;
 import com.cnpm.fashion_shop.core.product.repository.ImageRepository;
 import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
+import com.cnpm.fashion_shop.core.product.repository.SizeRepository;
 import com.cnpm.fashion_shop.core.review.repository.ReviewRepository;
 import com.cnpm.fashion_shop.entity.*;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
@@ -51,6 +53,9 @@ public class ProductService {
     @Autowired
     private ReviewRepository reviewRepository;
 
+    @Autowired
+    private SizeRepository sizeRepository;
+
     @Transactional
     public Page<ProductResponseDto> findAllProductDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
@@ -58,12 +63,15 @@ public class ProductService {
                 "name",
                 "price",
                 "number",
+                "sold_out",
+                "Name_Size",
                 "des",
                 "Name_Brand",
                 "Name_Category",
                 "Name_Gender",
                 "Name_Image",
-                "link"
+                "link",
+                "color"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
@@ -80,6 +88,7 @@ public class ProductService {
         Gender gender;
         Image image1;
         Review review;
+        SizeDto size;
 
 
         if (optionalProduct.isEmpty()) {
@@ -95,6 +104,32 @@ public class ProductService {
         image1 = imageRepository.findByName_image(product.getIdImage());
         review = reviewRepository.findById_Product(product.getId_product());
 
+//        for (int i = 0; i < size.length; i++) {
+//            size[i]=sizeRepository.findByName_size(product.getId_product());
+//        }
+
+        size=sizeRepository.findSizeById_product(product.getId_product());
+//        String size_name="";
+//        Integer sum_number=0;
+//        Integer sum_sold_out=0;
+//        for (int i = 0; i < size.length; i++) {
+//            if(i==0)
+//            {
+//                size_name=size_name+size[i].getName();
+//            }
+//            else {
+//                size_name = size_name + " " + size[i].getName();
+//            }
+//        }
+//
+//        for (int i = 0; i < size.length; i++) {
+//            sum_number+=size[i].getNumber();
+//            sum_sold_out+=size[i].getSold_out();
+//        }
+
+
+
+
         category=optionalCategory.get();
         brand=optionalBrand.get();
 
@@ -108,9 +143,11 @@ public class ProductService {
         productRes.setName(product.getName());
         productRes.setPrice(product.getPrice());
         productRes.setDes(product.getDescription());
-        productRes.setNumber(product.getNumber());
+        productRes.setNumber(0);
         productRes.setLink(image1.getLink());
         productRes.setNumber_of_star(review.getNumberOfStar());
+        productRes.setName_size(size);
+        productRes.setSold_out(0);
 
 
         if (productRes.getIsDeleted()) {
@@ -286,5 +323,50 @@ public class ProductService {
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return productRepository.findAllRelate(pageable, search, id, id_brand, id_category, id_gender);
+    }
+
+
+
+
+//    @Transactional
+//    public Page<ProductResponseDto> getBestProducts(int size, int page, String sort, String search) {
+//        List<String> columnsAllow = Arrays.asList(
+//                "id",
+//                "name",
+//                "price",
+//                "number",
+//                "des",
+//                "Name_Brand",
+//                "Name_Category",
+//                "Name_Gender",
+//                "Name_Image",
+//                "link"
+//        );
+//        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+//        orderFilterHelperImpl.validate();
+//
+//        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+//        return productRepository.findBestSelling(pageable, search);
+//    }
+
+    @Transactional
+    public Page<ProductResponseDto> getNewProducts(int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name",
+                "price",
+                "number",
+                "des",
+                "Name_Brand",
+                "Name_Category",
+                "Name_Gender",
+                "Name_Image",
+                "link"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return productRepository.findNewProduct(pageable, search);
     }
 }
