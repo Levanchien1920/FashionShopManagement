@@ -12,7 +12,16 @@ public class RoleService {
     @Autowired
     RoleRepository roleRepository;
 
-    public Role getDefaultRole() {
+    public Role getEmployeeRole() {
         return roleRepository.findByName(RoleEnum.employee.name());
     }
+
+    public Role getAdminRole() {
+        return roleRepository.findByName(RoleEnum.admin.name());
+    }
+
+    public Role getCustomerRole(){
+        return roleRepository.findByName(RoleEnum.customer.name());
+    }
+
 }

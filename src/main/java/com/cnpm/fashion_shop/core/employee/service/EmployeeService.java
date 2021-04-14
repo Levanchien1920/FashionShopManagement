@@ -26,6 +26,8 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
@@ -122,6 +124,15 @@ public class EmployeeService {
         employee.setAddress(dto.getAddress());
         employee.setPhone_number(dto.getPhoneNumber());
         employee.setId_role(dto.getId_role());
+        if (dto.getId_role() == 1) {
+            employee.setRole(new HashSet<>(Collections.singletonList(roleService.getAdminRole())));
+        }
+        if (dto.getId_role() == 2) {
+            employee.setRole(new HashSet<>(Collections.singletonList(roleService.getEmployeeRole())));
+        }
+        if (dto.getId_role() == 3) {
+            employee.setRole(new HashSet<>(Collections.singletonList(roleService.getCustomerRole())));
+        }
 
         try {
             employeeRepository.save(employee);
