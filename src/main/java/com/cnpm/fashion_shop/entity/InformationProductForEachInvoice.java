@@ -16,7 +16,7 @@ import javax.persistence.Id;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "info_for_each")
-public class info_for_each extends BaseEntity{
+public class InformationProductForEachInvoice {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter

@@ -3,6 +3,8 @@ package com.cnpm.fashion_shop.api.auth.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 public class LoginCustomerDto {
     @Getter
     @Setter
@@ -27,6 +29,10 @@ public class LoginCustomerDto {
     @Getter
     @Setter
     private String email;
+
+    @Getter
+    @Setter
+    private List<String> roleNames;
 
     public LoginCustomerDto(Integer id_cus, String username, String fullname, String address, String phoneNumber, String email) {
         this.id = id_cus;

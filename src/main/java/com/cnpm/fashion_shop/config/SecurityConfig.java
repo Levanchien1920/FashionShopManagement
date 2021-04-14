@@ -1,5 +1,6 @@
 package com.cnpm.fashion_shop.config;
 
+import com.cnpm.fashion_shop.common.enums.RoleEnum;
 import com.cnpm.fashion_shop.common.filter.JwtAuthenticationFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -51,9 +52,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/employee/**",  "/api/v1/brand/**")
-             /*   .hasAnyAuthority(RoleEnum.admin.name())
-                .anyRequest()*/
+                .antMatchers("/api/v1/employee/**", "/api/v1/brand/**", "/api/v1/category/**", "/api/v1/product/**", "/api/v1/post/**", "/api/v1/review/**", "/api/v1/invoice/**")
+                .hasAnyAuthority(RoleEnum.admin.name())
+                .antMatchers("/api/v1/brand/**", "/api/v1/category/**", "/api/v1/product/**", "/api/v1/post/**", "/api/v1/review/**", "/api/v1/invoice/**")
+                .hasAnyAuthority(RoleEnum.employee.name())
+                .anyRequest()
                 .permitAll()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)

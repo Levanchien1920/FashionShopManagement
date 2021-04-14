@@ -16,22 +16,18 @@ public class CustomerDto {
     @Getter
     @Setter
     @Size(max = 50)
-    @NotNull
     private String username;
 
     @Getter
     @Setter
-    @NotNull
     private String password;
 
     @Getter
     @Setter
-    @NotNull
     private String fullname;
 
     @Getter
     @Setter
-    @NotNull
     private String address;
 
     @Getter

@@ -72,7 +72,6 @@ public class CustomerService {
         return ResponseEntity.ok(new CustomerDto(customer.getId_cus(),customer.getUsername(),customer.getPassword(),customer.getFullname(),customer.getAddress(),customer.getEmail(),customer.getPhoneNumber()));
     }
 
-    @Transactional
     public ResponseEntity<Response> createCustomer(CustomerDto dto) {
         Customer customer;
         Customer existingCustomer = customerRepository.findByEmail(StringUtils.trim(dto.getEmail()));

@@ -19,6 +19,7 @@ import static com.cnpm.fashion_shop.common.constant.SecurityConstants.SECURITY_J
 @Configuration
 @EnableSwagger2
 public class SwaggerConfig {
+
     @Bean
     public Docket api() {
         return new Docket(DocumentationType.SWAGGER_2)
