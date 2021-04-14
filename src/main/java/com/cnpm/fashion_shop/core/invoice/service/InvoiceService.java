@@ -8,6 +8,7 @@ import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.invoice.repository.InvoiceRepository;
 import com.cnpm.fashion_shop.entity.Invoice;
 import com.cnpm.fashion_shop.entity.Post;
+import com.cnpm.fashion_shop.entity.info_for_each;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -77,6 +78,7 @@ public class InvoiceService {
     @Transactional
     public ResponseEntity<Response> createInvoiceDto(InvoiceDto dto) {
         Invoice invoice;
+        info_for_each details;
 //        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getContent()));
 //        if (StringUtils.trim(dto.get).equals("")) {
 //            return ResponseEntity
@@ -110,6 +112,11 @@ public class InvoiceService {
         invoice.setId_employee(dto.getId_employee());
         invoice.setId_user(dto.getId_user());
         invoice.set_paid(false);
+
+        details= new info_for_each();
+        details.setId_product();
+        details.setId_invoice();
+        details.setNumber();
 
 
         try {

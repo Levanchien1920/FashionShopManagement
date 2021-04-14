@@ -38,7 +38,7 @@ public class InvoiceController {
     @ApiOperation(value = "Create invoice")
     @PostMapping
     public ResponseEntity<Response> createInvoiceDto(
-            @Valid @RequestBody InvoiceDto dto
+            @Valid @RequestBody InvoiceDto dto, @Valid @RequestBody Cartdto cartdto
     ) {
         return invoiceService.createInvoiceDto(dto);
     }

@@ -367,6 +367,6 @@ public class ProductService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return productRepository.findNewProduct(pageable, search);
+        return productRepository.findProducts(pageable, search);
     }
 }

@@ -58,6 +58,6 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "FROM product as p inner join brand as b on p.id_brand=b.id " +
             "inner join category as c on p.id_cate=c.id " +
             "inner join image as i on p.id_image=i.id " +
-            "inner join gender as g on p.id_gender=g.id order by p.id limit 2 ", nativeQuery = true)
-    Page<ProductResponseDto> findNewProduct(Pageable pageable, @Param("keyword") String keyword);
+            "inner join gender as g on p.id_gender=g.id order by p.id desc limit 2 ", nativeQuery = true)
+    Page<ProductResponseDto> findProducts(Pageable pageable, @Param("keyword") String keyword);
 }

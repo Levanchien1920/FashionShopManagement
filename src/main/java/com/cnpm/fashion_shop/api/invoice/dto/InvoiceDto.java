@@ -30,5 +30,17 @@ public class InvoiceDto {
     @Setter
     private boolean is_paid;
 
+    @Getter
+    @Setter
+    private Integer id_product;
+
+    @Getter
+    @Setter
+    private Integer number;
+
+    @Getter
+    @Setter
+    private boolean is_paid;
+
 
 }
