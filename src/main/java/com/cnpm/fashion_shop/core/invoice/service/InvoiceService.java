@@ -1,9 +1,12 @@
 package com.cnpm.fashion_shop.core.invoice.service;
 
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
+import com.cnpm.fashion_shop.core.invoice.repository.DetailRepository;
 import com.cnpm.fashion_shop.core.invoice.repository.InvoiceRepository;
+import com.cnpm.fashion_shop.entity.InformationProductForEachInvoice;
 import com.cnpm.fashion_shop.entity.Invoice;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.slf4j.Logger;
@@ -28,6 +31,9 @@ public class InvoiceService {
     @Autowired
     private InvoiceRepository invoiceRepository;
 
+    @Autowired
+    private DetailRepository detailRepository;
+
     @Transactional
     public Page<InvoiceResponseDto> findAllInvoiceDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
@@ -46,6 +52,90 @@ public class InvoiceService {
         return invoiceRepository.findAllByName( pageable, search);
     }
 
+//    public ResponseEntity getOne(Integer id) {
+//        //lay ra id, content va id_image
+//        Optional<Post> optionalPost = postRepository.findById(id);
+//        Post post;
+//
+//
+//        if (optionalPost.isEmpty()) {
+//            return ResponseEntity
+//                    .status(HttpStatus.NOT_FOUND)
+//                    .body(Response.notFound("Cannot find this post with id = " + id));
+//        }
+//
+//        post = optionalPost.get();
+//
+//        if (post.getIsDeleted()) {
+//            return ResponseEntity
+//                    .status(HttpStatus.CONFLICT)
+//                    .body(Response.conflict("post with id = " + id + " is deleted"));
+//        }
+//        return ResponseEntity.ok(new PostDto(post.getId(),post.getContent() ,post.getId_image()));
+//    }
+
+    @Transactional
+    public ResponseEntity<Response> createInvoiceDto(InvoiceDto dto) {
+        try {
+        Invoice invoice;
+        InformationProductForEachInvoice details;
+
+        invoice = new Invoice();
+        invoice.setTotalMoney(dto.getTotalMoney());
+        invoice.setId_employee(dto.getId_employee());
+        invoice.setId_user(dto.getId_user());
+        invoice.set_paid(false);
+        invoiceRepository.save(invoice);
+
+
+        for(int i=0; i<dto.listProducts.size();i++)
+        {
+            details= new InformationProductForEachInvoice();
+            details.setId_product(dto.listProducts.get(i).getId());
+            details.setId_invoice(invoice.getId());
+            details.setNumber(dto.listProducts.get(i).getNumber());
+            detailRepository.save(details);
+        }
+
+
+
+
+
+
+            return ResponseEntity.ok(SuccessfulResponse.CREATED);
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.internalError(e.getMessage()));
+        }
+    }
+
+    @Transactional
+    public ResponseEntity<Response> updateInvoiceDto(Integer id) {
+        Optional<Invoice> invoiceOpt = invoiceRepository.findById_invoice(id);
+        Invoice invoice;
+        if (invoiceOpt.isEmpty() || invoiceOpt.get().getIsDeleted()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Not found invoice to be updated"));
+        }
+
+        invoice = invoiceOpt.get();
+        invoice.set_paid(true);
+
+        try {
+            invoiceRepository.save(invoice);
+            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.internalError(e.getMessage()));
+        }
+    }
+
+    @Transactional
     public ResponseEntity<Response> deleteInvoiceDto(Integer id) {
         Invoice invoice;
         Optional<Invoice> invoiceOpt = invoiceRepository.findById_invoice(id);

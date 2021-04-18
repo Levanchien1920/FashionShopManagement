@@ -1,17 +1,15 @@
 package com.cnpm.fashion_shop.core.product.service;
 
+import com.cnpm.fashion_shop.api.color.dto.ColorDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductColor;
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductRes;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
-import com.cnpm.fashion_shop.api.size.dto.SizeDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
 import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
-import com.cnpm.fashion_shop.core.product.repository.GenderRepository;
-import com.cnpm.fashion_shop.core.product.repository.ImageRepository;
-import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
-import com.cnpm.fashion_shop.core.product.repository.SizeRepository;
+import com.cnpm.fashion_shop.core.product.repository.*;
 import com.cnpm.fashion_shop.core.review.repository.ReviewRepository;
 import com.cnpm.fashion_shop.entity.*;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
@@ -54,7 +52,7 @@ public class ProductService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private SizeRepository sizeRepository;
+    private ColorRepository colorRepository;
 
     @Transactional
     public Page<ProductResponseDto> findAllProductDetails(int size, int page, String sort, String search) {
@@ -88,7 +86,6 @@ public class ProductService {
         Gender gender;
         Image image1;
         Review review;
-        SizeDto size;
 
 
         if (optionalProduct.isEmpty()) {
@@ -97,6 +94,7 @@ public class ProductService {
                     .body(Response.notFound("Cannot find this product with id = " + id));
         }
 
+
         product = optionalProduct.get();
         Optional<Category> optionalCategory = categoryRepository.findById(product.getIdCategory());
         Optional<Brand> optionalBrand = brandRepository.findById_brand(product.getIdBrand());
@@ -104,35 +102,28 @@ public class ProductService {
         image1 = imageRepository.findByName_image(product.getIdImage());
         review = reviewRepository.findById_Product(product.getId_product());
 
-//        for (int i = 0; i < size.length; i++) {
-//            size[i]=sizeRepository.findByName_size(product.getId_product());
-//        }
-
-        size=sizeRepository.findSizeById_product(product.getId_product());
-//        String size_name="";
-//        Integer sum_number=0;
-//        Integer sum_sold_out=0;
-//        for (int i = 0; i < size.length; i++) {
-//            if(i==0)
-//            {
-//                size_name=size_name+size[i].getName();
-//            }
-//            else {
-//                size_name = size_name + " " + size[i].getName();
-//            }
-//        }
-//
-//        for (int i = 0; i < size.length; i++) {
-//            sum_number+=size[i].getNumber();
-//            sum_sold_out+=size[i].getSold_out();
-//        }
 
 
 
+        // lay cac id color cua 1 sp cu the size XXL
+        List<ProductColor> idColorForXXLs;
+        idColorForXXLs=productRepository.getAllIdColorForXXL(product.getName());
+        ColorDto colorForXXL;
+
+        List<ProductColor> idColorForXLs;
+        idColorForXLs=productRepository.getAllIdColorForXL(product.getName());
+        ColorDto colorForXL;
+
+        List<ProductColor> idColorForLs;
+        idColorForLs=productRepository.getAllIdColorForL(product.getName());
+        ColorDto colorForL;
+
+        List<ProductColor> idColorForMs;
+        idColorForMs=productRepository.getAllIdColorForM(product.getName());
+        ColorDto colorForM;
 
         category=optionalCategory.get();
         brand=optionalBrand.get();
-
 
         ProductRes productRes= new ProductRes();
         productRes.setId(product.getId_product());
@@ -143,11 +134,60 @@ public class ProductService {
         productRes.setName(product.getName());
         productRes.setPrice(product.getPrice());
         productRes.setDes(product.getDescription());
-        productRes.setNumber(0);
         productRes.setLink(image1.getLink());
         productRes.setNumber_of_star(review.getNumberOfStar());
-        productRes.setName_size(size);
-        productRes.setSold_out(0);
+
+//        set cac Color cua 1 sp size XXL
+        String ColorXXL="";
+        String numberColorXXL="";
+        for(int i=0; i<idColorForXXLs.size();i++)
+        {
+            Integer idXXL=idColorForXXLs.get(i).getId_Color();
+            colorForXXL=colorRepository.findNameByIdColor(idXXL);
+            numberColorXXL+=colorForXXL.getNumber()+" ";
+            ColorXXL+=colorForXXL.getName_Color()+" ";
+        }
+
+        String ColorXL="";
+        String numberColorXL="";
+        for(int i=0; i<idColorForXLs.size();i++)
+        {
+            Integer idXL=idColorForXLs.get(i).getId_Color();
+            colorForXL=colorRepository.findNameByIdColor(idXL);
+            numberColorXL+=colorForXL.getNumber()+" ";
+            ColorXL+=colorForXL.getName_Color()+" ";
+        }
+
+        String ColorL="";
+        String numberColorL="";
+        for(int i=0; i<idColorForLs.size();i++)
+        {
+            Integer idL=idColorForLs.get(i).getId_Color();
+            colorForL=colorRepository.findNameByIdColor(idL);
+            numberColorL+=colorForL.getNumber()+" ";
+            ColorL+=colorForL.getName_Color()+" ";
+        }
+
+        String ColorM="";
+        String numberColorM="";
+        for(int i=0; i<idColorForMs.size();i++)
+        {
+            Integer idM=idColorForMs.get(i).getId_Color();
+            colorForM=colorRepository.findNameByIdColor(idM);
+            numberColorM+=colorForM.getNumber()+" ";
+            ColorM+=colorForM.getName_Color()+" ";
+        }
+
+
+        productRes.setXXL(ColorXXL);
+        productRes.setXL(ColorXL);
+        productRes.setL(ColorL);
+        productRes.setM(ColorM);
+        productRes.setXXL_Number(numberColorXXL);
+        productRes.setXL_Number(numberColorXL);
+        productRes.setL_Number(numberColorL);
+        productRes.setM_Number(numberColorM);
+
 
 
         if (productRes.getIsDeleted()) {
@@ -161,32 +201,11 @@ public class ProductService {
     @Transactional
     public ResponseEntity<Response> createProductDto(ProductDto dto) {
         Product product;
-        Product existing_product = productRepository.findByName(StringUtils.trim(dto.getName()));
-        if (StringUtils.trim(dto.getName()).equals("")) {
+        //Product existing_product = productRepository.findByNameAndNameSizeAndIdColor(StringUtils.trim(dto.getName()));
+        if (StringUtils.trim(dto.getName()).equals("") ) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Product name cannot be empty or contain only space"));
-        }
-
-        if (existing_product != null) {
-            if (!existing_product.getIsDeleted()) {
-                return ResponseEntity
-                        .status(HttpStatus.CONFLICT.value())
-                        .body(Response.conflict("This product name existed already"));
-
-            }
-
-            existing_product.setIsDeleted(false);
-
-            try {
-                productRepository.save(existing_product);
-                return ResponseEntity.ok(SuccessfulResponse.CREATED);
-            } catch (Exception e) {
-                LOG.error(e.getMessage());
-                return ResponseEntity
-                        .status(HttpStatus.INTERNAL_SERVER_ERROR)
-                        .body(Response.internalError(e.getMessage()));
-            }
+                    .body(Response.badRequest("Product name and name size cannot be empty or contain only space"));
         }
 
         product = new Product();
@@ -194,10 +213,12 @@ public class ProductService {
         product.setIdBrand(dto.getId_brand());
         product.setIdGender(dto.getId_gender());
         product.setIdImage(dto.getId_image());
-        product.setNumber(dto.getNumber());
         product.setName(dto.getName().trim());
         product.setDescription(dto.getDes());
         product.setPrice(dto.getPrice());
+        product.setName_size(dto.getName_size());
+        product.setIdColor(dto.getId_color());
+        product.setNumber(dto.getNumber());
 
 
         try {
@@ -240,15 +261,17 @@ public class ProductService {
                     .body(Response.badRequest("This product already exists"));
         }
 
-        product = productOpt.get();
+        product = new Product();
         product.setIdCategory(dto.getId_cate());
         product.setIdBrand(dto.getId_brand());
         product.setIdGender(dto.getId_gender());
         product.setIdImage(dto.getId_image());
-        product.setNumber(dto.getNumber());
         product.setName(dto.getName().trim());
         product.setDescription(dto.getDes());
         product.setPrice(dto.getPrice());
+        product.setName_size(dto.getName_size());
+        product.setIdColor(dto.getId_color());
+        product.setNumber(dto.getNumber());
 
         try {
             productRepository.save(product);

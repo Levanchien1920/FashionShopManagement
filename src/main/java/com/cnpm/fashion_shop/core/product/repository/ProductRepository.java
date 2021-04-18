@@ -1,5 +1,6 @@
 package com.cnpm.fashion_shop.core.product.repository;
 
+import com.cnpm.fashion_shop.api.product.dto.ProductColor;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.entity.Product;
 import org.springframework.data.domain.Page;
@@ -9,6 +10,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -30,15 +32,17 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
     @Query(value = "SELECT * FROM product p WHERE p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
     Product getOne_pro(@Param("id") Integer id);
 
-//    @Query(value = "SELECT p.name FROM gender p WHERE p.id = :id ", nativeQuery = true)
-//    Gender findById_gender(@Param("id") Integer id);
+    @Query(value = "SELECT p.id_color as Id_Color FROM product p WHERE p.name = :name AND p.is_deleted = FALSE AND p.name_size='XXL' ", nativeQuery = true)
+    List<ProductColor> getAllIdColorForXXL(@Param("name") String name);
 
-//    @Query(value = "SELECT * FROM image p WHERE p.id = :id ", nativeQuery = true)
-//    Image findById_image(@Param("id") Integer id);
-//
-//    @Query(value = "SELECT * FROM image p WHERE p.id = :id ", nativeQuery = true)
-//    Image findByName_image(@Param("id") Integer id);
+    @Query(value = "SELECT p.id_color as Id_Color FROM product p WHERE p.name = :name AND p.is_deleted = FALSE AND p.name_size='XL' ", nativeQuery = true)
+    List<ProductColor> getAllIdColorForXL(@Param("name") String name);
 
+    @Query(value = "SELECT p.id_color as Id_Color FROM product p WHERE p.name = :name AND p.is_deleted = FALSE AND p.name_size='L' ", nativeQuery = true)
+    List<ProductColor> getAllIdColorForL(@Param("name") String name);
+
+    @Query(value = "SELECT p.id_color as Id_Color FROM product p WHERE p.name = :name AND p.is_deleted = FALSE AND p.name_size='M' ", nativeQuery = true)
+    List<ProductColor> getAllIdColorForM(@Param("name") String name);
 
     @Query(value = "SELECT p.id,p.name as Name,p.price,p.number,p.des,b.name as Name_Brand,c.name as Name_Category,g.name as Name_Gender,i.name as Name_Image,i.link " +
             "FROM product as p inner join brand as b on p.id_brand=b.id " +

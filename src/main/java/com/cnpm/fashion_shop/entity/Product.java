@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import java.awt.*;
 
 @Getter
 @Setter
@@ -67,11 +68,21 @@ public class Product extends BaseEntity{
     @Column(name = "price")
     private Long price;
 
-    @Column(name = "number")
-    private Integer number;
-
     @Column(name = "des")
     private String description;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_color", insertable = false, updatable = false)
+    private Color color;
+
+    @Column(name = "id_color")
+    private Integer idColor;
+
+    @Column(name = "name_size")
+    private String name_size;
+
+    @Column(name = "number")
+    private Integer number;
 
 
 }

@@ -1,9 +1,11 @@
 package com.cnpm.fashion_shop.api.invoice.dto;
+import com.cnpm.fashion_shop.api.product.dto.ProductInCart;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
+import java.util.List;
 
 
 @NoArgsConstructor
@@ -27,14 +29,6 @@ public class InvoiceDto {
 
     @Getter
     @Setter
-    private boolean is_paid;
-
-    @Getter
-    @Setter
-    private Integer id_product;
-
-    @Getter
-    @Setter
-    private Integer number;
+    public List<ProductInCart> listProducts;
 
 }
