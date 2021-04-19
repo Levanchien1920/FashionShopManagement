@@ -11,7 +11,7 @@ import java.util.List;
 
 @Repository
 public interface ColorRepository  extends JpaRepository<Color, Long> {
-    @Query(value = "SELECT c.name as Name_Color, c.number as Number FROM color c WHERE c.id =:id", nativeQuery = true)
+    @Query(value = "SELECT c.name as Name_Color FROM color c WHERE c.id =:id", nativeQuery = true)
     ColorDto findNameByIdColor(@Param("id") Integer id);
 
 

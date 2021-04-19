@@ -48,13 +48,6 @@ public class Product extends BaseEntity{
     @Column(name = "id_gender")
     private Integer idGender;
 
-//    @Column(name = "id_review")
-//    private Integer idReview;
-//
-//    @ManyToOne()
-//    @JoinColumn(name = "id_review", insertable = false, updatable = false)
-//    private Review review;
-
     @Column(name = "id_image")
     private Integer idImage;
 

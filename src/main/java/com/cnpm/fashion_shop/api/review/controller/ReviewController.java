@@ -54,11 +54,6 @@ public class ReviewController {
         return this.reviewService.deleteReviewDto(id);
     }
 
-//    @ApiOperation(value = "Get review by id_product")
-//    @GetMapping("/{product_id}")
-//    public ResponseEntity getOneReview(@PathVariable("product_id") Integer id) {
-//        return reviewService.getOne(id);
-//    }
 
     @ApiOperation(value = "Get all reviews by id_product")
     @GetMapping("/{product_id}")

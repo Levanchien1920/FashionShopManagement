@@ -1,6 +1,5 @@
 package com.cnpm.fashion_shop.core.post.repository;
 
-import com.cnpm.fashion_shop.api.post.dto.PostDto;
 import com.cnpm.fashion_shop.api.post.dto.PostResponseDto;
 import com.cnpm.fashion_shop.entity.Post;
 import org.springframework.data.domain.Page;
@@ -14,8 +13,6 @@ import java.util.Optional;
 
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
-//    @Query(value = "SELECT * FROM post b WHERE LOWER(b.content) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
-//    Page<PostResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
 
     @Query(value = "SELECT p.content,p.id,i.link,i.name FROM post p inner join image i on p.id_image=i.id ", nativeQuery = true)
     Page<PostResponseDto> findAll(Pageable pageable, @Param("keyword") String keyword);

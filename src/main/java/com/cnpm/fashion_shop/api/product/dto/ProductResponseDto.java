@@ -23,6 +23,8 @@ public interface ProductResponseDto {
 
     String getName_Image();
 
+    String getName_Color();
+
     String getlink();
 
 

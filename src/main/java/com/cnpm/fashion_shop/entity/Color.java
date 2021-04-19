@@ -24,10 +24,5 @@ public class Color {
     @Column(name = "name")
     private String name;
 
-    @Column(name="number")
-    private  Integer number;
-
-    @Column(name="sold_out")
-    private  Integer sold_out;
 
 }

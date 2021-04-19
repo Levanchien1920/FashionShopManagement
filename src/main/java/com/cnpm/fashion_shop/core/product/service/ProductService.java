@@ -144,7 +144,8 @@ public class ProductService {
         {
             Integer idXXL=idColorForXXLs.get(i).getId_Color();
             colorForXXL=colorRepository.findNameByIdColor(idXXL);
-            numberColorXXL+=colorForXXL.getNumber()+" ";
+            Integer numberXXL=idColorForXXLs.get(i).getNumber();
+            numberColorXXL+=numberXXL+" ";
             ColorXXL+=colorForXXL.getName_Color()+" ";
         }
 
@@ -154,7 +155,8 @@ public class ProductService {
         {
             Integer idXL=idColorForXLs.get(i).getId_Color();
             colorForXL=colorRepository.findNameByIdColor(idXL);
-            numberColorXL+=colorForXL.getNumber()+" ";
+            Integer numberXL=idColorForXLs.get(i).getNumber();
+            numberColorXL+=numberXL+" ";
             ColorXL+=colorForXL.getName_Color()+" ";
         }
 
@@ -164,7 +166,8 @@ public class ProductService {
         {
             Integer idL=idColorForLs.get(i).getId_Color();
             colorForL=colorRepository.findNameByIdColor(idL);
-            numberColorL+=colorForL.getNumber()+" ";
+            Integer numberL=idColorForLs.get(i).getNumber();
+            numberColorL+=numberL+" ";
             ColorL+=colorForL.getName_Color()+" ";
         }
 
@@ -174,7 +177,8 @@ public class ProductService {
         {
             Integer idM=idColorForMs.get(i).getId_Color();
             colorForM=colorRepository.findNameByIdColor(idM);
-            numberColorM+=colorForM.getNumber()+" ";
+            Integer numberM=idColorForMs.get(i).getNumber();
+            numberColorM+=numberM+" ";
             ColorM+=colorForM.getName_Color()+" ";
         }
 
@@ -236,7 +240,6 @@ public class ProductService {
     public ResponseEntity<Response> updateProductDto(Integer id, ProductDto dto) {
         Optional<Product> productOpt = productRepository.findById(id);
         Product product;
-        Product existing_product = productRepository.findByName(StringUtils.trim(dto.getName()));
 
         if (StringUtils.equals(StringUtils.trim(dto.getName()), "")) {
             return ResponseEntity
@@ -250,18 +253,7 @@ public class ProductService {
                     .body(Response.badRequest("Not found product to be updated"));
         }
 
-        // Compare old and new name
-        if (productOpt.get().getName().equals(StringUtils.trim(dto.getName()))) {
-            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
-        }
-
-        if (existing_product != null) {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Response.badRequest("This product already exists"));
-        }
-
-        product = new Product();
+        product = productOpt.get();
         product.setIdCategory(dto.getId_cate());
         product.setIdBrand(dto.getId_brand());
         product.setIdGender(dto.getId_gender());

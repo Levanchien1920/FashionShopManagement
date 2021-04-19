@@ -6,8 +6,10 @@ import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.invoice.repository.DetailRepository;
 import com.cnpm.fashion_shop.core.invoice.repository.InvoiceRepository;
+import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
 import com.cnpm.fashion_shop.entity.InformationProductForEachInvoice;
 import com.cnpm.fashion_shop.entity.Invoice;
+import com.cnpm.fashion_shop.entity.Product;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,6 +35,9 @@ public class InvoiceService {
 
     @Autowired
     private DetailRepository detailRepository;
+
+    @Autowired
+    private ProductRepository productRepository;
 
     @Transactional
     public Page<InvoiceResponseDto> findAllInvoiceDetails(int size, int page, String sort, String search) {
@@ -79,6 +84,8 @@ public class InvoiceService {
         try {
         Invoice invoice;
         InformationProductForEachInvoice details;
+        Optional<Product> productOpt ;
+        Product product;
 
         invoice = new Invoice();
         invoice.setTotalMoney(dto.getTotalMoney());
@@ -95,14 +102,16 @@ public class InvoiceService {
             details.setId_invoice(invoice.getId());
             details.setNumber(dto.listProducts.get(i).getNumber());
             detailRepository.save(details);
+
+//            cap nnhat lai number cua san pham trong kho
+            productOpt = productRepository.findById(dto.listProducts.get(i).getId());
+            product = productOpt.get();
+            product.setNumber(product.getNumber()-dto.listProducts.get(i).getNumber());
+
+            productRepository.save(product);
         }
 
-
-
-
-
-
-            return ResponseEntity.ok(SuccessfulResponse.CREATED);
+        return ResponseEntity.ok(SuccessfulResponse.CREATED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
             return ResponseEntity
