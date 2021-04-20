@@ -175,7 +175,7 @@ class Cart extends Component {
                                             </div>
                                             <div className="cart-btn">
                                                 <button>Update Cart</button>
-                                                <button>Checkout</button>
+                                                <button><Link to="/checkout" style={{color: "white"}}>Checkout</Link></button>
                                             </div>
                                         </div>
                                     </div>

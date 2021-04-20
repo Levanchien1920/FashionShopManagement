@@ -14,6 +14,7 @@ import Products from './components/Products';
 import MyAccount from './components/MyAccount'
 import Order from './components/Orders'
 import UpdateAccount from './components/UpdateAccount'
+import Checkout from './components/Checkout/Checkout';
 function App() {
   return (
     <div >
@@ -21,6 +22,7 @@ function App() {
         <LoginContextProvider>
           <Header/>
             <Route path='/' exact component={Home} /> 
+            <Route path='/home' exact component={Home} /> 
             <Route path='/register' component={Register} /> 
             <Route path='/cart' component={Cart} /> 
             <Route path='/products' component={Products} />
@@ -28,8 +30,10 @@ function App() {
             <Route path='/order' component={Order} />
             <Route path='/updateaccount' component={UpdateAccount} />
             <Route path='/myaccount' component={MyAccount} />
-            <Route path='/contact' component={Contact} />  
+            <Route path='/contact' component={Contact} /> 
+            <Route path='/checkout' component={Checkout} />  
             <Route path='/productdetail/:id' component={ProductDetail} /> 
+           
           <Footer/>
           </LoginContextProvider>
       </BrowserRouter>
