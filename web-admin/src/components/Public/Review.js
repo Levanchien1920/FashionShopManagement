@@ -31,13 +31,13 @@ export default function Review() {
                     </div>
                 </div>
                 <div className="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                        <h4 class="card-title">List Review</h4>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="card">
+                                <div className="card-body">
+                                    <h4 className="card-title">List Review </h4>
                                 </div>
-                                <div class="table-responsive">
+                                <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
@@ -47,6 +47,7 @@ export default function Review() {
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Product</th>
+                                                <th scope="col">Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -58,6 +59,7 @@ export default function Review() {
                                                     <td>{Review.name_User}</td>
                                                     <td>{Review.email}</td>
                                                     <td>{Review.name_Product}</td>
+                                                    <td><button className="btn">delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

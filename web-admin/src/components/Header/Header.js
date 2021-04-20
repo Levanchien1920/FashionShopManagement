@@ -1,8 +1,16 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-
-class Header extends Component{
-    render(){
+import React, {  useContext, useEffect} from 'react';
+import { Link} from 'react-router-dom';
+import {LoginContext} from '../Context/LoginContext'
+import {Dropdown } from 'react-bootstrap'
+function Header() {
+    const login = useContext(LoginContext);
+    var fullname = login.Fullname;
+    useEffect(() => {
+        login.checklogin();
+    }, [fullname])
+    const LogoutHandle = () =>{
+        login.LogoutDispatch();
+    }
         return (
                 <div>
                     <div className="topbar" data-navbarbg="skin6">
@@ -18,8 +26,6 @@ class Header extends Component{
                                         
                                             <img src="../../../assets/images/logo-light-icon.png" alt="homepage" className="light-logo" />
                                         </b>
-                                
-                                 
                                         <span className="logo-text">
                                         
                                             <img src="../../../assets/images/logo-text.png" alt="homepage" className="dark-logo" />
@@ -29,13 +35,12 @@ class Header extends Component{
                                     </a>
                                 </div>
                             </div>
-
                             <div className="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">
 
                                 <ul className="navbar-nav float-left mr-auto">
 
                                     <li className="nav-item search-box">
-                                        <a className="nav-link waves-effect waves-dark" href="javascript:void(0)">
+                                        <a className="nav-link waves-effect waves-dark" href="a">
                                             <div className="d-flex align-items-center">
                                                 <i className="mdi mdi-magnify font-20 mr-1"></i>
                                                 <div className="ml-1 d-none d-sm-block">
@@ -51,19 +56,30 @@ class Header extends Component{
                                         </div>
                                     </li>
                                 </ul>
+                                { login.IsLogin ? (
+                                    <ul className="navbar-nav float-right">
+                                       <li className="nav-item dropdown">    
+                                            <Dropdown >
+                                                <Dropdown.Toggle variant="success" id="dropdown-basic" style={{backgroundColor: '#2d3e55'}}>
+                                                    welcome : {fullname}
+                                                </Dropdown.Toggle>
 
-                                <ul className="navbar-nav float-right">
-                                    <li className="nav-item dropdown">    
-                                        <Link className="nav-link" to="/login">Login</Link>
-                                    </li>
-
-                                </ul>
+                                                <Dropdown.Menu>
+                                                    <Dropdown.Item onClick={LogoutHandle}>logout</Dropdown.Item>
+                                                </Dropdown.Menu>
+                                            </Dropdown>
+                                        </li>
+                                    </ul> ) : (
+                                    <ul className="navbar-nav float-right">
+                                        <li className="nav-item dropdown">    
+                                            <Link className="nav-link" to="/login">Login</Link>
+                                        </li>
+                                    </ul>
+                                )}
                             </div>
                         </nav>
                     </div>
                 </div>
         )
-    }
 }
-
 export default Header

@@ -1,18 +1,25 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect, useContext} from 'react'
+import {LoginContext} from '../Context/LoginContext'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link ,useHistory } from 'react-router-dom';
 export default function Products() {
+    const history =useHistory();
     const [ListProduct , setListProduct] = useState([]);
+    const check = useContext(LoginContext);
     useEffect(() => {
+        check.checklogin();
         axios.get('http://localhost:9090/api/v1/product').then((response)=> {
-                console.log(ListProduct);
                 setListProduct(response.data.content);
-                console.log(response.data.content);
-                console.log(ListProduct);
             }).catch((error) =>{
             });
     }, [])
     return (
+        <>
+            {(check.IsLogin === false ) ? (
+                <div className="page-wrapper">
+                    <h3 style={{textAlign : "center"}}>you need login</h3>
+                </div>
+            ) : (
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
                     <div className="row">
@@ -34,13 +41,13 @@ export default function Products() {
                     </div>
                 </div>
                 <div className="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                        <h4 class="card-title">List Product</h4>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="card">
+                                <div className="card-body">
+                                        <h4 className="card-title">List Product <button className="btn1 btn" onClick ={ e=> {history.push("/newproduct")}}>new</button></h4>
                                 </div>
-                                <div class="table-responsive">
+                                <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
@@ -52,6 +59,8 @@ export default function Products() {
                                             <th scope="col">Brand</th>
                                             <th scope="col">Gender</th>
                                             <th scope="col">Category</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -66,6 +75,8 @@ export default function Products() {
                                                     <td>{product.name_Brand}</td>
                                                     <td>{product.name_Gender}</td>
                                                     <td>{product.name_Category}</td>
+                                                    <td><button className="btn" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>edit</button></td>
+                                                    <td><button className="btn">delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -76,5 +87,7 @@ export default function Products() {
                     </div>
                 </div>
             </div>
+            )}
+        </>
     )
 }

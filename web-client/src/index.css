@@ -13,6 +13,8 @@ code {
 }
 .error-mesage {
   color: red;
+  text-align: center;
+  margin: auto;
 }
 .color {
   color: aliceblue;

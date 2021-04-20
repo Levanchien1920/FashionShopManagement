@@ -7,13 +7,13 @@ import Register from "./components/Register"
 import Contact from "./components/Contact"
 import LoginContextProvider from './context/LoginContext'
 import Cart from './components/Cart/Cart'
-import Card from './components/Card'
 import Home from './components/Home'
 import ProductDetail from "./components/ProductDetail"
 import Products from './components/Products';
 import MyAccount from './components/MyAccount'
 import Order from './components/Orders'
 import UpdateAccount from './components/UpdateAccount'
+import Post from './components/Post';
 function App() {
   return (
     <div >
@@ -30,6 +30,7 @@ function App() {
             <Route path='/myaccount' component={MyAccount} />
             <Route path='/contact' component={Contact} />  
             <Route path='/productdetail/:id' component={ProductDetail} /> 
+            <Route path='/post' component={Post} /> 
           <Footer/>
           </LoginContextProvider>
       </BrowserRouter>

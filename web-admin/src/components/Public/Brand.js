@@ -1,8 +1,9 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 export default function Brand() {
     const [ListBrand , setListBrand] = useState([]);
+    const history = useHistory();
     useEffect(() => {
         axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
                 setListBrand(response.data.content);
@@ -31,11 +32,11 @@ export default function Brand() {
                     </div>
                 </div>
                 <div className="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                        <h4 class="card-title">List brand</h4>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="card">
+                                <div className="card-body">
+                                        <h4 class="card-title">List brand <button className="btn1 btn" onClick ={e => {history.push("/newbrand")}}>new</button></h4>
                                 </div>
                                 <div class="table-responsive">
                                     <table className="table table-hover">
@@ -43,6 +44,8 @@ export default function Brand() {
                                             <tr>
                                             <th scope="col">Id</th>
                                             <th scope="col">Name</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -51,6 +54,8 @@ export default function Brand() {
                                                 <tr>
                                                     <th scope="row">{brand.id}</th>
                                                     <td>{brand.name}</td>
+                                                    <td><button className="btn"  onClick ={e => {history.push(`/editbrand/${brand.id}`)}}>edit</button></td>
+                                                    <td><button className="btn">delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

@@ -41,6 +41,9 @@ function Products() {
         if (filter.check === 6){
                 listProduct.sort((a, b) => (a.price < b.price) ? 1 : -1);
             }
+       
+    }, [filter]);
+    useEffect(() => {
         axios.get('http://localhost:9090/api/v1/category').then((response)=> {
             setlistCategory(response.data.content);
         }).catch((error) =>{
@@ -49,7 +52,7 @@ function Products() {
             setlistBrand(response.data.content);
         }).catch((error) =>{
         });
-    }, [filter]);
+    }, []);
     function SortName (c) {
         setfilter({
             ...filter, check : c
@@ -97,18 +100,13 @@ function Products() {
                                         <div class="col-md-4">
                                             <div class="product-price-range">
                                                 <div class="dropdown">
-                                                    <div class="dropdown-toggle" data-toggle="dropdown">Product price range</div>
-                                                    <div class="dropdown-menu dropdown-menu-right">
-                                                        <a href="#" class="dropdown-item">$0 to $50</a>
-                                                        <a href="#" class="dropdown-item">$51 to $100</a>
-                                                        <a href="#" class="dropdown-item">$101 to $150</a>
-                                                        <a href="#" class="dropdown-item">$151 to $200</a>
-                                                        <a href="#" class="dropdown-item">$201 to $250</a>
-                                                        <a href="#" class="dropdown-item">$251 to $300</a>
-                                                        <a href="#" class="dropdown-item">$301 to $350</a>
-                                                        <a href="#" class="dropdown-item">$351 to $400</a>
-                                                        <a href="#" class="dropdown-item">$401 to $450</a>
-                                                        <a href="#" class="dropdown-item">$451 to $500</a>
+                                                <div className="dropdown-toggle">Product price range</div>
+                                                    <div class="dropdown-content">
+                                                        <button>$0 to $50</button>
+                                                        <button>$51 to $100</button>
+                                                        <button>$101 to $150</button>
+                                                        <button>$151 to $200</button>
+                                                        <button>$201 to $250</button>
                                                     </div>
                                                 </div>
                                             </div>
@@ -150,39 +148,6 @@ function Products() {
                                 ))} 
                                 </ul>
                             </nav>
-                        </div>
-                        
-                        <div class="sidebar-widget widget-slider">
-                            <div class="sidebar-slider normal-slider">
-                                <div class="product-item">
-                                    <div class="product-title">
-                                        <a href="#">Product Name</a>
-                                        <div class="ratting">
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                            <i class="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div class="product-image">
-                                        <a href="product-detail.html">
-                                            <img src="img/product-10.jpg" alt="Product Image"></img>
-                                        </a>
-                                        <div class="product-action">
-                                            <a href="#"><i class="fa fa-cart-plus"></i></a>
-                                            <a href="#"><i class="fa fa-heart"></i></a>
-                                            <a href="#"><i class="fa fa-search"></i></a>
-                                        </div>
-                                    </div>
-                                    <div class="product-price">
-                                        <h3><span>$</span>99</h3>
-                                        <a class="btn" href=""><i class="fa fa-shopping-cart"></i>Buy Now</a>
-                                    </div>
-                                </div>
-                         
-                             
-                            </div>
                         </div>
                         
                         <div class="sidebar-widget brands">

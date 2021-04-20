@@ -8,7 +8,6 @@ function Login() {
     const [errorMessage, setErrorMessage] = useState(null);
     const { LoginDispatch} = useContext(LoginContext);
     const history = useHistory();
-    console.log("nfejknvkrj");
     const OnSubmitHandle =  (e) =>{
         axios.post("http://localhost:9090/api/v1/auth/loginCustomer", userInput).then((response)=> {
             setErrorMessage(null);
@@ -36,15 +35,15 @@ function Login() {
             </div>
             <div className="login">
                 <div className="container-fluid">
-                        <div className="col-lg-6">
+                        <div className="col-lg-9">
                             <div className="login-form">
                                 <div className="col">
-                                    <div className="col-md-6">
+                                    <div className="col-md-12">
                                         <label>Username</label>
                                         <input className="form-control" type="text"  name="username" placeholder="Username" 
                                         onChange={e => setuserInput({...userInput ,username : e.target.value})} value={userInput.username}></input>
                                     </div>
-                                    <div className="col-md-6">
+                                    <div className="col-md-12">
                                         <label>Password</label>
                                         <input className="form-control" type="password"  name="password" placeholder="Password"  
                                         onChange={e => setuserInput({...userInput ,password : e.target.value})} value={userInput.password}></input>
@@ -56,7 +55,7 @@ function Login() {
                                         </div>
                                     </div>
                                     {errorMessage && (
-                                        <div classNameName="error-mesage">{errorMessage}</div>
+                                        <div className="error-mesage"><h3>{errorMessage}</h3></div>
                                     )}
                                     <div className="col-md-12">
                                         <button className="btn" onClick={OnSubmitHandle}>Submit</button>

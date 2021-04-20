@@ -1,7 +1,8 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 export default function Category() {
+    const history =useHistory()
     const [ListCategory , setListCategory] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:9090/api/v1/category').then((response)=> {
@@ -31,18 +32,20 @@ export default function Category() {
                     </div>
                 </div>
                 <div className="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                        <h4 class="card-title">List Category</h4>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="card">
+                                <div className="card-body">
+                                        <h4 className="card-title">List Category <button className="btn1 btn"onClick ={e => {history.push("/newcategory")}} >new</button></h4>
                                 </div>
-                                <div class="table-responsive">
+                                <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
                                             <th scope="col">Id</th>
                                             <th scope="col">Name</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -51,6 +54,8 @@ export default function Category() {
                                                 <tr>
                                                     <th scope="row">{Category.id}</th>
                                                     <td>{Category.name}</td>
+                                                    <td><button className="btn">edit</button></td>
+                                                    <td><button className="btn">delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

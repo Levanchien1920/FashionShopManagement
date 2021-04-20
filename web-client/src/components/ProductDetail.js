@@ -1,16 +1,20 @@
 import axios from 'axios';
 import React, { useEffect , useState } from 'react'
 import { useHistory } from 'react-router';
+import Card from './Card';
 
 function ProductDetail() {
     const history=useHistory();
+    const [color , setcolor] =useState([]);
     const [listProduct , setlistProduct] = useState([]);
+    const [star , setstar] = useState(0);
     const [Product , setProduct] = useState([]);
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
     const [filter , setfilter] = useState({
         check  : 0, 
         id  : 0,
+        size : "s"
     });
     useEffect(() => {
         if (filter.check === 1){
@@ -25,7 +29,16 @@ function ProductDetail() {
                 }).catch((error) =>{
                 });
             }
-        
+        if (filter.check === 0){
+                colorinsize(filter.size);
+            }
+    }, [filter]);
+    useEffect(() => {
+        const id = history.location.pathname.split("/")[2];
+        axios.get(`http://localhost:9090/api/v1/product/${id}`).then((response)=> {
+            setProduct(response.data);
+        }).catch((error) =>{
+        });
         axios.get('http://localhost:9090/api/v1/category').then((response)=> {
             setlistCategory(response.data.content);
         }).catch((error) =>{
@@ -34,15 +47,33 @@ function ProductDetail() {
             setlistBrand(response.data.content);
         }).catch((error) =>{
         });
-        console.log(filter);
-    }, [filter]);
-    useEffect(() => {
-        const id = history.location.pathname.split("/")[2];
-        axios.get(`http://localhost:9090/api/v1/product/${id}`).then((response)=> {
-            setProduct(response.data);
-        }).catch((error) =>{
-        });
-    }, [])
+    }, []);
+    const colorinsize = (size) => {
+        let s = "blue red yellow";
+        let m = "red yellow rose";
+        let l = "yellow green";
+        let xl = "orange pine while";
+        switch(size) {
+            case "s":
+                let colorofsizes = s.split(" ");
+                setcolor(colorofsizes);
+              break;
+            case "m":
+                let colorofsizem = m.split(" ");
+                setcolor(colorofsizem);
+              break;
+            case "l":
+                let colorofsizel = l.split(" ");
+                setcolor(colorofsizel);
+                break;
+            case "xl":
+                let colorofsizexl = xl.split(" ");
+                setcolor(colorofsizexl);
+              break;
+            default:
+                console.log("no");
+        }
+    }
     return (
         <div className="product-detail">
             <div className="container-fluid">
@@ -61,11 +92,11 @@ function ProductDetail() {
                                     <div className="product-content">
                                         <div className="title"><h2>{Product.name}</h2></div>
                                         <div className="ratting">
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
+                                            <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                            <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                            <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                            <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                            <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                         </div>
                                         <div className="price">
                                             <h4>Price:</h4>
@@ -82,18 +113,22 @@ function ProductDetail() {
                                         <div className="p-size">
                                             <h4>Size:</h4>
                                             <div className="btn-group btn-group-sm">
-                                                <button type="button" className="btn">S</button>
-                                                <button type="button" className="btn">M</button>
-                                                <button type="button" className="btn">L</button>
-                                                <button type="button" className="btn">XL</button>
+                                                <button type="button" className="btn" 
+                                                onClick={e => {setfilter({...filter , check : 0 , size : "s" })}}>S</button>
+                                                <button type="button" className="btn" 
+                                                onClick={e => {setfilter({...filter , check : 0 , size : "m" })}}>M</button>
+                                                <button type="button" className="btn"
+                                                onClick={e => {setfilter({...filter , check : 0 , size : "l" })}}>L</button>
+                                                <button type="button" className="btn" 
+                                                onClick={e => {setfilter({...filter , check : 0 , size : "xl" })}}>XL</button>
                                             </div> 
                                         </div>
                                         <div className="p-color">
                                             <h4>Color:</h4>
                                             <div className="btn-group btn-group-sm">
-                                                <button type="button" className="btn">White</button>
-                                                <button type="button" className="btn">Black</button>
-                                                <button type="button" className="btn">Blue</button>
+                                                {color.map((color) => (
+                                                    <button type="button" className="btn">{color}</button>
+                                                ))}
                                             </div> 
                                         </div>
                                         <div className="action">
@@ -121,23 +156,6 @@ function ProductDetail() {
                                 </div>
                                 <ul className="nav nav-pills nav-justified">
                                     <li className="nav-item">
-                                        <h3>Specification</h3>
-                                    </li>
-                                </ul>
-                                <div className="tab-content">
-                                    <div id="specification" className="container tab-pane active">
-                                        <h4>Product specification</h4>
-                                        <ul>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                            <li>Lorem ipsum dolor sit amet</li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                <ul className="nav nav-pills nav-justified">
-                                    <li className="nav-item">
                                         <h3>Reviews (1)</h3>
                                     </li>
                                 </ul>
@@ -145,11 +163,11 @@ function ProductDetail() {
                                         <div className="reviews-submitted">
                                             <div className="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
                                             <div className="ratting">
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star-half"></i>
+                                                <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                             </div>
                                             <p>
                                                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
@@ -158,27 +176,24 @@ function ProductDetail() {
                                         <div className="reviews-submit">
                                             <h4>Give your Review:</h4>
                                             <div className="ratting">
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
-                                                <i className="far fa-star"></i>
+                                                <button className={star >=1 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(1)}}></button>
+                                                <button className={star >=2 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(2)}}></button>
+                                                <button className={star >=3 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(3)}}></button>
+                                                <button className={star >=4 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(4)}}></button>
+                                                <button className={star >=5 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(5)}}></button>
                                             </div>
                                         </div>
                                         <div className="row form">
-                                                <div className="col-sm-6">
-                                                    <input type="text" placeholder="Name"></input>
-                                                </div>
-                                                <div className="col-sm-6">
-                                                    <input type="email" placeholder="Email"></input>
-                                                </div>
-                                                <div className="col-sm-12">
-                                                    <textarea placeholder="Review"></textarea>
-                                                </div>
-                                                <div className="col-sm-12">
-                                                    <button>Submit</button>
-                                                </div>
-                                            </div>
+                                                <label>Name : </label>
+                                                <input type="text" placeholder="Name" className="col-sm-12"></input>
+                                                <label>Email : </label>
+                                                <input type="email" placeholder="Email" className="col-sm-12"></input>
+                                                <label>Review :</label>
+                                                <textarea placeholder="Review" className="col-sm-12"></textarea>
+                                               
+                                                        <button className="submit">Submit</button>
+                                               
+                                        </div>
                                     </div>
                             </div>
                         </div>
@@ -217,9 +232,6 @@ function ProductDetail() {
                                         </div>
                                     </div>
                                 </div>
-                              
-                               
-        
                                 <div className="col-lg-3">
                                     <div className="product-item">
                                         <div className="product-title">
@@ -252,7 +264,66 @@ function ProductDetail() {
                         </div>
                     </div>
                     ):(
-                        <div></div>
+                                    <div class="col-lg-8">
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="product-view-top">
+                                                    <div class="row">
+                                                        <div class="col-md-4">
+                                                            <div class="product-search">
+                                                                <input type="email" value="Search"></input>
+                                                                <button><i class="fa fa-search"></i></button>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="product-short">
+                                                                <div class="dropdown">
+                                                                    <button className="dropdown-toggle">Product short by</button>
+                                                                        <div className="dropdown-content">
+                                                                    
+                                                                        </div>
+                                                                
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-4">
+                                                            <div class="product-price-range">
+                                                                <div class="dropdown">
+                                                                <button className="dropdown-toggle">Product price range</button>
+                                                                    <div class="dropdown-content">
+                                                                        <button>$0 to $50</button>
+                                                                        <button>$51 to $100</button>
+                                                                        <button>$101 to $150</button>
+                                                                        <button>$151 to $200</button>
+                                                                        <button>$201 to $250</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            {listProduct.map((product) => (
+                                                <Card product={product}></Card>
+                                            ))} 
+                                        </div>
+                                        
+                                        <div class="col-md-12">
+                                            <nav aria-label="Page navigation example">
+                                                <ul class="pagination justify-content-center">
+                                                    <li class="page-item disabled">
+                                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
+                                                    </li>
+                                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                                    <li class="page-item">
+                                                        <a class="page-link" href="#">Next</a>
+                                                    </li>
+                                                </ul>
+                                            </nav>
+                                    </div>
+                                </div>         
                     )}
         
                     <div className="col-lg-4 sidebar">
@@ -267,38 +338,6 @@ function ProductDetail() {
                                     ))} 
                                 </ul>
                             </nav>
-                        </div>
-                        
-                        <div className="sidebar-widget widget-slider">
-                            <div className="sidebar-slider normal-slider">
-                                <div className="product-item">
-                                    <div className="product-title">
-                                        <a href="#">Product Name</a>
-                                        <div className="ratting">
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                            <i className="fa fa-star"></i>
-                                        </div>
-                                    </div>
-                                    <div className="product-image">
-                                        <a href="product-detail.html">
-                                            <img src="img/product-7.jpg" alt="Product Image"></img>
-                                        </a>
-                                        <div className="product-action">
-                                            <a href="#"><i className="fa fa-cart-plus"></i></a>
-                                            <a href="#"><i className="fa fa-heart"></i></a>
-                                            <a href="#"><i className="fa fa-search"></i></a>
-                                        </div>
-                                    </div>
-                                    <div className="product-price">
-                                        <h3><span>$</span>99</h3>
-                                        <a className="btn" href=""><i className="fa fa-shopping-cart"></i>Buy Now</a>
-                                    </div>
-                                </div>
-                              
-                            </div>
                         </div>
                         
                         <div className="sidebar-widget brands">

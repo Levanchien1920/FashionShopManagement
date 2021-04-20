@@ -1,12 +1,12 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom';
-export default function Customer() {
+export default function Employee() {
     const history = useHistory();
-    const [ListCustomer , setListCustomer] = useState([]);
+    const [ListEmployee , setListEmployee] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/customer').then((response)=> {
-                setListCustomer(response.data.content);
+        axios.get('http://localhost:9090/api/v1/employee').then((response)=> {
+                setListEmployee(response.data.content);
             }).catch((error) =>{
             });
     }, [])
@@ -15,7 +15,7 @@ export default function Customer() {
                 <div className="page-breadcrumb">
                     <div className="row">
                         <div className="col-5 align-self-center">
-                            <h4 className="page-title">Customer</h4>
+                            <h4 className="page-title">Employee</h4>
                         </div>
                         <div className="col-7 align-self-center">
                             <div className="d-flex align-items-center justify-content-end">
@@ -24,7 +24,7 @@ export default function Customer() {
                                         <li className="breadcrumb-item">
                                             <Link to="/">Home</Link>
                                         </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Customer</li>
+                                        <li className="breadcrumb-item active" aria-current="page">Employee</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -36,7 +36,7 @@ export default function Customer() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Customer <button className="btn1 btn" onClick ={e => {history.push("/newcustomer")}}>new</button></h4>
+                                        <h4 className="card-title">List Employee <button className="btn1 btn" onClick ={e => {history.push("/newemployee")}}>new</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -45,7 +45,6 @@ export default function Customer() {
                                             <th scope="col">Id</th>                                            
                                             <th scope="col">Full Name</th>
                                             <th scope="col">User Name</th>
-                                            <th scope="col">Email</th>
                                             <th scope="col">Phone Number</th>
                                             <th scope="col">Address</th>
                                             <th scope="col">Edit</th>
@@ -53,14 +52,13 @@ export default function Customer() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {ListCustomer.map((Customer) => (
+                                            {ListEmployee.map((Employee) => (
                                                 <tr>
-                                                    <th scope="row">{Customer.id}</th>
-                                                    <td>{Customer.fullName}</td>
-                                                    <td>{Customer.userName}</td>
-                                                    <td>{Customer.email}</td>
-                                                    <td>{Customer.phone_Number}</td>
-                                                    <td>{Customer.address}</td>
+                                                    <th scope="row">{Employee.id}</th>
+                                                    <td>{Employee.fullName}</td>
+                                                    <td>{Employee.userName}</td>
+                                                    <td>{Employee.phone_Number}</td>
+                                                    <td>{Employee.address}</td>
                                                     <td><button className="btn">edit</button></td>
                                                     <td><button className="btn">delete</button></td>
                                                 </tr>

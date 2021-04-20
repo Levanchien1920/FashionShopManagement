@@ -67,8 +67,12 @@ h2 {
     padding-top: 12px;
     color: #ffffff;
 }
-
-
+.tagbr {
+    height: 5px;
+}
+.submit {
+    margin-top: 5px;
+}
 /**********************************/
 /********* Form Input CSS *********/
 /**********************************/
@@ -567,6 +571,10 @@ h2 {
     margin: 0;
     padding: 0;
     background: transparent;
+}
+
+.ratting button{
+    border: 0;
 }
 
 .fa-star {
@@ -2227,7 +2235,9 @@ h2 {
     background: #ffffff;
     margin-bottom: 30px;
 }
-
+.login .login-form {
+    margin-left: 25rem;
+}
 
 /**********************************/
 /********** Footer CSS ************/
@@ -2357,6 +2367,9 @@ h2 {
     .footer .payment-security {
         text-align: center; 
     } 
+    .login .login-form {
+        margin-left: 5rem;
+    }
 }
 
 .footer .payment-method h2,

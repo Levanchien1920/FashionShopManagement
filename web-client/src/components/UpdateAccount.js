@@ -1,10 +1,38 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
 export default function UpdateAccount() {
     const[user , setuser] = useState("");
+    const [userUpdate , setuserUpdate] = useState({
+        username: "",
+        password: "",
+        fullname: "",
+        address: "",
+        email: "",
+        phone_number: "",
+    });
     useEffect(() => {
            setuser(localStorage.getItem("token"));
-    }, [user])
+           axios.get(`http://localhost:9090/api/v1/customer/${localStorage.id}`).then((response)=> {
+                    let temp = {
+                        username : response.data.username,
+                        password : response.data.password,
+                        fullname: response.data.fullname,
+                        address :response.data.address ,
+                        email: response.data.email,
+                        phone_number: response.data.phone_number  
+                    }
+                    setuserUpdate(temp);
+                }).catch((error) =>{
+                });
+    }, [])
+    function submitHandle() {
+        axios.patch(`http://localhost:9090/api/v1/customer/${localStorage.id}`, userUpdate).then((response)=> {
+            alert(response.data.message);
+        }).catch((error) =>{
+            console.log(error);
+        });     
+    }
     return (
         (user !== null) ? (    <div className="my-account">
         <div className="container-fluid">
@@ -20,35 +48,39 @@ export default function UpdateAccount() {
                 <div className="col-md-9">
                     <div className="tab-content">
                         <div className="tab-pane fade show active" id="account-tab" role="tabpanel" aria-labelledby="account-nav">
-                            <h4>Account Details</h4>
                             <div className="row">
                                 <div className="col-md-12">
-                                    <input className="form-control" type="text" placeholder="Name"></input>
+                                    <label>Full Name</label>
+                                    <input className="form-control" type="text" placeholder="fullName"
+                                    onChange={e => setuserUpdate({...userUpdate ,fullname : e.target.value})} value={userUpdate.fullname}></input>
                                 </div>
                                 <div className="col-md-12">
-                                    <input className="form-control" type="text" placeholder="Mobile"></input>
+                                    <label>Phone Number</label>
+                                    <input className="form-control" type="text" placeholder="Phone Number"
+                                    onChange={e => setuserUpdate({...userUpdate ,phone_number : e.target.value})} value={userUpdate.phone_number}></input>
                                 </div>
                                 <div className="col-md-12">
-                                    <input className="form-control" type="text" placeholder="Email"></input>
+                                    <label>Email</label>
+                                    <input className="form-control" type="text" placeholder="Email"
+                                    onChange={e => setuserUpdate({...userUpdate ,email : e.target.value})} value={userUpdate.email}></input>
                                 </div>
                                 <div className="col-md-12">
-                                    <input className="form-control" type="text" placeholder="Address"></input>
+                                    <label>Address</label>
+                                    <input className="form-control" type="text" placeholder="Address"
+                                    onChange={e => setuserUpdate({...userUpdate ,address : e.target.value})} value={userUpdate.address}></input>
                                 </div>
                                 <div className="col-md-12">
-                                    <button className="btn">Update Account</button>
-                                   <br></br><br></br>
-                                </div>
-                            </div>
-                            <h4>Password change</h4>
-                            <div className="row">
-                                <div className="col-md-12">
-                                    <input className="form-control" type="text" placeholder="UserName"></input>
+                                    <label>User Name</label>
+                                    <input className="form-control" type="text" placeholder="UserName"
+                                    onChange={e => setuserUpdate({...userUpdate ,username : e.target.value})} value={userUpdate.username}></input>
                                 </div>
                                 <div className="col-md-12">
-                                    <input className="form-control" type="text" placeholder="Password"></input>
+                                    <label>Password</label>
+                                    <input className="form-control" type="text" placeholder="Password"
+                                    onChange={e => setuserUpdate({...userUpdate ,password : e.target.value})} value={userUpdate.password}></input>
                                 </div>
                                 <div className="col-md-12">
-                                    <button className="btn">Save Changes</button>
+                                    <button className="btn" onClick={submitHandle}>Save Changes</button>
                                 </div>
                             </div>
                         </div>

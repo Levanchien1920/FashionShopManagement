@@ -105,7 +105,22 @@ html {
   margin:0 auto;
   max-width:500px;
 }
-
+.idlabel{
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.btn {
+  background-color: #2d3e55;
+  color: white;
+}
+.btn:hover {
+  background-color: rgb(224, 20, 207);
+}
+.btn1 {
+  border-radius: 10px;
+  float:right;
+  margin-right: 10rem;
+}
 /* .login-header h1 {
    text-shadow: 0px 5px 15px #000; */
 .login-form {
@@ -116,8 +131,7 @@ html {
   width: 600px;
 }
 .login-form h3 {
-  text-align:center;
-  margin-left:40px;
+  margin-left:4px;
   color:#fff;
 }
 .login-form {
@@ -150,7 +164,9 @@ html {
   font-family: 'Ubuntu', sans-serif;
   cursor:pointer;
 }
-
+input[type="button"]:hover{
+  background-color: rgb(122, 37, 65);
+}
 .no-access {
   color:#E86850;
   margin-top: 20px;
