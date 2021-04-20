@@ -6,7 +6,6 @@ import styles from './styles';
 
 const Input = ({onChangeText,style,value,lable,icon,iconPosition,error,...props}) => {
 
-    const [focused,setFocused]=React.useState(false);
     return (
         <View style= {styles.inputContainer}>
         {lable && <Text> {lable} </Text>}
