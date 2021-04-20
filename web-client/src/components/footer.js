@@ -72,17 +72,7 @@ function Footer() {
                         </div>
                     </div>
                 </div>
-            </div>
-            
-            <div className="footer-bottom">
-                <div className="container">
-                    <div className="row color1">
-                        <p>demo</p>
-                    </div>
-                </div>
-            </div>
-            <a href="a" className="back-to-top"><i className="fa fa-chevron-up"></i></a>
-           
+            </div>  
         </div>
     )
 }

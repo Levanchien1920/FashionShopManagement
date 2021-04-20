@@ -8,7 +8,6 @@ function Header() {
     const history = useHistory();
     useEffect(() => {
            login.LoginDispatch();
-           localStorage.removeItem("fulln");
     }, [fullname])
     const LogoutHandle = () =>{
         login.LogoutDispatch();
@@ -45,16 +44,16 @@ function Header() {
                                 }
                                 <Link to='/cart'className="nav-item nav-link active" >Cart</Link>
                                 <Link to='/contact'className="nav-item nav-link active" >Contact</Link>
-
+                                <Link to='/post'className="nav-item nav-link active" >Post</Link>
                             </div>
                             <div className="navbar-nav ml-auto">                               
                                 {(fullname != null) ? ( 
                                         <div className="dropdown">
                                             <button className="dropbtn">Xin chào {fullname}</button>
-                                            <div className="dropdown-content">
-                                            <button onClick={LogoutHandle}>Logout</button>
-                                            <button onClick={ChangeToMyAccount} >My accout</button>
-                                        </div>
+											<div className="dropdown-content">
+												<button onClick={LogoutHandle}>Logout</button>
+												<button onClick={ChangeToMyAccount} >My accout</button>
+											</div>
                                       </div>
                                     ) : (
                                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">

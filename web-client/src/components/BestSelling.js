@@ -5,10 +5,12 @@ import Slide from './Slide'
 function BestSelling() {
     const [listProduct , setlistProduct] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/product').then((response)=> {
-            setlistProduct(response.data.content);
-        }).catch((error) =>{
-        });
+       // async function Loadingbl() {
+             axios.get('http://localhost:9090/api/v1/product').then((response)=> {
+                setlistProduct(response.data.content);
+            }).catch((error) =>{
+            });
+       // }
     },[])
     return (
     <div>

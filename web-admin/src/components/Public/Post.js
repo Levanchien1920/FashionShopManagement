@@ -1,7 +1,8 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
-import { Link } from 'react-router-dom';
+import { Link , useHistory } from 'react-router-dom';
 export default function Post() {
+    const history = useHistory();
     const [ListPost , setListPost] = useState([]);
     useEffect(() => {
         axios.get('http://localhost:9090/api/v1/post').then((response)=> {
@@ -31,13 +32,13 @@ export default function Post() {
                     </div>
                 </div>
                 <div className="container-fluid">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="card">
-                                <div class="card-body">
-                                        <h4 class="card-title">List Post</h4>
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="card">
+                                <div className="card-body">
+                                        <h4 className="card-title">List Post <button className="btn1 btn" onClick ={ e=> {history.push("/newpost")}} >new</button></h4>
                                 </div>
-                                <div class="table-responsive">
+                                <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
@@ -45,6 +46,8 @@ export default function Post() {
                                             <th scope="col">Name</th>
                                             <th scope="col">Content</th>
                                             <th scope="col">Detail</th>
+                                            <th scope="col">Edit</th>
+                                            <th scope="col">Delete</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -54,6 +57,8 @@ export default function Post() {
                                                     <td>{Post.name}</td>
                                                     <td>{Post.content}</td>
                                                     <td><a href={Post.link} target="_blank">click in here</a></td>
+                                                    <td><button className="btn">edit</button></td>
+                                                    <td><button className="btn">delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

@@ -2,6 +2,7 @@ import React, {useState , useContext } from 'react'
 import {Link} from 'react-router-dom'
 function Card(props) {
     const {product} = props;
+    console.log(product);
     const [quantity, setquantity] = useState(1);
     const addToCart = (e) => {
         console.log(e.target)
@@ -22,11 +23,11 @@ function Card(props) {
                            {product.name}
                         </Link>
                         <div className="ratting">
-                            <i className="fa fa-star"></i>
-                            <i className="fa fa-star"></i>
-                            <i className="fa fa-star"></i>
-                            <i className="fa fa-star"></i>
-                            <i className="fa fa-star"></i>
+                            <i className={product.number_of_star >=1 ?"fa fa-star": product.number_of_star >= 0.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.number_of_star >=2 ?"fa fa-star": product.number_of_star >= 1.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.number_of_star >=3 ?"fa fa-star": product.number_of_star >= 2.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.number_of_star >=4 ?"fa fa-star": product.number_of_star >= 3.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.number_of_star >=5 ?"fa fa-star": product.number_of_star >= 4.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
                         </div>
                     </div>
                     <div className="product-image">
