@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-import RegisterComponent from '../../components/SignUp';
+import RegisterComponent from '../../components/Signup';
 
 
 const Register = () => {
