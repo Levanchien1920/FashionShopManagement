@@ -58,9 +58,7 @@ public class InvoiceController {
         return this.invoiceService.deleteInvoiceDto(id);
     }
 
-////    @ApiOperation(value = "Get brand by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-////    @GetMapping("/{id_brand}")
-////    public ResponseEntity getOneBrand(@PathVariable("id_brand") Integer id) {
-////        return brandService.getOne(id);
-////    }
+
+
+
 }

@@ -21,7 +21,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "inner join category as c on p.id_cate=c.id " +
             "inner join image as i on p.id_image=i.id " +
             "inner join gender as g on p.id_gender=g.id " +
-            "inner join color as co on co.id=p.id_color", nativeQuery = true)
+            "inner join color as co on co.id=p.id_color WHERE LOWER(p.name) LIKE %:keyword% ", nativeQuery = true)
     Page<ProductResponseDto> findAll(Pageable pageable, @Param("keyword") String keyword);
 
     Product findByName(String name);

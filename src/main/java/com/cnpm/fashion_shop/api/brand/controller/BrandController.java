@@ -42,7 +42,6 @@ public class BrandController {
                 requestParamsForGettingList.getSize(),
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch());
-
         return new PaginationResponse<>(data);
     }
 
