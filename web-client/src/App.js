@@ -11,10 +11,11 @@ import Home from './components/Home'
 import ProductDetail from "./components/ProductDetail"
 import Products from './components/Products';
 import MyAccount from './components/MyAccount'
-import Order from './components/Orders'
+import Order from './components/Order/Orders'
 import UpdateAccount from './components/UpdateAccount'
 import Post from './components/Post';
 import Checkout from './components/Checkout/Checkout'
+
 function App() {
   return (
     <div >
