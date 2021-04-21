@@ -14,9 +14,9 @@ public class SaleFigureController {
     @Autowired
     private SaleFigureService saleFigureService;
 
-    @ApiOperation(value = "Get all salefigure")
-    @GetMapping()
-    public ResponseEntity getSaleFigure() {
-        return saleFigureService.get();
-    }
+//    @ApiOperation(value = "Get all salefigure")
+//    @GetMapping()
+//    public ResponseEntity getSaleFigure() {
+////        return saleFigureService.get();
+//    }
 }
