@@ -1,6 +1,6 @@
 import React from 'react'
 
-function contact() {
+function Contact() {
     return (
          <div className="contact">
             <div className="container-fluid">
@@ -68,4 +68,4 @@ function contact() {
     )
 }
 
-export default contact
+export default Contact

@@ -11,9 +11,11 @@ import Home from './components/Home'
 import ProductDetail from "./components/ProductDetail"
 import Products from './components/Products';
 import MyAccount from './components/MyAccount'
-import Order from './components/Orders'
+import Order from './components/Order/Orders'
 import UpdateAccount from './components/UpdateAccount'
 import Post from './components/Post';
+import Checkout from './components/Checkout/Checkout'
+
 function App() {
   return (
     <div >
@@ -21,6 +23,7 @@ function App() {
         <LoginContextProvider>
           <Header/>
             <Route path='/' exact component={Home} /> 
+            <Route path='/home' exact component={Home} /> 
             <Route path='/register' component={Register} /> 
             <Route path='/cart' component={Cart} /> 
             <Route path='/products' component={Products} />
@@ -28,7 +31,8 @@ function App() {
             <Route path='/order' component={Order} />
             <Route path='/updateaccount' component={UpdateAccount} />
             <Route path='/myaccount' component={MyAccount} />
-            <Route path='/contact' component={Contact} />  
+            <Route path='/contact' component={Contact} /> 
+            <Route path='/checkout' component={Checkout} />  
             <Route path='/productdetail/:id' component={ProductDetail} /> 
             <Route path='/post' component={Post} /> 
           <Footer/>

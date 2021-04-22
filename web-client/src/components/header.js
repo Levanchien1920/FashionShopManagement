@@ -1,14 +1,27 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {useHistory} from 'react-router'
 import {Link} from 'react-router-dom'
 import {LoginContext} from '../context/LoginContext'
 function Header() {
     const login = useContext(LoginContext);
+    const [countCart, setCountCart] = useState(0);
+
     var fullname = login.Fullname;
     const history = useHistory();
     useEffect(() => {
            login.LoginDispatch();
     }, [fullname])
+
+   
+    useEffect(() => {
+        let cart = JSON.parse(localStorage.getItem('cart'));
+        let count = 0
+        for (var item in cart) {
+            count++
+        }
+        setCountCart(count)
+    }, [JSON.parse(localStorage.getItem('cart'))])
+
     const LogoutHandle = () =>{
         login.LogoutDispatch();
     }
@@ -90,7 +103,7 @@ function Header() {
                             <div className="user">
                                 <a href="/cart" className="btn cart">
                                     <i className="fa fa-shopping-cart"></i>
-                                    <span>(0)</span>
+                                    <span>({countCart})</span>
                                 </a>
                             </div>
                         </div>
