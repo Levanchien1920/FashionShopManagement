@@ -20,53 +20,56 @@ function Sidebar() {
                             </li> 
                         </ul>
                         ) : ( 
-                        <ul id="sidebarnav">
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/products" aria-expanded="false">
-                                    <i className="mdi-account-network"></i>
-                                    <span className="hide-menu">Products</span>
-                                </Link>
-                            </li>
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/brands" aria-expanded="false">
-                                    <i className="mdi-account-network"></i>
-                                    <span className="hide-menu">Brand</span>
-                                </Link>
-                            </li>
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/categorys" aria-expanded="false">
-                                    <i className="mdi-account-network"></i>
-                                    <span className="hide-menu">Category</span>
-                                </Link>
-                            </li>
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/posts" aria-expanded="false">
-                                    <i className="mdi-account-network"></i>
-                                    <span className="hide-menu">Post</span>
-                                </Link>
-                            </li>
-                            <li className="sidebar-item">
-                                <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/reviews" aria-expanded="false">
-                                    <i className="mdi-account-network"></i>
-                                    <span className="hide-menu">Reviews</span>
-                                </Link>
-                            </li>
-                            {(check.Employer === "admin") ? (
-                                <li className="sidebar-item">
-                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/employee" aria-expanded="false">
-                                        <i className="mdi-account-network"></i>
-                                        <span className="hide-menu">Employer</span>
-                                    </Link>
-                                </li>
+                            (check.Employer === "employee") ? (
+                                <ul id="sidebarnav">
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/products" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Products</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/brands" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Brand</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/categorys" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Category</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/posts" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Post</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/reviews" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Reviews</span>
+                                        </Link>
+                                    </li>
+                                </ul>
                             ) : (
-                                <li className="sidebar-item">
-                                    <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/customer" aria-expanded="false">
-                                        <i className="mdi-account-network"></i>
-                                        <span className="hide-menu">Customer</span>
-                                    </Link>
-                                </li> 
-                            )}
-                        </ul>
+                                <ul id="sidebarnav">
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/customer" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Invoice</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/employee" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Employer</span>
+                                        </Link>
+                                    </li>
+                                </ul> 
+                            )
+                       
                         )}                 
                 </nav>
             </div>

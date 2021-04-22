@@ -1,20 +1,24 @@
 import axios from 'axios';
 import React , {useState , useEffect} from 'react'
 import Card from './Card'
-import Slide from './Slide'
+import Carousel from 'react-elastic-carousel';
+const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 550, itemsToShow: 2, itemsToScroll: 2 },
+    { width: 768, itemsToShow: 3 },
+    { width: 1600, itemsToShow: 4 }
+  ];
 function BestSelling() {
-    const [listProduct , setlistProduct] = useState([]);
+    const [listProductBL , setlistProductBL] = useState([]);
     useEffect(() => {
-       // async function Loadingbl() {
              axios.get('http://localhost:9090/api/v1/product').then((response)=> {
-                setlistProduct(response.data.content);
+                setlistProductBL(response.data.content);
             }).catch((error) =>{
-            });
-       // }
+            })
     },[])
     return (
     <div>
-        {( listProduct.length === 0 ) ? (
+        {( listProductBL.length === 0 ) ? (
             <div class="isloading">
                 Loading....
             </div>
@@ -38,9 +42,11 @@ function BestSelling() {
                             <h1>Best-Selling</h1>
                         </div>
                         <div className="row align-items-center product-slider product-slider-4">
-                            {listProduct.map((product) => (
-                                <Card product={product} key={product.id}></Card>
+                            <Carousel breakPoints={breakPoints}>
+                            {listProductBL.map((product) => (
+                                    <Card product={product} key={product.id}></Card>
                             ))}
+                            </Carousel>
                         </div>
                     </div>
                 </div> 

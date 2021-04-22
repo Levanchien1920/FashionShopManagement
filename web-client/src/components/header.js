@@ -47,7 +47,7 @@ function Header() {
                                 <Link to='/post'className="nav-item nav-link active" >Post</Link>
                             </div>
                             <div className="navbar-nav ml-auto">                               
-                                {(fullname != null) ? ( 
+                                {(login.IsLogin ===true ) ? ( 
                                         <div className="dropdown">
                                             <button className="dropbtn">Xin chào {fullname}</button>
 											<div className="dropdown-content">

@@ -6,21 +6,28 @@ import {Link} from 'react-router-dom'
 function Login() {
     const [userInput , setuserInput] = useState({username:"", password:""});
     const [errorMessage, setErrorMessage] = useState(null);
+    const [space , setspace] = useState(null);
     const { LoginDispatch} = useContext(LoginContext);
     const history = useHistory();
     const OnSubmitHandle =  (e) =>{
-        axios.post("http://localhost:9090/api/v1/auth/loginCustomer", userInput).then((response)=> {
-            setErrorMessage(null);
-            const {token, info} = response.data;
-            localStorage.setItem("token", token);
-            localStorage.setItem("id", info.id);
-            localStorage.setItem("username", info.username);
-            localStorage.setItem("fullname", info.fullName);
-            LoginDispatch();
-            history.push("/");
-        }).catch((error) =>{
-            setErrorMessage(error.response.data.message);
-        });
+        if (userInput.username !== "" && userInput.password !== ""){
+            axios.post("http://localhost:9090/api/v1/auth/loginCustomer", userInput).then((response)=> {
+                setErrorMessage(null);
+                const {token, info} = response.data;
+                localStorage.setItem("token", token);
+                localStorage.setItem("id", info.id);
+                localStorage.setItem("username", info.username);
+                localStorage.setItem("fullname", info.fullName);
+                LoginDispatch();
+                history.push("/");
+            }).catch((error) =>{
+                setErrorMessage(error.response.data.message);
+                setspace("");
+            });
+        }else {
+            setspace("you need to enter username or password");
+            setErrorMessage("");
+        }
     }
     return (
         <div>
@@ -48,14 +55,11 @@ function Login() {
                                         <input className="form-control" type="password"  name="password" placeholder="Password"  
                                         onChange={e => setuserInput({...userInput ,password : e.target.value})} value={userInput.password}></input>
                                     </div>
-                                    <div className="col-md-12">
-                                        <div className="custom-control custom-checkbox">
-                                            <input type="checkbox" className="custom-control-input" id="newaccount"></input>
-                                            <label className="custom-control-label" for="newaccount">Keep me signed in</label>
-                                        </div>
-                                    </div>
+                                    {space && (
+                                        <div className="error-mesage"><h3>{space}</h3></div>
+                                    )}
                                     {errorMessage && (
-                                        <div className="error-mesage"><h3>{errorMessage}</h3></div>
+                                        <div className="error-mesage"><h3>Username or Password wrong</h3></div>
                                     )}
                                     <div className="col-md-12">
                                         <button className="btn" onClick={OnSubmitHandle}>Submit</button>

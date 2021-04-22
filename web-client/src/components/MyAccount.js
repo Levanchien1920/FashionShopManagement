@@ -4,7 +4,6 @@ import axios from 'axios'
 import {LoginContext} from '../context/LoginContext'
 export default function MyAccount() {
     const login = useContext(LoginContext);
-    const[user , setuser] = useState("");
     const history = useHistory();
     const [ account, setaccount] = useState({
             "id": 0,
@@ -16,7 +15,6 @@ export default function MyAccount() {
             "phone_number": "",
     })
     useEffect(() => {
-           setuser(localStorage.getItem("token"));
            axios.get(`http://localhost:9090/api/v1/customer/${localStorage.getItem("id")}`).then((response)=> {
             setaccount(response.data);
         }).catch((error) =>{
@@ -27,7 +25,7 @@ export default function MyAccount() {
         login.LogoutDispatch();
     }
     return (
-        (user !== null) ? (    <div className="my-account">
+        (login.IsLogin !== false) ? (    <div className="my-account">
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-3">
@@ -35,7 +33,7 @@ export default function MyAccount() {
                         <Link to="/myaccount" className="nav-link" id="address-nav" data-toggle="pill" href="#address-tab" role="tab"><i className="fa fa-user"></i>My account</Link>
                         <Link to="/order" className="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i className="fa fa-shopping-bag"></i>Orders</Link>
                         <Link to="/updateaccount" className="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i className="fa fa-user"></i>Update Account</Link>
-                        <button className="nav-link" href="index.html"  onClick={LogoutHandle} ><i className="fa fa-sign-out-alt"></i>Logout</button>
+                        <button className="nav-link" onClick={LogoutHandle} ><i className="fa fa-sign-out-alt"></i>Logout</button>
                     </div>
                 </div>
                 <div className="col-md-9">
@@ -59,7 +57,7 @@ export default function MyAccount() {
             </div>
         </div>
     </div> ) :(
-        <div className="dangnhap">bạn cần đăng nhập </div>
+        <div className="dangnhap">You Need Login </div>
     )
     )
 }

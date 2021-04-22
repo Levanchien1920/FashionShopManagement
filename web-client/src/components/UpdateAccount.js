@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState , useContext } from 'react'
 import {Link} from 'react-router-dom'
+import {LoginContext} from '../context/LoginContext'
 export default function UpdateAccount() {
-    const[user , setuser] = useState("");
+    const login = useContext(LoginContext);
     const [userUpdate , setuserUpdate] = useState({
         username: "",
         password: "",
@@ -12,7 +13,6 @@ export default function UpdateAccount() {
         phone_number: "",
     });
     useEffect(() => {
-           setuser(localStorage.getItem("token"));
            axios.get(`http://localhost:9090/api/v1/customer/${localStorage.id}`).then((response)=> {
                     let temp = {
                         username : response.data.username,
@@ -33,8 +33,11 @@ export default function UpdateAccount() {
             console.log(error);
         });     
     }
+    const LogoutHandle = () =>{
+        login.LogoutDispatch();
+    }
     return (
-        (user !== null) ? (    <div className="my-account">
+        (login.IsLogin !== false) ? (    <div className="my-account">
         <div className="container-fluid">
             <div className="row">
                 <div className="col-md-3">
@@ -42,7 +45,7 @@ export default function UpdateAccount() {
                         <Link to="/myaccount" className="nav-link" id="address-nav" data-toggle="pill" href="#address-tab" role="tab"><i className="fa fa-user"></i>My account</Link>
                         <Link to="/order" className="nav-link" id="orders-nav" data-toggle="pill" href="#orders-tab" role="tab"><i className="fa fa-shopping-bag"></i>Orders</Link>
                         <Link to="/updateaccount" className="nav-link" id="account-nav" data-toggle="pill" href="#account-tab" role="tab"><i className="fa fa-user"></i>Update Account</Link>
-                        <button className="nav-link" href="index.html"><i className="fa fa-sign-out-alt"></i>Logout</button>
+                        <button className="nav-link" onClick={LogoutHandle}><i className="fa fa-sign-out-alt"></i>Logout</button>
                     </div>
                 </div>
                 <div className="col-md-9">
@@ -76,7 +79,7 @@ export default function UpdateAccount() {
                                 </div>
                                 <div className="col-md-12">
                                     <label>Password</label>
-                                    <input className="form-control" type="text" placeholder="Password"
+                                    <input className="form-control" type="password" placeholder="Password"
                                     onChange={e => setuserUpdate({...userUpdate ,password : e.target.value})} value={userUpdate.password}></input>
                                 </div>
                                 <div className="col-md-12">

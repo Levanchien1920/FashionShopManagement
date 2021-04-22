@@ -14,8 +14,13 @@ function ProductDetail() {
     const [filter , setfilter] = useState({
         check  : 0, 
         id  : 0,
-        size : "s"
+        size : ""
     });
+    const [colorSizeM , setcolorSizeM] = useState("")
+    const [colorSizeL , setcolorSizeL] = useState("");
+    const [colorSizeXL , setcolorSizeXL] = useState("")
+    const [colorSizeXXL , setcolorSizeXXL] = useState("")
+
     useEffect(() => {
         if (filter.check === 1){
                 axios.get(`http://localhost:9090/api/v1/client/category/${filter.id}`).then((response)=> {
@@ -37,6 +42,10 @@ function ProductDetail() {
         const id = history.location.pathname.split("/")[2];
         axios.get(`http://localhost:9090/api/v1/product/${id}`).then((response)=> {
             setProduct(response.data);
+            setcolorSizeM(response.data.m);
+            setcolorSizeL(response.data.l);
+            setcolorSizeXL(response.data.xl);
+            setcolorSizeXXL(response.data.xxl);
         }).catch((error) =>{
         });
         axios.get('http://localhost:9090/api/v1/category').then((response)=> {
@@ -49,26 +58,26 @@ function ProductDetail() {
         });
     }, []);
     const colorinsize = (size) => {
-        let s = "blue red yellow";
-        let m = "red yellow rose";
-        let l = "yellow green";
-        let xl = "orange pine while";
         switch(size) {
-            case "s":
-                let colorofsizes = s.split(" ");
-                setcolor(colorofsizes);
-              break;
             case "m":
-                let colorofsizem = m.split(" ");
+                let colorofsizem = colorSizeM.split(" ");
+                colorofsizem.pop();
                 setcolor(colorofsizem);
               break;
             case "l":
-                let colorofsizel = l.split(" ");
+                let colorofsizel = colorSizeL.split(" ");
+                colorofsizel.pop();
                 setcolor(colorofsizel);
-                break;
+              break;
             case "xl":
-                let colorofsizexl = xl.split(" ");
+                let colorofsizexl = colorSizeXL.split(" ");
+                colorofsizexl.pop();
                 setcolor(colorofsizexl);
+                break;
+            case "xxl":
+                let colorofsizexxl = colorSizeXXL.split(" ");
+                colorofsizexxl.pop();
+                setcolor(colorofsizexxl);
               break;
             default:
                 console.log("no");
@@ -114,26 +123,27 @@ function ProductDetail() {
                                             <h4>Size:</h4>
                                             <div className="btn-group btn-group-sm">
                                                 <button type="button" className="btn" 
-                                                onClick={e => {setfilter({...filter , check : 0 , size : "s" })}}>S</button>
-                                                <button type="button" className="btn" 
                                                 onClick={e => {setfilter({...filter , check : 0 , size : "m" })}}>M</button>
-                                                <button type="button" className="btn"
-                                                onClick={e => {setfilter({...filter , check : 0 , size : "l" })}}>L</button>
                                                 <button type="button" className="btn" 
+                                                onClick={e => {setfilter({...filter , check : 0 , size : "l" })}}>L</button>
+                                                <button type="button" className="btn"
                                                 onClick={e => {setfilter({...filter , check : 0 , size : "xl" })}}>XL</button>
+                                                <button type="button" className="btn" 
+                                                onClick={e => {setfilter({...filter , check : 0 , size : "xxl" })}}>XXL</button>
                                             </div> 
                                         </div>
                                         <div className="p-color">
                                             <h4>Color:</h4>
                                             <div className="btn-group btn-group-sm">
                                                 {color.map((color) => (
-                                                    <button type="button" className="btn">{color}</button>
+                                                   
+                                                        <button type="button" className="btn">{color}</button>
+                                                      
                                                 ))}
                                             </div> 
                                         </div>
                                         <div className="action">
                                             <a className="btn" href="#"><i className="fa fa-shopping-cart"></i>Add to Cart</a>
-                                            <a className="btn" href="#"><i className="fa fa-shopping-bag"></i>Buy Now</a>
                                         </div>
                                     </div>
                                 </div>

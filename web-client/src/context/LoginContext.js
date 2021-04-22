@@ -6,17 +6,24 @@ const LoginContextProvider =({children}) =>{
     const [Id , setId] = useState("");
     const [Username , setUsername] = useState("");
     const [Fullname , setfullname] = useState("");
+    const [isLogin , setisLogin] = useState(false);
     const history = useHistory();
     // function dispatch
     const LoginDispatch = () =>{
         setId(localStorage.getItem('id'));
         setUsername(localStorage.getItem('username'));
         setfullname(localStorage.getItem('fullname'));
+        if(localStorage.getItem("token") === null){
+            setisLogin(false);
+        }else{
+            setisLogin(true);
+        }
     }
     const LogoutDispatch = () =>{
         setId("");
         setUsername("");
         setfullname("");
+        setisLogin(false);
         localStorage.removeItem('id');
         localStorage.removeItem('username');
         localStorage.removeItem('fullname');
@@ -28,12 +35,11 @@ const LoginContextProvider =({children}) =>{
         Id : Id,
         Username :Username , 
         Fullname :Fullname , 
+        IsLogin : isLogin,
         LoginDispatch,
         LogoutDispatch,
     }
-    
     //return provider
-
     return(
         <LoginContext.Provider value={LoginContextData}>
             {children}

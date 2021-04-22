@@ -16,7 +16,7 @@ function Card(props) {
         localStorage.setItem('cart', JSON.stringify(cart));
       }
     return (
-        <div className="col-lg-3">
+        <div className="Product">
             <div className="product-item">
                     <div class="product-title">
                         <Link to={`/productdetail/${product.id}`}>
@@ -41,10 +41,10 @@ function Card(props) {
                         </div>
                     </div>
                     <div className="product-price">
-                        <h3><span>$</span>{product.price}</h3>
+                        <h3><span><h3>$</h3></span>{product.price}</h3>
                         <a className="btn" href="/cart"><i className="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
-               
+                    
             </div>
         </div>
     )
