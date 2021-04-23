@@ -6,3 +6,5 @@ const home =(state,{type,payload}) => {
             return state;
     }
 }
+
+export default home;
