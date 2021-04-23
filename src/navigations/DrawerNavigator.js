@@ -7,6 +7,9 @@ import Container from '../components/common/Container';
 import styles from '../components/common/Container/styles';
 import SideMenu from './SideMenu';
 
+import Login from '../screens/Login';
+import Register from '../screens/Register';
+
 const getDrawerContent= navigation => {
   return <SideMenu  navigation= {navigation} />
 }
@@ -15,6 +18,10 @@ const DrawerNavigator = () => {
     return (
         <Drawer.Navigator drawerType="slide" drawerContent= {( {navigation}) =>getDrawerContent(navigation)}>
           <Drawer.Screen name={HOME_NAVIGATOR} component= {HomeNavigator} ></Drawer.Screen>
+          <Drawer.Screen name={'LogIn'} component= {Login}></Drawer.Screen>
+          <Drawer.Screen name={'Register'} component= {Register}></Drawer.Screen>
+
+
         </Drawer.Navigator>
 
     );

@@ -12,7 +12,7 @@ const RegisterComponent = ({onSubmit,onChange,form,errors}) => {
         <Container>
 
             <View>
-                <Text style={styles.title}>Welcome to apppppp </Text>
+                <Text style={styles.title}>Welcome to app  </Text>
                 <Text style={styles.subTitle}>Create a free account</Text>
             </View>
 
@@ -85,11 +85,11 @@ const RegisterComponent = ({onSubmit,onChange,form,errors}) => {
            />  
            
             
-        <CustomButtom onPress={onSubmit} title="Submitttttttttttt"  secondary />
+        <CustomButtom onPress={onSubmit} title="Register"  secondary />
 
         <View  style = {styles.createSection}>
             <Text  style = {styles.infoText}> You already have account ? </Text>
-            <TouchableOpacity onPress= {() => {navigate('Login')}}>
+            <TouchableOpacity onPress= {() => {navigate('LogIn')}}>
                 <Text  style = {styles.linkBtn}>Login</Text>
             </TouchableOpacity>
         </View>

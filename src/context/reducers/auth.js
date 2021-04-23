@@ -7,6 +7,13 @@ const auth =(state,{type,payload}) => {
             data: payload,
             isLoggedIn: true,
           };
+          case 'LoginFail':
+          return {
+            ...state,
+            loading: false,
+            data: payload,
+            isLoggedIn: false,
+          };
     
         default:
           return state;
