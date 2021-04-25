@@ -9,7 +9,15 @@ import {GlobalContext} from '../../context/Provider';
 
 
 const SideMenu = ({navigation}) => {
+
+
   const [check,setCheck]=useState(true);
+
+
+
+   const value =  AsyncStorage.getItem("fullname");
+  console.log("user:"+value);
+  
 
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
   
@@ -31,7 +39,8 @@ const SideMenu = ({navigation}) => {
         </Container>
       </View>
       <View>
-          <Text>Hello Le Van Cuong</Text>
+          <Text>Welcome to shopping app</Text>
+     
           <TouchableOpacity onPress= {() => navigation.navigate('LogIn')}>
             
             <Text>Log in</Text>
@@ -59,17 +68,16 @@ const SideMenu = ({navigation}) => {
       </Container>
     </View>
     <View>
-        <Text>Hello Le Van Cuong</Text>
+    {/* <Text> {user}</Text> */}
         <TouchableOpacity onPress= {() =>  {
             AsyncStorage.clear();
             authDispatch({
               type: 'LoginFail',
             });
-          navigation.navigate('LogIn')
+          navigation.navigate('Home')
           
           }}>
           
-        
           <Text>Log out</Text>
          
          

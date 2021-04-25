@@ -6,7 +6,14 @@ import Input from '../common/Input';
 import CustomButtom from '../common/CustomButton';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
-const RegisterComponent = ({onSubmit,onChange,form,errors}) => {
+const RegisterComponent = ({
+    onSubmit,
+    onChange,
+    form,
+    loading,
+    error,
+    errors,
+  }) => {
     const {navigate} =useNavigation();
     return (
         <Container>
@@ -23,10 +30,23 @@ const RegisterComponent = ({onSubmit,onChange,form,errors}) => {
             iconPosition= "left"
             placeholder="Enter full name"
             onChangeText= {(value) =>  {
+
                 onChange({name:"fullname",value});
             }}
             error={errors.fullname}
            />   
+
+
+            <Input
+            lable="Address"
+            placeholder="Enter address"
+            iconPosition= "left"
+            onChangeText= {(value) =>  {
+                onChange({name:"address",value});
+            }}
+            error={errors.address}
+            
+           />
             <Input
             lable="Email"
             placeholder="Enter email"

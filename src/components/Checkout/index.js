@@ -35,6 +35,17 @@ onChangeText= {(value) =>  {
 />
 
 
+<Input
+lable="Address"
+placeholder="Enter address"
+iconPosition= "left"
+onChangeText= {(value) =>  {
+    onChange({name:"address",value});
+}}
+
+/>
+
+
  <Input
 lable="PhoneNumber"
 iconPosition= "left"
