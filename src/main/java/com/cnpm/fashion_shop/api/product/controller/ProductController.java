@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
@@ -43,7 +44,6 @@ public class ProductController {
     }
 
 
-
     @ApiOperation(value = "Create product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PostMapping
     public ResponseEntity<Response> createDto(@Valid @RequestBody ProductDto dto) {
@@ -52,7 +52,7 @@ public class ProductController {
 
     @ApiOperation(value = "Update product", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PatchMapping("/{product_id}")
-    public ResponseEntity<Response> updateProductProduct(@PathVariable("product_id") Integer id,@Valid @RequestBody ProductDto dto) {
+    public ResponseEntity<Response> updateProductProduct(@PathVariable("product_id") Integer id, @Valid @RequestBody ProductDto dto) {
         return this.productService.updateProductDto(id, dto);
     }
 
@@ -61,7 +61,6 @@ public class ProductController {
     public ResponseEntity<Response> deleteProduct(@PathVariable("product_id") Integer id) {
         return this.productService.deleteProductDto(id);
     }
-
 
 
     @ApiOperation(value = "Get product by id")

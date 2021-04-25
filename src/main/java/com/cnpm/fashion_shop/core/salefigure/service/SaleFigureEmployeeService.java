@@ -2,6 +2,7 @@ package com.cnpm.fashion_shop.core.salefigure.service;
 
 import com.cnpm.fashion_shop.api.salefigures.dto.SaleFigureDto;
 import com.cnpm.fashion_shop.api.salefigures.dto.SaleFigureEmployeeDto;
+import com.cnpm.fashion_shop.core.salefigure.repository.SaleFigureEmployeeRepository;
 import com.cnpm.fashion_shop.core.salefigure.repository.SaleFigureRepository;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,15 @@ import java.util.Arrays;
 import java.util.List;
 
 @Service
-public class SaleFigureService {
+public class SaleFigureEmployeeService {
     @Autowired
-    private SaleFigureRepository saleFigureRepository;
+    private SaleFigureEmployeeRepository saleFigureEmployeeRepository;
+
     @Transactional
-    public Page<SaleFigureDto> findAllSaleFigureDetails(int size, int page, String sort) {
+    public Page<SaleFigureEmployeeDto> findAllSaleFigureByEmployee(int size, int page, String sort) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
+                "fullName",
                 "total_money",
                 "month"
         );
@@ -29,7 +32,7 @@ public class SaleFigureService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return saleFigureRepository.findSaleFigure(pageable);
+        return saleFigureEmployeeRepository.findSaleFigureEmployee(pageable);
     }
 
 }

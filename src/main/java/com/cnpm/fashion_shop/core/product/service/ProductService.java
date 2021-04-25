@@ -75,7 +75,7 @@ public class ProductService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return productRepository.findAll(pageable, search);
+        return productRepository.findAllByName(pageable, search);
     }
 
     public ResponseEntity getOne(Integer id) {
@@ -339,30 +339,6 @@ public class ProductService {
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return productRepository.findAllRelate(pageable, search, id, id_brand, id_category, id_gender);
     }
-
-
-
-
-//    @Transactional
-//    public Page<ProductResponseDto> getBestProducts(int size, int page, String sort, String search) {
-//        List<String> columnsAllow = Arrays.asList(
-//                "id",
-//                "name",
-//                "price",
-//                "number",
-//                "des",
-//                "Name_Brand",
-//                "Name_Category",
-//                "Name_Gender",
-//                "Name_Image",
-//                "link"
-//        );
-//        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
-//        orderFilterHelperImpl.validate();
-//
-//        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-//        return productRepository.findBestSelling(pageable, search);
-//    }
 
     @Transactional
     public Page<ProductResponseDto> getNewProducts(int size, int page, String sort, String search) {

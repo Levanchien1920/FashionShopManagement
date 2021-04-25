@@ -20,11 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 @RequestMapping(path = "/api/v1/client/product")
 public class ProductControllerClient {
+
     @Autowired
     private ProductService productService;
-
-
-
 
     @ApiOperation(value = "Get product by id")
     @GetMapping("/{product_id}")

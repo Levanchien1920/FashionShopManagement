@@ -1,7 +1,9 @@
 package com.cnpm.fashion_shop.api.salefigures.dto;
 
+public interface SaleFigureEmployeeDto {
+    Integer getId();
 
-public interface SaleFigureDto {
+    String getFullName();
 
     Long getTotal();
 

@@ -14,7 +14,7 @@ import java.util.Optional;
 @Repository
 public interface PostRepository extends JpaRepository<Post, Long> {
 
-    @Query(value = "SELECT p.content,p.id,i.link,i.name FROM post p inner join image i on p.id_image=i.id ", nativeQuery = true)
+    @Query(value = "SELECT post.content, post.id, image.link as image_link, image.name as name_image FROM (post inner join image on post.id_image = image.id) ", nativeQuery = true)
     Page<PostResponseDto> findAll(Pageable pageable, @Param("keyword") String keyword);
 
 
