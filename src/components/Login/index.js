@@ -6,11 +6,14 @@ import Input from '../../components/common/Input';
 import CustomButtom from '../../components/common/CustomButton';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
-const LoginComponent = (  { error,
-    form,
+const LoginComponent = (  {
+    onSubmit,
     onChange,
+    form,
     loading,
-    onSubmit}) => {
+    error,
+    errors,
+  }) => {
     const {navigate} =useNavigation();
     return (
         <Container>
@@ -28,17 +31,24 @@ const LoginComponent = (  { error,
             onChangeText={(value) => {
                 onChange({name: 'username', value});
             }}
+            error={errors.username}
             
            />
+
+           
         <Input
             lable="Password"
             iconPosition= "left"
             secureTextEntry={true}
             placeholder="Enter password"
+
             onChangeText={(value) => {
                 onChange({name: 'password', value});
             }}
+            error={errors.password}
            />
+
+           
         <CustomButtom title="Submit"  onPress={onSubmit} secondary />
 
         <View  style = {styles.createSection}>

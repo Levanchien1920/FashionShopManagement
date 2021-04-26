@@ -3,16 +3,36 @@ import {useRoute} from '@react-navigation/native';
 import React, {useState} from 'react';
 import {useContext} from 'react';
 import LoginComponent from '../../components/Login';
-import loginUser from '../../context/actions/auth/loginUser';
+import { Alert } from 'react-native';
 import {GlobalContext} from '../../context/Provider';
 import {useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
 const Login = () => {
-
+  const showAlert = () =>
+  Alert.alert(
+    "Alert Title",
+    "My Alert Msg",
+    [
+      {
+        text: "Cancel",
+        onPress: () => Alert.alert("Cancel Pressed"),
+        style: "cancel",
+      },
+    ],
+    {
+      cancelable: true,
+      onDismiss: () =>
+        Alert.alert(
+          "This alert was dismissed by tapping outside of the alert dialog."
+        ),
+    }
+  );
+  
   const [form, setForm] = useState({});
   const {params} = useRoute();
+  const [errors, setErrors] = useState({});
   const {navigate} =useNavigation();
   React.useEffect(() => {
     if (params?.data) {
@@ -26,6 +46,26 @@ const Login = () => {
   } = useContext(GlobalContext);
 
   const onSubmit = () => {
+
+
+    setErrors((prev) => {
+      return {...prev, username: ''};
+    });
+    setErrors((prev) => {
+      return {...prev, password: ''};
+    });
+    if (!form.username) {
+      setErrors((prev) => {
+        return {...prev, username: 'Please add a username'};
+      });
+    }
+
+    if (!form.password) {
+      setErrors((prev) => {
+        return {...prev, password: 'Please add a password'};
+      });
+    }
+
     if (form.username && form.password) {
       const login= {
         "username": form.username,
@@ -53,14 +93,15 @@ const Login = () => {
   }).catch((error) =>{
       // setErrorMessage(error.response.data.message);
       console.log(error);
+
+     ()=> {showAlert};
+  
   });
 
-     
     }
   };
 
  
-
   const onChange = ({name, value}) => {
     setForm({...form, [name]: value});
   };
@@ -72,6 +113,7 @@ const Login = () => {
       form={form}
       error={error}
       loading={loading}
+      errors={errors}
     />
   );
 }

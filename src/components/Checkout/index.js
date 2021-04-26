@@ -89,7 +89,6 @@ onChangeText= {(value) =>  {
 
 />  
 
-
 <CustomButtom  title="Submit"  secondary />
 
 

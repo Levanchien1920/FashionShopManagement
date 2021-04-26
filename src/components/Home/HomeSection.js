@@ -1,4 +1,5 @@
 import React from 'react';
+import {useNavigation } from '@react-navigation/native';
 import {
   StyleSheet,
   Image,
@@ -6,6 +7,7 @@ import {
   Text,
   Dimensions,
   ScrollView,
+  TouchableOpacity
 } from 'react-native';
 
 const {width} = Dimensions.get('window');
@@ -17,16 +19,22 @@ const item_image_3 = require('../../assets/images/item_image_3.png');
 const item_image_4 = require('../../assets/images/item_image_4.png');
 
 const ProductItem = ({image, name, price}) => (
+  
+  
   <View style={styles.itemContainer}>
     <Image source={image} style={styles.itemImage} />
     <Text style={styles.itemName} numberOfLines={2}>
       {name}
     </Text>
     <Text style={styles.itemPrice}>{price}</Text>
+    <TouchableOpacity onPress= {() => {navigate('Product')}}>
+                <Text >Chi tiết</Text>
+            </TouchableOpacity>
   </View>
 );
 
 const HomeSection = () => {
+
   return (
     <View style={styles.sectionContainer}>
       {/*  */}
@@ -39,13 +47,20 @@ const HomeSection = () => {
       <ScrollView horizontal={true}>
         <View style={styles.listItemContainer}>
           {[
-            {image1: item_image_1, image2: item_image_2},
-            {image1: item_image_2, image2: item_image_3},
-            {image1: item_image_4, image2: item_image_1},
-            {image1: item_image_1, image2: item_image_2},
+            {image1: item_image_1,name:"dress",price:"1000000"},
+            {image1: item_image_2,name:"suit",price:"9000000"}
+            // {image1: item_image_1, image2: item_image_2},
+            // {image1: item_image_2, image2: item_image_3},
+            // {image1: item_image_4, image2: item_image_1},
+            // {image1: item_image_1, image2: item_image_2},
           ].map((e, index) => (
             <View key={index.toString()}>
-              <ProductItem
+               <ProductItem
+                name={e.name}
+                image={e.image1}
+                price={e.price}
+              />
+              {/* <ProductItem
                 name="Điện thoại Vsmart Bee (Smart Bee)"
                 image={e.image1}
                 price="699.000đ"
@@ -54,7 +69,7 @@ const HomeSection = () => {
                 name="Điện thoại Vsmart Joy 2 Vsmart Joy 2"
                 image={e.image2}
                 price="699.000đ"
-              />
+              /> */}
             </View>
           ))}
         </View>

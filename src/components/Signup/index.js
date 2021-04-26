@@ -30,7 +30,6 @@ const RegisterComponent = ({
             iconPosition= "left"
             placeholder="Enter full name"
             onChangeText= {(value) =>  {
-
                 onChange({name:"fullname",value});
             }}
             error={errors.fullname}

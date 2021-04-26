@@ -75,10 +75,78 @@ export default StyleSheet.create({
       flex: 1,
       backgroundColor: '#fff',
     },
-    ///////////////
+
+
+    /////222222222222222222222222222222222222222
+    sectionContainer: {
+      backgroundColor: '#fff',
+      paddingHorizontal: 12,
+    },
+    sectionTitle: {
+      fontWeight: '700',
+      fontSize: 16,
+      color: '#2f2f2f',
+      marginVertical: 12,
+    },
+    sectionImage: {
+      width: 500,
+      height: 130,
+      borderRadius: 4,
+    },
+    //
+    filterContainer: {
+      flexDirection: 'row',
+      marginTop: 10,
+    },
+    filterActiveButtonContainer: {
+      backgroundColor: '#242424',
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 4,
+      marginRight: 10,
+    },
+    filterInactiveButtonContainer: {
+      backgroundColor: '#fff',
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 4,
+      borderColor: '#5a5a5a',
+      borderWidth: 1,
+      marginRight: 10,
+    },
+    filterActiveText: {
+      color: '#fff',
+    },
+    filterInactiveText: {
+      color: '#5a5a5a',
+    },
+    //
+    listItemContainer: {
+      flexDirection: 'row',
+    },
+    itemContainer: {
+      width: 100,
+      marginRight: 12,
+      marginTop: 10,
+    },
+    itemImage: {
+      width: 100,
+      height: 120,
+    },
+    itemName: {
+      fontSize: 14,
+      color: '#484848',
+      marginVertical: 4,
+    },
+    itemPrice: {
+      fontSize: 16,
+      fontWeight: '500',
+      color: '#2a2a2a',
+    },
+    //
     seeMoreContainer: {
-      marginBottom: 10,
-      padding: 12 ,
+      marginTop: 10,
+      padding: 12,
       borderTopWidth: 0.6,
       borderTopColor: '#ededed',
       alignItems: 'center',

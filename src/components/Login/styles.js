@@ -26,8 +26,6 @@ export default StyleSheet.create({
         paddingLeft:30,
         color:'blue',
         fontSize:16
-
-        
      },
 
      infoText : {

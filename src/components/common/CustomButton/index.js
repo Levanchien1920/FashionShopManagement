@@ -23,8 +23,8 @@ const CustomButton = ({secondary,primary,danger,title,disable,loading,onPress}) 
     return (
         <TouchableOpacity onPress= {onPress} disabled= {disable} style= {[styles.wrapper,{backgroundColor:getBgColor()}]} >
           <View style= {[styles.loaderSection]}>
-                 { loading && <ActivityIndicator  color={colors.primary} />}
-              {title && (<Text style ={{colors:disable?"yellow":"white", paddingLeft:loading?5:0}}> {title} </Text>)}
+                 {/* {!! loading && <ActivityIndicator  color={colors.primary} />} */}
+           <Text> {!!title && (<Text style ={{colors:disable?"yellow":"white", paddingLeft:loading?5:0}}> {title} </Text>)}</Text>  
 
           </View>
           
