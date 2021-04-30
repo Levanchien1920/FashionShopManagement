@@ -1,4 +1,4 @@
-package com.cnpm.fashion_shop.api.employee.dto;
+package com.cnpm.fashion_shop.api.user.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

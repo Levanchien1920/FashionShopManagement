@@ -25,13 +25,4 @@ public class Image extends BaseEntity{
     @Column(name = "link")
     private String link;
 
-//    public Image(String link) {
-//
-//        this.link = link;
-//    }
-//
-//
-//    public Image(String name) {
-//        this.name = name;
-//    }
 }

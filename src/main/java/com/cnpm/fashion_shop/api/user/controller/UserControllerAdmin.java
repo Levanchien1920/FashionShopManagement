@@ -1,14 +1,12 @@
-package com.cnpm.fashion_shop.api.employee.controller;
+package com.cnpm.fashion_shop.api.user.controller;
 
-import com.cnpm.fashion_shop.api.customer.dto.CustomerResponseDto;
-import com.cnpm.fashion_shop.api.employee.dto.EmployeeDetailDto;
-import com.cnpm.fashion_shop.api.employee.dto.EmployeeDto;
-import com.cnpm.fashion_shop.api.employee.dto.EmployeeResponseDto;
+import com.cnpm.fashion_shop.api.user.dto.UserDto;
+import com.cnpm.fashion_shop.api.user.dto.UserResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
 import com.cnpm.fashion_shop.common.response.Response;
-import com.cnpm.fashion_shop.core.employee.service.EmployeeService;
+import com.cnpm.fashion_shop.core.employee.service.UserService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,15 +26,26 @@ import javax.validation.Valid;
 import static com.cnpm.fashion_shop.common.constant.SecurityConstants.SECURITY_JWT_NAME;
 
 @RestController
-@RequestMapping(path = "/api/v1/employee")
-public class EmployeeController {
+@RequestMapping(path = "/api/v1/admin/user")
+public class UserControllerAdmin {
     @Autowired
-    private EmployeeService employeeService;
+    private UserService userService;
 
     @ApiOperation(value = "Get all employees", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping
-    public PaginationResponse<EmployeeResponseDto> getEmployees(RequestParamsForGettingList requestParamsForGettingList) {
-        Page<EmployeeResponseDto> data = employeeService.findAllEmployeeDetails(requestParamsForGettingList.getPage(),
+    @GetMapping("/employee")
+    public PaginationResponse<UserResponseDto> getEmployees(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<UserResponseDto> data = userService.findAllEmployeesDetails(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
+
+    @ApiOperation(value = "Get all employees", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/customer")
+    public PaginationResponse<UserResponseDto> getCustomers(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<UserResponseDto> data = userService.findAllCustomerDetails(requestParamsForGettingList.getPage(),
                 requestParamsForGettingList.getSize(),
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch());
@@ -47,9 +56,9 @@ public class EmployeeController {
     @ApiOperation(value = "Create employee", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PostMapping
     public ResponseEntity<Response> createEmployeeDto(
-            @Valid @RequestBody EmployeeDto dto
+            @Valid @RequestBody UserDto dto
     ) {
-        return employeeService.createEmployee(dto);
+        return userService.createUser(dto);
     }
 
     //
@@ -57,19 +66,25 @@ public class EmployeeController {
     @PatchMapping("/{id}")
     public ResponseEntity<Response> updateEmployee(
             @PathVariable("id") Integer id,
-            @Valid @RequestBody EmployeeDto dto
+            @Valid @RequestBody UserDto dto
     ) {
-        return this.employeeService.updateEmployee(id, dto);
+        return this.userService.updateUser(id, dto);
     }
     @ApiOperation(value = "Get employee by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping("/{id}")
-    public ResponseEntity getOneCustomer(@PathVariable("id") Integer id) {
-        return employeeService.getOne(id);
+    public ResponseEntity getOneEmployee(@PathVariable("id") Integer id) {
+        return userService.getOneEmployee(id);
+    }
+
+    @ApiOperation(value = "Get customer by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/{id_customer}")
+    public ResponseEntity getOneCustomer(@PathVariable("id_customer") Integer id) {
+        return userService.getOneCustomer(id);
     }
 
     @ApiOperation(value = "Delete employee", authorizations = {@Authorization(value = SECURITY_JWT_NAME)})
     @DeleteMapping("/{id}")
     public ResponseEntity<Response> deleteEmployee(@PathVariable("id") Integer id) {
-        return this.employeeService.deleteEmployee(id);
+        return this.userService.deleteUser(id);
     }
 }

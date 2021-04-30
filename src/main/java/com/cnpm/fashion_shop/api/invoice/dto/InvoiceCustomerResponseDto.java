@@ -1,18 +1,16 @@
 package com.cnpm.fashion_shop.api.invoice.dto;
 
-public interface InvoiceResponseDto {
+public interface InvoiceCustomerResponseDto {
     Integer getId();
 
-    String getName_User();
-
     Long getTotal_Money();
+
+    String getName_Customer();
 
     boolean getIs_paid();
 
     String getName_Product();
 
     Integer getNumber_Product();
-
-    String getFullName_Employee();
 
 }

@@ -1,7 +1,8 @@
 package com.cnpm.fashion_shop.api.invoice.controller;
 
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
-import com.cnpm.fashion_shop.api.invoice.dto.InvoiceResponseDto;
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
@@ -23,9 +24,18 @@ public class InvoiceController {
     private InvoiceService invoiceService;
 
     @ApiOperation(value = "Get all invoices", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping
-    public PaginationResponse<InvoiceResponseDto> getInvoice(RequestParamsForGettingList requestParamsForGettingList) {
-        Page<InvoiceResponseDto> data = invoiceService.findAllInvoiceDetails(requestParamsForGettingList.getPage(),
+    @GetMapping("/ByCustomer")
+    public PaginationResponse<InvoiceCustomerResponseDto> getInvoiceByCustomer(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<InvoiceCustomerResponseDto> data = invoiceService.findAllInvoiceDetailsByCustomer(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
+    @GetMapping("/ByEmployee")
+    public PaginationResponse<InvoiceEmployeeResponseDto> getInvoiceByEmployee(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<InvoiceEmployeeResponseDto> data = invoiceService.findAllInvoiceDetailsByEmployee(requestParamsForGettingList.getPage(),
                 requestParamsForGettingList.getSize(),
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch());

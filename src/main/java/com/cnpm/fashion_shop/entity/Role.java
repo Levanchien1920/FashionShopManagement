@@ -31,7 +31,7 @@ public class Role  extends BaseEntity{
             fetch = FetchType.LAZY,
             mappedBy = "role"
     )
-    private Set<Employee> employee = new HashSet<>();
+    private Set<User> user = new HashSet<>();
 //    @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 //    private List<Employee> employeeList;
 }

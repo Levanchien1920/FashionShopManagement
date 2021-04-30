@@ -1,3 +1,4 @@
+/*
 package com.cnpm.fashion_shop.core.customer.service;
 
 import com.cnpm.fashion_shop.api.customer.dto.CustomerDto;
@@ -5,7 +6,9 @@ import com.cnpm.fashion_shop.api.customer.dto.CustomerResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.customer.repository.CustomerRepository;
+import com.cnpm.fashion_shop.core.role.service.RoleService;
 import com.cnpm.fashion_shop.entity.Customer;
+import com.cnpm.fashion_shop.entity.Role;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -22,14 +25,21 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.MethodHandles;
 import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class CustomerService {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private RoleService roleService;
 
     @Autowired
     private BCryptPasswordEncoder encoder;
@@ -69,7 +79,7 @@ public class CustomerService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Customer with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new CustomerDto(customer.getId_cus(),customer.getUsername(),customer.getPassword(),customer.getFullname(),customer.getAddress(),customer.getEmail(),customer.getPhoneNumber()));
+        return ResponseEntity.ok(new CustomerDto(customer.getId_cus(), customer.getUsername(), customer.getPassword(), customer.getFullname(), customer.getAddress(), customer.getEmail(), customer.getPhoneNumber(), customer.getId_role()));
     }
 
     public ResponseEntity<Response> createCustomer(CustomerDto dto) {
@@ -109,6 +119,9 @@ public class CustomerService {
         customer.setAddress(dto.getAddress());
         customer.setEmail(dto.getEmail());
         customer.setPhoneNumber(dto.getPhone_number());
+        customer.setId_role(dto.getId_role());
+
+
 
         try {
             customerRepository.save(customer);
@@ -179,7 +192,7 @@ public class CustomerService {
                     .body(Response.badRequest("This customer does not exist"));
         }
 
-        customer =customerOpt.get();
+        customer = customerOpt.get();
 
         if (customer.getIsDeleted()) {
             return ResponseEntity.badRequest()
@@ -197,11 +210,20 @@ public class CustomerService {
                     .body(Response.internalError(e.getMessage()));
         }
     }
+
     public Customer findByUsername(String username) {
         return this.customerRepository.findByUsername(username);
     }
+
     @Transactional
     public Optional<Customer> findByIdOptional(Integer id) {
         return customerRepository.findById_customer(id);
     }
+
+    public List<String> mappingRolesToName(Set<Role> roles) {
+        return roles
+                .stream().map(Role::getName)
+                .collect(Collectors.toList());
+    }
 }
+*/

@@ -1,7 +1,7 @@
 package com.cnpm.fashion_shop.common.filter;
 
-import com.cnpm.fashion_shop.api.employee.dto.EmployeeDetail;
-import com.cnpm.fashion_shop.core.employee.service.EmployeeDetailService;
+import com.cnpm.fashion_shop.api.user.dto.UserDetail;
+import com.cnpm.fashion_shop.core.employee.service.UserDetailService;
 import com.cnpm.fashion_shop.shared.JwtProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +25,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private JwtProvider jwtProvider;
 
     @Autowired
-    private EmployeeDetailService employeeDetailService;
+    private UserDetailService userDetailService;
 
     @Override
     protected void doFilterInternal(
@@ -38,7 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (token != null && jwtProvider.validateToken(token) != null) {
             Integer userId = Math.toIntExact(jwtProvider.getUserIdFromJWT(token));
 
-            EmployeeDetail detail = (EmployeeDetail) employeeDetailService.loadUserById(userId);
+            UserDetail detail = (UserDetail) userDetailService.loadUserById(userId);
 
             if (detail != null) {
                 UsernamePasswordAuthenticationToken authentication =

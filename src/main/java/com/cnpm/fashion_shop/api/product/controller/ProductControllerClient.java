@@ -24,6 +24,18 @@ public class ProductControllerClient {
     @Autowired
     private ProductService productService;
 
+    @ApiOperation(value = "Get all product")
+    @GetMapping
+    public PaginationResponse<ProductResponseDto> getProducts(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<ProductResponseDto> data = productService.findAllProductDetails(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
+
+
     @ApiOperation(value = "Get product by id")
     @GetMapping("/{product_id}")
     public ResponseEntity getOneProduct(@PathVariable("product_id") Integer id) {
@@ -63,7 +75,7 @@ public class ProductControllerClient {
 
 
     @ApiOperation(value = "Get new products for client")
-    @GetMapping
+    @GetMapping("/new")
     public PaginationResponse<ProductResponseDto> getNewProducts(RequestParamsForGettingList requestParamsForGettingList) {
         Page<ProductResponseDto> data = productService.getNewProducts(requestParamsForGettingList.getPage(),
                 requestParamsForGettingList.getSize(),

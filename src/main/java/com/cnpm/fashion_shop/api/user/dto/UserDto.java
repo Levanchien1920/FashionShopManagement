@@ -1,4 +1,4 @@
-package com.cnpm.fashion_shop.api.employee.dto;
+package com.cnpm.fashion_shop.api.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,7 +12,7 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 @Setter
-public class EmployeeDto {
+public class UserDto {
     private Integer id;
 
     @NotNull
@@ -35,13 +35,18 @@ public class EmployeeDto {
     @Size(max = 50)
     private String address;
 
+    @Getter
+    @Setter
+    @NotNull
+    private String email;
+
     private Integer id_role;
 
     List<RoleDto> roles = new ArrayList<>();
     List<String> role = new ArrayList<>();
 
 
-    public EmployeeDto(int id, String fullName, String phone_number, String username, String address, int id_role) {
+    public UserDto(int id, String fullName, String phone_number, String username, String address, int id_role) {
         this.id = id;
         this.username = username;
         this.fullname = fullName;

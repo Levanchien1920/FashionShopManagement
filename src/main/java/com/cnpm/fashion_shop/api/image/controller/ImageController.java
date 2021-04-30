@@ -1,12 +1,12 @@
-package com.cnpm.fashion_shop.api.brand.controller;
+package com.cnpm.fashion_shop.api.image.controller;
 
-import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
-import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
+import com.cnpm.fashion_shop.api.image.dto.ImageDto;
+import com.cnpm.fashion_shop.api.image.dto.ImageResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
 import com.cnpm.fashion_shop.common.response.Response;
-import com.cnpm.fashion_shop.core.brand.service.BrandService;
+import com.cnpm.fashion_shop.core.image.service.ImageService;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,19 +23,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
-
 @RestController
-@RequestMapping(path = "/api/v1/brand")
-public class BrandController {
-
-
+@RequestMapping(path = "/api/v1/image")
+public class ImageController {
     @Autowired
-    private BrandService brandService;
+    private ImageService imageService;
 
-    @ApiOperation(value = "Get all brands")
+    @ApiOperation(value = "Get all images")
     @GetMapping()
-    public PaginationResponse<BrandResponseDto> getBrand(RequestParamsForGettingList requestParamsForGettingList) {
-        Page<BrandResponseDto> data = brandService.findAllBrandDetails(requestParamsForGettingList.getPage(),
+    public PaginationResponse<ImageResponseDto> getImage(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<ImageResponseDto> data = imageService.findAllImageDetails(requestParamsForGettingList.getPage(),
                 requestParamsForGettingList.getSize(),
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch());
@@ -43,33 +40,33 @@ public class BrandController {
     }
 
 
-    @ApiOperation(value = "Create brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @ApiOperation(value = "Create image", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PostMapping
-    public ResponseEntity<Response> createBrandDto(
-            @Valid @RequestBody BrandDto dto
+    public ResponseEntity<Response> createImage(
+            @Valid @RequestBody ImageDto dto
     ) {
-        return brandService.createBrandDto(dto);
+        return imageService.createImage(dto);
     }
 
-    @ApiOperation(value = "Update brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @PatchMapping("/{id_brand}")
-    public ResponseEntity<Response> updateBrand(
-            @PathVariable("id_brand") Integer id,
-            @Valid @RequestBody BrandDto dto
+    @ApiOperation(value = "Update image", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @PatchMapping("/{id_image}")
+    public ResponseEntity<Response> updateImage(
+            @PathVariable("id_image") Integer id,
+            @Valid @RequestBody ImageDto dto
     ) {
-        return this.brandService.updateBrandDto(id, dto);
+        return this.imageService.updateImage(id, dto);
     }
 
     @ApiOperation(value = "Delete brand", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @DeleteMapping("/{id_brand}")
-    public ResponseEntity<Response> deleteBrand(@PathVariable("id_brand") Integer id) {
-        return this.brandService.deleteBrandDto(id);
+    public ResponseEntity<Response> deleteImage(@PathVariable("id_brand") Integer id) {
+        return this.imageService.deleteImage(id);
     }
 
     @ApiOperation(value = "Get brand by id")
-    @GetMapping("/{id_brand}")
-    public ResponseEntity getOneBrand(@PathVariable("id_brand") Integer id) {
-        return brandService.getOne(id);
+    @GetMapping("/{id_image}")
+    public ResponseEntity getOneImage(@PathVariable("id_image") Integer id) {
+        return imageService.getOne(id);
     }
 
 }

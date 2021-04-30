@@ -8,7 +8,7 @@ import java.util.List;
 
 
 @AllArgsConstructor
-public class LoginEmployeeDetailDto {
+public class LoginDetailDto {
     @Getter
     @Setter
     private Integer id;
@@ -21,6 +21,17 @@ public class LoginEmployeeDetailDto {
     @Setter
     private String fullName;
 
+    @Getter
+    @Setter
+    private String address;
+
+    @Getter
+    @Setter
+    private String phoneNumber;
+
+    @Getter
+    @Setter
+    private String email;
 
     @Getter
     @Setter

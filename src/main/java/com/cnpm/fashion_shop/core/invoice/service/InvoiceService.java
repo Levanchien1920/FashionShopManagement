@@ -1,7 +1,8 @@
 package com.cnpm.fashion_shop.core.invoice.service;
 
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
-import com.cnpm.fashion_shop.api.invoice.dto.InvoiceResponseDto;
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.invoice.repository.DetailRepository;
@@ -40,21 +41,37 @@ public class InvoiceService {
     private ProductRepository productRepository;
 
     @Transactional
-    public Page<InvoiceResponseDto> findAllInvoiceDetails(int size, int page, String sort, String search) {
+    public Page<InvoiceCustomerResponseDto> findAllInvoiceDetailsByCustomer(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
-                "name_user",
                 "total_money",
+                "name_customer",
                 "is_paid",
                 "name_product",
-                "number_product",
-                "full_name_employee"
+                "number_product"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return invoiceRepository.findAllByName( pageable, search);
+        return invoiceRepository.findAllByIdCustomer( pageable, search);
+    }
+
+    @Transactional
+    public Page<InvoiceEmployeeResponseDto> findAllInvoiceDetailsByEmployee(int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "total_money",
+                "fullName_Employee",
+                "is_paid",
+                "name_product",
+                "number_product"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return invoiceRepository.findAllByIdEmployee( pageable, search);
     }
 
 //    public ResponseEntity getOne(Integer id) {
@@ -90,7 +107,7 @@ public class InvoiceService {
         invoice = new Invoice();
         invoice.setTotalMoney(dto.getTotalMoney());
         invoice.setId_employee(dto.getId_employee());
-        invoice.setId_user(dto.getId_user());
+        invoice.setId_customer(dto.getId_user());
         invoice.set_paid(false);
         invoiceRepository.save(invoice);
 

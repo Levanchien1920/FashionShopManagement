@@ -39,7 +39,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Bean(BeanIds.AUTHENTICATION_MANAGER)
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+        return super.authenticationManager();
     }
 
     public SecurityConfig() {
@@ -50,15 +50,16 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http
                 .cors()
                 .and()
-                .csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/api/v1/employee/**", "/api/v1/brand/**", "/api/v1/category/**", "/api/v1/product/**", "/api/v1/post/**", "/api/v1/review/**", "/api/v1/invoice/**")
+                .antMatchers("/api/v1/admin/user/**", "/api/v1/saleFigureByMonth/**", "/api/v1/saleFigureEmployee/**","/api/v1/invoice/**")
                 .hasAnyAuthority(RoleEnum.admin.name())
-                .antMatchers("/api/v1/brand/**", "/api/v1/category/**", "/api/v1/product/**", "/api/v1/post/**", "/api/v1/review/**", "/api/v1/invoice/**")
+                .antMatchers("/api/v1/user/**","/api/v1/brand/**", "/api/v1/category/**", "/api/v1/product/**", "/api/v1/post/**", "/api/v1/review/**", "/api/v1/invoice/**","/api/v1/customer/**","/api/v1/client/image/**")
                 .hasAnyAuthority(RoleEnum.employee.name())
-                .anyRequest()
-                .permitAll()
+                .antMatchers( "/api/v1/customer/**","/api/v1/client/brand/**","/api/v1/client/category/**", "/api/v1/client/product/**","/api/v1/client/post/**","/api/v1/client/review/**")
+                .hasAnyAuthority(RoleEnum.customer.name())
+                .anyRequest().permitAll()
                 .and()
+                .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .addFilterBefore(jwtAuthenticationFilter(), UsernamePasswordAuthenticationFilter.class);

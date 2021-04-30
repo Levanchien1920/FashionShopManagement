@@ -23,8 +23,8 @@ import java.util.Set;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity(name = "employee")
-public class Employee extends BaseEntity {
+@Entity(name = "user")
+public class User extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Getter
@@ -46,17 +46,8 @@ public class Employee extends BaseEntity {
     @Column(name = "phone_number")
     private String phone_number;
 
-    public Employee(Integer id, String fullName, String username, String password, String address, String phone_number,
-                    int id_role) {
-        super();
-        this.id = id;
-        this.fullName = fullName;
-        this.username = username;
-        this.password = password;
-        this.address = address;
-        this.phone_number = phone_number;
-        this.id_role = id_role;
-    }
+    @Column(name = "email")
+    private String email;
 
     @Column(name = "id_role")
     private int id_role;
@@ -74,8 +65,8 @@ public class Employee extends BaseEntity {
             cascade = CascadeType.PERSIST
     )
     @JoinTable(
-            name = "employees_roles",
-            joinColumns = {@JoinColumn(name = "id_employee", referencedColumnName = "id", nullable = false, updatable = false)},
+            name = "users_roles",
+            joinColumns = {@JoinColumn(name = "id_user", referencedColumnName = "id", nullable = false, updatable = false)},
             inverseJoinColumns = {@JoinColumn(name = "id_role", referencedColumnName = "id", nullable = false, updatable = false)}
     )
     private Set<Role> role = new HashSet<>();

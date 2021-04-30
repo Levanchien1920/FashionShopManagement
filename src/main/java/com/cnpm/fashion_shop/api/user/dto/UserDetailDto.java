@@ -1,17 +1,16 @@
-package com.cnpm.fashion_shop.api.employee.dto;
+package com.cnpm.fashion_shop.api.user.dto;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
 @Getter
 @Setter
-public class EmployeeDetailDto {
+public class UserDetailDto {
     Integer id;
 
     String employeeName;

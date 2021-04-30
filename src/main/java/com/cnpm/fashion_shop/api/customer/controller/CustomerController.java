@@ -1,3 +1,4 @@
+/*
 package com.cnpm.fashion_shop.api.customer.controller;
 
 import com.cnpm.fashion_shop.api.customer.dto.CustomerDto;
@@ -63,3 +64,4 @@ public class CustomerController {
         return customerService.getOne(id);
     }
 }
+*/

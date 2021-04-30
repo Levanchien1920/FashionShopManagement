@@ -46,7 +46,7 @@ public class PostController {
     @ApiOperation(value = "Create post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PostMapping
     public ResponseEntity<Response> createPostDto(@Valid @RequestBody PostDto dto) {
-        return postService.createPostDto(dto);
+        return postService.createPost(dto);
     }
 
     @ApiOperation(value = "Update post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
@@ -54,13 +54,13 @@ public class PostController {
     public ResponseEntity<Response> updatePost(@PathVariable("post_id") Integer id,
                                                    @Valid @RequestBody PostDto dto
     ) {
-        return this.postService.updatePostDto(id, dto);
+        return this.postService.updatePost(id, dto);
     }
 
     @ApiOperation(value = "Delete post", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @DeleteMapping("/{post_id}")
     public ResponseEntity<Response> deleteCategory(@PathVariable("post_id") Integer id) {
-        return this.postService.deletePostDto(id);
+        return this.postService.deletePost(id);
     }
 
     @ApiOperation(value = "Get post by id")

@@ -29,8 +29,8 @@ public class Invoice extends BaseEntity{
     @Column(name = "is_paid")
     private boolean is_paid;
 
-    @Column(name = "id_user")
-    private Integer id_user;
+    @Column(name = "id_customer")
+    private Integer id_customer;
 
     @Column(name = "id_employee")
     private Integer id_employee;

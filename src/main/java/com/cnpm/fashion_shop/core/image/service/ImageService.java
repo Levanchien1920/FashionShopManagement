@@ -1,11 +1,11 @@
-package com.cnpm.fashion_shop.core.post.service;
+package com.cnpm.fashion_shop.core.image.service;
 
-import com.cnpm.fashion_shop.api.post.dto.PostDto;
-import com.cnpm.fashion_shop.api.post.dto.PostResponseDto;
+import com.cnpm.fashion_shop.api.image.dto.ImageDto;
+import com.cnpm.fashion_shop.api.image.dto.ImageResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
-import com.cnpm.fashion_shop.core.post.repository.PostRepository;
-import com.cnpm.fashion_shop.entity.Post;
+import com.cnpm.fashion_shop.core.image.repository.ImageRepository;
+import com.cnpm.fashion_shop.entity.Image;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -25,16 +25,15 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class PostService {
+public class ImageService {
     private static final Logger LOG = LoggerFactory.getLogger(MethodHandles.lookup().lookupClass());
     @Autowired
-    private PostRepository postRepository;
+    private ImageRepository imageRepository;
 
     @Transactional
-    public Page<PostResponseDto> findAllPostDetails(int size, int page, String sort, String search) {
+    public Page<ImageResponseDto> findAllImageDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
-                "content",
                 "name",
                 "link"
         );
@@ -42,52 +41,51 @@ public class PostService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return postRepository.findAll(pageable, search);
+        return imageRepository.findAllByName(pageable, search);
     }
 
     public ResponseEntity getOne(Integer id) {
-        //lay ra id, content va id_image
-        Optional<Post> optionalPost = postRepository.findById(id);
-        Post post;
+        Optional<Image> optionalImage = imageRepository.findByIdImage(id);
+        Image image;
 
-
-        if (optionalPost.isEmpty()) {
+        if (optionalImage.isEmpty()) {
             return ResponseEntity
                     .status(HttpStatus.NOT_FOUND)
-                    .body(Response.notFound("Cannot find this post with id = " + id));
+                    .body(Response.notFound("Cannot find this image with id = " + id));
         }
 
-        post = optionalPost.get();
+        image = optionalImage.get();
 
-        if (post.getIsDeleted()) {
+        if (image.getIsDeleted()) {
             return ResponseEntity
                     .status(HttpStatus.CONFLICT)
-                    .body(Response.conflict("post with id = " + id + " is deleted"));
+                    .body(Response.conflict("Image with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new PostDto(post.getId(),post.getContent() ,post.getId_image()));
+        return ResponseEntity.ok(new ImageDto(image.getId(), image.getName(), image.getLink()));
     }
 
-    public ResponseEntity<Response> createPost(PostDto dto) {
-        Post post;
-        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getContent()));
-        if (StringUtils.trim(dto.getContent()).equals("")) {
+    @Transactional
+    public ResponseEntity<Response> createImage(ImageDto dto) {
+        Image image;
+        Image existingImage = imageRepository.findByLink(StringUtils.trim(dto.getName()));
+        if (StringUtils.trim(dto.getName()).equals("")) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Post content cannot be empty or contain only space"));
+                    .body(Response.badRequest("Image name cannot be empty or contain only space"));
         }
 
-        if (existing_post != null) {
-            if (!existing_post.getIsDeleted()) {
+        if (existingImage != null) {
+            if (!existingImage.getIsDeleted()) {
                 return ResponseEntity
                         .status(HttpStatus.CONFLICT.value())
-                        .body(Response.conflict("This post content existed already"));
+                        .body(Response.conflict("This image name existed already"));
 
             }
 
-            existing_post.setIsDeleted(false);
+            existingImage.setIsDeleted(false);
 
             try {
-                postRepository.save(existing_post);
+                imageRepository.save(existingImage);
                 return ResponseEntity.ok(SuccessfulResponse.CREATED);
             } catch (Exception e) {
                 LOG.error(e.getMessage());
@@ -97,14 +95,11 @@ public class PostService {
             }
         }
 
-        post = new Post();
-        post.setContent(dto.getContent().trim());
-        post.setId(dto.getId());
-        post.setId_image(dto.getId_image());
-
+        image = new Image();
+        image.setName(dto.getName().trim());
 
         try {
-            postRepository.save(post);
+            imageRepository.save(image);
             return ResponseEntity.ok(SuccessfulResponse.CREATED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -115,41 +110,39 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseEntity<Response> updatePost(Integer id, PostDto dto) {
-        Optional<Post> postOpt = postRepository.findById(id);
-        Post post;
-        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getContent()));
+    public ResponseEntity<Response> updateImage(Integer id, ImageDto dto) {
+        Optional<Image> imageOptional = imageRepository.findByIdImage(id);
+        Image image;
+        Image existingImage = imageRepository.findByLink(StringUtils.trim(dto.getLink()));
 
-        if (StringUtils.equals(StringUtils.trim(dto.getContent()), "")) {
+        if (StringUtils.equals(StringUtils.trim(dto.getLink()), "")) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Post's content cannot be empty"));
+                    .body(Response.badRequest("Image's name cannot be empty"));
         }
 
-        if (postOpt.isEmpty() || postOpt.get().getIsDeleted()) {
+        if (imageOptional.isEmpty() || imageOptional.get().getIsDeleted()) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Not found post to be updated"));
+                    .body(Response.badRequest("Not found image to be updated"));
         }
 
         // Compare old and new name
-        if (postOpt.get().getContent().equals(StringUtils.trim(dto.getContent()))) {
+        if (imageOptional.get().getLink().equals(StringUtils.trim(dto.getLink()))) {
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);
         }
 
-        if (existing_post != null) {
+        if (existingImage != null) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("This post already exists"));
+                    .body(Response.badRequest("This image already exists"));
         }
 
-        post = postOpt.get();
-        post.setContent(dto.getContent().trim());
-        post.setId_image(dto.getId_image());
-
+        image=imageOptional.get();
+        image.setName(dto.getName().trim());
 
         try {
-            postRepository.save(post);
+            imageRepository.save(image);
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -160,26 +153,26 @@ public class PostService {
     }
 
     @Transactional
-    public ResponseEntity<Response> deletePost(Integer id) {
-        Post post;
-        Optional<Post> postOpt = postRepository.findById(id);
+    public ResponseEntity<Response> deleteImage(Integer id) {
+        Image image;
+        Optional<Image> imageOptional = imageRepository.findByIdImage(id);
 
-        if (postOpt.isEmpty()) {
+        if (imageOptional.isEmpty()) {
             return ResponseEntity.badRequest()
-                    .body(Response.badRequest("This post does not exist"));
+                    .body(Response.badRequest("This image does not exist"));
         }
 
-        post = postOpt.get();
+        image = imageOptional.get();
 
-        if (post.getIsDeleted()) {
+        if (image.getIsDeleted()) {
             return ResponseEntity.badRequest()
-                    .body(Response.badRequest("This post has been deleted"));
+                    .body(Response.badRequest("This image has been deleted"));
         }
 
-        post.setIsDeleted(true);
+        image.setIsDeleted(true);
 
         try {
-            postRepository.save(post);
+            imageRepository.save(image);
             return ResponseEntity.ok(SuccessfulResponse.DELETED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
@@ -188,8 +181,4 @@ public class PostService {
         }
     }
 
-    @Transactional
-    public Optional<Post> findByIdOptional(Integer id) {
-        return postRepository.findById(id);
-    }
 }

@@ -1,6 +1,6 @@
-package com.cnpm.fashion_shop.api.employee.dto;
+package com.cnpm.fashion_shop.api.user.dto;
 
-public interface EmployeeResponseDto {
+public interface UserResponseDto {
     Integer getId();
 
     String getUserName();

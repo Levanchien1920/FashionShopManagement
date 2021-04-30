@@ -9,6 +9,7 @@ import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
 import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
+import com.cnpm.fashion_shop.core.image.repository.ImageRepository;
 import com.cnpm.fashion_shop.core.product.repository.*;
 import com.cnpm.fashion_shop.core.review.repository.ReviewRepository;
 import com.cnpm.fashion_shop.entity.*;
@@ -99,7 +100,7 @@ public class ProductService {
         Optional<Category> optionalCategory = categoryRepository.findById(product.getIdCategory());
         Optional<Brand> optionalBrand = brandRepository.findById_brand(product.getIdBrand());
         gender = genderRepository.findById_gender(product.getIdGender());
-        image1 = imageRepository.findByName_image(product.getIdImage());
+        image1 = imageRepository.findById(product.getIdImage());
         review = reviewRepository.findById_Product(product.getId_product());
 
 
