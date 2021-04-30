@@ -64,7 +64,6 @@ public class ImageService {
         return ResponseEntity.ok(new ImageDto(image.getId(), image.getName(), image.getLink()));
     }
 
-    @Transactional
     public ResponseEntity<Response> createImage(ImageDto dto) {
         Image image;
         Image existingImage = imageRepository.findByLink(StringUtils.trim(dto.getName()));
@@ -97,6 +96,7 @@ public class ImageService {
 
         image = new Image();
         image.setName(dto.getName().trim());
+        image.setLink(dto.getLink().trim());
 
         try {
             imageRepository.save(image);
@@ -140,6 +140,7 @@ public class ImageService {
 
         image=imageOptional.get();
         image.setName(dto.getName().trim());
+        image.setLink(dto.getLink().trim());
 
         try {
             imageRepository.save(image);
