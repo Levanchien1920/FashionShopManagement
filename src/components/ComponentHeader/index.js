@@ -50,9 +50,6 @@ const ComponentHeader = () => {
       </View>
             
           
-
-
-
        <View style={styles.bodyContainer}>
        
       </View>

@@ -4,16 +4,11 @@ import { ScrollView, StyleSheet, Text, View,TextInput } from 'react-native';
 import styles from './styles';
 
 
-const Input = ({onChangeText,style,value,lable,icon,iconPosition,error,...props}) => {
-
+const Input = ({onChangeText,style,value,lable,error,...props}) => {
     return (
-        <View style= {styles.inputContainer}>
-        {lable && <Text> {lable} </Text>}
-
+        <View style={styles.inputContainer}>
+        {lable ? (<Text> {lable} </Text>) : null}
         <View style= {styles.wrapper}>
-
-        {/* <View> {icon && icon}</View> */}
-        
         <TextInput
         style={[styles.textInput,style]}
         onChangeText={onChangeText}
@@ -22,7 +17,7 @@ const Input = ({onChangeText,style,value,lable,icon,iconPosition,error,...props}
         />
 
         </View>
-        {error && <Text style ={{colors:"yellow"}}> {error} </Text>}
+        {error ? (<Text style ={{colors:"yellow"}}> {error} </Text>) : null}
         </View>
         
     );

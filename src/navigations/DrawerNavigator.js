@@ -17,7 +17,7 @@ const DrawerNavigator = () => {
     const Drawer = createDrawerNavigator();
     return (
         <Drawer.Navigator drawerType="slide" drawerContent= {( {navigation}) =>getDrawerContent(navigation)}>
-          <Drawer.Screen name={HOME_NAVIGATOR} component= {HomeNavigator} ></Drawer.Screen>
+          <Drawer.Screen name={"Home"} component= {HomeNavigator} ></Drawer.Screen>
           <Drawer.Screen name={'LogIn'} component= {Login}></Drawer.Screen>
           <Drawer.Screen name={'Register'} component= {Register}></Drawer.Screen>
 

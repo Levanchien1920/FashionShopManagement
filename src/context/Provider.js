@@ -13,7 +13,7 @@ const GlobalProvider=({children}) => {
     
 
     return <GlobalContext.Provider 
-    value= {{authState,homeState,authDispatch,homeDispatch}}>{children} </GlobalContext.Provider>
+    value= {{authState,homeState,authDispatch,homeDispatch}}>{children}</GlobalContext.Provider>
 
     
 }

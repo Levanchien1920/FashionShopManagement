@@ -7,6 +7,7 @@ import AppNavContainer from './src/navigations/index';
 
 export default function App() {
   return (
+    
     <GlobalProvider>
         <AppNavContainer />
     </GlobalProvider>

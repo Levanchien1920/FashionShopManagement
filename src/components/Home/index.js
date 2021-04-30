@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,StatusBar,ScrollView ,Dimensions} from 'react-native';
+import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,StatusBar,ScrollView ,Picker} from 'react-native';
 import Container from '../common/Container';
 import Input from '../common/Input';
 import CustomButtom from '../common/CustomButton';
@@ -13,7 +13,6 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import ComponentHeader from '../ComponentHeader';
 
-const section_banner = require('../../assets/images/section_banner.png');
 
 
 const ProductItem = ({image, name, price}) => (
@@ -22,7 +21,7 @@ const ProductItem = ({image, name, price}) => (
   <View style={styles.itemContainer}>
 
   <Image  source={{ uri: {image} }}
-   style={{width: 100, height: 200, borderWidth: 10}}
+   style={{width: 100, height: 200, borderWidth: 1}}
   //  style={styles.itemImage}
   />
    
@@ -48,16 +47,31 @@ const HomeComponent = () => {
   console.log(listProductNP);
 
   const {navigate} =useNavigation();
+  const [selectedValue, setSelectedValue] = useState("java");
     return (
+
+      
         <View>
          <ComponentHeader />
+{/* 
+         <View style={styles.container}>
+      <Picker
+        selectedValue={selectedValue}
+        style={{ height: 50, width: 150 }}
+        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="Java" value="java" />
+        <Picker.Item label="JavaScript" value="js" />
+      </Picker>
+    </View> */}
+
        <View style={styles.bodyContainer}>
         <ScrollView>
         <View style={styles.sectionContainer}>
       {/*  */}
       <Text style={styles.sectionTitle}>Clothers</Text>
       {/*  */}
-      <Image source={section_banner} style={styles.sectionImage} />
+    
       {/*  */}
      
       {/*  */}
@@ -71,7 +85,10 @@ const HomeComponent = () => {
                 price={e.price}
               />
 
-              <TouchableOpacity onPress= {() => {navigate('ProductDetail')}}>
+              <TouchableOpacity onPress= {() => {navigate('ProductDetail'), {
+            itemId: 86,
+            otherParam: 'anything you want here',
+          }}}>
                 <Text >Chi tiết</Text>
             </TouchableOpacity>
 

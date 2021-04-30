@@ -21,6 +21,7 @@ const HomeNavigator = () => {
         <HomeStack.Navigator initialRouterName={CONTACT_LIST}>
           <HomeStack.Screen name={'Home'} component= {Home} ></HomeStack.Screen>
           <HomeStack.Screen name={'Products'} component= {Products}></HomeStack.Screen>
+          <HomeStack.Screen name={'Products/:id'} component= {ProductDetail}></HomeStack.Screen>
           <HomeStack.Screen name={'ProductDetail'} component= {ProductDetail}></HomeStack.Screen>
           <HomeStack.Screen name={'Cart'} component= {Cart}></HomeStack.Screen>
           <HomeStack.Screen name={'Checkout'} component= {Checkout}></HomeStack.Screen>
