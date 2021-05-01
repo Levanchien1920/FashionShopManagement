@@ -190,4 +190,20 @@ public class ReviewService {
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return reviewRepository.findAllGoodReview(pageable, search);
     }
+    @Transactional
+    public Page<ReviewResponseDto> findAllReviewByProduct(int size, int page, String sort, int id) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "content",
+                "number_of_star",
+                "name_product",
+                "name_user",
+                "email"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return reviewRepository.findAllReviewByIdProduct(pageable, id);
+    }
 }

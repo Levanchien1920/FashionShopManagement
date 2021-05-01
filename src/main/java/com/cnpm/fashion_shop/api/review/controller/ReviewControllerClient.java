@@ -61,4 +61,15 @@ public class ReviewControllerClient {
 
         return new PaginationResponse<>(data);
     }
+
+    @ApiOperation(value = "Get all reviews by id_product")
+    @GetMapping("/{product_id}")
+    public PaginationResponse<ReviewResponseDto> getReviewByProduct(@PathVariable("product_id") Integer id,RequestParamsForGettingList requestParamsForGettingList) {
+        Page<ReviewResponseDto> data = reviewService.findAllReviewByProduct(id,requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
 }

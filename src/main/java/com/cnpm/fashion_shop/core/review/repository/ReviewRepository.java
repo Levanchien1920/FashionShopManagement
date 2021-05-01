@@ -22,9 +22,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     @Query(value = "SELECT * FROM review r WHERE r.id = :id AND r.is_deleted = FALSE", nativeQuery = true)
     Optional<Review> findById(@Param("id") Integer id);
 
-    @Query(value = "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product,c.fullname AS Name_User,c.email AS Email FROM review r inner join product p on r.id_product=p.id " +
-            "inner join user c on r.id_user=c.id WHERE r.id_product=:id and LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE", nativeQuery = true)
-    Page<ReviewResponseDto> findAllReviewByProduct(Pageable pageable, @Param("keyword") String keyword,@Param("id") Integer id);
+    @Query(value = "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product,c.full_name AS Name_User,c.email AS Email FROM review r inner join product p on r.id_product=p.id " +
+            "inner join user c on r.id_user=c.id WHERE p.id=:id and LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE", nativeQuery = true)
+    Page<ReviewResponseDto> findAllReviewByProduct(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id);
 
 
     @Query(value = "SELECT r.id, r.content as content,  AVG(r.number_of_star) as number_of_star, r.id_product as id_product, r.id_user as id_user, r.created_at as created_at, r.is_deleted as is_deleted, r.updated_at  FROM review r inner join product p on r.id_product=p.id WHERE p.id = :id AND p.is_deleted = FALSE group by p.id", nativeQuery = true)
@@ -32,6 +32,9 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
 
 
     @Query(value = "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product,c.full_name AS Name_User,c.email AS Email FROM review r inner join product p on r.id_product=p.id " +
-            "inner join user c on r.id_user=c.id WHERE LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE and r.number_of_star >=4", nativeQuery = true)
+            "WHERE LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE and r.number_of_star >=4", nativeQuery = true)
     Page<ReviewResponseDto> findAllGoodReview(Pageable pageable, @Param("keyword") String keyword);
+
+    @Query(value= "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product FROM review r inner join product p on r.id_product=p.id WHERE p.id = :id and r.is_deleted = FALSE", nativeQuery = true)
+    Page<ReviewResponseDto> findAllReviewByIdProduct(Pageable pageable, @Param("id") Integer id);
 }
