@@ -17,6 +17,13 @@ public class ProductRes extends BaseEntity {
 
     @Getter
     @Setter
+    private Integer id_cate;
+    @Getter
+    @Setter
+    private Integer id_brand;
+
+    @Getter
+    @Setter
     private String categoryName;
 
     @Getter

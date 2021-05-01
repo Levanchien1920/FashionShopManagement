@@ -125,7 +125,10 @@ public class ProductService {
         brand = optionalBrand.get();
 
         ProductRes productRes = new ProductRes();
+
         productRes.setId(product.getId_product());
+        productRes.setId_cate(category.getId());
+        productRes.setId_brand(brand.getId());
         productRes.setBrandName(brand.getName());
         productRes.setCategoryName(category.getName());
         productRes.setGenderName(gender.getName());
