@@ -15,7 +15,7 @@ export default function MyAccount() {
             "phone_number": "",
     })
     useEffect(() => {
-           axios.get(`http://localhost:9090/api/v1/customer/${localStorage.getItem("id")}`).then((response)=> {
+           axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`).then((response)=> {
             setaccount(response.data);
         }).catch((error) =>{
         });

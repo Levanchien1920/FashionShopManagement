@@ -2105,6 +2105,7 @@ h2 {
     flex-direction: row;
     background: #ffffff;
     margin: 5px;
+    width: 800px;
 }
 
 .review .review-img {

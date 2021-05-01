@@ -5,7 +5,12 @@ export default function Brand() {
     const [ListBrand , setListBrand] = useState([]);
     const history = useHistory();
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
+        axios.get('http://localhost:9090/api/v1/brand',
+        {
+        headers: {
+          'Authorization': `Bearer ${localStorage.getItem("token")}`
+        } 
+        }).then((response)=> {
                 setListBrand(response.data.content);
             }).catch((error) =>{
             });

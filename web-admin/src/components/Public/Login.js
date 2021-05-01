@@ -8,7 +8,7 @@ export default function Login() {
     const { LoginDispatch} = useContext(LoginContext);
     const history = useHistory();
     const OnSubmitHandle =  (e) =>{
-        axios.post("http://localhost:9090/api/v1/auth/loginEmployee", userInput).then((response)=> {
+        axios.post("http://localhost:9090/api/v1/auth/login", userInput).then((response)=> {
             setErrorMessage(null);
             const {token, info} = response.data;
             localStorage.setItem("token", token);
@@ -17,7 +17,6 @@ export default function Login() {
             localStorage.setItem("fullname", info.fullName);
             localStorage.setItem("roleNames", info.roleNames);
             LoginDispatch();
-           // history.push("/");
         }).catch((error) =>{
             setErrorMessage(error.response.data.message);
         });
@@ -36,7 +35,6 @@ export default function Login() {
                 <input type="button" value="Login" className="login-button"
                 onClick={OnSubmitHandle}/>
                 <br></br>        
-                <h6 className="no-access">Can't access your account?</h6>
                 {errorMessage && (
                     <div className="error-mesage"><h3>{errorMessage}</h3></div>
                 )}

@@ -10,50 +10,112 @@ function Products() {
         check  : 0, 
         id  : 0,
     });
+    const [pageIndex, setpageIndex] = useState(0)
+    const [totalPage, settotalPage] = useState(0)
+    const [searchInput, setsearchInput] = useState("");
     useEffect(() => {
-        if (filter.check === 0) {
-            axios.get('http://localhost:9090/api/v1/product').then((response)=> {
-                setlistProduct(response.data.content);
+        async function get() {
+            switch (filter.check) {
+                case 0:
+                    axios.get('http://localhost:9090/api/v1/client/product').then((response)=> {
+                        setlistProduct(response.data.content);
+                        setpageIndex(response.data.pageIndex)
+                        settotalPage(response.data.totalPage)
+                    }).catch((error) =>{
+                    });
+                    break;
+                case 1:
+                    axios.get(`http://localhost:9090/api/v1/client/category/relateProduct/${filter.id}`).then((response)=> {
+                        setlistProduct(response.data.content);
+                        setpageIndex(response.data.pageIndex)
+                        settotalPage(response.data.totalPage)
+                    }).catch((error) =>{
+                    });
+                    break;
+                case 2:
+                    axios.get(`http://localhost:9090/api/v1/client/brand/relateProduct/${filter.id}`).then((response)=> {
+                        setlistProduct(response.data.content);
+                        setpageIndex(response.data.pageIndex)
+                        settotalPage(response.data.totalPage)
+                    }).catch((error) =>{
+                    });
+                    break;
+                case 7:
+                    console.log(pageIndex)
+                    let id = pageIndex-1;
+                    axios.get(`http://localhost:9090/api/v1/client/product?page=${id}`).then((response)=> {
+                        setlistProduct(response.data.content);
+                        setpageIndex(response.data.pageIndex)
+                        settotalPage(response.data.totalPage)
+                    }).catch((error) =>{
+                    });
+                    break;
+                case 8 :
+                    let id8 = pageIndex+1;
+                    axios.get(`http://localhost:9090/api/v1/client/product?page=${id8}`).then((response)=> {
+                        setlistProduct(response.data.content);
+                        setpageIndex(response.data.pageIndex)
+                        settotalPage(response.data.totalPage)
+                    }).catch((error) =>{
+                    });
+                    break;
+                case 9 :
+                    axios.get(`http://localhost:9090/api/v1/client/product?search=${searchInput}`).then((response)=> {
+                        setlistProduct(response.data.content);
+                    }).catch((error) =>{
+                    });
+                    break;
+                default:
+                    break;
+            }
+         }
+        get()
+       // console.log(pageIndex)
+    }, [filter]);
+    useEffect(() => {
+        async function getCategoryAndBrand() {
+            axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
+                setlistCategory(response.data.content);
+            }).catch((error) =>{
+            });
+            axios.get('http://localhost:9090/api/v1/client/brand').then((response)=> {
+                setlistBrand(response.data.content);
             }).catch((error) =>{
             });
         }
-        if (filter.check === 1){
-                axios.get(`http://localhost:9090/api/v1/client/category/${filter.id}`).then((response)=> {
-                    setlistProduct(response.data.content);
-                }).catch((error) =>{
-                });
-            }
-        if (filter.check === 2){
-                axios.get(`http://localhost:9090/api/v1/client/brand/${filter.id}`).then((response)=> {
-                    setlistProduct(response.data.content);
-                }).catch((error) =>{
-                });
-            }
-        if (filter.check === 3){
-                listProduct.sort((a, b) => (a.name > b.name) ? 1 : -1);
-            }
-        if (filter.check === 4){
-                listProduct.sort((a, b) => (a.name < b.name) ? 1 : -1);
-            }
-        if (filter.check === 5){
-                listProduct.sort((a, b) => (a.price > b.price) ? 1 : -1);
-            }
-        if (filter.check === 6){
-                listProduct.sort((a, b) => (a.price < b.price) ? 1 : -1);
-            }
-       
-    }, [filter]);
-    useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/category').then((response)=> {
-            setlistCategory(response.data.content);
-        }).catch((error) =>{
-        });
-        axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
-            setlistBrand(response.data.content);
-        }).catch((error) =>{
-        });
+        getCategoryAndBrand();
     }, []);
     function SortName (c) {
+        switch (c) {
+            case 3:
+                listProduct.sort((a, b) => (a.name > b.name) ? 1 : -1);
+                break;
+            case 4:
+                listProduct.sort((a, b) => (a.name < b.name) ? 1 : -1);
+                break;
+            case 5:
+                listProduct.sort((a, b) => (a.price > b.price) ? 1 : -1);
+                break;
+            default:
+                listProduct.sort((a, b) => (a.price < b.price) ? 1 : -1);
+                break;
+        }
+        // để chạy lại useEfect
+        setfilter({
+            ...filter, check : c
+        });
+    }
+    function buttonPrev(c) {
+        setfilter({
+            ...filter, check : c
+        });
+    }
+    function buttonNext(c) {
+        setfilter({
+            ...filter, check : c
+        });
+    }
+    function search(c) {
         setfilter({
             ...filter, check : c
         });
@@ -79,8 +141,8 @@ function Products() {
                                     <div class="row">
                                         <div class="col-md-4">
                                             <div class="product-search">
-                                                <input type="email" value="Search"></input>
-                                                <button><i class="fa fa-search"></i></button>
+                                                <input type="input"  onChange={e => setsearchInput(e.target.value)}value={searchInput}></input>
+                                                <button><i class="fa fa-search" onClick={search.bind(this,9)}></i></button>
                                             </div>
                                         </div>
                                         <div class="col-md-4">
@@ -97,20 +159,6 @@ function Products() {
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="product-price-range">
-                                                <div class="dropdown">
-                                                <div className="dropdown-toggle">Product price range</div>
-                                                    <div class="dropdown-content">
-                                                        <button>$0 to $50</button>
-                                                        <button>$51 to $100</button>
-                                                        <button>$101 to $150</button>
-                                                        <button>$151 to $200</button>
-                                                        <button>$201 to $250</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -122,14 +170,11 @@ function Products() {
                         <div class="col-md-12">
                             <nav aria-label="Page navigation example">
                                 <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                    </li>
-                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
                                     <li class="page-item">
-                                        <a class="page-link" href="#">Next</a>
+                                        <button class="page-link"  disabled={pageIndex === 0 } onClick={buttonPrev.bind(this,7)}>Prev</button>
+                                    </li>
+                                    <li class="page-item">
+                                        <button class="page-link" disabled={pageIndex === totalPage-1} onClick={buttonNext.bind(this,8)}>Next</button>
                                     </li>
                                 </ul>
                             </nav>
@@ -163,18 +208,18 @@ function Products() {
                         
                         <div class="sidebar-widget tag">
                             <h2 class="title">Tags Cloud</h2>
-                            <a href="#">Lorem ipsum</a>
-                            <a href="#">Vivamus</a>
-                            <a href="#">Phasellus</a>
-                            <a href="#">pulvinar</a>
-                            <a href="#">Curabitur</a>
-                            <a href="#">Fusce</a>
-                            <a href="#">Sem quis</a>
-                            <a href="#">Mollis metus</a>
-                            <a href="#">Sit amet</a>
-                            <a href="#">Vel posuere</a>
-                            <a href="#">orci luctus</a>
-                            <a href="#">Nam lorem</a>
+                            <a href="a">Lorem ipsum</a>
+                            <a href="b">Vivamus</a>
+                            <a href="c">Phasellus</a>
+                            <a href="d">pulvinar</a>
+                            <a href="e">Curabitur</a>
+                            <a href="f">Fusce</a>
+                            <a href="g">Sem quis</a>
+                            <a href="h">Mollis metus</a>
+                            <a href="i">Sit amet</a>
+                            <a href="k">Vel posuere</a>
+                            <a href="l">orci luctus</a>
+                            <a href="m">Nam lorem</a>
                         </div>
                     </div>
                 </div>

@@ -11,7 +11,7 @@ const breakPoints = [
 export default function NewProduct() {
     const [listProductNP , setlistProductNP] = useState([]);
     useEffect(() => {
-             axios.get('http://localhost:9090/api/v1/product').then((response)=> {
+             axios.get('http://localhost:9090/api/v1/client/product/new').then((response)=> {
                 setlistProductNP(response.data.content);
             }).catch((error) =>{
             })
@@ -40,11 +40,11 @@ export default function NewProduct() {
                     <h1>Recent Product</h1>
                 </div>
                 <div class="row align-items-center product-slider product-slider-4">
-                <Carousel breakPoints={breakPoints}>
-                    {listProductNP.map((product) => (
-                            <Card product={product} key={product.id}></Card>
-                    ))}
-                </Carousel>
+                    <Carousel breakPoints={breakPoints}>
+                        {listProductNP.map((product) => (
+                                <Card product={product} key={product.id}></Card>
+                        ))}
+                    </Carousel>
                 </div>
             </div>
         </div>

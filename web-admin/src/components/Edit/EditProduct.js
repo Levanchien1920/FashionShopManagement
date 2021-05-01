@@ -4,14 +4,14 @@ import {LoginContext} from '../Context/LoginContext'
 export default function EditProduct() {
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
+    const [Productdetail , setProductdetail] = useState({});
     const check = useContext(LoginContext);
     var array = window.location.pathname.split("/");
     useEffect(() => {
         check.checklogin();
-        console.log(array[array.length -1]);
         axios.get(`http://localhost:9090/api/v1/product/${array[array.length -1]}`).then((response)=> {
-            setlistCategory(response.data);
-            console.log(response.data);
+            setProductdetail(response.data);
+            console.log(response.data)
         }).catch((error) =>{
         });
         axios.get('http://localhost:9090/api/v1/category').then((response)=> {
@@ -22,6 +22,7 @@ export default function EditProduct() {
             setlistBrand(response.data.content);
         }).catch((error) =>{
         });
+       
     }, []);
     return (
         <>

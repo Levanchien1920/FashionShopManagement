@@ -2,7 +2,6 @@ import React, {useState , useContext } from 'react'
 import {Link} from 'react-router-dom'
 function Card(props) {
     const {product} = props;
-    console.log(product);
     const [quantity, setquantity] = useState(1);
     const addToCart = (e) => {
         console.log(e.target)

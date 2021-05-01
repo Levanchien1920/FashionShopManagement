@@ -44,7 +44,6 @@ function App() {
                 <Route path='/newproduct' > <NewProduct/>  </Route>
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
-                
             </Switch>
           </LoginContextProvider>
       </div>

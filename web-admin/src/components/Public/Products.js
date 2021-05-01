@@ -8,7 +8,12 @@ export default function Products() {
     const check = useContext(LoginContext);
     useEffect(() => {
         check.checklogin();
-        axios.get('http://localhost:9090/api/v1/product').then((response)=> {
+        axios.get('http://localhost:9090/api/v1/product',
+            {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem("token")}`
+            } 
+            }).then((response)=> {
                 setListProduct(response.data.content);
             }).catch((error) =>{
             });
@@ -53,12 +58,17 @@ export default function Products() {
                                             <tr>
                                             <th scope="col">Id</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Numeber</th>
+                                            <th scope="col">Number</th>
+                                            <th scope="col">Size</th>
+                                            <th scope="col">Color</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Brand</th>
                                             <th scope="col">Gender</th>
                                             <th scope="col">Category</th>
+                                            <th scope="col">Name Image</th>
+                                            <th scope="col">Image</th>
+                                            <th scope="col">sold out</th>
                                             <th scope="col">Edit</th>
                                             <th scope="col">Delete</th>
                                             </tr>
@@ -70,11 +80,16 @@ export default function Products() {
                                                     <th scope="row">{product.id}</th>
                                                     <td>{product.name}</td>
                                                     <td>{product.number}</td>
+                                                    <td>{product.name_Size}</td>
+                                                    <td>{product.name_Color}</td>
                                                     <td>{product.des}</td>
                                                     <td>{product.price}</td>
                                                     <td>{product.name_Brand}</td>
                                                     <td>{product.name_Gender}</td>
                                                     <td>{product.name_Category}</td>
+                                                    <td>{product.name_Image}</td>
+                                                    <td><a href={product.link} target="_blank">click in here</a></td>
+                                                    <td>{product.sold_Out}</td>
                                                     <td><button className="btn" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>edit</button></td>
                                                     <td><button className="btn">delete</button></td>
                                                 </tr>

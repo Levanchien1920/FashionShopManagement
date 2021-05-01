@@ -2,7 +2,13 @@ import axios from 'axios';
 import React, { useEffect , useState } from 'react'
 import { useHistory } from 'react-router';
 import Card from './Card';
-
+import Carousel from 'react-elastic-carousel';
+const breakPoints = [
+    { width: 1, itemsToShow: 1 },
+    { width: 550, itemsToShow: 2, itemsToScroll: 2 },
+    { width: 768, itemsToShow: 3 },
+    { width: 1600, itemsToShow: 4 }
+  ];
 function ProductDetail() {
     const history=useHistory();
     const [color , setcolor] =useState([]);
@@ -20,6 +26,8 @@ function ProductDetail() {
     const [colorSizeL , setcolorSizeL] = useState("");
     const [colorSizeXL , setcolorSizeXL] = useState("")
     const [colorSizeXXL , setcolorSizeXXL] = useState("")
+    const [brandRelated, setbrandRelated] = useState([]);
+    const [cateRelated, setcateRelated] = useState([])
 
     useEffect(() => {
         if (filter.check === 1){
@@ -40,19 +48,27 @@ function ProductDetail() {
     }, [filter]);
     useEffect(() => {
         const id = history.location.pathname.split("/")[2];
-        axios.get(`http://localhost:9090/api/v1/product/${id}`).then((response)=> {
+        axios.get(`http://localhost:9090/api/v1/client/product/${id}`).then((response)=> {
             setProduct(response.data);
             setcolorSizeM(response.data.m);
             setcolorSizeL(response.data.l);
             setcolorSizeXL(response.data.xl);
             setcolorSizeXXL(response.data.xxl);
+            axios.get(`http://localhost:9090/api/v1/client/brand/relateProduct/${response.data.id_brand}`).then((response)=> {
+                setbrandRelated(response.data.content);
+            }).catch((error) =>{
+            });
+            axios.get(`http://localhost:9090/api/v1/client/category/relateProduct/${response.data.id_brand}`).then((response)=> {
+                setcateRelated(response.data.content);
+            }).catch((error) =>{
+            });
         }).catch((error) =>{
         });
-        axios.get('http://localhost:9090/api/v1/category').then((response)=> {
+        axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
             setlistCategory(response.data.content);
         }).catch((error) =>{
         });
-        axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
+        axios.get('http://localhost:9090/api/v1/client/brand').then((response)=> {
             setlistBrand(response.data.content);
         }).catch((error) =>{
         });
@@ -89,89 +105,17 @@ function ProductDetail() {
                 <div className="row">
                     { (filter.check === 0) ? (
                         <div className="col-lg-8">
-                        <div className="product-detail-top">
-                            <div className="row align-items-center">
-                                <div className="col-md-5">
-                                    <div className="product-slider-single-nav normal-slider">
-                                        <div className="slider-nav-img"><img src={Product.link} alt={Product.iamgeName}></img></div>
-                                     
-                                    </div>
-                                </div>
-                                <div className="col-md-7">
-                                    <div className="product-content">
-                                        <div className="title"><h2>{Product.name}</h2></div>
-                                        <div className="ratting">
-                                            <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                            <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                            <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                            <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                            <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                        </div>
-                                        <div className="price">
-                                            <h4>Price:</h4>
-                                            <p>{Product.price} <span>$149</span></p>
-                                        </div>
-                                        <div className="quantity">
-                                            <h4>Quantity:</h4>
-                                            <div className="qty">
-                                                <button className="btn-minus"><i className="fa fa-minus"></i></button>
-                                                <input type="text" value="1"></input>
-                                                <button className="btn-plus"><i className="fa fa-plus"></i></button>
-                                            </div>
-                                        </div>
-                                        <div className="p-size">
-                                            <h4>Size:</h4>
-                                            <div className="btn-group btn-group-sm">
-                                                <button type="button" className="btn" 
-                                                onClick={e => {setfilter({...filter , check : 0 , size : "m" })}}>M</button>
-                                                <button type="button" className="btn" 
-                                                onClick={e => {setfilter({...filter , check : 0 , size : "l" })}}>L</button>
-                                                <button type="button" className="btn"
-                                                onClick={e => {setfilter({...filter , check : 0 , size : "xl" })}}>XL</button>
-                                                <button type="button" className="btn" 
-                                                onClick={e => {setfilter({...filter , check : 0 , size : "xxl" })}}>XXL</button>
-                                            </div> 
-                                        </div>
-                                        <div className="p-color">
-                                            <h4>Color:</h4>
-                                            <div className="btn-group btn-group-sm">
-                                                {color.map((color) => (
-                                                   
-                                                        <button type="button" className="btn">{color}</button>
-                                                      
-                                                ))}
-                                            </div> 
-                                        </div>
-                                        <div className="action">
-                                            <a className="btn" href="#"><i className="fa fa-shopping-cart"></i>Add to Cart</a>
+                            <div className="product-detail-top">
+                                <div className="row align-items-center">
+                                    <div className="col-md-5">
+                                        <div className="product-slider-single-nav normal-slider">
+                                            <div className="slider-nav-img"><img src={Product.link} alt={Product.iamgeName}></img></div>
+                                        
                                         </div>
                                     </div>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div className="row product-detail-bottom">
-                            <div className="col-lg-12">
-                                <ul className="nav nav-pills nav-justified">
-                                    <li className="nav-item">
-                                        <h3>Description</h3>
-                                    </li>
-                                </ul>
-                                <div className="tab-content">
-                                    <div id="description" className="container tab-pane active">
-                                        <p>
-                                            {Product.des} 
-                                        </p>
-                                    </div>
-                                </div>
-                                <ul className="nav nav-pills nav-justified">
-                                    <li className="nav-item">
-                                        <h3>Reviews (1)</h3>
-                                    </li>
-                                </ul>
-                                <div id="reviews" className="container tab-pane active">
-                                        <div className="reviews-submitted">
-                                            <div className="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
+                                    <div className="col-md-7">
+                                        <div className="product-content">
+                                            <div className="title"><h2>{Product.name}</h2></div>
                                             <div className="ratting">
                                                 <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                                 <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
@@ -179,99 +123,114 @@ function ProductDetail() {
                                                 <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                                 <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                             </div>
+                                            <div className="price">
+                                                <h4>Price:</h4>
+                                                <p>{Product.price} <span>$149</span></p>
+                                            </div>
+                                            <div className="quantity">
+                                                <h4>Quantity:</h4>
+                                                <div className="qty">
+                                                    <button className="btn-minus"><i className="fa fa-minus"></i></button>
+                                                    <input type="text" value="1"></input>
+                                                    <button className="btn-plus"><i className="fa fa-plus"></i></button>
+                                                </div>
+                                            </div>
+                                            <div className="p-size">
+                                                <h4>Size:</h4>
+                                                <div className="btn-group btn-group-sm">
+                                                    <button type="button" className="btn" 
+                                                    onClick={e => {setfilter({...filter , check : 0 , size : "m" })}}>M</button>
+                                                    <button type="button" className="btn" 
+                                                    onClick={e => {setfilter({...filter , check : 0 , size : "l" })}}>L</button>
+                                                    <button type="button" className="btn"
+                                                    onClick={e => {setfilter({...filter , check : 0 , size : "xl" })}}>XL</button>
+                                                    <button type="button" className="btn" 
+                                                    onClick={e => {setfilter({...filter , check : 0 , size : "xxl" })}}>XXL</button>
+                                                </div> 
+                                            </div>
+                                            <div className="p-color">
+                                                <h4>Color:</h4>
+                                                <div className="btn-group btn-group-sm">
+                                                    {color.map((color) => (
+                                                    
+                                                            <button type="button" className="btn">{color}</button>
+                                                        
+                                                    ))}
+                                                </div> 
+                                            </div>
+                                            <div className="action">
+                                                <a className="btn" href="#"><i className="fa fa-shopping-cart"></i>Add to Cart</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div className="row product-detail-bottom">
+                                <div className="col-lg-12">
+                                    <ul className="nav nav-pills nav-justified">
+                                        <li className="nav-item">
+                                            <h3>Description</h3>
+                                        </li>
+                                    </ul>
+                                    <div className="tab-content">
+                                        <div id="description" className="container tab-pane active">
                                             <p>
-                                                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                                                {Product.des} 
                                             </p>
                                         </div>
-                                        <div className="reviews-submit">
-                                            <h4>Give your Review:</h4>
-                                            <div className="ratting">
-                                                <button className={star >=1 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(1)}}></button>
-                                                <button className={star >=2 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(2)}}></button>
-                                                <button className={star >=3 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(3)}}></button>
-                                                <button className={star >=4 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(4)}}></button>
-                                                <button className={star >=5 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(5)}}></button>
-                                            </div>
-                                        </div>
-                                        <div className="row form">
-                                                <label>Name : </label>
-                                                <input type="text" placeholder="Name" className="col-sm-12"></input>
-                                                <label>Email : </label>
-                                                <input type="email" placeholder="Email" className="col-sm-12"></input>
-                                                <label>Review :</label>
-                                                <textarea placeholder="Review" className="col-sm-12"></textarea>
-                                               
-                                                        <button className="submit">Submit</button>
-                                               
-                                        </div>
                                     </div>
-                            </div>
-                        </div>
-                        
-                        <div className="product">
-                            <div className="section-header">
-                                <h1>Related Products</h1>
-                            </div>
-
-                            <div className="row align-items-center product-slider product-slider-3">
-                                <div className="col-lg-3">
-                                    <div className="product-item">
-                                        <div className="product-title">
-                                            <a href="#">Product Name</a>
-                                            <div className="ratting">
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
+                                    <ul className="nav nav-pills nav-justified">
+                                        <li className="nav-item">
+                                            <h3>Reviews (1)</h3>
+                                        </li>
+                                    </ul>
+                                    <div id="reviews" className="container tab-pane active">
+                                            <div className="reviews-submitted">
+                                                <div className="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
+                                                <div className="ratting">
+                                                    <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                </div>
+                                                <p>
+                                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                                                </p>
+                                            </div>
+                                            <div className="reviews-submit">
+                                                <h4>Give your Review:</h4>
+                                                <div className="ratting">
+                                                    <button className={star >=1 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(1)}}></button>
+                                                    <button className={star >=2 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(2)}}></button>
+                                                    <button className={star >=3 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(3)}}></button>
+                                                    <button className={star >=4 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(4)}}></button>
+                                                    <button className={star >=5 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(5)}}></button>
+                                                </div>
+                                            </div>
+                                            <div className="row form">
+                                                    <label>Review :</label>
+                                                    <textarea placeholder="Review" className="col-sm-12"></textarea>
+                                                    <button className="submit">Submit</button>
+                                                
                                             </div>
                                         </div>
-                                        <div className="product-image">
-                                            <a href="product-detail.html">
-                                                <img src="img/product-10.jpg" alt="Product Image"></img>
-                                            </a>
-                                            <div className="product-action">
-                                                <a href="#"><i className="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i className="fa fa-heart"></i></a>
-                                                <a href="#"><i className="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                        <div className="product-price">
-                                            <h3><span>$</span>99</h3>
-                                            <a className="btn" href=""><i className="fa fa-shopping-cart"></i>Buy Now</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-3">
-                                    <div className="product-item">
-                                        <div className="product-title">
-                                            <a href="#">Product Name</a>
-                                            <div className="ratting">
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                                <i className="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                        <div className="product-image">
-                                            <a href="product-detail.html">
-                                                <img src="img/product-2.jpg" alt="Product Image"></img>
-                                            </a>
-                                            <div className="product-action">
-                                                <a href="#"><i className="fa fa-cart-plus"></i></a>
-                                                <a href="#"><i className="fa fa-heart"></i></a>
-                                                <a href="#"><i className="fa fa-search"></i></a>
-                                            </div>
-                                        </div>
-                                        <div className="product-price">
-                                            <h3><span>$</span>99</h3>
-                                            <a className="btn" href=""><i className="fa fa-shopping-cart"></i>Buy Now</a>
-                                        </div>
-                                    </div>
                                 </div>
                             </div>
-                        </div>
+                            
+                            <div className="featured-product product">
+                                <div className="section-header">
+                                    <h1>Related Products (brand)</h1>
+                                </div>
+                                <div class="row align-items-center product-slider product-slider-4">
+                                    <Carousel breakPoints={breakPoints}>
+                                        {brandRelated.map((product) => (
+                                                <Card product={product} key={product.id}></Card>
+                                        ))}
+                                    </Carousel>
+                                </div>
+                            </div>
                     </div>
                     ):(
                                     <div class="col-lg-8">
@@ -349,7 +308,16 @@ function ProductDetail() {
                                 </ul>
                             </nav>
                         </div>
-                        
+                        <div class="sidebar-widget widget-slider">
+                            <div class="sidebar-slider normal-slider">
+                                <h2 className="title">Related Products (Category)</h2>
+                                <Carousel breakPoints={breakPoints}>
+                                    {cateRelated.map((product) => (
+                                            <Card product={product} key={product.id}></Card>
+                                    ))}
+                                </Carousel>
+                            </div>
+                        </div>
                         <div className="sidebar-widget brands">
                             <h2 className="title">Brands</h2>
                             <ul>

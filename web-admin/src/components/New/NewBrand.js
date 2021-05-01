@@ -4,17 +4,23 @@ import React, { useState } from 'react'
 export default function NewBrand() {
     const [message , setmessage] = useState("");
     const [newvalue, setnewvalue] = useState({
-        brand : ""
+        name : ""
     });
     const savebrand =  (e) =>{
         if( newvalue.brand === "" ) {
             setmessage("You have not entered enough");
         }else {
-                axios.post("http://localhost:9090/api/v1/brand", newvalue).then((response)=> {
-                    alert(response.message);
-                }).catch((error) =>{
-                    alert(error.message);
-                });
+            console.log(newvalue)
+            axios.post("http://localhost:9090/api/v1/brand",newvalue,{
+                headers: {
+                            'Authorization': `Bearer ${localStorage.getItem("token")}`
+                            } 
+                }).then((response)=> {
+                alert(response.data.message);
+            }).catch((error) =>{
+                alert(error.message);
+                console.log(error)
+            });
         }
     }
     return (
@@ -47,7 +53,7 @@ export default function NewBrand() {
                                 <div className="form-group">
                                     <label>Name Brand <span className="help"> e.g. "Gucci"</span></label>
                                     <input type="text" className="form-control" 
-                                    onChange={e => setnewvalue({...newvalue ,brand : e.target.value})} value={newvalue.brand}></input>
+                                    onChange={e => setnewvalue({...newvalue ,name : e.target.value})} value={newvalue.name}></input>
                                 </div>
                                 <div className="form-group">
                                     <button type="button" name="example-email" className="btn" onClick={savebrand}>Save </button>

@@ -11,7 +11,7 @@ function Login() {
     const history = useHistory();
     const OnSubmitHandle =  (e) =>{
         if (userInput.username !== "" && userInput.password !== ""){
-            axios.post("http://localhost:9090/api/v1/auth/loginCustomer", userInput).then((response)=> {
+            axios.post("http://localhost:9090/api/v1/auth/login", userInput).then((response)=> {
                 setErrorMessage(null);
                 const {token, info} = response.data;
                 localStorage.setItem("token", token);
