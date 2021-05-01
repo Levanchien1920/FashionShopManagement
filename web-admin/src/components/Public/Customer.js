@@ -5,7 +5,7 @@ export default function Customer() {
     const history = useHistory();
     const [ListCustomer , setListCustomer] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/customer').then((response)=> {
+        axios.get('http://localhost:9090/api/v1/admin/user/customer').then((response)=> {
                 setListCustomer(response.data.content);
             }).catch((error) =>{
             });
@@ -39,7 +39,7 @@ export default function Customer() {
                                         <h4 className="card-title">List Customer <button className="btn1 btn" onClick ={e => {history.push("/newcustomer")}}>new</button></h4>
                                 </div>
                                 <div className="table-responsive">
-                                    <table className="table table-hover">
+                                    <table className="table table-striped">
                                         <thead>
                                             <tr>
                                             <th scope="col">Id</th>                                            
@@ -54,7 +54,7 @@ export default function Customer() {
                                         </thead>
                                         <tbody>
                                             {ListCustomer.map((Customer) => (
-                                                <tr>
+                                                <tr >
                                                     <th scope="row">{Customer.id}</th>
                                                     <td>{Customer.fullName}</td>
                                                     <td>{Customer.userName}</td>

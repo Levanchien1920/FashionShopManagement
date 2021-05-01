@@ -21,6 +21,7 @@ import NewPost from './components/New/NewPost';
 import NewProduct from './components/New/NewProduct';
 import EditProduct from './components/Edit/EditProduct';
 import EditBrand from './components/Edit/EditBrand';
+import ReviewS from './components/Reviews/Review';
 
 function App() {
   return (
@@ -44,6 +45,7 @@ function App() {
                 <Route path='/newproduct' > <NewProduct/>  </Route>
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
+                <Route path='/rv'> <ReviewS/>  </Route>
             </Switch>
           </LoginContextProvider>
       </div>
