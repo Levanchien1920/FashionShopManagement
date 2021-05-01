@@ -137,7 +137,11 @@ public class ProductService {
         productRes.setPrice(product.getPrice());
         productRes.setDes(product.getDescription());
         productRes.setLink(image1.getLink());
-        productRes.setNumber_of_star(review.getNumberOfStar());
+        if(review != null) {
+            productRes.setNumber_of_star(review.getNumberOfStar());
+        } else {
+            productRes.setNumber_of_star(0.0f);
+        }
 
 //        set cac Color cua 1 sp size XXL
         String ColorXXL = "";
