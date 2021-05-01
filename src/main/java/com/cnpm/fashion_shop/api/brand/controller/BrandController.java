@@ -32,7 +32,7 @@ public class BrandController {
     @Autowired
     private BrandService brandService;
 
-    @ApiOperation(value = "Get all brands")
+    @ApiOperation(value = "Get all brands", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping()
     public PaginationResponse<BrandResponseDto> getBrand(RequestParamsForGettingList requestParamsForGettingList) {
         Page<BrandResponseDto> data = brandService.findAllBrandDetails(requestParamsForGettingList.getPage(),
