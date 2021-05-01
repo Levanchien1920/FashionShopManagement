@@ -51,7 +51,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cors()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/api/v1/admin/user/**", "/api/v1/saleFigureByMonth/**", "/api/v1/saleFigureEmployee/**","/api/v1/invoice/**")
+                .antMatchers("/api/v1/admin/user/**", "/api/v1/saleFigureByMonth/**", "/api/v1/saleFigureEmployee/**","/api/v1/invoice/**","/api/v1/role/**")
                 .hasAnyAuthority(RoleEnum.admin.name())
                 .antMatchers("/api/v1/user/**","/api/v1/brand/**", "/api/v1/category/**", "/api/v1/product/**", "/api/v1/post/**", "/api/v1/review/**", "/api/v1/invoice/**","/api/v1/customer/**","/api/v1/client/image/**")
                 .hasAnyAuthority(RoleEnum.employee.name())

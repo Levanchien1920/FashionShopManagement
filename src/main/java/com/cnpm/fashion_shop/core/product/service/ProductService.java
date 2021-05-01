@@ -104,29 +104,27 @@ public class ProductService {
         review = reviewRepository.findById_Product(product.getId_product());
 
 
-
-
         // lay cac id color cua 1 sp cu the size XXL
         List<ProductColor> idColorForXXLs;
-        idColorForXXLs=productRepository.getAllIdColorForXXL(product.getName());
+        idColorForXXLs = productRepository.getAllIdColorForXXL(product.getName());
         ColorDto colorForXXL;
 
         List<ProductColor> idColorForXLs;
-        idColorForXLs=productRepository.getAllIdColorForXL(product.getName());
+        idColorForXLs = productRepository.getAllIdColorForXL(product.getName());
         ColorDto colorForXL;
 
         List<ProductColor> idColorForLs;
-        idColorForLs=productRepository.getAllIdColorForL(product.getName());
+        idColorForLs = productRepository.getAllIdColorForL(product.getName());
         ColorDto colorForL;
 
         List<ProductColor> idColorForMs;
-        idColorForMs=productRepository.getAllIdColorForM(product.getName());
+        idColorForMs = productRepository.getAllIdColorForM(product.getName());
         ColorDto colorForM;
 
-        category=optionalCategory.get();
-        brand=optionalBrand.get();
+        category = optionalCategory.get();
+        brand = optionalBrand.get();
 
-        ProductRes productRes= new ProductRes();
+        ProductRes productRes = new ProductRes();
         productRes.setId(product.getId_product());
         productRes.setBrandName(brand.getName());
         productRes.setCategoryName(category.getName());
@@ -139,48 +137,44 @@ public class ProductService {
         productRes.setNumber_of_star(review.getNumberOfStar());
 
 //        set cac Color cua 1 sp size XXL
-        String ColorXXL="";
-        String numberColorXXL="";
-        for(int i=0; i<idColorForXXLs.size();i++)
-        {
-            Integer idXXL=idColorForXXLs.get(i).getId_Color();
-            colorForXXL=colorRepository.findNameByIdColor(idXXL);
-            Integer numberXXL=idColorForXXLs.get(i).getNumber();
-            numberColorXXL+=numberXXL+" ";
-            ColorXXL+=colorForXXL.getName_Color()+" ";
+        String ColorXXL = "";
+        String numberColorXXL = "";
+        for (int i = 0; i < idColorForXXLs.size(); i++) {
+            Integer idXXL = idColorForXXLs.get(i).getId_Color();
+            colorForXXL = colorRepository.findNameByIdColor(idXXL);
+            Integer numberXXL = idColorForXXLs.get(i).getNumber();
+            numberColorXXL += numberXXL + " ";
+            ColorXXL += colorForXXL.getName_Color() + " ";
         }
 
-        String ColorXL="";
-        String numberColorXL="";
-        for(int i=0; i<idColorForXLs.size();i++)
-        {
-            Integer idXL=idColorForXLs.get(i).getId_Color();
-            colorForXL=colorRepository.findNameByIdColor(idXL);
-            Integer numberXL=idColorForXLs.get(i).getNumber();
-            numberColorXL+=numberXL+" ";
-            ColorXL+=colorForXL.getName_Color()+" ";
+        String ColorXL = "";
+        String numberColorXL = "";
+        for (int i = 0; i < idColorForXLs.size(); i++) {
+            Integer idXL = idColorForXLs.get(i).getId_Color();
+            colorForXL = colorRepository.findNameByIdColor(idXL);
+            Integer numberXL = idColorForXLs.get(i).getNumber();
+            numberColorXL += numberXL + " ";
+            ColorXL += colorForXL.getName_Color() + " ";
         }
 
-        String ColorL="";
-        String numberColorL="";
-        for(int i=0; i<idColorForLs.size();i++)
-        {
-            Integer idL=idColorForLs.get(i).getId_Color();
-            colorForL=colorRepository.findNameByIdColor(idL);
-            Integer numberL=idColorForLs.get(i).getNumber();
-            numberColorL+=numberL+" ";
-            ColorL+=colorForL.getName_Color()+" ";
+        String ColorL = "";
+        String numberColorL = "";
+        for (int i = 0; i < idColorForLs.size(); i++) {
+            Integer idL = idColorForLs.get(i).getId_Color();
+            colorForL = colorRepository.findNameByIdColor(idL);
+            Integer numberL = idColorForLs.get(i).getNumber();
+            numberColorL += numberL + " ";
+            ColorL += colorForL.getName_Color() + " ";
         }
 
-        String ColorM="";
-        String numberColorM="";
-        for(int i=0; i<idColorForMs.size();i++)
-        {
-            Integer idM=idColorForMs.get(i).getId_Color();
-            colorForM=colorRepository.findNameByIdColor(idM);
-            Integer numberM=idColorForMs.get(i).getNumber();
-            numberColorM+=numberM+" ";
-            ColorM+=colorForM.getName_Color()+" ";
+        String ColorM = "";
+        String numberColorM = "";
+        for (int i = 0; i < idColorForMs.size(); i++) {
+            Integer idM = idColorForMs.get(i).getId_Color();
+            colorForM = colorRepository.findNameByIdColor(idM);
+            Integer numberM = idColorForMs.get(i).getNumber();
+            numberColorM += numberM + " ";
+            ColorM += colorForM.getName_Color() + " ";
         }
 
 
@@ -192,7 +186,6 @@ public class ProductService {
         productRes.setXL_Number(numberColorXL);
         productRes.setL_Number(numberColorL);
         productRes.setM_Number(numberColorM);
-
 
 
         if (productRes.getIsDeleted()) {
@@ -207,7 +200,7 @@ public class ProductService {
     public ResponseEntity<Response> createProductDto(ProductDto dto) {
         Product product;
         //Product existing_product = productRepository.findByNameAndNameSizeAndIdColor(StringUtils.trim(dto.getName()));
-        if (StringUtils.trim(dto.getName()).equals("") ) {
+        if (StringUtils.trim(dto.getName()).equals("")) {
             return ResponseEntity
                     .badRequest()
                     .body(Response.badRequest("Product name and name size cannot be empty or contain only space"));
@@ -312,7 +305,7 @@ public class ProductService {
     }
 
     @Transactional
-    public Optional<Product>  findByIdOptional(Integer id) {
+    public Optional<Product> findByIdOptional(Integer id) {
         return productRepository.findById(id);
     }
 
@@ -321,7 +314,7 @@ public class ProductService {
 
 
     @Transactional
-    public Page<ProductResponseDto> findRelateProductDto(Integer id,Integer id_brand, Integer id_category, Integer id_gender,int size, int page, String sort, String search) {
+    public Page<ProductResponseDto> findRelateProductDto(Integer id, Integer id_brand, Integer id_category, Integer id_gender, int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
                 "name",
