@@ -19,6 +19,6 @@ public interface  CustomerRepository extends JpaRepository<User, Long> {
     User findByEmail(String email);
     User findByUsername(String username);
 
-    @Query(value = "SELECT * FROM customer b WHERE b.id = :id AND b.is_deleted = FALSE AND b.id_role =3", nativeQuery = true)
+    @Query(value = "SELECT * FROM user b WHERE b.id = :id AND b.is_deleted = FALSE AND b.id_role =3", nativeQuery = true)
     Optional<User> findById_customer(@Param("id") Integer id);
 }

@@ -8,6 +8,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.Authorization;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,5 +30,10 @@ public class UserControllerClient {
             @Valid @RequestBody UserDto dto
     ) {
         return this.userService.updateUser(id, dto);
+    }
+    @ApiOperation(value = "Get customer by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/{id}")
+    public ResponseEntity getOneCustomer(@PathVariable("id") Integer id) {
+        return userService.getOneCustomer(id);
     }
 }
