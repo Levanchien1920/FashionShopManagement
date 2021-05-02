@@ -72,7 +72,7 @@ const Login = () => {
         "password": form.password
     }
 
-    axios.post("http://localhost:9090/api/v1/auth/loginCustomer", login).then((response)=> {
+    axios.post("http://localhost:9090/api/v1/auth/login", login).then((response)=> {
             
       const {token, info} = response.data;
 
@@ -91,7 +91,7 @@ const Login = () => {
        navigate('Home');
       
   }).catch((error) =>{
-      // setErrorMessage(error.response.data.message);
+
       console.log(error);
 
      ()=> {showAlert};
@@ -101,7 +101,6 @@ const Login = () => {
     }
   };
 
- 
   const onChange = ({name, value}) => {
     setForm({...form, [name]: value});
   };

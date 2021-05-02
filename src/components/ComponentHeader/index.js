@@ -21,16 +21,7 @@ const ComponentHeader = () => {
            <TouchableOpacity onPress= {() => {navigate('Products')}}>
                <Text  style = {styles.linkBtn}>Products</Text>
            </TouchableOpacity>
-           
-           <TouchableOpacity onPress= {() => {navigate('Cart')}}>
-               <Text  style = {styles.linkBtn}>Cart</Text>
-           </TouchableOpacity>
-           
-           <TouchableOpacity onPress= {() => {navigate('Checkout')}}>
-               <Text  style = {styles.linkBtn}>Checkout</Text>
-           </TouchableOpacity>
-
-           
+            
            <TouchableOpacity onPress= {() => {navigate('MyAccount')}}>
                <Text  style = {styles.linkBtn}>Myaccount</Text>
            </TouchableOpacity>

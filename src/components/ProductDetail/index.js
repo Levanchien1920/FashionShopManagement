@@ -1,34 +1,19 @@
-
-// import React from 'react';
-import * as React from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { StyleSheet, Text, View,TextInput, TouchableOpacity,ScrollView ,Image, Button} from 'react-native';
 import Container from '../common/Container';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ComponentHeader from '../ComponentHeader';
-const ProductItemDetail = ({image, name, price,des}) => (
-    <View style={styles.itemContainer}>
-      <Image  source={{ uri: {image} }}
-     style={{width: 100, height: 200, borderWidth: 1}} />
-      <Text style={styles.itemName} numberOfLines={2}>
-        {name}
-      </Text>
-      <Text style={styles.itemPrice}>{price}</Text>
+import axios from 'axios';
 
-      <Text style={styles.itemPrice}>{price}</Text>
-  
-    </View>
-  );
 
 const ProductDetailComponent = () => {
     const route = useRoute();
- 
+    const [number, onChangeNumber] = React.useState(0);
+   
 
-    // const id=route.params.id;
-    /////
-    // const history=useHistory();
-    const [color , setcolor] =React.useState([]);
+    const [color , setcolor] =useState([]);
     const [listProduct , setlistProduct] = useState([]);
     const [star , setstar] = useState(0);
     const [Product , setProduct] = useState([]);
@@ -43,6 +28,8 @@ const ProductDetailComponent = () => {
     const [colorSizeL , setcolorSizeL] = useState("");
     const [colorSizeXL , setcolorSizeXL] = useState("")
     const [colorSizeXXL , setcolorSizeXXL] = useState("")
+    const [brandRelated, setbrandRelated] = useState([]);
+    const [cateRelated, setcateRelated] = useState([])
 
     useEffect(() => {
         if (filter.check === 1){
@@ -64,9 +51,8 @@ const ProductDetailComponent = () => {
 
 
     useEffect(() => {
-        // const id = history.location.pathname.split("/")[2];
         const id=route.params.id;
-        axios.get(`http://localhost:9090/api/v1/product/${id}`).then((response)=> {
+        axios.get(`http://localhost:9090/api/v1/client/product/${id}`).then((response)=> {
             setProduct(response.data);
             setcolorSizeM(response.data.m);
             setcolorSizeL(response.data.l);
@@ -74,14 +60,7 @@ const ProductDetailComponent = () => {
             setcolorSizeXXL(response.data.xxl);
         }).catch((error) =>{
         });
-        axios.get('http://localhost:9090/api/v1/category').then((response)=> {
-            setlistCategory(response.data.content);
-        }).catch((error) =>{
-        });
-        axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
-            setlistBrand(response.data.content);
-        }).catch((error) =>{
-        });
+      
     }, []);
 
     const colorinsize = (size) => {
@@ -114,12 +93,73 @@ const ProductDetailComponent = () => {
 
     return (
         <View>
-        <ComponentHeader />
-        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Details Screen</Text>
-        
-      </View>
-      </View>
+      <ComponentHeader />
+    <View style={styles.bodyContainer}>
+     <ScrollView>
+     <View style={styles.sectionContainer}>
+
+   <ScrollView horizontal={true}>
+
+       <View>
+       <Image  source={{ uri: Product.link }}
+                 style={{width: 100, height: 200, borderWidth: 1}} />
+       </View>
+     <View style={styles.listItemContainer}>
+            <View>
+                <Text>Name:{Product.name}</Text>
+                <Text>Price:{Product.price}</Text>
+                <Text>brandName:{Product.brandName}</Text>
+                <View horizontal= {true}>
+                <Button   title="+" onPress= {() => { onChangeNumber(number+1)} }>    
+                         </Button>
+
+                 <TextInput
+                   
+                    value={number}
+                   
+                 />
+                 <Button   title="-" onPress= {() => { if(number>0) {
+                     onChangeNumber(number-1)} } }>
+                         
+                 </Button>
+                 </View>
+                <View>
+                <Button  title="M"  onClick={e => {setfilter({...filter , check : 0 , size : "m" })
+            console.log(size);}}></Button>
+                <Button  title="L"  onClick={e => {setfilter({...filter , check : 0 , size : "l" })}}></Button>
+                <Button  title="XL"  onClick={e => {setfilter({...filter , check : 0 , size : "xl" })}}></Button>
+                <Button  title="XXL"  onClick={e => {setfilter({...filter , check : 0 , size : "xxl" })}}></Button>
+                </View>
+                
+                <View>
+                    <Text>Color</Text>
+                    
+                    {color.map((color) => (
+                                                    
+                    <Button title={color} ></Button>
+                                                  ))}
+                
+
+                </View>
+
+            <TouchableOpacity onPress= {() => {} }>
+             <Text >Add to card</Text>
+         </TouchableOpacity>
+            </View>
+
+    
+         </View>
+
+
+     
+   </ScrollView>
+
+ </View>
+    
+   </ScrollView>
+   
+     </View>
+     </View>
         
     );
 }

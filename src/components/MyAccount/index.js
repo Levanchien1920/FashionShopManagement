@@ -1,15 +1,52 @@
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native';
-import Container from '../common/Container';
-import styles from './styles';
+
 import {useNavigation } from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import ComponentHeader from '../ComponentHeader';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from 'axios';
 const MyAccountComponent = () => {
     const {navigate} =useNavigation();
+    console.log("token:");
+  console.log(AsyncStorage.getItem("token"));
+    const [ account, setaccount] = useState({
+            "id": 0,
+            "username": "",
+            "password": "",
+            "fullname": "",
+            "address": "",
+            "email": "",
+            "phone_number": "",
+    })
+    useEffect(() => {
+           axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`).then((response)=> {
+            setaccount(response.data);
+            console.log("aaa");
+           
+        }).catch((error) =>{
+        });
+    }, [AsyncStorage.getItem("token")])
+    
+
     return (
-       <ComponentHeader />
+        <View>
+                  <ComponentHeader />
+
+                  <View>
+                                     <Text>Hello</Text>
+                                    <Text>Name : {account.fullname}</Text>
+                                    <Text>UserName : {account.username}</Text>
+                                    <Text>Email : {account.email}</Text>
+                                    <Text>Mobile: {account.phone_number}</Text>
+                                    <Text>Address : {account.address}</Text>
+                                    <TouchableOpacity onPress={() => navigate("UpdateAccount")}><Text>Update profile</Text></TouchableOpacity>
+                  </View>
+
+        </View>
+ 
+
+
     );
 }
 

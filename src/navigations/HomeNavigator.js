@@ -1,16 +1,11 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
-import { CONTACT_DETAIL, CONTACT_LIST ,CREATE_CONTACT} from '../constants/routeNames';
 import Home from '../screens/Home';
-import { StyleSheet, Text, View } from 'react-native';
 import Products from '../screens/Products';
 import ProductDetail from '../screens/ProductDetail';
 import Cart from '../screens/Cart';
 import Checkout from '../screens/Checkout';
-
 import MyAccount from '../screens/MyAccount';
-import Login from '../screens/Login';
-import Register from '../screens/Register';
 
 
 
@@ -18,7 +13,7 @@ import Register from '../screens/Register';
 const HomeNavigator = () => {
     const HomeStack =createStackNavigator();
     return (
-        <HomeStack.Navigator initialRouterName={CONTACT_LIST}>
+        <HomeStack.Navigator>
           <HomeStack.Screen name={'Home'} component= {Home} ></HomeStack.Screen>
           <HomeStack.Screen name={'Products'} component= {Products}></HomeStack.Screen>
           <HomeStack.Screen name={'Products/:id'} component= {ProductDetail}></HomeStack.Screen>

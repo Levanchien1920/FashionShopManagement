@@ -1,15 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,StatusBar,ScrollView ,Picker} from 'react-native';
-import Container from '../common/Container';
-import Input from '../common/Input';
-import CustomButtom from '../common/CustomButton';
+import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,StatusBar,ScrollView} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-
-
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 import ComponentHeader from '../ComponentHeader';
 
@@ -22,7 +16,6 @@ const ProductItem = ({image, name, price}) => (
 
   <Image  source={{ uri: {image} }}
    style={{width: 100, height: 200, borderWidth: 1}}
-  //  style={styles.itemImage}
   />
    
     <Text style={styles.itemName} numberOfLines={2}>
@@ -38,7 +31,7 @@ const ProductItem = ({image, name, price}) => (
 const HomeComponent = () => {
   const [listProductNP , setlistProductNP] = useState([]);
   useEffect(() => {
-           axios.get('http://localhost:9090/api/v1/product').then((response)=> {
+           axios.get('http://localhost:9090/api/v1/client/product').then((response)=> {
                setlistProductNP(response.data.content);
           }).catch((error) =>{
           })
@@ -52,29 +45,19 @@ const HomeComponent = () => {
 
       
         <View>
+          
          <ComponentHeader />
-{/* 
-         <View style={styles.container}>
-      <Picker
-        selectedValue={selectedValue}
-        style={{ height: 50, width: 150 }}
-        onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Java" value="java" />
-        <Picker.Item label="JavaScript" value="js" />
-      </Picker>
-    </View> */}
+
+         <View>
+
+         
 
        <View style={styles.bodyContainer}>
         <ScrollView>
         <View style={styles.sectionContainer}>
       {/*  */}
       <Text style={styles.sectionTitle}>Clothers</Text>
-      {/*  */}
-    
-      {/*  */}
-     
-      {/*  */}
+   
       <ScrollView horizontal={true}>
         <View style={styles.listItemContainer}>
           {listProductNP.map((e, index) => (
@@ -85,12 +68,11 @@ const HomeComponent = () => {
                 price={e.price}
               />
 
-              <TouchableOpacity onPress= {() => {navigate('ProductDetail'), {
-            itemId: 86,
-            otherParam: 'anything you want here',
-          }}}>
-                <Text >Chi tiết</Text>
-            </TouchableOpacity>
+            <TouchableOpacity onPress= {() => {navigate('ProductDetail', {
+            id: e.id ,
+          })}}>
+             <Text >Chi tiết</Text>
+         </TouchableOpacity>
 
             </View>
           ))}
@@ -98,10 +80,12 @@ const HomeComponent = () => {
       </ScrollView>
       {/*  */}
       <View style={styles.seeMoreContainer}>
-        <Text style={styles.seeMoreText}>XEM THÊM 636 SẢN PHẨM </Text>
+        <Text style={styles.seeMoreText}>Welcome to app_shopping </Text>
       </View>
     </View>
         </ScrollView>
+      </View>
+
       </View>
       
         </View>

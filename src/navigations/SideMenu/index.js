@@ -30,14 +30,7 @@ const SideMenu = ({navigation}) => {
   
 
     return ( (!isLoggedIn) ?(  <SafeAreaView>
-      <View>
-        <Container>
-        <Image
-          source={require('../../assets/images/avt.jpg')}
-          style={styles.logoImage}
-        />
-        </Container>
-      </View>
+      
       <View>
           <Text>Welcome to shopping app</Text>
      
