@@ -24,7 +24,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "INNER JOIN image ON product.id_image = image.id) \n" +
             "INNER JOIN gender ON product.id_gender = gender.id)  \n" +
             "INNER JOIN color ON product.id_color = color.id)  \n" +
-            "WHERE LOWER(product.name) LIKE %:keyword% ", nativeQuery = true)
+            "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false ", nativeQuery = true)
     Page<ProductResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
 
     @Query(value = "SELECT * FROM product p WHERE p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
@@ -53,7 +53,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "INNER JOIN category AS c ON p.id_cate=c.id) \n " +
             "INNER JOIN image AS i ON p.id_image=i.id)\n " +
             "INNER JOIN gender AS g ON p.id_gender=g.id)\n " +
-            "WHERE p.id_brand=:id_brand AND p.id_cate=:id_category AND p.id_gender=:id_gender AND p.id <> :id AND LOWER(p.name) LIKE %:keyword%", nativeQuery = true)
+            "WHERE p.id_brand=:id_brand AND p.id_cate=:id_category AND p.id_gender=:id_gender AND p.id <> :id AND LOWER(p.name) LIKE %:keyword% AND p.is_deleted =false ", nativeQuery = true)
     Page<ProductResponseDto> findAllRelate(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id, @Param("id_brand") Integer id_brand, @Param("id_category") Integer id_category, @Param("id_gender") Integer id_gender);
 
     @Query(value = "SELECT product.id,product.name as Name,product.price,product.number,product.des,brand.name as Name_Brand,category.name as Name_Category,gender.name as Name_Gender,image.name as Name_Image,image.link \n" +
@@ -61,6 +61,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "INNER JOIN brand on product.id_brand = brand.id) \n" +
             "INNER JOIN category on product.id_cate = category.id) \n" +
             "INNER JOIN image on product.id_image = image.id) \n" +
-            "INNER JOIN gender on product.id_gender = gender.id )\n", nativeQuery = true)
+            "INNER JOIN gender on product.id_gender = gender.id )\n"+
+            "where product.is_deleted = false", nativeQuery = true)
     Page<ProductResponseDto> findProducts(Pageable pageable, @Param("keyword") String keyword);
 }

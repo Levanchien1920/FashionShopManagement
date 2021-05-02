@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface SaleFigureRepository extends JpaRepository<Invoice, Long> {
-    @Query(value = "SELECT sum(p.total_money) AS total, MONTH(p.updated_at) AS Month FROM invoice AS p GROUP BY MONTH(p.updated_at)", nativeQuery = true)
+    @Query(value = "SELECT sum(p.total_money) AS total, MONTH(p.updated_at) AS Month FROM invoice AS p WHERE p.is_deleted = false GROUP BY MONTH(p.updated_at)", nativeQuery = true)
     Page<SaleFigureDto> findSaleFigure(Pageable pageable);
 
 }
