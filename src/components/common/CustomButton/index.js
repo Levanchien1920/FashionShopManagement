@@ -3,21 +3,20 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View,TextInput, TouchableOpacity, ActivityIndicator } from 'react-native';
 
 import styles from './styles';
-import colors from '../../../assets/theme/colors';
 
 const CustomButton = ({secondary,primary,danger,title,disable,loading,onPress}) => {
     const getBgColor = () => {
         if(disable) {
-            return colors.gray;
+            return '#adb5bd';
         }
         if(primary) {
-            return colors.primary;
+            return '#4361ee';
         }
         if(danger) {
-            return colors.danger;
+            return '#f72585';
         }
         if(secondary) {
-            return colors.secondary;
+            return '#3f37c9';
         }
     }
     return (

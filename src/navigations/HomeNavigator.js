@@ -6,7 +6,7 @@ import ProductDetail from '../screens/ProductDetail';
 import Cart from '../screens/Cart';
 import Checkout from '../screens/Checkout';
 import MyAccount from '../screens/MyAccount';
-
+import UpdateAccount from '../screens/UpdateAccount';
 
 
 
@@ -21,6 +21,7 @@ const HomeNavigator = () => {
           <HomeStack.Screen name={'Cart'} component= {Cart}></HomeStack.Screen>
           <HomeStack.Screen name={'Checkout'} component= {Checkout}></HomeStack.Screen>
           <HomeStack.Screen name={'MyAccount'} component= {MyAccount}></HomeStack.Screen>
+          <HomeStack.Screen name={'UpdateAccount'} component= {UpdateAccount}></HomeStack.Screen>
         </HomeStack.Navigator>
 
     );

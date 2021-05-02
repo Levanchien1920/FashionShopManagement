@@ -11,7 +11,7 @@ import axios from 'axios';
 const ProductDetailComponent = () => {
     const route = useRoute();
     const [number, onChangeNumber] = React.useState(0);
-   
+    const [textInputValue, setTextInputValue] = React.useState('');
 
     const [color , setcolor] =useState([]);
     const [listProduct , setlistProduct] = useState([]);
@@ -60,6 +60,15 @@ const ProductDetailComponent = () => {
             setcolorSizeXXL(response.data.xxl);
         }).catch((error) =>{
         });
+
+        axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
+            setlistCategory(response.data.content);
+        }).catch((error) =>{
+        });
+        axios.get('http://localhost:9090/api/v1/client/brand').then((response)=> {
+            setlistBrand(response.data.content);
+        }).catch((error) =>{
+        });
       
     }, []);
 
@@ -99,33 +108,31 @@ const ProductDetailComponent = () => {
      <View style={styles.sectionContainer}>
 
    <ScrollView horizontal={true}>
-
-       <View>
+       
        <Image  source={{ uri: Product.link }}
                  style={{width: 100, height: 200, borderWidth: 1}} />
-       </View>
+     
      <View style={styles.listItemContainer}>
             <View>
                 <Text>Name:{Product.name}</Text>
                 <Text>Price:{Product.price}</Text>
                 <Text>brandName:{Product.brandName}</Text>
-                <View horizontal= {true}>
-                <Button   title="+" onPress= {() => { onChangeNumber(number+1)} }>    
+                <View >
+                <Button  style={{ flex: 0.3 }} title="+" onPress= {() => { onChangeNumber(number+1)} }>    
                          </Button>
 
                  <TextInput
-                   
+                    style={{ flex: 0.3 }}
                     value={number}
                    
                  />
-                 <Button   title="-" onPress= {() => { if(number>0) {
+                 <Button   style={{ flex: 0.4 }}  title="-" onPress= {() => { if(number>0) {
                      onChangeNumber(number-1)} } }>
                          
                  </Button>
                  </View>
                 <View>
-                <Button  title="M"  onClick={e => {setfilter({...filter , check : 0 , size : "m" })
-            console.log(size);}}></Button>
+                <Button  title="M"  onClick={e => {setfilter({...filter , check : 0 , size : "m" })}}></Button>
                 <Button  title="L"  onClick={e => {setfilter({...filter , check : 0 , size : "l" })}}></Button>
                 <Button  title="XL"  onClick={e => {setfilter({...filter , check : 0 , size : "xl" })}}></Button>
                 <Button  title="XXL"  onClick={e => {setfilter({...filter , check : 0 , size : "xxl" })}}></Button>
@@ -137,7 +144,7 @@ const ProductDetailComponent = () => {
                     {color.map((color) => (
                                                     
                     <Button title={color} ></Button>
-                                                  ))}
+                     ))}
                 
 
                 </View>
@@ -150,12 +157,72 @@ const ProductDetailComponent = () => {
     
          </View>
 
+            <View>
+            <View>
+            
+            <Text>Category</Text>
+ 
+            {listCategory.map((category) => (
+              <View key={category.id}>
+                <TouchableOpacity  onPress={() => (setfilter({check : 1 ,id: category.id }))}>
+                 <Text >{category.name}</Text>
+             </TouchableOpacity>
+              </View>
+                               
+                  ))} 
+            </View>
+ 
+      
+ 
+            <View>
+             
+             <Text>Brand</Text>
+  
+             {listBrand.map((brand) => (
+               <View key={brand.id}>
+            <TouchableOpacity  onPress={() => (setfilter({check : 2 ,id: brand.id }))}>
+           <Text >{brand.name}</Text>
+              </TouchableOpacity>
+          
+           
+               </View>
+                                
+                   ))} 
+             </View>
+            </View>
+
+
+
+
 
      
    </ScrollView>
 
- </View>
+
+
+   <View>
+             <Text>Description</Text>
+             <Text>{Product.des}</Text>
+    </View>
+
+    < View>
+    <Text>Review</Text>
+    <TextInput
+     style={{ 
+    	height: 40, 
+    	borderColor: 'gray', 
+    	borderWidth: 1,
+    	placeholderTextColor: 'gray',
+    }}
+	multiline={true}
+    numberOfLines={10}
+    onChangeText={text => setTextInputValue(text)}
+    value={textInputValue}
+    placeholder="Insert your review!"
+    />
+    </View>
     
+ </View>
    </ScrollView>
    
      </View>

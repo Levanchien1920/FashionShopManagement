@@ -15,7 +15,6 @@ const Input = ({onChangeText,style,value,lable,error,...props}) => {
         value={value}
          {...props}
         />
-
         </View>
         {error ? (<Text style ={{colors:"yellow"}}> {error} </Text>) : null}
         </View>

@@ -1,33 +1,25 @@
 
-import React, {useContext, useState } from 'react';
+import React, {useContext, useEffect, useState } from 'react';
 import { SafeAreaView,View,Image, Text, TouchableOpacity } from 'react-native';
 
 import Container from '../../components/common/Container';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GlobalContext} from '../../context/Provider';
+import axios from 'axios';
 
 
 const SideMenu = ({navigation}) => {
 
-
-  const [check,setCheck]=useState(true);
-
-
-
-   const value =  AsyncStorage.getItem("fullname");
-  console.log("user:"+value);
-  
-
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
-  
 
-  console.log('isloggedin:=>' ,isLoggedIn);
   const {
     authDispatch,
     authState: {error, loading},
   } = useContext(GlobalContext);
-  
+
+  console.log('isloggedin:=>' ,isLoggedIn);
+
 
     return ( (!isLoggedIn) ?(  <SafeAreaView>
       
@@ -60,8 +52,11 @@ const SideMenu = ({navigation}) => {
       />
       </Container>
     </View>
-    <View>
-    {/* <Text> {user}</Text> */}
+             <View>
+
+                    <Text>Hello: {localStorage.getItem("username")}</Text> 
+                    <Text>Name: {localStorage.getItem("fullname")}</Text> 
+
         <TouchableOpacity onPress= {() =>  {
             AsyncStorage.clear();
             authDispatch({

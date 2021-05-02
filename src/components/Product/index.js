@@ -152,7 +152,7 @@ switch (c) {
            <Text>Category</Text>
 
            {listCategory.map((category) => (
-             <View>
+             <View key={category.id}>
                <TouchableOpacity  onPress={() => (setfilter({check : 1 ,id: category.id }))}>
                 <Text >{category.name}</Text>
             </TouchableOpacity>
@@ -168,7 +168,7 @@ switch (c) {
             <Text>Brand</Text>
  
             {listBrand.map((brand) => (
-              <View>
+              <View key={brand.id}>
            <TouchableOpacity  onPress={() => (setfilter({check : 2 ,id: brand.id }))}>
           <Text >{brand.name}</Text>
              </TouchableOpacity>

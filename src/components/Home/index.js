@@ -9,22 +9,22 @@ import ComponentHeader from '../ComponentHeader';
 
 
 
-const ProductItem = ({image, name, price}) => (
+// const ProductItem = ({image, name, price}) => (
   
   
-  <View style={styles.itemContainer}>
+//   <View style={styles.itemContainer}>
 
-  <Image  source={{ uri: {image} }}
-   style={{width: 100, height: 200, borderWidth: 1}}
-  />
+//   <Image  source={{ uri: {image} }}
+//    style={{width: 100, height: 200, borderWidth: 1}}
+//   />
    
-    <Text style={styles.itemName} numberOfLines={2}>
-      {name}
-    </Text>
-    <Text style={styles.itemPrice}>{price}</Text>
+//     <Text style={styles.itemName} numberOfLines={2}>
+//       {name}
+//     </Text>
+//     <Text style={styles.itemPrice}>{price}</Text>
     
-  </View>
-);
+//   </View>
+// );
 
 
 
@@ -37,21 +37,16 @@ const HomeComponent = () => {
           })
   },[])
 
-  console.log(listProductNP);
+  // console.log(listProductNP);
 
   const {navigate} =useNavigation();
   const [selectedValue, setSelectedValue] = useState("java");
     return (
-
-      
         <View>
           
          <ComponentHeader />
 
          <View>
-
-         
-
        <View style={styles.bodyContainer}>
         <ScrollView>
         <View style={styles.sectionContainer}>
@@ -60,16 +55,15 @@ const HomeComponent = () => {
    
       <ScrollView horizontal={true}>
         <View style={styles.listItemContainer}>
-          {listProductNP.map((e, index) => (
-            <View key={index.toString()}>
-               <ProductItem
-                name={e.name}
-                image={e.link}
-                price={e.price}
-              />
+          {listProductNP.map((product) => (
+            <View key={product.id}> 
+               <Text>name:{product.name}</Text> 
+               <Image  source={{ uri: product.link }}
+               style={{width: 100, height: 200, borderWidth: 1}}/>
+                <Text>price:{product.price}</Text>
 
             <TouchableOpacity onPress= {() => {navigate('ProductDetail', {
-            id: e.id ,
+            id: product.id ,
           })}}>
              <Text >Chi tiết</Text>
          </TouchableOpacity>

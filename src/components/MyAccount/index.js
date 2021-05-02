@@ -8,8 +8,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 const MyAccountComponent = () => {
     const {navigate} =useNavigation();
-    console.log("token:");
-  console.log(AsyncStorage.getItem("token"));
     const [ account, setaccount] = useState({
             "id": 0,
             "username": "",
@@ -17,28 +15,31 @@ const MyAccountComponent = () => {
             "fullname": "",
             "address": "",
             "email": "",
-            "phone_number": "",
+            "phoneNumber": "",
     })
-    useEffect(() => {
-           axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`).then((response)=> {
-            setaccount(response.data);
-            console.log("aaa");
-           
-        }).catch((error) =>{
-        });
-    }, [AsyncStorage.getItem("token")])
-    
+   
+    useEffect(() => {   
+        axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`,
+            {
+            headers: {
+              'Authorization': `Bearer ${localStorage.getItem("token")}`
+            } 
+            }).then((response)=> {
+                setaccount(response.data);
+            }).catch((error) =>{
+            });
+    }, [])
 
     return (
         <View>
                   <ComponentHeader />
 
                   <View>
-                                     <Text>Hello</Text>
+                                   
                                     <Text>Name : {account.fullname}</Text>
                                     <Text>UserName : {account.username}</Text>
                                     <Text>Email : {account.email}</Text>
-                                    <Text>Mobile: {account.phone_number}</Text>
+                                    <Text>Mobile: {account.phoneNumber}</Text>
                                     <Text>Address : {account.address}</Text>
                                     <TouchableOpacity onPress={() => navigate("UpdateAccount")}><Text>Update profile</Text></TouchableOpacity>
                   </View>

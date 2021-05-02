@@ -1,10 +1,10 @@
 import {StyleSheet} from 'react-native';
-import Color from '../../../assets/theme/color';
+
 
 export default StyleSheet.create({
     wrapper : {
        height: 50,
-       borderColor:Color.success,
+       borderColor:'#4cc9f0',
        borderWidth: 1,
        borderRadius:2, 
        marginTop:5
