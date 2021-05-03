@@ -48,6 +48,7 @@ public class InvoiceService {
                 "name_customer",
                 "is_paid",
                 "name_product",
+                "price",
                 "number_product"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);

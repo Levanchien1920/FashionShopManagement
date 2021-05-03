@@ -54,10 +54,10 @@ public class UserService {
     public Page<UserResponseDto> findAllEmployeesDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
-                "employeeName",
-                "phoneNumber",
                 "address",
-                "email"
+                "fullName",
+                "userName",
+                "phoneNumber"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
