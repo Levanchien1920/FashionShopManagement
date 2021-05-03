@@ -22,14 +22,44 @@ function Pagination(props) {
         }
     }
 
+    const pages = [];
+    for (let i = 1; i <= totalPages; i++){
+        pages.push(i)
+    }
+    const renderPageNumber = pages.map(number => {
+        if (number - 1 == page)
+            return (         
+            <li class="page-item active" >
+                <button class="page-link" key = {number} id = {number} onClick = {() => handlePageChange(number - 1)}>{number}</button>
+            </li>
+            )
+        else  
+        return (      
+            <li class="page-item" >
+                <button class="page-link" key = {number} id = {number} onClick = {() => handlePageChange(number - 1)}>{number}</button>
+            </li>
+            )        
+    })
+
     return (
         <div>
-             <button 
-                disabled={page <= 0} 
-                onClick={() => handlePageChange(page - 1)}>Prev</button> 
-            <button 
-                disabled={page >= totalPages - 1} 
-                onClick={() => handlePageChange(page + 1)}>Next</button>
+            <nav aria-label="...">
+                <ul class="pagination">
+                    <li class="page-item">
+                        <button class="page-link" tabindex="-1"
+                            disabled={page <= 0} 
+                            onClick={() => handlePageChange(page - 1)}
+                        >Previous</button>
+                    </li>
+                    {renderPageNumber}
+                    <li class="page-item" >
+                        <button class="page-link"  
+                            disabled={page >= totalPages - 1} 
+                            onClick={() => handlePageChange(page + 1)}
+                        >Next</button>
+                    </li>
+                </ul>
+            </nav>
         </div>
     )
 }

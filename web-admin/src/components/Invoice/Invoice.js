@@ -40,7 +40,7 @@ export default function Invoice() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Employee <button className="btn1 btn" onClick ={e => {history.push("/add-invoice")}}>new</button></h4>
+                                        <h4 className="card-title">List Employee <button className="btn1 btn btn-success" onClick ={e => {history.push("/add-invoice")}}>New</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -51,7 +51,7 @@ export default function Invoice() {
                                             <th scope="col">List Product</th>
                                             <th scope="col">Status</th>
                                             <th scope="col">Total Money</th>
-                                            <th scope="col">View</th>
+                                            <th scope="col">Action</th>
 
                                             </tr>
                                         </thead>
@@ -64,7 +64,7 @@ export default function Invoice() {
                                                     <td>{Invoice.name_Product}</td>
                                                     <td>{Invoice.is_paid}</td>
                                                     <td>{Invoice.number_Product}</td>
-                                                    <td><button className="btn" onClick ={e => {history.push("/view-invoice")}}>View</button></td>
+                                                    <td><button className="btn btn-success" onClick ={e => {history.push("/view-invoice")}}>View</button></td>
 
                                                 </tr>
                                             ))}

@@ -108,7 +108,7 @@ export default function Review() {
                                                 <th scope="col">Name</th>
                                                 <th scope="col">Email</th>
                                                 <th scope="col">Product</th>
-                                                <th scope="col">Delete</th>
+                                                <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -120,7 +120,7 @@ export default function Review() {
                                                     <td>{Review.name_User}</td>
                                                     <td>{Review.email}</td>
                                                     <td>{Review.name_Product}</td>
-                                                    <td><button id = {Review.id} onClick={deleteReview} className="btn">delete</button></td>
+                                                    <td><button id = {Review.id} onClick={deleteReview} className="btn btn-danger">Delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

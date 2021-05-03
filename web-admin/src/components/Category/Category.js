@@ -3,8 +3,9 @@ import axios from 'axios'
 import API from '../Config/Api'
 import { Link, useHistory } from 'react-router-dom'
 import Paginate from '../Pagination/index'
-import Pagination from '../Pagination/index';
+import Pagination from '../Pagination/index'
 import queryString from 'query-string'
+import Paginator from 'react-pagify'
 export default function Category() {
 
     const [pagination, setPagination] = useState({
@@ -94,7 +95,7 @@ export default function Category() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Category <button className="btn1 btn" onClick ={e => {history.push("/addcategory")}} >new</button></h4>
+                                        <h4 className="card-title">List Category <button className="btn1 btn btn-success" onClick ={e => {history.push("/addcategory")}} >New</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -112,7 +113,9 @@ export default function Category() {
                                                     <th scope="row">{Category.id}</th>
                                                     <td>{Category.name}</td>
                                                   
-                                                    <td><button className="btn"  onClick ={ e=> {history.push(`/editcategory/${Category.id}`)}}>edit</button>  <button className="btn" id = {Category.id} onClick={deleteCategory}>delete</button></td>
+                                                    <td>
+                                                        <button className="btn btn-success"  onClick ={ e=> {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>
