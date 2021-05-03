@@ -10,7 +10,8 @@ import Products from './components/Public/Products'
 import Brands from './components/Public/Brand'
 import Categorys from './components/Category/Category'
 import Post from './components/Public/Post'
-import Review from './components/Public/Review'
+// import Review from './components/Public/Reviews'
+import Review from './components/Reviews/Review'
 import Invoice from './components/Invoice/Invoice'
 import Customer from './components/Public/Customer'
 import Login from './components/Public/Login'
@@ -23,7 +24,7 @@ import NewPost from './components/New/NewPost';
 import NewProduct from './components/New/NewProduct';
 import EditProduct from './components/Edit/EditProduct';
 import EditBrand from './components/Edit/EditBrand';
-import ReviewS from './components/Reviews/Review';
+// import ReviewS from './components/Reviews/Review';
 
 function App() {
   return (
@@ -49,7 +50,7 @@ function App() {
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
                 <Route path='/editcategory/:id'> <EditBrand/>  </Route>
-                <Route path='/rv'> <ReviewS/>  </Route>
+                {/* <Route path='/rv'> <ReviewS/>  </Route> */}
             </Switch>
           </LoginContextProvider>
       </div>

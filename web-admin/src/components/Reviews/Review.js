@@ -1,19 +1,47 @@
 import React , {useState , useEffect} from 'react'
 import API from '../Config/Api';
 import axios from 'axios'
-import { Link } from 'react-router-dom';
-export default function ReviewS() {
+import { Link } from 'react-router-dom'
+import Pagination from '../Pagination/index'
+import queryString from 'query-string'
+export default function Review() {
+
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 5,
+        totalPages: 1
+    })
+
+    const [filters, setFilters] = useState({
+        page: 0
+    })
 
     const [ListReview , setListReview] = useState([]);
     const [id, setId] = useState('');
 
     useEffect(() => {
+        const paramsString = queryString.stringify(filters)
+        const requestUrl = `review?${paramsString}`
         API.get('review')
             .then((response)=> {
-                setListReview(response.data.content);
+                setListReview(response.data.content)
+                setPagination({
+                    page: response.data.pageIndex,
+                    totalPages: response.data.totalPage
+                })
             }).catch((error) =>{
         });
-    }, [])
+    }, [filters])
+
+    
+    function handlePageChange(newPage) {
+       
+        setFilters({
+            page: newPage
+        })
+        console.log(filters)
+        console.log('New page: ', newPage)
+    }
 
 
     const deleteReview = (e) => {
@@ -101,6 +129,10 @@ export default function ReviewS() {
                             </div>
                         </div>
                     </div>
+                    <Pagination
+                        pagination={pagination}
+                        onPageChange={handlePageChange}
+                    />
                 </div>
             </div>
     )
