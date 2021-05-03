@@ -22,13 +22,17 @@ export default function ReviewS() {
         console.log(id)
 
         const data = {
-            id: 12
+
         } 
-        API.delete('review/', data)
+
+        var path = 'review/'
+        path += id
+
+        API.delete(path)
         .then(response => {
            
             console.log(response.data)
-            alert("Đặt hàng thành công")
+            alert("Xóa review thành công")
             // window.localStorage.removeItem("cart")
             // history.push('/home')
     
@@ -81,7 +85,7 @@ export default function ReviewS() {
                                         </thead>
                                         <tbody>
                                             {ListReview.map((Review) => (
-                                                <tr>
+                                                <tr key="{Review.id}">
                                                     <th scope="row">{Review.id}</th>
                                                     <td>{Review.number_Of_Star}</td>
                                                     <td>{Review.content}</td>

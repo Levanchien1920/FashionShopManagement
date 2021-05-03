@@ -8,14 +8,16 @@ import LoginContextProvider from './components/Context/LoginContext'
 import Home from './components/Home/Home';
 import Products from './components/Public/Products'
 import Brands from './components/Public/Brand'
-import Categorys from './components/Public/Category'
+import Categorys from './components/Category/Category'
 import Post from './components/Public/Post'
 import Review from './components/Public/Review'
+import Invoice from './components/Invoice/Invoice'
 import Customer from './components/Public/Customer'
 import Login from './components/Public/Login'
 import Employee from './components/Public/Employee'
 import NewBrand from './components/New/NewBrand';
-import NewCategory from './components/New/NewCategory';
+// import NewCategory from './components/New/NewCategory';
+import AddCategory from './components/Category/AddCategory'
 import NewCustomer from './components/New/NewCustomer';
 import NewPost from './components/New/NewPost';
 import NewProduct from './components/New/NewProduct';
@@ -36,15 +38,17 @@ function App() {
                 <Route path='/categorys' > <Categorys/>  </Route>
                 <Route path='/posts' > <Post/>  </Route>
                 <Route path='/reviews' > <Review/>  </Route>
+                <Route path='/invoice' > <Invoice/>  </Route>
                 <Route path='/customer' > <Customer/>  </Route>
                 <Route path='/Employee' > <Employee/>  </Route>
                 <Route path='/newbrand' > <NewBrand/>  </Route>
-                <Route path='/newcategory' > <NewCategory/>  </Route>
+                <Route path='/addcategory' > <AddCategory/>  </Route>
                 <Route path='/newcustomer' > <NewCustomer/>  </Route>
                 <Route path='/newpost' > <NewPost/>  </Route>
                 <Route path='/newproduct' > <NewProduct/>  </Route>
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
+                <Route path='/editcategory/:id'> <EditBrand/>  </Route>
                 <Route path='/rv'> <ReviewS/>  </Route>
             </Switch>
           </LoginContextProvider>
