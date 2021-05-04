@@ -1,9 +1,12 @@
 import React, { useState } from 'react'
-
-export default function EditCategory() {
+import { Link } from 'react-router-dom'
+function EditCategory(props) {
     const [newvalue, setnewvalue] = useState({
         category : ""
     });
+
+    console.log(props.match);
+
     const save =  (e) =>{
         console.log(newvalue);
     }
@@ -19,7 +22,7 @@ export default function EditCategory() {
                         <nav aria-label="breadcrumb">
                             <ol className="breadcrumb">
                                 <li className="breadcrumb-item">
-                                    <a href="#">Home</a>
+                                    <Link to="/">Home</Link>
                                 </li>
                                 <li className="breadcrumb-item active" aria-current="page">New Category</li>
                             </ol>
@@ -32,15 +35,15 @@ export default function EditCategory() {
             <div className="row">
                 <div className="col-12">
                     <div className="card card-body">
-                        <h4 className="card-title">New</h4>
+                        <h4 className="card-title">Edit</h4>
                         <form className="form-horizontal m-t-30">
                             <div className="form-group">
-                                <label>Name Category <span className="help"> e.g. "Shirt"</span></label>
+                                <label>Name Category <span className="help"> e.g. "Luis Vutton"</span></label>
                                 <input type="text" className="form-control" value=""
                                 onChange={e => setnewvalue({...newvalue ,category : e.target.value})} value={newvalue.category}/>
                             </div>
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn" onClick={save}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-success" onClick={save}>Save </button>
                             </div>
                         </form>
                     </div>
@@ -50,3 +53,5 @@ export default function EditCategory() {
     </div>
     )
 }
+
+export default  EditCategory

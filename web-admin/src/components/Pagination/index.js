@@ -29,31 +29,31 @@ function Pagination(props) {
     const renderPageNumber = pages.map(number => {
         if (number - 1 == page)
             return (         
-            <li class="page-item active" >
-                <button class="page-link" key = {number} id = {number} onClick = {() => handlePageChange(number - 1)}>{number}</button>
+            <li className="page-item active" key = {number}>
+                <button className="page-link"  id = {number} onClick = {() => handlePageChange(number - 1)}>{number}</button>
             </li>
             )
         else  
         return (      
-            <li class="page-item" >
-                <button class="page-link" key = {number} id = {number} onClick = {() => handlePageChange(number - 1)}>{number}</button>
+            <li className="page-item" key = {number} >
+                <button className="page-link"  id = {number} onClick = {() => handlePageChange(number - 1)}>{number}</button>
             </li>
             )        
     })
 
     return (
         <div>
-            <nav aria-label="...">
-                <ul class="pagination">
-                    <li class="page-item">
-                        <button class="page-link" tabindex="-1"
+            <nav aria-label="..." >
+                <ul className="pagination">
+                    <li className={(page <= 0) ? "page-item disabled" : "page-item"}>
+                        <button className="page-link" tabIndex="-1"
                             disabled={page <= 0} 
                             onClick={() => handlePageChange(page - 1)}
                         >Previous</button>
                     </li>
                     {renderPageNumber}
-                    <li class="page-item" >
-                        <button class="page-link"  
+                    <li className= {(page >= totalPages - 1) ? "page-item disabled" : "page-item"}>
+                        <button className="page-link"  
                             disabled={page >= totalPages - 1} 
                             onClick={() => handlePageChange(page + 1)}
                         >Next</button>

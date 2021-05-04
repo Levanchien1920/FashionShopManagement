@@ -1,19 +1,19 @@
 import './App.css';
 import { BrowserRouter, Route, } from "react-router-dom";
-import Header from "./components/Header"
-import Footer from "./components/Footer"
-import Login from "./components/Login"
-import Register from "./components/Register"
-import Contact from "./components/Contact"
+import Header from "./components/Template/Header"
+import Footer from "./components/Template/Footer"
+import Login from "./components/Login/Login"
+import Register from "./components/Login/Register"
+import Contact from "./components/Contact/Contact"
 import LoginContextProvider from './context/LoginContext'
 import Cart from './components/Cart/Cart'
-import Home from './components/Home'
-import ProductDetail from "./components/ProductDetail"
-import Products from './components/Products';
-import MyAccount from './components/MyAccount'
-import Order from './components/Order/Orders'
-import UpdateAccount from './components/UpdateAccount'
-import Post from './components/Post';
+import Home from './components/Home/Home'
+import ProductDetail from "./components/Product/ProductDetail"
+import Products from './components/Product/Products';
+import MyAccount from './components/MyAccount/MyAccount'
+import Order from './components/MyAccount/Order/Orders'
+import UpdateAccount from './components/MyAccount/UpdateAccount'
+import Post from './components/Post/Post';
 import Checkout from './components/Checkout/Checkout'
 
 function App() {

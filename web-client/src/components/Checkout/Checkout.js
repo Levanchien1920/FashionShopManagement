@@ -4,13 +4,14 @@ import {useHistory} from 'react-router'
 import API from '../Config/Api';
 import NumberFormat from 'react-number-format';
 import CartItemCheckout from './CartItemCheckout'
-
+import {LoginContext} from '../../context/LoginContext'
 function Checkout() {
     const [productItem , setProductItem] = useState([])
     const [total, setTotal] = useState(0)
     const [id, setId] = useState('')
-     let history = useHistory();
-
+    let history = useHistory();
+    const IsLogin = useContext(LoginContext)
+    console.log(IsLogin.IsLogin)
     useEffect(() => {
         let cart = JSON.parse(localStorage.getItem('cart'));
         let keys = [];

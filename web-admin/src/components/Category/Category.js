@@ -1,11 +1,8 @@
 import React , {useState , useEffect} from 'react'
-import axios from 'axios'
 import API from '../Config/Api'
 import { Link, useHistory } from 'react-router-dom'
-import Paginate from '../Pagination/index'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
-import Paginator from 'react-pagify'
 export default function Category() {
 
     const [pagination, setPagination] = useState({
@@ -22,8 +19,8 @@ export default function Category() {
 
     useEffect(() => {
         const paramsString = queryString.stringify(filters)
-        const requestUrl = `http://localhost:9090/api/v1/category?${paramsString}`
-        axios.get(requestUrl).then((response)=> {
+        const requestUrl = `category?${paramsString}`
+        API.get(requestUrl).then((response)=> {
                 console.log(response.data)
                 setListCategory(response.data.content);
                 setPagination({
@@ -39,24 +36,16 @@ export default function Category() {
         setFilters({
             page: newPage
         })
-        console.log(filters)
-        console.log('New page: ', newPage)
+        // console.log(filters)
+        // console.log('New page: ', newPage)
     }
 
     const deleteCategory = (e) => {
         e.preventDefault()
         let id = e.target.id.toString()
-        console.log(id)
-
-        const data = {
-            
-        } 
-        
-        var path = 'category/'
-        path += id
-
-        console.log(path)
-        API.delete(path, data)
+        // console.log(id)
+   
+        API.delete('category/' + id)
         .then(response => {
            
             console.log(response.data)
@@ -109,12 +98,12 @@ export default function Category() {
                                         <tbody>
                                         
                                             {ListCategory.map((Category) => (
-                                                <tr>
+                                                <tr key = {Category.id}>
                                                     <th scope="row">{Category.id}</th>
                                                     <td>{Category.name}</td>
                                                   
                                                     <td>
-                                                        <button className="btn btn-success"  onClick ={ e=> {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
+                                                        <button className="btn btn-success"  onClick ={ e => {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
                                                     </td>
                                                 </tr>
                                             ))}

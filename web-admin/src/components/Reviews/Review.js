@@ -1,6 +1,5 @@
 import React , {useState , useEffect} from 'react'
 import API from '../Config/Api';
-import axios from 'axios'
 import { Link } from 'react-router-dom'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
@@ -17,12 +16,12 @@ export default function Review() {
     })
 
     const [ListReview , setListReview] = useState([]);
-    const [id, setId] = useState('');
+
 
     useEffect(() => {
         const paramsString = queryString.stringify(filters)
         const requestUrl = `review?${paramsString}`
-        API.get('review')
+        API.get(requestUrl)
             .then((response)=> {
                 setListReview(response.data.content)
                 setPagination({
@@ -48,10 +47,6 @@ export default function Review() {
         e.preventDefault()
         let id = e.target.id.toString()
         console.log(id)
-
-        const data = {
-
-        } 
 
         var path = 'review/'
         path += id
@@ -113,7 +108,7 @@ export default function Review() {
                                         </thead>
                                         <tbody>
                                             {ListReview.map((Review) => (
-                                                <tr key="{Review.id}">
+                                                <tr key={Review.id}>
                                                     <th scope="row">{Review.id}</th>
                                                     <td>{Review.number_Of_Star}</td>
                                                     <td>{Review.content}</td>

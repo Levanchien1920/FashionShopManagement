@@ -9,6 +9,8 @@ import Home from './components/Home/Home';
 import Products from './components/Public/Products'
 import Brands from './components/Public/Brand'
 import Categorys from './components/Category/Category'
+import EditCategory from './components/Category/EditCategory'
+
 import Post from './components/Public/Post'
 // import Review from './components/Public/Reviews'
 import Review from './components/Reviews/Review'
@@ -49,7 +51,7 @@ function App() {
                 <Route path='/newproduct' > <NewProduct/>  </Route>
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
-                <Route path='/editcategory/:id'> <EditBrand/>  </Route>
+                <Route path='/editcategory/:id' component={EditCategory}/>
                 {/* <Route path='/rv'> <ReviewS/>  </Route> */}
             </Switch>
           </LoginContextProvider>
