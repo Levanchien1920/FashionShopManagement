@@ -32,4 +32,13 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceEmployeeResponseDto> findAllByIdEmployee(Pageable pageable, @Param("keyword") String keyword);
 
+
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
+            "FROM (((invoice i inner join user e on i.id_customer=e.id) " +
+            "inner join info_for_each info on info.id_invoice=i.id) " +
+            "inner join product p on p.id=info.id_product) " +
+            "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id= :id", nativeQuery = true)
+    Page<InvoiceCustomerResponseDto> getOneByIdCustomer(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id);
+
+
 }

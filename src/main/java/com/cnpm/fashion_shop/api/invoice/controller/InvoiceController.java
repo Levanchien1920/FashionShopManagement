@@ -68,7 +68,16 @@ public class InvoiceController {
         return this.invoiceService.deleteInvoiceDto(id);
     }
 
+    @ApiOperation(value = "Get invoice by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/{id_invoice}")
+    public PaginationResponse<InvoiceCustomerResponseDto> getOneInvoice(RequestParamsForGettingList requestParamsForGettingList, @PathVariable("id_invoice") Integer id) {
+        Page<InvoiceCustomerResponseDto> data = invoiceService.getOne(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch(), id);
 
+        return new PaginationResponse<>(data);
+    }
 
 
 }
