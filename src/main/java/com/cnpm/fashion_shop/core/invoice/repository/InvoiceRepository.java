@@ -3,6 +3,7 @@ package com.cnpm.fashion_shop.core.invoice.repository;
 
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
+import com.cnpm.fashion_shop.entity.InformationProductForEachInvoice;
 import com.cnpm.fashion_shop.entity.Invoice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -31,6 +32,5 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "inner join product p on p.id=info.id_product) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceEmployeeResponseDto> findAllByIdEmployee(Pageable pageable, @Param("keyword") String keyword);
-
 
 }

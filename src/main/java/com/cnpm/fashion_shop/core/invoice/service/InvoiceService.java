@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.lang.invoke.MethodHandles;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -97,7 +98,7 @@ public class InvoiceService {
 //        return ResponseEntity.ok(new PostDto(post.getId(),post.getContent() ,post.getId_image()));
 //    }
 
-    @Transactional
+
     public ResponseEntity<Response> createInvoiceDto(InvoiceDto dto) {
         try {
         Invoice invoice;
@@ -113,20 +114,40 @@ public class InvoiceService {
         invoiceRepository.save(invoice);
 
 
+        List<Integer> allId = new ArrayList<Integer>();
         for(int i=0; i<dto.listProducts.size();i++)
         {
-            details= new InformationProductForEachInvoice();
-            details.setId_product(dto.listProducts.get(i).getId());
-            details.setId_invoice(invoice.getId());
-            details.setNumber(dto.listProducts.get(i).getNumber());
-            detailRepository.save(details);
+            if(!allId.contains(dto.listProducts.get(i).getId()))
+            {
+                details= new InformationProductForEachInvoice();
+                details.setId_product(dto.listProducts.get(i).getId());
+                details.setId_invoice(invoice.getId());
+                details.setNumber(dto.listProducts.get(i).getNumber());
+                detailRepository.save(details);
+                allId.add(dto.listProducts.get(i).getId());
 
-//            cap nnhat lai number cua san pham trong kho
-            productOpt = productRepository.findById(dto.listProducts.get(i).getId());
-            product = productOpt.get();
-            product.setNumber(product.getNumber()-dto.listProducts.get(i).getNumber());
+//              cap nnhat lai number cua san pham trong kho
+                productOpt = productRepository.findById(dto.listProducts.get(i).getId());
+                product = productOpt.get();
+                product.setNumber(product.getNumber()-dto.listProducts.get(i).getNumber());
 
-            productRepository.save(product);
+                productRepository.save(product);
+            }
+            else
+            {
+                //tim ra details do
+                details=detailRepository.findByIdInfoForEach(dto.listProducts.get(i).getId());
+                details.setNumber(dto.listProducts.get(i).getNumber()+details.getNumber());
+                details.setId_product(details.getId_product());
+                details.setId_invoice(details.getId_invoice());
+                detailRepository.save(details);
+
+//              cap nnhat lai number cua san pham trong kho
+                productOpt = productRepository.findById(dto.listProducts.get(i).getId());
+                product = productOpt.get();
+                product.setNumber(product.getNumber()-dto.listProducts.get(i).getNumber());
+
+            }
         }
 
         return ResponseEntity.ok(SuccessfulResponse.CREATED);
