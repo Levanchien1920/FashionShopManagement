@@ -3,7 +3,6 @@ package com.cnpm.fashion_shop.core.invoice.repository;
 
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
-import com.cnpm.fashion_shop.entity.InformationProductForEachInvoice;
 import com.cnpm.fashion_shop.entity.Invoice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

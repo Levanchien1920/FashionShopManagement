@@ -31,7 +31,8 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
     Review findById_Product(@Param("id") Integer id);
 
 
-    @Query(value = "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product,c.full_name AS Name_User,c.email AS Email FROM review r inner join product p on r.id_product=p.id " +
+    @Query(value = "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product,c.full_name AS Name_User,c.email AS Email FROM ((review r inner join product p on r.id_product=p.id )" +
+            "inner join user c on r.id_user=c.id)"+
             "WHERE LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE and r.number_of_star >=4", nativeQuery = true)
     Page<ReviewResponseDto> findAllGoodReview(Pageable pageable, @Param("keyword") String keyword);
 

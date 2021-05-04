@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -22,6 +23,14 @@ import javax.validation.Valid;
 public class UserControllerClient {
     @Autowired
     private UserService userService;
+
+    @ApiOperation(value = "Create customer", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @PostMapping
+    public ResponseEntity<Response> createCustomer(
+            @Valid @RequestBody UserDto dto
+    ) {
+        return userService.createUser(dto);
+    }
 
     @ApiOperation(value = "Update customer", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PatchMapping("/{id}")
