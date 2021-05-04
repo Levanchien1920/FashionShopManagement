@@ -6,18 +6,27 @@ export default function Products() {
     const history =useHistory();
     const [ListProduct , setListProduct] = useState([]);
     const check = useContext(LoginContext);
+    const [filter, setfilter] = useState(0)
     useEffect(() => {
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
         check.checklogin();
-        axios.get('http://localhost:9090/api/v1/product',
-            {
-            headers: {
-              'Authorization': `Bearer ${localStorage.getItem("token")}`
-            } 
-            }).then((response)=> {
+        axios.get('http://localhost:9090/api/v1/product',token).then((response)=> {
                 setListProduct(response.data.content);
+                console.log(response.data);
             }).catch((error) =>{
             });
-    }, [])
+    }, [filter])
+    function deleteproduct (id) {
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
+        axios.delete(`http://localhost:9090/api/v1/product/${id}`,token).then((response)=> {
+            setfilter(id);
+        }).catch((error) =>{
+        });
+    }
     return (
         <>
             {(check.IsLogin === false ) ? (
@@ -74,7 +83,6 @@ export default function Products() {
                                             </tr>
                                         </thead>
                                         <tbody>
-                                        
                                             {ListProduct.map((product) => (
                                                 <tr>
                                                     <th scope="row">{product.id}</th>
@@ -89,15 +97,19 @@ export default function Products() {
                                                     <td>{product.name_Category}</td>
                                                     <td>{product.name_Image}</td>
                                                     <td><a href={product.link} target="_blank">click in here</a></td>
-                                                    <td>{product.sold_Out}</td>
+                                                    <td>{(product.sold_Out === null) ? product.sold_Out : null }</td>
                                                     <td><button className="btn" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>edit</button></td>
-                                                    <td><button className="btn">delete</button></td>
+                                                    <td><button className="btn" onClick = {deleteproduct.bind(this, product.id)}>delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </table>
                                 </div>
                             </div>
+                                <div className="pn">
+                                    <button className="btn">Prev</button>
+                                    <button className="btn">Next</button>
+                                </div>
                         </div>
                     </div>
                 </div>

@@ -14,6 +14,7 @@ import Review from './components/Public/Review'
 import Customer from './components/Public/Customer'
 import Login from './components/Public/Login'
 import Employee from './components/Public/Employee'
+import Invoice from './components/Invoice/Invoice'
 import NewBrand from './components/New/NewBrand';
 import NewCategory from './components/New/NewCategory';
 import NewCustomer from './components/New/NewCustomer';
@@ -22,6 +23,8 @@ import NewProduct from './components/New/NewProduct';
 import EditProduct from './components/Edit/EditProduct';
 import EditBrand from './components/Edit/EditBrand';
 import ReviewS from './components/Reviews/Review';
+import NewEmployee from './components/New/NewEmployee';
+import EditEmployee from './components/Edit/EditEmployee';
 
 function App() {
   return (
@@ -32,6 +35,7 @@ function App() {
             <Switch>
                 <Route exact path='/login' > <Login/>  </Route>
                 <Route path='/products' > <Products/>  </Route>
+                <Route path='/invoice' > <Invoice/>  </Route>
                 <Route path='/brands' > <Brands/>  </Route>
                 <Route path='/categorys' > <Categorys/>  </Route>
                 <Route path='/posts' > <Post/>  </Route>
@@ -42,7 +46,9 @@ function App() {
                 <Route path='/newcategory' > <NewCategory/>  </Route>
                 <Route path='/newcustomer' > <NewCustomer/>  </Route>
                 <Route path='/newpost' > <NewPost/>  </Route>
+                <Route path='/newemployee' > <NewEmployee/>  </Route>
                 <Route path='/newproduct' > <NewProduct/>  </Route>
+                <Route path='/editemployee/:id' > <EditEmployee/>  </Route>
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
                 <Route path='/rv'> <ReviewS/>  </Route>

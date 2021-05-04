@@ -13,8 +13,8 @@ export default function NewBrand() {
             console.log(newvalue)
             axios.post("http://localhost:9090/api/v1/brand",newvalue,{
                 headers: {
-                            'Authorization': `Bearer ${localStorage.getItem("token")}`
-                            } 
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                        } 
                 }).then((response)=> {
                 alert(response.data.message);
             }).catch((error) =>{

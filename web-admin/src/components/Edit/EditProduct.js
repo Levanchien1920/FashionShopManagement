@@ -1,9 +1,13 @@
 import axios from 'axios';
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 export default function EditProduct() {
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
+    const [listImage, setlistImage] = useState([])
+    const [color, setcolor] = useState([])
     const [Productdetail , setProductdetail] = useState({});
     const check = useContext(LoginContext);
     var array = window.location.pathname.split("/");
@@ -20,6 +24,14 @@ export default function EditProduct() {
         });
         axios.get('http://localhost:9090/api/v1/brand').then((response)=> {
             setlistBrand(response.data.content);
+        }).catch((error) =>{
+        });
+        axios.get('http://localhost:9090/api/v1/image').then((response)=> {
+            setlistImage(response.data.content);
+        }).catch((error) =>{
+        });
+        axios.get('http://localhost:9090/api/v1/color').then((response)=> {
+            setlistImage(response.data.content);
         }).catch((error) =>{
         });
        
@@ -70,10 +82,20 @@ export default function EditProduct() {
                             </div>
                             <div className="form-group">
                                 <label for="des">Description</label>
-                                <textarea type="text" className="form-control" rows="5" value="" id="des"/>
+                                <CKEditor
+                                    editor={ ClassicEditor }
+                                    data="<p>Hello from CKEditor 5!</p>"
+                                    onReady={ editor => {
+                                        console.log( 'Editor is ready to use!', editor );
+                                    } }
+                                    onChange={ ( event, editor ) => {
+                                        const data = editor.getData();
+                                        console.log( { event, editor, data } );
+                                    } }
+                                />
                             </div>
                             <div className="form-group">
-                                <label for="linkimage">Link Image</label>
+                                <label for="linkimage">Name size</label>
                                 <input type="text" className="form-control" value="" id="linkimage"/>
                             </div>
                             <div className="form-group">
@@ -88,6 +110,18 @@ export default function EditProduct() {
                                     <select className="col-md-3" id="category">
                                         {listCategory.map((category) => (
                                            <option value={category.name}>{category.name}</option>
+                                        ))}
+                                    </select>
+                                    <label className="idlabel" for="image">Image</label>
+                                    <select className="col-md-3" id="image">
+                                        {listImage.map((image) => (
+                                           <option value={image.name}>{image.name}</option>
+                                        ))}
+                                    </select>
+                                    <label className="idlabel" for="color">Color</label>
+                                    <select className="col-md-3" id="color">
+                                        {color.map((color) => (
+                                           <option value={color.name}>{color.name}</option>
                                         ))}
                                     </select>
                                 </div>

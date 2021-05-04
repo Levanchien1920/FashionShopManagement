@@ -56,7 +56,7 @@ function Sidebar() {
                             ) : (
                                 <ul id="sidebarnav">
                                     <li className="sidebar-item">
-                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/customer" aria-expanded="false">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/invoice" aria-expanded="false">
                                             <i className="mdi-account-network"></i>
                                             <span className="hide-menu">Invoice</span>
                                         </Link>
