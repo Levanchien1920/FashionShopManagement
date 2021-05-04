@@ -361,4 +361,25 @@ public class ProductService {
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return productRepository.findProducts(pageable, search);
     }
+
+    @Transactional
+    public Page<ProductResponseDto> getBestProducts(int size, int page, String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name",
+                "price",
+                "number",
+                "des",
+                "Name_Brand",
+                "Name_Category",
+                "Name_Gender",
+                "Name_Image",
+                "link"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return productRepository.findBestProducts(pageable, search);
+    }
 }

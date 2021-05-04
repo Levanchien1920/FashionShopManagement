@@ -62,16 +62,16 @@ public class ProductControllerClient {
 
 
 
-//    @ApiOperation(value = "Get best selling products for client")
-//    @GetMapping
-//    public PaginationResponse<ProductResponseDto> getBestProducts(RequestParamsForGettingList requestParamsForGettingList) {
-//        Page<ProductResponseDto> data = productService.getBestProducts(requestParamsForGettingList.getPage(),
-//                requestParamsForGettingList.getSize(),
-//                requestParamsForGettingList.getSort(),
-//                requestParamsForGettingList.getSearch());
-//
-//        return new PaginationResponse<>(data);
-//    }
+    @ApiOperation(value = "Get best selling products for client")
+    @GetMapping("/best")
+    public PaginationResponse<ProductResponseDto> getBestProducts(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<ProductResponseDto> data = productService.getBestProducts(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
 
 
     @ApiOperation(value = "Get new products for client")
