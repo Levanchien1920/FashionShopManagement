@@ -1,4 +1,6 @@
 import axios from 'axios';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 export default function NewProduct() {
@@ -87,11 +89,17 @@ export default function NewProduct() {
                             </div>
                             <div className="form-group">
                                 <label for="des">Description</label>
-                                <textarea type="text" className="form-control" rows="5" value="" id="des"/>
-                            </div>
-                            <div className="form-group">
-                                <label for="linkimage">Image</label>
-                                <input type="text" className="form-control" value="" id="linkimage"/>
+                                <CKEditor
+                                    editor={ ClassicEditor }
+                                    data=""
+                                    onReady={ editor => {
+                                        console.log( 'Editor is ready to use!', editor );
+                                    } }
+                                    onChange={ ( event, editor ) => {
+                                        const data = editor.getData();
+                                        console.log( { event, editor, data } );
+                                    } }
+                                />
                             </div>
                             <div className="form-group">
                                 <div className="row">

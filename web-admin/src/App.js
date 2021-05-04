@@ -12,7 +12,7 @@ import Categorys from './components/Category/Category'
 import Post from './components/Public/Post'
 // import Review from './components/Public/Reviews'
 import Review from './components/Reviews/Review'
-import Invoice from './components/Invoice/Invoice'
+//import Invoice from './components/Invoice/Invoice'
 import Customer from './components/Public/Customer'
 import Login from './components/Public/Login'
 import Employee from './components/Public/Employee'
@@ -39,12 +39,12 @@ function App() {
             <Switch>
                 <Route exact path='/login' > <Login/>  </Route>
                 <Route path='/products' > <Products/>  </Route>
-                <Route path='/invoice' > <Invoice/>  </Route>
+               
                 <Route path='/brands' > <Brands/>  </Route>
                 <Route path='/categorys' > <Categorys/>  </Route>
                 <Route path='/posts' > <Post/>  </Route>
                 <Route path='/reviews' > <Review/>  </Route>
-                <Route path='/invoice' > <Invoice/>  </Route>
+               
                 <Route path='/sale' > <Sale/>  </Route>
                 <Route path='/customer' > <Customer/>  </Route>
                 <Route path='/Employee' > <Employee/>  </Route>
