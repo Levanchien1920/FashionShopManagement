@@ -18,7 +18,7 @@ function Card(props) {
         <div className="Product">
             <div className="product-item">
                     <div class="product-title">
-                        <Link to={`/productdetail/${product.id}`}>
+                        <Link onClick={() => {window.location.href=`/productdetail/${product.id}`}} >
                            {product.name}
                         </Link>
                         <div className="ratting">

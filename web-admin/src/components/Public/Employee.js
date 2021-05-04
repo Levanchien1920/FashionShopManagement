@@ -4,15 +4,31 @@ import { Link, useHistory } from 'react-router-dom';
 export default function Employee() {
     const history = useHistory();
     const [ListEmployee , setListEmployee] = useState([]);
+    const [runuseEff, setrunuseEff] = useState(1)
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/employee').then((response)=> {
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
+        axios.get('http://localhost:9090/api/v1/admin/user/employee',token).then((response)=> {
                 setListEmployee(response.data.content);
+                console.log(response.data);
             }).catch((error) =>{
             });
-    }, [])
+    }, [runuseEff])
+    function deleteEmployee (id) {
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
+        axios.delete(`http://localhost:9090/api/v1/admin/user/${id}`,token).then((response)=> {
+            alert(response.data.message)
+            setrunuseEff(id)
+        }).catch((error) =>{
+            alert(error.data)
+        });
+    }
     return (
             <div className="page-wrapper">
-                <div className="page-breadcrumb">
+                <div className="page-breadcrumb">=
                     <div className="row">
                         <div className="col-5 align-self-center">
                             <h4 className="page-title">Employee</h4>
@@ -57,10 +73,10 @@ export default function Employee() {
                                                     <th scope="row">{Employee.id}</th>
                                                     <td>{Employee.fullName}</td>
                                                     <td>{Employee.userName}</td>
-                                                    <td>{Employee.phone_Number}</td>
+                                                    <td>{Employee.phoneNumber}</td>
                                                     <td>{Employee.address}</td>
-                                                    <td><button className="btn">edit</button></td>
-                                                    <td><button className="btn">delete</button></td>
+                                                    <td><button className="btn" onClick ={ e=> {history.push(`/editemployee/${Employee.id}`)}}>edit</button></td>
+                                                    <td><button className="btn" onClick = {deleteEmployee.bind(this,Employee.id)}>delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

@@ -7,6 +7,7 @@ export default function Post() {
     useEffect(() => {
         axios.get('http://localhost:9090/api/v1/client/post').then((response)=> {
             setpost(response.data.content);
+            console.log(response.data.content)
         }).catch((error) =>{
         });
     }, [])

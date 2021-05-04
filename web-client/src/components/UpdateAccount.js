@@ -13,18 +13,21 @@ export default function UpdateAccount() {
         phone_number: "",
     });
     useEffect(() => {
-           axios.get(`http://localhost:9090/api/v1/customer/${localStorage.id}`).then((response)=> {
-                    let temp = {
-                        username : response.data.username,
-                        password : response.data.password,
-                        fullname: response.data.fullname,
-                        address :response.data.address ,
-                        email: response.data.email,
-                        phone_number: response.data.phone_number  
-                    }
-                    setuserUpdate(temp);
-                }).catch((error) =>{
-                });
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
+        axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`,token).then((response)=> {
+            let temp = {
+                username : response.data.username,
+                password : response.data.password,
+                fullname: response.data.fullname,
+                address :response.data.address ,
+                email: response.data.email,
+                phone_number: response.data.phone_number  
+            }
+            setuserUpdate(temp);
+        }).catch((error) =>{
+        });
     }, [])
     function submitHandle() {
         axios.patch(`http://localhost:9090/api/v1/customer/${localStorage.id}`, userUpdate).then((response)=> {

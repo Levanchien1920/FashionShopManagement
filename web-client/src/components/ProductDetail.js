@@ -1,8 +1,9 @@
 import axios from 'axios';
-import React, { useEffect , useState } from 'react'
+import React, { useContext, useEffect , useState } from 'react'
 import { useHistory } from 'react-router';
 import Card from './Card';
 import Carousel from 'react-elastic-carousel';
+import {LoginContext} from '../context/LoginContext'
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -10,10 +11,10 @@ const breakPoints = [
     { width: 1600, itemsToShow: 4 }
   ];
 function ProductDetail() {
+    const Login = useContext(LoginContext);
     const history=useHistory();
     const [color , setcolor] =useState([]);
     const [listProduct , setlistProduct] = useState([]);
-    const [star , setstar] = useState(0);
     const [Product , setProduct] = useState([]);
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
@@ -41,6 +42,14 @@ function ProductDetail() {
         localStorage.setItem('cart', JSON.stringify(cart));
       }
 
+    const [cateRelated, setcateRelated] = useState([]);
+    const [review, setreview] = useState([]);
+    const [OutputReview, setOutputReview] = useState({
+        id_user : 0,
+        id_product : 0,
+        content : "",
+        number_of_star : 0
+    })
     useEffect(() => {
         if (filter.check === 1){
                 axios.get(`http://localhost:9090/api/v1/client/category/${filter.id}`).then((response)=> {
@@ -70,12 +79,17 @@ function ProductDetail() {
                 setbrandRelated(response.data.content);
             }).catch((error) =>{
             });
-            axios.get(`http://localhost:9090/api/v1/client/category/relateProduct/${response.data.id_brand}`).then((response)=> {
+            axios.get(`http://localhost:9090/api/v1/client/category/relateProduct/${response.data.id_cate}`).then((response)=> {
                 setcateRelated(response.data.content);
             }).catch((error) =>{
             });
         }).catch((error) =>{
         });
+        axios.get(`http://localhost:9090/api/v1/client/review/${id}`).then((response)=> {
+                setreview(response.data.content);
+                console.log(response.data.content)
+            }).catch((error) =>{
+            });
         axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
             setlistCategory(response.data.content);
         }).catch((error) =>{
@@ -108,8 +122,22 @@ function ProductDetail() {
                 setcolor(colorofsizexxl);
               break;
             default:
-                console.log("no");
         }
+    }
+    function submitReview() {
+        console.log("12123")
+            
+        if (Login.IsLogin === true) {
+            axios.post(`http://localhost:9090/api/v1/client/review`, OutputReview).then((response)=> {
+                alert(response.data.message);
+            }).catch((error) =>{
+                console.log(error);
+            });
+        } else {
+            history.push("/login")
+            console.log("12123")
+        }
+        
     }
     return (
         <div className="product-detail">
@@ -129,11 +157,11 @@ function ProductDetail() {
                                         <div className="product-content">
                                             <div className="title"><h2>{Product.name}</h2></div>
                                             <div className="ratting">
-                                                <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=1 ?"fa fa-star": Product.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=2 ?"fa fa-star": Product.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=3 ?"fa fa-star": Product.number_Of_Star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=4 ?"fa fa-star": Product.number_Of_Star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=5 ?"fa fa-star": Product.number_Of_Star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                             </div>
                                             <div className="price">
                                                 <h4>Price:</h4>
@@ -194,37 +222,40 @@ function ProductDetail() {
                                     </div>
                                     <ul className="nav nav-pills nav-justified">
                                         <li className="nav-item">
-                                            <h3>Reviews (1)</h3>
+                                            <h3>Reviews ({review.length})</h3>
                                         </li>
                                     </ul>
                                     <div id="reviews" className="container tab-pane active">
-                                            <div className="reviews-submitted">
-                                                <div className="reviewer">Phasellus Gravida - <span>01 Jan 2020</span></div>
+                                            {review.map((review) => (
+                                                <div className="reviews-submitted">
+                                                <div className="reviewer">{review.name_User}</div>
                                                 <div className="ratting">
-                                                    <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_of_star >=1 ?"fa fa-star": review.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_of_star >=2 ?"fa fa-star": review.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_of_star >=3 ?"fa fa-star": review.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_of_star >=4 ?"fa fa-star": review.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_of_star >=5 ?"fa fa-star": review.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                                 </div>
                                                 <p>
-                                                    Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.
+                                                    {review.content}
                                                 </p>
                                             </div>
+                                            ))}
                                             <div className="reviews-submit">
                                                 <h4>Give your Review:</h4>
                                                 <div className="ratting">
-                                                    <button className={star >=1 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(1)}}></button>
-                                                    <button className={star >=2 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(2)}}></button>
-                                                    <button className={star >=3 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(3)}}></button>
-                                                    <button className={star >=4 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(4)}}></button>
-                                                    <button className={star >=5 ? "fa fa-star" : "far fa-star"} onClick={ e => {setstar(5)}}></button>
+                                                    <button className={OutputReview.number_of_star >=1 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 1})}}></button>
+                                                    <button className={OutputReview.number_of_star >=2 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 2})}}></button>
+                                                    <button className={OutputReview.number_of_star >=3 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 3})}}></button>
+                                                    <button className={OutputReview.number_of_star >=4 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 4})}}></button>
+                                                    <button className={OutputReview.number_of_star >=5 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 5})}}></button>
                                                 </div>
                                             </div>
                                             <div className="row form">
                                                     <label>Review :</label>
-                                                    <textarea placeholder="Review" className="col-sm-12"></textarea>
-                                                    <button className="submit">Submit</button>
+                                                    <textarea placeholder="Review" className="col-sm-12" 
+                                                    onChange={e => setOutputReview({...OutputReview ,content : e.target.value, id_user : localStorage.getItem("id") , id_product : Product.id})} value={OutputReview.content}></textarea>
+                                                    <button className="submit" onClick={submitReview}>Submit</button>
                                                 
                                             </div>
                                         </div>
@@ -261,9 +292,7 @@ function ProductDetail() {
                                                                 <div class="dropdown">
                                                                     <button className="dropdown-toggle">Product short by</button>
                                                                         <div className="dropdown-content">
-                                                                    
                                                                         </div>
-                                                                
                                                                 </div>
                                                             </div>
                                                         </div>

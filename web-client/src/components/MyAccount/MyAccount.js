@@ -15,7 +15,10 @@ export default function MyAccount() {
             "phone_number": "",
     })
     useEffect(() => {
-           axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`).then((response)=> {
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
+        axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`,token).then((response)=> {
             setaccount(response.data);
         }).catch((error) =>{
         });
@@ -46,7 +49,7 @@ export default function MyAccount() {
                                     <p> Name : {account.fullname}</p>
                                     <p> UserName : {account.username}</p>
                                     <p> Email : {account.email}</p>
-                                    <p> Mobile: {account.phone_number}</p>
+                                    <p> Mobile: {account.phoneNumber}</p>
                                     <p> Address : {account.address}</p>
                                     <button className="btn"onClick={() => ( history.push("/updateaccount"))}>Edit Address</button>
                                 </div>
