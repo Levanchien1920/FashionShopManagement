@@ -3389,6 +3389,8 @@ input[type="button"].btn-block {
 .cardinvoice {
     max-height: 30rem;
     max-width: 90%;
+    margin-left: 4rem;
+    margin-bottom: 2rem;
   }
   .card > hr {
     margin-right: 0;

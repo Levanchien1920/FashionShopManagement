@@ -34,7 +34,7 @@ function ProductDetail() {
         id_user : 0,
         id_product : 0,
         content : "",
-        numberOfStar : 0
+        number_of_star : 0
     })
     useEffect(() => {
         if (filter.check === 1){
@@ -73,6 +73,7 @@ function ProductDetail() {
         });
         axios.get(`http://localhost:9090/api/v1/client/review/${id}`).then((response)=> {
                 setreview(response.data.content);
+                console.log(response.data.content)
             }).catch((error) =>{
             });
         axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
@@ -139,11 +140,11 @@ function ProductDetail() {
                                         <div className="product-content">
                                             <div className="title"><h2>{Product.name}</h2></div>
                                             <div className="ratting">
-                                                <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=1 ?"fa fa-star": Product.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=2 ?"fa fa-star": Product.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=3 ?"fa fa-star": Product.number_Of_Star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=4 ?"fa fa-star": Product.number_Of_Star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_Of_Star >=5 ?"fa fa-star": Product.number_Of_Star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                             </div>
                                             <div className="price">
                                                 <h4>Price:</h4>
@@ -226,11 +227,11 @@ function ProductDetail() {
                                             <div className="reviews-submit">
                                                 <h4>Give your Review:</h4>
                                                 <div className="ratting">
-                                                    <button className={OutputReview.numberOfStar >=1 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , numberOfStar : 1})}}></button>
-                                                    <button className={OutputReview.numberOfStar >=2 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , numberOfStar : 2})}}></button>
-                                                    <button className={OutputReview.numberOfStar >=3 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , numberOfStar : 3})}}></button>
-                                                    <button className={OutputReview.numberOfStar >=4 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , numberOfStar : 4})}}></button>
-                                                    <button className={OutputReview.numberOfStar >=5 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , numberOfStar : 5})}}></button>
+                                                    <button className={OutputReview.number_of_star >=1 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 1})}}></button>
+                                                    <button className={OutputReview.number_of_star >=2 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 2})}}></button>
+                                                    <button className={OutputReview.number_of_star >=3 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 3})}}></button>
+                                                    <button className={OutputReview.number_of_star >=4 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 4})}}></button>
+                                                    <button className={OutputReview.number_of_star >=5 ? "fa fa-star" : "far fa-star"} onClick={ e => {setOutputReview({...OutputReview , number_of_star : 5})}}></button>
                                                 </div>
                                             </div>
                                             <div className="row form">
