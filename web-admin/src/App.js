@@ -8,15 +8,18 @@ import LoginContextProvider from './components/Context/LoginContext'
 import Home from './components/Home/Home';
 import Products from './components/Public/Products'
 import Brands from './components/Public/Brand'
-import Categorys from './components/Public/Category'
+import Categorys from './components/Category/Category'
 import Post from './components/Public/Post'
-import Review from './components/Public/Review'
+// import Review from './components/Public/Reviews'
+import Review from './components/Reviews/Review'
+import Invoice from './components/Invoice/Invoice'
 import Customer from './components/Public/Customer'
 import Login from './components/Public/Login'
 import Employee from './components/Public/Employee'
-import Invoice from './components/Invoice/Invoice'
+import Sale from './components/Sale/Sale'
 import NewBrand from './components/New/NewBrand';
-import NewCategory from './components/New/NewCategory';
+// import NewCategory from './components/New/NewCategory';
+import AddCategory from './components/Category/AddCategory'
 import NewCustomer from './components/New/NewCustomer';
 import NewPost from './components/New/NewPost';
 import NewProduct from './components/New/NewProduct';
@@ -25,6 +28,7 @@ import EditBrand from './components/Edit/EditBrand';
 import ReviewS from './components/Reviews/Review';
 import NewEmployee from './components/New/NewEmployee';
 import EditEmployee from './components/Edit/EditEmployee';
+// import ReviewS from './components/Reviews/Review';
 
 function App() {
   return (
@@ -40,10 +44,12 @@ function App() {
                 <Route path='/categorys' > <Categorys/>  </Route>
                 <Route path='/posts' > <Post/>  </Route>
                 <Route path='/reviews' > <Review/>  </Route>
+                <Route path='/invoice' > <Invoice/>  </Route>
+                <Route path='/sale' > <Sale/>  </Route>
                 <Route path='/customer' > <Customer/>  </Route>
                 <Route path='/Employee' > <Employee/>  </Route>
                 <Route path='/newbrand' > <NewBrand/>  </Route>
-                <Route path='/newcategory' > <NewCategory/>  </Route>
+                <Route path='/addcategory' > <AddCategory/>  </Route>
                 <Route path='/newcustomer' > <NewCustomer/>  </Route>
                 <Route path='/newpost' > <NewPost/>  </Route>
                 <Route path='/newemployee' > <NewEmployee/>  </Route>
@@ -51,7 +57,8 @@ function App() {
                 <Route path='/editemployee/:id' > <EditEmployee/>  </Route>
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
-                <Route path='/rv'> <ReviewS/>  </Route>
+                <Route path='/editcategory/:id'> <EditBrand/>  </Route>
+                {/* <Route path='/rv'> <ReviewS/>  </Route> */}
             </Switch>
           </LoginContextProvider>
       </div>

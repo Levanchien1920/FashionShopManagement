@@ -36,18 +36,19 @@ export default function Post() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Post <button className="btn1 btn" onClick ={ e=> {history.push("/newpost")}} >new</button></h4>
+                                        <h4 className="card-title">List Post <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/newpost")}} >New</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
-                                            <th scope="col">Id</th>
-                                            <th scope="col">Name</th>
-                                            <th scope="col">Content</th>
-                                            <th scope="col">Detail</th>
-                                            <th scope="col">Edit</th>
-                                            <th scope="col">Delete</th>
+                                                <th scope="col">Id</th>
+                                                <th scope="col">Name</th>
+                                                <th scope="col" >Content</th>
+                                                <th scope="col">Detail</th>
+                                                <th scope="col">Action</th>
+                                                <th></th>
+                                        
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -56,9 +57,9 @@ export default function Post() {
                                                     <th scope="row">{Post.id}</th>
                                                     <td>{Post.name}</td>
                                                     <td>{Post.content}</td>
-                                                    <td><a href={Post.link} target="_blank">click in here</a></td>
-                                                    <td><button className="btn">edit</button></td>
-                                                    <td><button className="btn">delete</button></td>
+                                                    <td ><a href={Post.link} target="_blank">click in here</a></td>
+                                                    <td><button className="btn btn-success">edit</button> </td>
+                                                    <td><button className="btn btn-danger">delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

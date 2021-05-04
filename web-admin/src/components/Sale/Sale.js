@@ -2,7 +2,7 @@ import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import axios from 'axios'
 import { Bar } from "react-chartjs-2";
-export default function Invoice() {
+export default function Sale() {
     const [ListSale , setListSale] = useState([]);
     const [DataMonthly, setDataMonthly] = useState([])
     const check = useContext(LoginContext);
@@ -130,38 +130,8 @@ export default function Invoice() {
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12">
-                        <div className="card">
-                            <div className="card-body">
-                                <h4 className="card-title">Latest Sales</h4>
-                            </div>
-                            <div className="table-responsive">
-                                <table className="table table-hover">
-                                    <thead>
-                                        <tr>
-                                            <th className="border-top-0">ID</th>
-                                            <th className="border-top-0">Name</th>
-                                            <th className="border-top-0">Month</th>
-                                            <th className="border-top-0">Total</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        {ListSale.map((sale) => (
-                                            <tr>
-                                                <td className="txt-oflo">{sale.id}</td>
-                                                <td><span className="label label-success label-rounded">{sale.fullName}</span> </td>
-                                                <td className="txt-oflo">{sale.month}</td>
-                                                <td><span className="font-medium">{sale.total}</span></td>
-                                            </tr>
-                                        ))}
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     )
 }
+

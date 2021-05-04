@@ -1,10 +1,12 @@
 import React , {useState , useEffect} from 'react'
-import API from '../Config/Api';
 import axios from 'axios'
-import { Link } from 'react-router-dom'
+import API from '../Config/Api'
+import { Link, useHistory } from 'react-router-dom'
+import Paginate from '../Pagination/index'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
-export default function Review() {
+import Paginator from 'react-pagify'
+export default function Category() {
 
     const [pagination, setPagination] = useState({
         page: 0,
@@ -15,25 +17,23 @@ export default function Review() {
     const [filters, setFilters] = useState({
         page: 0
     })
-
-    const [ListReview , setListReview] = useState([]);
-    const [id, setId] = useState('');
+    const history = useHistory()
+    const [ListCategory , setListCategory] = useState([]);
 
     useEffect(() => {
         const paramsString = queryString.stringify(filters)
-        const requestUrl = `review?${paramsString}`
-        API.get('review')
-            .then((response)=> {
-                setListReview(response.data.content)
+        const requestUrl = `http://localhost:9090/api/v1/category?${paramsString}`
+        axios.get(requestUrl).then((response)=> {
+                console.log(response.data)
+                setListCategory(response.data.content);
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
             }).catch((error) =>{
-        });
+                });
     }, [filters])
 
-    
     function handlePageChange(newPage) {
        
         setFilters({
@@ -43,27 +43,26 @@ export default function Review() {
         console.log('New page: ', newPage)
     }
 
-
-    const deleteReview = (e) => {
+    const deleteCategory = (e) => {
         e.preventDefault()
         let id = e.target.id.toString()
         console.log(id)
 
         const data = {
-
+            
         } 
-
-        var path = 'review/'
+        
+        var path = 'category/'
         path += id
 
-        API.delete(path)
+        console.log(path)
+        API.delete(path, data)
         .then(response => {
            
             console.log(response.data)
-            alert("Xóa review thành công")
+            alert("Xóa category thành công")
             // window.localStorage.removeItem("cart")
-            // history.push('/home')
-    
+            // history.push('/home') 
         })
         .catch(errors => {
               console.log(errors)
@@ -75,7 +74,7 @@ export default function Review() {
                 <div className="page-breadcrumb">
                     <div className="row">
                         <div className="col-5 align-self-center">
-                            <h4 className="page-title">Review</h4>
+                            <h4 className="page-title">Category</h4>
                         </div>
                         <div className="col-7 align-self-center">
                             <div className="d-flex align-items-center justify-content-end">
@@ -84,7 +83,7 @@ export default function Review() {
                                         <li className="breadcrumb-item">
                                             <Link to="/">Home</Link>
                                         </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Review</li>
+                                        <li className="breadcrumb-item active" aria-current="page">Category</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -96,31 +95,27 @@ export default function Review() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title">List Review </h4>
+                                        <h4 className="card-title">List Category <button className="btn1 btn btn-success" onClick ={e => {history.push("/addcategory")}} >New</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>
                                             <tr>
-                                                <th scope="col">Id</th>
-                                                <th scope="col">Star</th>
-                                                <th scope="col">Content</th>                                                
-                                                <th scope="col">Name</th>
-                                                <th scope="col">Email</th>
-                                                <th scope="col">Product</th>
-                                                <th scope="col">Action</th>
+                                            <th scope="col">Id</th>
+                                            <th scope="col">Name</th>
+                                            <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {ListReview.map((Review) => (
-                                                <tr key="{Review.id}">
-                                                    <th scope="row">{Review.id}</th>
-                                                    <td>{Review.number_Of_Star}</td>
-                                                    <td>{Review.content}</td>
-                                                    <td>{Review.name_User}</td>
-                                                    <td>{Review.email}</td>
-                                                    <td>{Review.name_Product}</td>
-                                                    <td><button id = {Review.id} onClick={deleteReview} className="btn btn-danger">Delete</button></td>
+                                        
+                                            {ListCategory.map((Category) => (
+                                                <tr>
+                                                    <th scope="row">{Category.id}</th>
+                                                    <td>{Category.name}</td>
+                                                  
+                                                    <td>
+                                                        <button className="btn btn-success"  onClick ={ e=> {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
+                                                    </td>
                                                 </tr>
                                             ))}
                                         </tbody>
@@ -134,6 +129,7 @@ export default function Review() {
                         onPageChange={handlePageChange}
                     />
                 </div>
+
             </div>
     )
 }

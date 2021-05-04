@@ -11,6 +11,7 @@ export default function EditProduct() {
     const [Productdetail , setProductdetail] = useState({});
     const check = useContext(LoginContext);
     var array = window.location.pathname.split("/");
+    console.log(array)
     useEffect(() => {
         check.checklogin();
         axios.get(`http://localhost:9090/api/v1/product/${array[array.length -1]}`).then((response)=> {

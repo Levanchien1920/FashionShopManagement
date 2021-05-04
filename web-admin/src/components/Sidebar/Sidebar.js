@@ -52,13 +52,19 @@ function Sidebar() {
                                             <span className="hide-menu">Reviews</span>
                                         </Link>
                                     </li>
-                                </ul>
-                            ) : (
-                                <ul id="sidebarnav">
                                     <li className="sidebar-item">
                                         <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/invoice" aria-expanded="false">
                                             <i className="mdi-account-network"></i>
                                             <span className="hide-menu">Invoice</span>
+                                        </Link>
+                                    </li>
+                                </ul>
+                            ) : (
+                                <ul id="sidebarnav">
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/Sale" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Sale</span>
                                         </Link>
                                     </li>
                                     <li className="sidebar-item">
