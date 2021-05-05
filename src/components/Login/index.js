@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native';
+import { Text, View, TouchableOpacity } from 'react-native';
 import Container from '../../components/common/Container';
 import Input from '../../components/common/Input';
 import CustomButtom from '../../components/common/CustomButton';
@@ -17,7 +17,6 @@ const LoginComponent = (  {
     const {navigate} =useNavigation();
     return (
         <Container>
-
             <View>
                 <Text style={styles.title}>Welcome to app</Text>
                 <Text style={styles.subTitle}>Please login here</Text>
@@ -32,7 +31,6 @@ const LoginComponent = (  {
                 onChange({name: 'username', value});
             }}
             error={errors.username}
-            
            />
 
            

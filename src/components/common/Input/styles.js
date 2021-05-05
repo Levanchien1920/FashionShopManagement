@@ -8,8 +8,6 @@ export default StyleSheet.create({
        borderWidth: 1,
        borderRadius:2, 
        marginTop:5
-    //    alignItems:'center'
-
     },
     textInput: {
         flex:1,
@@ -18,5 +16,8 @@ export default StyleSheet.create({
 
     inputContainer: {
         paddingVertical:20,
+    },
+    textError : {
+        color : 'red',
     }
 })

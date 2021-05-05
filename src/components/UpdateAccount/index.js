@@ -6,7 +6,7 @@ import Input from '../common/Input';
 import CustomButtom from '../common/CustomButton';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
-import axios from 'axios';
+import axiosInstance from '../../helper/axiosInstance';
 const UpdateAccountComponent = ({
     onSubmit,
     onChange,
@@ -24,7 +24,7 @@ const UpdateAccountComponent = ({
 })
 
 useEffect(() => {   
-    axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`,
+    axiosInstance.get(`/client/user/${localStorage.getItem("id")}`,
         {
         headers: {
           'Authorization': `Bearer ${localStorage.getItem("token")}`

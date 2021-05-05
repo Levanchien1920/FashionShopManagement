@@ -1,11 +1,9 @@
 
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native';
-
 import {useNavigation } from '@react-navigation/native';
 import ComponentHeader from '../ComponentHeader';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import axiosInstance from '../../helper/axiosInstance';
 const MyAccountComponent = () => {
     const {navigate} =useNavigation();
     const [ account, setaccount] = useState({
@@ -19,7 +17,8 @@ const MyAccountComponent = () => {
     })
    
     useEffect(() => {   
-        axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`,
+      
+        axiosInstance.get(`/client/user/${localStorage.getItem("id")+""}`,
             {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem("token")}`
@@ -29,14 +28,12 @@ const MyAccountComponent = () => {
             }).catch((error) =>{
             });
     }, [])
-
     return (
         <View>
                   <ComponentHeader />
 
-                  <View>
-                                   
-                                    <Text>Name : {account.fullname}</Text>
+                  <View>    
+                                   <Text>Name : {account.fullname}</Text>
                                     <Text>UserName : {account.username}</Text>
                                     <Text>Email : {account.email}</Text>
                                     <Text>Mobile: {account.phoneNumber}</Text>

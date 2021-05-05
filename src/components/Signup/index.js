@@ -44,7 +44,6 @@ const RegisterComponent = ({
                 onChange({name:"address",value});
             }}
             error={errors.address}
-            
            />
             <Input
             lable="Email"

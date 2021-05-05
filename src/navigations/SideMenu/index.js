@@ -6,8 +6,6 @@ import Container from '../../components/common/Container';
 import styles from './styles';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GlobalContext} from '../../context/Provider';
-import axios from 'axios';
-
 
 const SideMenu = ({navigation}) => {
 
@@ -25,6 +23,11 @@ const SideMenu = ({navigation}) => {
       
       <View>
           <Text>Welcome to shopping app</Text>
+
+          <Image
+        source={require('../../assets/images/shoppinga.jpg')}
+        style={styles.logoImage}
+      />
      
           <TouchableOpacity onPress= {() => navigation.navigate('LogIn')}>
             
@@ -38,8 +41,7 @@ const SideMenu = ({navigation}) => {
           
           </TouchableOpacity>
 
-         
-
+    
       </View>
 
     </SafeAreaView>
@@ -54,8 +56,8 @@ const SideMenu = ({navigation}) => {
     </View>
              <View>
 
-                    <Text>Hello: {localStorage.getItem("username")}</Text> 
-                    <Text>Name: {localStorage.getItem("fullname")}</Text> 
+                    {/* <Text>Hello:{AsyncStorage.getItem("username")}</Text> 
+                    <Text>Name:{AsyncStorage.getItem("fullname")}</Text>  */}
 
         <TouchableOpacity onPress= {() =>  {
             AsyncStorage.clear();

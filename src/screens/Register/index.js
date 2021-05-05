@@ -3,13 +3,11 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import RegisterComponent from '../../components/Signup';
 import {useNavigation } from '@react-navigation/native';
-import {useFocusEffect} from '@react-navigation/native';
 import {GlobalContext} from '../../context/Provider';
 import {useContext} from 'react';
-import axios from 'axios';
+import axiosInstance from '../../helper/axiosInstance';
 
 const Register = () => {
-    
     const [form, setForm] = useState({});
     const {navigate} = useNavigation();
     const [errors, setErrors] = useState({});
@@ -86,8 +84,7 @@ const Register = () => {
           return {...prev, retypepassword: 'Please add a retype password'};
         });
       }
-
-      
+      if (form.username && form.password && form.fullname && form.address && form.email && form.phonenumber ) {
           const register= {
             "username": form.username,
             "password": form.password,
@@ -98,19 +95,18 @@ const Register = () => {
         }
         console.log(register);
     
-        axios.post("http://localhost:9090/api/v1/customer", register).then((response)=> {
+        axiosInstance.post("/client/user", register).then((response)=> {
           navigate('LogIn');
           
       }).catch((error) =>{
-          // setErrorMessage(error.response.data.message);
           console.log(error);
           console.log("fail");
           navigate('Register');
       });
     }
 
-    
-  
+  }
+
     return (
         <RegisterComponent
       onSubmit={onSubmit}

@@ -66,9 +66,9 @@ leftScreen : {
    
   
     listItemContainer: {
-      flexDirection: 'row',
+      flexDirection: 'column',
       flexWrap:'wrap',
-      width: '70%',
+      width: '100%',
       margin:10
       
     },

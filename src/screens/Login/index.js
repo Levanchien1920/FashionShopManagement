@@ -7,28 +7,10 @@ import { Alert } from 'react-native';
 import {GlobalContext} from '../../context/Provider';
 import {useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import axios from 'axios';
+import axiosInstance from '../../helper/axiosInstance';
 
 const Login = () => {
-  const showAlert = () =>
-  Alert.alert(
-    "Alert Title",
-    "My Alert Msg",
-    [
-      {
-        text: "Cancel",
-        onPress: () => Alert.alert("Cancel Pressed"),
-        style: "cancel",
-      },
-    ],
-    {
-      cancelable: true,
-      onDismiss: () =>
-        Alert.alert(
-          "This alert was dismissed by tapping outside of the alert dialog."
-        ),
-    }
-  );
+ 
   
   const [form, setForm] = useState({});
   const {params} = useRoute();
@@ -72,7 +54,7 @@ const Login = () => {
         "password": form.password
     }
 
-    axios.post("http://localhost:9090/api/v1/auth/login", login).then((response)=> {
+    axiosInstance.post("/auth/login", login).then((response)=> {
             
       const {token, info} = response.data;
 
@@ -92,9 +74,11 @@ const Login = () => {
       
   }).catch((error) =>{
 
-      console.log(error);
+    Alert.alert(`Wrong username or password`);
 
-     ()=> {showAlert};
+      console.log("loi roi");
+
+  
   
   });
 

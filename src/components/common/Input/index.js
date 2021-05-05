@@ -3,7 +3,6 @@ import React from 'react';
 import { ScrollView, StyleSheet, Text, View,TextInput } from 'react-native';
 import styles from './styles';
 
-
 const Input = ({onChangeText,style,value,lable,error,...props}) => {
     return (
         <View style={styles.inputContainer}>
@@ -16,7 +15,7 @@ const Input = ({onChangeText,style,value,lable,error,...props}) => {
          {...props}
         />
         </View>
-        {error ? (<Text style ={{colors:"yellow"}}> {error} </Text>) : null}
+        {error ? (<Text style= {styles.textError}> {error} </Text>) : null}
         </View>
         
     );

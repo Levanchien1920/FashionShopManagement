@@ -1,34 +1,15 @@
 
 import React, { useState ,useEffect} from 'react';
 import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,StatusBar,ScrollView ,Dimensions,FlatList} from 'react-native';
-import Container from '../common/Container';
-import Input from '../common/Input';
-import CustomButtom from '../common/CustomButton';
 import styles from './styles';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {useNavigation } from '@react-navigation/native';
 import ComponentHeader from '../ComponentHeader/index';
-import axios from 'axios';
 import RNPickerSelect from "react-native-picker-select";
-
-
-
-
-const ProductItem = ({image, name, price}) => (
-  <View style={styles.itemContainer}>
-    <Image  source={{ uri: {image} }}
-   style={{width: 100, height: 200, borderWidth: 1}} />
-    <Text style={styles.itemName} numberOfLines={2}>
-      {name}
-    </Text>
-    <Text style={styles.itemPrice}>{price}</Text>
-
-  </View>
-);
+import axiosInstance from '../../helper/axiosInstance';
+import Card from '../../screens/Card';
 
 
 const ProductComponent = () => {
-
   const [listProduct , setlistProduct] = useState([]);
   const [listCategory, setlistCategory] = useState([]);
   const [listBrand, setlistBrand] = useState([]);
@@ -40,33 +21,32 @@ const ProductComponent = () => {
 
   useEffect(() => {
     if (filter.check === 0) {
-        axios.get('http://localhost:9090/api/v1/client/product').then((response)=> {
+      axiosInstance.get('/client/product').then((response)=> {
             setlistProduct(response.data.content);
         }).catch((error) =>{
         });
     }
     if (filter.check === 1){
-            axios.get(`http://localhost:9090/api/v1/client/category/relateProduct/${filter.id}`).then((response)=> {
+      axiosInstance.get(`/client/category/relateProduct/${filter.id}`).then((response)=> {
                 setlistProduct(response.data.content);
             }).catch((error) =>{
             });
         }
     if (filter.check === 2){
-            axios.get(`http://localhost:9090/api/v1/client/brand/relateProduct/${filter.id}`).then((response)=> {
+      axiosInstance.get(`/client/brand/relateProduct/${filter.id}`).then((response)=> {
                 setlistProduct(response.data.content);
             }).catch((error) =>{
             });
         }
-       
 }, [filter]);
 
 
 useEffect(() => {
-  axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
+  axiosInstance.get('/client/category').then((response)=> {
       setlistCategory(response.data.content);
   }).catch((error) =>{
   });
-  axios.get('http://localhost:9090/api/v1/client/brand').then((response)=> {
+  axiosInstance.get('/client/brand').then((response)=> {
       setlistBrand(response.data.content);
   }).catch((error) =>{
   });
@@ -97,12 +77,9 @@ switch (c) {
           ...filter, check : c
       });
  }
-    
     return (
       <View>
       <ComponentHeader />
-
-     
 
     <View style={styles.bodyContainer}>
     <ScrollView horizontal={true} >
@@ -121,36 +98,21 @@ switch (c) {
            ]}
                 onValueChange={(value) =>  { 
                  console.log(value);
-               SortName(Number(value));
-
+                SortName(Number(value));
                 }
                }
-              
             />
         </View>
         <View style={styles.listItemContainer}>
-          {listProduct.map((e, index) => (
-            <View key={index.toString()}>
-               <ProductItem
-                name={e.name}
-                image={e.link}
-                price={e.price}
-              />
-            <TouchableOpacity onPress= {() => {navigate('ProductDetail', {
-            id: e.id ,
-          })}}>
-             <Text >Chi tiết</Text>
-         </TouchableOpacity>
-
-            </View>
-          ))}
+              {listProduct.map((product) => (
+               <Card product={product} key={product.id}></Card>
+               ))}  
         </View>
       </View>
 
+          <View style={styles.scrollViewContainer}>
        <View>
-            
            <Text>Category</Text>
-
            {listCategory.map((category) => (
              <View key={category.id}>
                <TouchableOpacity  onPress={() => (setfilter({check : 1 ,id: category.id }))}>
@@ -161,8 +123,6 @@ switch (c) {
                  ))} 
            </View>
 
-     
-
            <View>
             
             <Text>Brand</Text>
@@ -172,14 +132,12 @@ switch (c) {
            <TouchableOpacity  onPress={() => (setfilter({check : 2 ,id: brand.id }))}>
           <Text >{brand.name}</Text>
              </TouchableOpacity>
-         
-          
               </View>
                                
                   ))} 
             </View>
 
-     
+            </View>
      </ScrollView>
           <View style={styles.seeMoreContainer}>
                <Text style={styles.seeMoreText}>Welcome </Text>

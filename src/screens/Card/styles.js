@@ -127,9 +127,6 @@ export default StyleSheet.create({
     //
     listItemContainer: {
       flexDirection: 'row',
-      flexWrap: 'wrap',
-      maxWidth:600,
-      width:'100%'
     },
     itemContainer: {
       width: 100,

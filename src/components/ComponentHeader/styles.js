@@ -19,13 +19,13 @@ export default StyleSheet.create({
 
     },
     createSection : {
+        paddingLeft: 10,
         flexDirection:'row',
-
      },
      linkBtn : {
-        paddingLeft:30,
+        paddingRight: 30,
         color:'blue',
-        fontSize:16
+        fontSize:16,
      },
 
      infoText : {
@@ -38,30 +38,33 @@ export default StyleSheet.create({
     headerContainer: {
       flexDirection: 'row',
       paddingTop: 50,
-      paddingBottom: 4,
       backgroundColor: 'pink',
+      position:'relative',
+      display:'flex',
+      alignItems:'center'
     },
     inputContainer: {
       backgroundColor: '#fff',
       flexDirection: 'row',
-      flex: 1,
+      width:'85%',
+      position: 'absolute',
       marginLeft: 10,
-      alignItems: 'center',
-      paddingVertical: 8,
+      top:10,
       paddingHorizontal: 12,
       borderRadius: 2,
+      display:'flex',
+      alignItems:'center'
     },
     inputText: {
-       flex:1,
       color: '#969696',
       fontSize: 14,
       marginLeft: 8,
       fontWeight: '500',
+      height:30
     },
     cartContainer: {
-      paddingHorizontal: 20,
-      alignItems: 'center',
-      justifyContent: 'center',
+      position: 'absolute',
+      right:10,
     },
     //
     bodyContainer: {

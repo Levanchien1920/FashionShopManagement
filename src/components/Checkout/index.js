@@ -34,7 +34,6 @@ onChangeText= {(value) =>  {
 
 />
 
-
 <Input
 lable="Address"
 placeholder="Enter address"
