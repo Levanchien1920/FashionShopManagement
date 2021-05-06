@@ -42,7 +42,7 @@ function ProductDetail() {
         localStorage.setItem('cart', JSON.stringify(cart));
       }
 
-    const [cateRelated, setcateRelated] = useState([]);
+    //const [cateRelated, setcateRelated] = useState([]);
     const [review, setreview] = useState([]);
     const [OutputReview, setOutputReview] = useState({
         id_user : 0,

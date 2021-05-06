@@ -17,8 +17,8 @@ const LoginContextProvider =({children}) =>{
         setfullname(localStorage.getItem('fullname'));
         setemployer(localStorage.getItem("employer"));
         setisLogin(true);
-        if(localStorage.getItem("employer") === "admin"){
-             history.push("/employee")
+        if(localStorage.getItem("roleNames") === "admin"){
+             history.push("/sale")
         } else {
             history.push("/products")
         }

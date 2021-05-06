@@ -20,7 +20,7 @@ import Login from './components/Public/Login'
 import Employee from './components/Public/Employee'
 import Sale from './components/Sale/Sale'
 import NewBrand from './components/New/NewBrand';
-// import NewCategory from './components/New/NewCategory';
+import ProductDetail from './components/Product/ProductDetail';
 import AddCategory from './components/Category/AddCategory'
 import NewCustomer from './components/New/NewCustomer';
 import NewPost from './components/New/NewPost';
@@ -46,7 +46,7 @@ function App() {
                 <Route path='/categorys' > <Categorys/>  </Route>
                 <Route path='/posts' > <Post/>  </Route>
                 <Route path='/reviews' > <Review/>  </Route>
-               
+                <Route path='/product/:id' component={ProductDetail}/>
                 <Route path='/sale' > <Sale/>  </Route>
                 <Route path='/customer' > <Customer/>  </Route>
                 <Route path='/Employee' > <Employee/>  </Route>

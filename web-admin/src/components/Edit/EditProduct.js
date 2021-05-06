@@ -114,11 +114,13 @@ export default function EditProduct() {
                                         ))}
                                     </select>
                                     <label className="idlabel" for="image">Image</label>
-                                    <select className="col-md-3" id="image">
+                                    <input list="brow" className="col-md-3"></input>
+                                    <datalist id="brow">
+                                    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()"></input>
                                         {listImage.map((image) => (
                                            <option value={image.name}>{image.name}</option>
                                         ))}
-                                    </select>
+                                    </datalist>
                                     <label className="idlabel" for="color">Color</label>
                                     <select className="col-md-3" id="color">
                                         {color.map((color) => (

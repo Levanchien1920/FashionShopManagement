@@ -11,7 +11,7 @@ const breakPoints = [
 function BestSelling() {
     const [listProductBL , setlistProductBL] = useState([]);
     useEffect(() => {
-             axios.get('http://localhost:9090/api/v1/product').then((response)=> {
+             axios.get('http://localhost:9090/api/v1/client/product/best').then((response)=> {
                 setlistProductBL(response.data.content);
             }).catch((error) =>{
             })

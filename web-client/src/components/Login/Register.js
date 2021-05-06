@@ -17,7 +17,6 @@ function Register() {
     const register =  (e) =>{
         if( user.fullname === "" || user.phone_number === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
             setmessage("You have not entered enough");
-
         }else {
             if(RetypePassword !== user.password){
                 setmessage(" Retype Password Don't Correct ");

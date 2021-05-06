@@ -6,40 +6,62 @@ import {LoginContext} from '../Context/LoginContext'
 export default function NewProduct() {
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
+    const [listImage, setlistImage] = useState([]);
+    const [listColor, setlistColor] = useState([])
     const check = useContext(LoginContext);
     const [dataoutput, setdataoutput] = useState({
-        id_cate: "0",
-        id_brand: "0",
-        id_gender : "0",
+        id_cate: 0,
+        id_brand: 0,
+        id_gender : 0,
         name: "",
-        iamgeName: "Áo hai dây & Áo ba lỗ",
         price: "",
         name_size : "L",
         number : "",
-        id_image : "",
-        id_color : "",
+        id_image : 0,
+        id_color : 0,
         des: "",
     })
     useEffect(() => {
-        check.checklogin();
-        axios.get('http://localhost:9090/api/v1/category',{
-            headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`
-                    } 
-            }).then((response)=> {
-            setlistCategory(response.data.content);
-        }).catch((error) =>{
-        });
-        axios.get('http://localhost:9090/api/v1/brand',{
-            headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`
-                    } 
-            }).then((response)=> {
-            setlistBrand(response.data.content);
-            console.log(response.data.content);
-        }).catch((error) =>{
-        });
+        async function getdata (){
+            check.checklogin();
+            axios.get('http://localhost:9090/api/v1/category',{
+                headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                        } 
+                }).then((response)=> {
+                setlistCategory(response.data.content);
+            }).catch((error) =>{
+            });
+            axios.get('http://localhost:9090/api/v1/brand',{
+                headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                        } 
+                }).then((response)=> {
+                setlistBrand(response.data.content);
+            }).catch((error) =>{
+            });
+            axios.get('http://localhost:9090/api/v1/image',{
+                headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                        } 
+                }).then((response)=> {
+                setlistImage(response.data.content);
+            }).catch((error) =>{
+            });
+            axios.get('http://localhost:9090/api/v1/color',{
+                headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                        } 
+                }).then((response)=> {
+                setlistColor(response.data.content);
+            }).catch((error) =>{
+            });
+        }
+        getdata()
     }, []);
+    function save () {
+        console.log(dataoutput);
+    }
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -78,11 +100,6 @@ export default function NewProduct() {
                                  onChange={e => setdataoutput({...dataoutput ,name : e.target.value})}/>
                             </div>
                             <div className="form-group">
-                                <label for="number">Number</label>
-                                <input type="text" className="form-control"  value={dataoutput.number} id="number"
-                                 onChange={e => setdataoutput({...dataoutput ,number : e.target.value})}/>
-                            </div>
-                            <div className="form-group">
                                 <label  for="price">Price</label>
                                 <input type="text" className="form-control" value={dataoutput.price} id="price"
                                  onChange={e => setdataoutput({...dataoutput ,price : e.target.value})}/>
@@ -90,64 +107,80 @@ export default function NewProduct() {
                             <div className="form-group">
                                 <label for="des">Description</label>
                                 <CKEditor
+                                    
                                     editor={ ClassicEditor }
                                     data=""
                                     onReady={ editor => {
                                         console.log( 'Editor is ready to use!', editor );
                                     } }
                                     onChange={ ( event, editor ) => {
-                                        const data = editor.getData();
-                                        console.log( { event, editor, data } );
+                                        let data = editor.getData();
+                                        setdataoutput({...dataoutput , des : data});
                                     } }
                                 />
                             </div>
                             <div className="form-group">
                                 <div className="row">
                                     <label className="idlabel" for="brand">Brand</label>
-                                    <select className="col-md-3" id="brand">
+                                    <input list="brand" className="col-md-3"  
+                                        onChange={e => setdataoutput({...dataoutput ,id_brand : e.target.value })}></input>
+                                    <datalist id="brand">
                                         {listBrand.map((brand) => (
-                                           <option value={brand.name}>{brand.name}</option>
+                                           <option value={brand.id} >{brand.name}</option>
                                         ))}
-                                    </select>
+                                    </datalist>
                                     <label className="idlabel" for="category">Category</label>
-                                    <select className="col-md-3" id="category">
+                                    <input list="cate" className="col-md-3"
+                                        onChange={e => setdataoutput({...dataoutput ,id_cate : e.target.value })}></input>
+                                    <datalist id="cate">
                                         {listCategory.map((category) => (
-                                           <option value={category.name}>{category.name}</option>
+                                           <option value={category.id}>{category.name}</option>
                                         ))}
-                                    </select>
+                                    </datalist>
+                                    <label className="idlabel" for="image">Image</label>
+                                    <input list="image" className="col-md-3"
+                                        onChange={e => setdataoutput({...dataoutput ,id_image : e.target.value })}></input>
+                                    <datalist id="image">
+                                        {listImage.map((ima) => (
+                                           <option value={ima.id}>{ima.name}</option>
+                                        ))}
+                                    </datalist>
                                 </div>
                             </div>
                             <div className="form-group">
                                 <div className="row">
                                     <label className="idlabel" for="size">Size  :</label>
-                                    <select className="col-md-3" id="size">
+                                    <input list="size" className="col-md-3"
+                                    onChange={e => setdataoutput({...dataoutput ,name_size : e.target.value })}></input>
+                                    <datalist id="size">
                                         <option value="M">M</option>
                                         <option value="L">L</option>
                                         <option value="XL">XL</option>
                                         <option value="XXL">XXL</option>
-                                    </select>
+                                    </datalist>
                                     <label className="idlabel" for="Color">Color</label>
-                                    <select className="col-md-3" id="Color">
-                                        {listCategory.map((category) => (
-                                           <option value={category.name}>{category.name}</option>
+                                    <input list="color" className="col-md-3"
+                                    onChange={e => setdataoutput({...dataoutput ,name_size : e.target.value })}></input>
+                                    <datalist id="color">
+                                        {listColor.map((color) => (
+                                           <option value={color.name}>{color.name}</option>
                                         ))}
-                                    </select>
-                                    <label className="idlabel" for="image">Image</label>
-                                    <select className="col-md-3" id="image">
-                                        {listCategory.map((category) => (
-                                           <option value={category.name}>{category.name}</option>
-                                        ))}
-                                    </select>
+                                    </datalist>
+                                    <label  className="idlabel" for="number">Number</label>
+                                    <input type="text" className="col-md-3"  value={dataoutput.number} id="number"
+                                    onChange={e => setdataoutput({...dataoutput ,number : e.target.value})}/>
                                 </div>
                             </div>
 
                             <div className="form-group">
                                 <label>Gender</label><br></br>
-                                <input type="radio" id="male" value="Male" name="gender"/><label for="male" className="idlabel" >Male</label>
-                                <input type="radio" id="female" value="Female" name="gender"/><label for="female"className="idlabel" >Female</label><br></br>
+                                <input type="radio" id="male" value="Male" name="gender"
+                                onChange={e => setdataoutput({...dataoutput ,id_gender : 1})}/><label for="male" className="idlabel" >Male</label>
+                                <input type="radio" id="female" value="Female" name="gender"
+                                onChange={e => setdataoutput({...dataoutput ,id_gender : 0})}/><label for="female"className="idlabel" >Female</label><br></br>
                             </div>
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn">Save </button>
+                                <button type="button" name="example-email" className="btn" onClick={save}>Save </button>
                             </div>
                         </form>
                     </div>

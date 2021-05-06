@@ -9,6 +9,7 @@ function Products() {
     const [filter , setfilter] = useState({
         check  : 0, 
         id  : 0,
+        search : ""
     });
     const [pageIndex, setpageIndex] = useState(0)
     const [totalPage, settotalPage] = useState(0)
@@ -62,6 +63,7 @@ function Products() {
                 case 9 :
                     axios.get(`http://localhost:9090/api/v1/client/product?search=${searchInput}`).then((response)=> {
                         setlistProduct(response.data.content);
+                        console.log(response.data.content)
                     }).catch((error) =>{
                     });
                     break;
@@ -117,7 +119,7 @@ function Products() {
     }
     function search(c) {
         setfilter({
-            ...filter, check : c
+            ...filter, check : c , search : searchInput
         });
     }
     return (

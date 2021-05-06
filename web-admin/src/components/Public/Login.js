@@ -8,28 +8,41 @@ export default function Login() {
     const { LoginDispatch} = useContext(LoginContext);
     const history = useHistory();
     const OnSubmitHandle =  (e) =>{
-        axios.post("http://localhost:9090/api/v1/auth/login", userInput).then((response)=> {
-            setErrorMessage(null);
-            const {token, info} = response.data;
-            localStorage.setItem("token", token);
-            localStorage.setItem("id", info.id);
-            localStorage.setItem("username", info.username);
-            localStorage.setItem("fullname", info.fullName);
-            localStorage.setItem("roleNames", info.roleNames);
-            LoginDispatch();
-        }).catch((error) =>{
-            setErrorMessage(error.response.data.message);
-        });
+        if( userInput.username === ""  || userInput.password === "") {
+            setErrorMessage("You have not entered username or password")
+        }else{
+            axios.post("http://localhost:9090/api/v1/auth/login", userInput).then((response)=> {
+                setErrorMessage(null);
+                const {token, info} = response.data;
+                localStorage.setItem("token", token);
+                localStorage.setItem("id", info.id);
+                localStorage.setItem("username", info.username);
+                localStorage.setItem("fullname", info.fullName);
+                localStorage.setItem("roleNames", info.roleNames);
+                LoginDispatch();
+            }).catch((error) =>{
+                setErrorMessage( "username or password don't correct" );
+            });
+        }
+       
     }
+    const handleKeypress = e => {
+        console.log(e);
+        //it triggers by pressing the enter key
+      if (e.charCode === 13) {
+        OnSubmitHandle();
+      }
+    };
+  
     return (
         <div className="login">
             <div className="login-form">
                 <h3>Username:</h3>
-                <input type="text" placeholder="Username"
+                <input type="text" placeholder="Username" onKeyPress={handleKeypress}
                 onChange={e => setuserInput({...userInput ,username : e.target.value})} value={userInput.username}/>
                 <br></br>
                 <h3>Password:</h3>
-                <input type="password" placeholder="Password"
+                <input type="password" placeholder="Password" onKeyPress={handleKeypress}
                 onChange={e => setuserInput({...userInput ,password : e.target.value})} value={userInput.password}/>
                 <br></br>
                 <input type="button" value="Login" className="login-button"
