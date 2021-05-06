@@ -17,7 +17,7 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {//phai tao repository cho moi Entity==>sai ngu mat thoi gian
 
-    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color, (color.number - color.sold_out) as numberRemainOfColor \n" +
+    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color \n" +
             "FROM ((((( product\n" +
             "INNER JOIN brand ON product.id_brand = brand.id) \n" +
             "INNER JOIN category ON product.id_cate = category.id)\n" +
