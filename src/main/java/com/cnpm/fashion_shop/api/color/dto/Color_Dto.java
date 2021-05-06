@@ -1,16 +1,14 @@
-package com.cnpm.fashion_shop.api.brand.dto;
-
+package com.cnpm.fashion_shop.api.color.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
 @AllArgsConstructor
-public class BrandDto {
+public class Color_Dto {
     @Getter
     @Setter
     private Integer id;

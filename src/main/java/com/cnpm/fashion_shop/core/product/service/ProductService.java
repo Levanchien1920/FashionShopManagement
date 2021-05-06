@@ -53,7 +53,7 @@ public class ProductService {
     private ReviewRepository reviewRepository;
 
     @Autowired
-    private ColorRepository colorRepository;
+    private ColorProductRepository colorProductRepository;
 
     @Transactional
     public Page<ProductResponseDto> findAllProductDetails(int size, int page, String sort, String search) {
@@ -62,7 +62,6 @@ public class ProductService {
                 "name",
                 "price",
                 "number",
-                "sold_out",
                 "Name_Size",
                 "des",
                 "Name_Brand",
@@ -148,7 +147,7 @@ public class ProductService {
         String numberColorXXL = "";
         for (int i = 0; i < idColorForXXLs.size(); i++) {
             Integer idXXL = idColorForXXLs.get(i).getId_Color();
-            colorForXXL = colorRepository.findNameByIdColor(idXXL);
+            colorForXXL = colorProductRepository.findNameByIdColor(idXXL);
             Integer numberXXL = idColorForXXLs.get(i).getNumber();
             numberColorXXL += numberXXL + " ";
             ColorXXL += colorForXXL.getName_Color() + " ";
@@ -158,7 +157,7 @@ public class ProductService {
         String numberColorXL = "";
         for (int i = 0; i < idColorForXLs.size(); i++) {
             Integer idXL = idColorForXLs.get(i).getId_Color();
-            colorForXL = colorRepository.findNameByIdColor(idXL);
+            colorForXL = colorProductRepository.findNameByIdColor(idXL);
             Integer numberXL = idColorForXLs.get(i).getNumber();
             numberColorXL += numberXL + " ";
             ColorXL += colorForXL.getName_Color() + " ";
@@ -168,7 +167,7 @@ public class ProductService {
         String numberColorL = "";
         for (int i = 0; i < idColorForLs.size(); i++) {
             Integer idL = idColorForLs.get(i).getId_Color();
-            colorForL = colorRepository.findNameByIdColor(idL);
+            colorForL = colorProductRepository.findNameByIdColor(idL);
             Integer numberL = idColorForLs.get(i).getNumber();
             numberColorL += numberL + " ";
             ColorL += colorForL.getName_Color() + " ";
@@ -178,7 +177,7 @@ public class ProductService {
         String numberColorM = "";
         for (int i = 0; i < idColorForMs.size(); i++) {
             Integer idM = idColorForMs.get(i).getId_Color();
-            colorForM = colorRepository.findNameByIdColor(idM);
+            colorForM = colorProductRepository.findNameByIdColor(idM);
             Integer numberM = idColorForMs.get(i).getNumber();
             numberColorM += numberM + " ";
             ColorM += colorForM.getName_Color() + " ";
