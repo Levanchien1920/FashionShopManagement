@@ -1,15 +1,46 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import API from '../Config/Api'
+import { useHistory } from 'react-router';
 function EditCategory(props) {
-    const [newvalue, setnewvalue] = useState({
+    const [category, setCategory] = useState({
+        id: "",
         category : ""
     });
+    const history=useHistory();
+    const id = props.match.params.id
+    
+    useEffect(() => {
+        // check.checklogin();
+        API.get('category/' + id).then((response)=> {
+            setCategory(response.data);
+        }).catch((error) =>{
+        });
+    }, []);
 
-    console.log(props.match);
+    // console.log(category);
 
-    const save =  (e) =>{
-        console.log(newvalue);
+    const editCaegory =  (e) =>{
+        e.preventDefault();  
+        const data = {
+            "name": category.name
+        }
+
+        API.patch('category/' + id, data).then((response) => {
+            console.log(response.data)
+            history.push('/categorys')  
+            
+        }).catch((error) => {
+
+        });
+        console.log(category);
     }
+
+    const onChange = (e) => {  
+        e.persist();  
+        setCategory({...category, [e.target.name]: e.target.value});  
+    }  
+                
     return (
         <div className="page-wrapper">
         <div className="page-breadcrumb">
@@ -36,14 +67,15 @@ function EditCategory(props) {
                 <div className="col-12">
                     <div className="card card-body">
                         <h4 className="card-title">Edit</h4>
-                        <form className="form-horizontal m-t-30">
-                            <div className="form-group">
+                        <form className="form-horizontal m-t-30" onSubmit={editCaegory}>
+                            <div className="form-group" >
                                 <label>Name Category <span className="help"> e.g. "Luis Vutton"</span></label>
-                                <input type="text" className="form-control" value=""
-                                onChange={e => setnewvalue({...newvalue ,category : e.target.value})} value={newvalue.category}/>
+                                <input type="text" className="form-control" 
+                                    onChange={e => setCategory({...category, name : e.target.value})} value={category.name}/>
+                                    
                             </div>
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn btn-success" onClick={save}>Save </button>
+                                <button type="submit" name="example-email" className="btn btn-success" >Save </button>
                             </div>
                         </form>
                     </div>

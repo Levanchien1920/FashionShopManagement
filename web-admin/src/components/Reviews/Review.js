@@ -41,7 +41,11 @@ export default function Review() {
         console.log(filters)
         console.log('New page: ', newPage)
     }
-
+    const viewReview = (e) => {
+        e.preventDefault()
+        let id = e.target.id.toString()
+        console.log(id)
+    }
 
     const deleteReview = (e) => {
         e.preventDefault()
@@ -115,7 +119,7 @@ export default function Review() {
                                                     <td>{Review.name_User}</td>
                                                     <td>{Review.email}</td>
                                                     <td>{Review.name_Product}</td>
-                                                    <td><button id = {Review.id} onClick={deleteReview} className="btn btn-danger">Delete</button></td>
+                                                    <td> <button id = {Review.id} onClick={viewReview} className="btn btn-success">View</button> <button id = {Review.id} onClick={deleteReview} className="btn btn-danger">Delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
