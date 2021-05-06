@@ -1,6 +1,5 @@
 package com.cnpm.fashion_shop.core.invoice.service;
 
-import com.cnpm.fashion_shop.api.brand.dto.BrandDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
@@ -9,7 +8,6 @@ import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.invoice.repository.DetailRepository;
 import com.cnpm.fashion_shop.core.invoice.repository.InvoiceRepository;
 import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
-import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.entity.InformationProductForEachInvoice;
 import com.cnpm.fashion_shop.entity.Invoice;
 import com.cnpm.fashion_shop.entity.Product;

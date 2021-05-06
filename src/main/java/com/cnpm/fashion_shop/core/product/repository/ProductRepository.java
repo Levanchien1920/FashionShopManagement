@@ -65,13 +65,14 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "where product.is_deleted = false", nativeQuery = true)
     Page<ProductResponseDto> findProducts(Pageable pageable, @Param("keyword") String keyword);
 
-    @Query(value = "select * from (SELECT product.id,product.name as Name,product.price,sum(info.number) as Sold_Out,product.des,brand.name as Name_Brand,category.name as Name_Category,gender.name as Name_Gender,image.name as Name_Image,image.link \n" +
-            "FROM (((((product \n" +
+    @Query(value = "select * from (SELECT product.id,product.name as Name,product.price, product.name_size, color.name as NameColor,sum(info.number) as Sold_Out,product.des,brand.name as Name_Brand,category.name as Name_Category,gender.name as Name_Gender,image.name as Name_Image,image.link \n" +
+            "FROM ((((((product \n" +
             "INNER JOIN brand on product.id_brand = brand.id) \n" +
             "INNER JOIN category on product.id_cate = category.id) \n" +
             "INNER JOIN image on product.id_image = image.id) \n" +
             "INNER JOIN gender on product.id_gender = gender.id )\n"+
             "INNER JOIN info_for_each as info on info.id_product = product.id )\n"+
+            "INNER JOIN color on color.id = product.id_color )\n"+
             "Where product.is_deleted = false GROUP By product.id Order by sum(info.number) DESC limit 4) as c1", nativeQuery = true)
     Page<ProductResponseDto> findBestProducts(Pageable pageable, @Param("keyword") String keyword);
 }
