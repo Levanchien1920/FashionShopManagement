@@ -1,10 +1,10 @@
 import React , {useState , useEffect} from 'react'
-import axios from 'axios'
+import API from '../Config/Api'
 import { Link } from 'react-router-dom';
 export default function Review() {
     const [ListReview , setListReview] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/review').then((response)=> {
+        API.get('review').then((response)=> {
                 setListReview(response.data.content);
             }).catch((error) =>{
             });
@@ -59,7 +59,7 @@ export default function Review() {
                                                     <td>{Review.name_User}</td>
                                                     <td>{Review.email}</td>
                                                     <td>{Review.name_Product}</td>
-                                                    <td><button className="btn">delete</button></td>
+                                                    <td><button className="btn btn-success">View</button> <button className="btn btn-danger">delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

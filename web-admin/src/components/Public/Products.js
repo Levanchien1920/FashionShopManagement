@@ -59,7 +59,7 @@ export default function Products() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Product <button className="btn1 btn" onClick ={ e=> {history.push("/newproduct")}}>new</button></h4>
+                                        <h4 className="card-title">List Product <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/newproduct")}}>New</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -69,17 +69,17 @@ export default function Products() {
                                             <th scope="col">Name</th>
                                             <th scope="col">Number</th>
                                             <th scope="col">Size</th>
-                                            <th scope="col">Color</th>
+                                            {/* <th scope="col">Color</th>
                                             <th scope="col">Description</th>
                                             <th scope="col">Price</th>
                                             <th scope="col">Brand</th>
                                             <th scope="col">Gender</th>
                                             <th scope="col">Category</th>
-                                            <th scope="col">Name Image</th>
+                                            <th scope="col">Name Image</th> */}
                                             <th scope="col">Image</th>
                                             <th scope="col">sold out</th>
-                                            <th scope="col">Edit</th>
-                                            <th scope="col">Delete</th>
+                                            <th scope="col">Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -89,17 +89,17 @@ export default function Products() {
                                                     <td>{product.name}</td>
                                                     <td>{product.number}</td>
                                                     <td>{product.name_Size}</td>
-                                                    <td>{product.name_Color}</td>
+                                                    {/* <td>{product.name_Color}</td>
                                                     <td>{product.des}</td>
                                                     <td>{product.price}</td>
                                                     <td>{product.name_Brand}</td>
                                                     <td>{product.name_Gender}</td>
                                                     <td>{product.name_Category}</td>
-                                                    <td>{product.name_Image}</td>
+                                                    <td>{product.name_Image}</td> */}
                                                     <td><a href={product.link} target="_blank">click in here</a></td>
                                                     <td>{(product.sold_Out === null) ? product.sold_Out : null }</td>
-                                                    <td><button className="btn" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>edit</button></td>
-                                                    <td><button className="btn" onClick = {deleteproduct.bind(this, product.id)}>delete</button></td>
+                                                    <td><button className="btn btn-success" >View</button> <button className="btn btn-info" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>Edit</button> <button className="btn btn-danger" onClick = {deleteproduct.bind(this, product.id)}>Delete</button></td>
+
                                                 </tr>
                                             ))}
                                         </tbody>

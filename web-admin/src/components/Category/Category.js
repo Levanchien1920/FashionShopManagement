@@ -12,7 +12,8 @@ export default function Category() {
     })
 
     const [filters, setFilters] = useState({
-        page: 0
+        page: 0,
+        category_edit_id: 0
     })
     const history = useHistory()
     const [ListCategory , setListCategory] = useState([]);
@@ -47,9 +48,9 @@ export default function Category() {
    
         API.delete('category/' + id)
         .then(response => {
-           
+            setFilters({...filters, category_edit_id: id})
             console.log(response.data)
-            alert("Xóa category thành công")
+            // alert("Xóa category thành công")
             // window.localStorage.removeItem("cart")
             // history.push('/home') 
         })
@@ -103,7 +104,7 @@ export default function Category() {
                                                     <td>{Category.name}</td>
                                                   
                                                     <td>
-                                                        <button className="btn btn-success"  onClick ={ e => {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
+                                                        <button className="btn btn-info"  onClick ={ e => {history.push(`/editcategory/${Category.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Category.id} onClick={deleteCategory}>Delete</button>
                                                     </td>
                                                 </tr>
                                             ))}

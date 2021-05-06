@@ -1,9 +1,23 @@
 import React , {useState , useEffect} from 'react'
-import API from '../Config/Api';
-import { Link } from 'react-router-dom'
+import API from '../Config/Api'
 import Pagination from '../Pagination/index'
+import { Link , useHistory } from 'react-router-dom';
 import queryString from 'query-string'
-export default function Invoice() {
+const tableStyle = {
+    // border: 1px solid black,
+    // table-layout: fixed,
+    // width: '200px',
+}
+
+const thStyle = {
+//   border: '1px solid black',
+  width: '400px',
+  overflow: 'hidden'
+}
+
+function Post() {
+    const history = useHistory();
+    const [ListPost , setListPost] = useState([]);
 
     const [pagination, setPagination] = useState({
         page: 0,
@@ -12,27 +26,23 @@ export default function Invoice() {
     })
 
     const [filters, setFilters] = useState({
-        page: 0
+        page: 0,
+        post_edit_id: 0
     })
-
-    const [ListInvoice , setListInvoice] = useState([]);
-
 
     useEffect(() => {
         const paramsString = queryString.stringify(filters)
-        const requestUrl = `invoice/ByEmployee?${paramsString}`
-        API.get(requestUrl)
-            .then((response)=> {
-                setListInvoice(response.data.content)
+        const requestUrl = `post?${paramsString}`
+        API.get(requestUrl).then((response)=> {
+                setListPost(response.data.content);
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
             }).catch((error) =>{
-        });
+            });
     }, [filters])
 
-    
     function handlePageChange(newPage) {
        
         setFilters({
@@ -41,40 +51,31 @@ export default function Invoice() {
         console.log(filters)
         console.log('New page: ', newPage)
     }
-    const viewInvoice = (e) => {
+
+    const deletePost = (e) => {
         e.preventDefault()
         let id = e.target.id.toString()
-        console.log(id)
-    }
-
-    const deleteInvoice = (e) => {
-        e.preventDefault()
-        let id = e.target.id.toString()
-        console.log(id)
-
-        var path = 'review/'
-        path += id
-
-        API.delete(path)
+        // console.log(id)
+   
+        API.delete('post/' + id)
         .then(response => {
-           
+            setFilters({...filters, post_edit_id: id})
             console.log(response.data)
-            alert("Xóa review thành công")
+            // alert("Xóa category thành công")
             // window.localStorage.removeItem("cart")
-            // history.push('/home')
-    
+            // history.push('/home') 
         })
         .catch(errors => {
               console.log(errors)
         })
     }
-
+    
     return (
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
                     <div className="row">
                         <div className="col-5 align-self-center">
-                            <h4 className="page-title">Review</h4>
+                            <h4 className="page-title">Post</h4>
                         </div>
                         <div className="col-7 align-self-center">
                             <div className="d-flex align-items-center justify-content-end">
@@ -83,7 +84,7 @@ export default function Invoice() {
                                         <li className="breadcrumb-item">
                                             <Link to="/">Home</Link>
                                         </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Review</li>
+                                        <li className="breadcrumb-item active" aria-current="page">Post</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -95,39 +96,45 @@ export default function Invoice() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title">List Review </h4>
+                                        <h4 className="card-title">List Post <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/add-post")}} >New</button></h4>
                                 </div>
                                 <div className="table-responsive">
-                                    <table className="table table-hover">
+                                    <table className="table table-hover" style = {tableStyle}>
                                         <thead>
                                             <tr>
                                                 <th scope="col">Id</th>
-                                                <th scope="col">Employee</th>
-                                                <th scope="col">Status</th>                                                
+                                                <th scope="col">Name</th>
+                                                <th scope="col" style = {thStyle}>Content</th>
+                                                {/* <th scope="col">Detail</th> */}
                                                 <th scope="col">Action</th>
+                                        
                                             </tr>
                                         </thead>
                                         <tbody>
-                                            {ListInvoice.map((Invoice) => (
-                                                <tr key={Invoice.id}>
-                                                    <th scope="row">{Invoice.id}</th>
-                                                    <td>{Invoice.fullname_employee}</td>
-                                                    <td>{Invoice.is_paid}</td>
-
-                                                    <td> <button id = {Invoice.id} onClick={viewInvoice} className="btn btn-success">View</button> <button id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button></td>
+                                            {ListPost.map((Post) => (
+                                                <tr key={Post.id}>
+                                                    <th scope="row">{Post.id}</th>
+                                                    <td>{Post.name}</td>
+                                                    {/* <td></td> */}
+                                                    <td>{Post.content}</td>
+                                                    {/* <td ><a href={Post.link} target="_blank">click in here</a></td> */}
+                                                    <td><button className="btn btn-success">View</button> <button className="btn btn-info" onClick ={ e => {history.push(`/edit-post/${Post.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Post.id} onClick={deletePost}>Delete</button></td>
+                                                    
                                                 </tr>
                                             ))}
                                         </tbody>
                                     </table>
+                                    <Pagination
+                                        pagination={pagination}
+                                        onPageChange={handlePageChange}
+                                    />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <Pagination
-                        pagination={pagination}
-                        onPageChange={handlePageChange}
-                    />
                 </div>
             </div>
     )
 }
+
+export default Post

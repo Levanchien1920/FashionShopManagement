@@ -41,7 +41,7 @@ export default function Brand() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 class="card-title">List brand <button className="btn1 btn" onClick ={e => {history.push("/newbrand")}}>new</button></h4>
+                                        <h4 class="card-title">List brand <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>new</button></h4>
                                 </div>
                                 <div class="table-responsive">
                                     <table className="table table-hover">
@@ -49,8 +49,8 @@ export default function Brand() {
                                             <tr>
                                             <th scope="col">Id</th>
                                             <th scope="col">Name</th>
-                                            <th scope="col">Edit</th>
-                                            <th scope="col">Delete</th>
+                                            <th scope="col">Action</th>
+
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -59,8 +59,8 @@ export default function Brand() {
                                                 <tr>
                                                     <th scope="row">{brand.id}</th>
                                                     <td>{brand.name}</td>
-                                                    <td><button className="btn"  onClick ={e => {history.push(`/editbrand/${brand.id}`)}}>edit</button></td>
-                                                    <td><button className="btn">delete</button></td>
+                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editbrand/${brand.id}`)}}>Edit</button> <button className="btn btn-danger">Delete</button></td>
+                                                
                                                 </tr>
                                             ))}
                                         </tbody>
