@@ -29,5 +29,4 @@ public class Post extends BaseEntity{
     @Column(name = "id_image")
     private Integer id_image;
 
-
 }

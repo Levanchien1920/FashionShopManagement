@@ -32,4 +32,18 @@ public class SaleFigureService {
         return saleFigureRepository.findSaleFigure(pageable);
     }
 
+    @Transactional
+    public Page<SaleFigureDto> findAllSaleFigureDetailsByDay(int size, int page, String sort) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "total_money",
+                "day"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return saleFigureRepository.findSaleFigureByDay(pageable);
+    }
+
 }

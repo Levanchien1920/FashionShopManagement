@@ -282,7 +282,7 @@ public class UserService {
     }
 
     public ResponseEntity<Response> deleteEmployee(Integer id) {
-        Optional<User> employeeOpt = userRepository.findById(id);
+        Optional<User> employeeOpt = userRepository.findByIdEmployee(id);
         if (employeeOpt.isEmpty()) {
             return ResponseEntity
                     .badRequest()

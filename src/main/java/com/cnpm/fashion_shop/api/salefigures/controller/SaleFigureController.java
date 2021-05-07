@@ -14,17 +14,29 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping(path = "/api/v1/saleFigureByMonth")
+@RequestMapping(path = "/api/v1/saleFigure")
 public class SaleFigureController {
     @Autowired
     private SaleFigureService saleFigureService;
     @ApiOperation(value = "Get all sales figures", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping
+    @GetMapping("/ByMonth")
     public PaginationResponse<SaleFigureDto> getSaleFigures(
             RequestParamsForGettingList requestParamsForGettingList
     ) {
         Page<SaleFigureDto> data = saleFigureService
                 .findAllSaleFigureDetails(requestParamsForGettingList.getPage(),
+                        requestParamsForGettingList.getSize(),
+                        requestParamsForGettingList.getSort());
+
+        return new PaginationResponse<>(data);
+    }
+    @ApiOperation(value = "Get all sales figures", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/ByDay")
+    public PaginationResponse<SaleFigureDto> getSaleFiguresByDay(
+            RequestParamsForGettingList requestParamsForGettingList
+    ) {
+        Page<SaleFigureDto> data = saleFigureService
+                .findAllSaleFigureDetailsByDay(requestParamsForGettingList.getPage(),
                         requestParamsForGettingList.getSize(),
                         requestParamsForGettingList.getSort());
 

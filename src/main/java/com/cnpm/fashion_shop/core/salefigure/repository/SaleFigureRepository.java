@@ -13,4 +13,7 @@ public interface SaleFigureRepository extends JpaRepository<Invoice, Long> {
     @Query(value = "SELECT sum(p.total_money) AS total, MONTH(p.updated_at) AS Month FROM invoice AS p WHERE p.is_deleted = false GROUP BY MONTH(p.updated_at)", nativeQuery = true)
     Page<SaleFigureDto> findSaleFigure(Pageable pageable);
 
+    @Query(value = "SELECT sum(p.total_money) AS total, p.updated_at AS Day FROM invoice AS p WHERE p.is_deleted = false GROUP BY DAY(p.updated_at)", nativeQuery = true)
+    Page<SaleFigureDto> findSaleFigureByDay(Pageable pageable);
+
 }
