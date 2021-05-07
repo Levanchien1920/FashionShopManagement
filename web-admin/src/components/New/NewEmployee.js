@@ -30,7 +30,7 @@ export default function NewEmployee() {
                     alert(response.data.message);
                     history.push("/employee")
                 }).catch((error) =>{
-                    alert(error.data.message);
+                    alert(error.response.data.message);
                 });
             }
         }

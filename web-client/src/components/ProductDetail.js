@@ -230,11 +230,11 @@ function ProductDetail() {
                                                 <div className="reviews-submitted">
                                                 <div className="reviewer">{review.name_User}</div>
                                                 <div className="ratting">
-                                                    <i className={review.number_of_star >=1 ?"fa fa-star": review.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=2 ?"fa fa-star": review.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=3 ?"fa fa-star": review.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=4 ?"fa fa-star": review.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=5 ?"fa fa-star": review.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=1 ?"fa fa-star": review.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=2 ?"fa fa-star": review.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=3 ?"fa fa-star": review.number_Of_Star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=4 ?"fa fa-star": review.number_Of_Star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=5 ?"fa fa-star": review.number_Of_Star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                                 </div>
                                                 <p>
                                                     {review.content}

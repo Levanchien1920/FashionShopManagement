@@ -6,8 +6,8 @@ import {
 } from "react-router-dom";
 import LoginContextProvider from './components/Context/LoginContext'
 import Home from './components/Home/Home';
-import Products from './components/Public/Products'
-import Brands from './components/Public/Brand'
+import Products from './components/Product/Products'
+import Brands from './components/Brand/Brand'
 import Categorys from './components/Category/Category'
 import EditCategory from './components/Category/EditCategory'
 
@@ -22,17 +22,22 @@ import Customer from './components/Public/Customer'
 import Login from './components/Public/Login'
 import Employee from './components/Public/Employee'
 import Sale from './components/Sale/Sale'
-import NewBrand from './components/New/NewBrand';
+import NewBrand from './components/Brand/NewBrand';
 import ProductDetail from './components/Product/ProductDetail';
 import AddCategory from './components/Category/AddCategory'
 import NewCustomer from './components/New/NewCustomer';
 // import NewPost from './components/New/NewPost';
-import NewProduct from './components/New/NewProduct';
-import EditProduct from './components/Edit/EditProduct';
-import EditBrand from './components/Edit/EditBrand';
+import NewProduct from './components/Product/NewProduct';
+import NewImage from './components/Image/NewImage';
+import EditProduct from './components/Product/EditProduct';
+import EditBrand from './components/Brand/EditBrand';
 import NewEmployee from './components/New/NewEmployee';
 import EditEmployee from './components/Edit/EditEmployee';
-// import ReviewS from './components/Reviews/Review';
+import EditImage from './components/Image/EditImage';
+import Image from './components/Image/Image';
+import Color from './components/Color/Color'
+import NewColor from './components/Color/NewColor'
+import EditColor from './components/Color/EditColor'
 
 function App() {
   return (
@@ -41,9 +46,12 @@ function App() {
           <LoginContextProvider>
             <Home/>
             <Switch>
+                <Route exact path='/' 
+                component={localStorage.getItem("roleNames") === "admin" ? Sale : localStorage.getItem("roleNames") === "employee" ? Products : Login }></Route>
                 <Route exact path='/login' > <Login/>  </Route>
                 <Route path='/products' > <Products/>  </Route>
-               
+                <Route path='/image' component={Image}/>
+                <Route path='/color' component={Color}/>
                 <Route path='/brands' > <Brands/>  </Route>
                 <Route path='/categorys' > <Categorys/>  </Route>
                 <Route path='/posts' component={Post}/> 
@@ -58,6 +66,8 @@ function App() {
                 <Route path='/newbrand' > <NewBrand/>  </Route>
                 <Route path='/addcategory' > <AddCategory/>  </Route>
                 <Route path='/newcustomer' > <NewCustomer/>  </Route>
+                <Route path='/newimage' component={NewImage} />
+                <Route path='/newcolor' component={NewColor}/>
                 {/* <Route path='/newpost' > <NewPost/>  </Route> */}
                 <Route path='/newemployee' > <NewEmployee/>  </Route>
                 <Route path='/newproduct' > <NewProduct/>  </Route>
@@ -65,6 +75,8 @@ function App() {
                 <Route path='/editproduct/:id'> <EditProduct/>  </Route>
                 <Route path='/editbrand/:id'> <EditBrand/>  </Route>
                 <Route path='/editcategory/:id' component={EditCategory}/>
+                <Route path='/editimage/:id' component={EditImage}/>
+                <Route path='/editcolor/:id' component={EditColor}/>
               
             </Switch>
           </LoginContextProvider>

@@ -21,7 +21,8 @@ function ProductDetail() {
     const [filter , setfilter] = useState({
         check  : 0, 
         id  : 0,
-        size : ""
+        size : "",
+        review : ""
     });
     const [colorSizeM , setcolorSizeM] = useState("")
     const [colorSizeL , setcolorSizeL] = useState("");
@@ -87,7 +88,6 @@ function ProductDetail() {
         });
         axios.get(`http://localhost:9090/api/v1/client/review/${id}`).then((response)=> {
                 setreview(response.data.content);
-                console.log(response.data.content)
             }).catch((error) =>{
             });
         axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
@@ -98,7 +98,7 @@ function ProductDetail() {
             setlistBrand(response.data.content);
         }).catch((error) =>{
         });
-    }, []);
+    }, [filter.review]);
     const colorinsize = (size) => {
         switch(size) {
             case "m":
@@ -124,18 +124,16 @@ function ProductDetail() {
             default:
         }
     }
-    function submitReview() {
-        console.log("12123")
-            
+    function submitReview() { 
         if (Login.IsLogin === true) {
             axios.post(`http://localhost:9090/api/v1/client/review`, OutputReview).then((response)=> {
                 alert(response.data.message);
+                setfilter({...filter , review : OutputReview.content})
             }).catch((error) =>{
                 console.log(error);
             });
         } else {
             history.push("/login")
-            console.log("12123")
         }
         
     }
@@ -230,11 +228,11 @@ function ProductDetail() {
                                                 <div className="reviews-submitted">
                                                 <div className="reviewer">{review.name_User}</div>
                                                 <div className="ratting">
-                                                    <i className={review.number_of_star >=1 ?"fa fa-star": review.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=2 ?"fa fa-star": review.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=3 ?"fa fa-star": review.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=4 ?"fa fa-star": review.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_of_star >=5 ?"fa fa-star": review.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={review.number_Of_Star >=1 ?"fa fa-star": review.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=2 ?"fa fa-star": review.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=3 ?"fa fa-star": review.number_Of_Star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=4 ?"fa fa-star": review.number_Of_Star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    <i className={review.number_Of_Star >=5 ?"fa fa-star": review.number_Of_Star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                                 </div>
                                                 <p>
                                                     {review.content}

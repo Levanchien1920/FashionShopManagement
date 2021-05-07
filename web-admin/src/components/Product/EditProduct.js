@@ -14,6 +14,7 @@ export default function EditProduct() {
     const [listImage, setlistImage] = useState([]);
     const [listColor, setlistColor] = useState([])
     const check = useContext(LoginContext);
+    let array = window.location.pathname.split("/");
     const [dataoutput, setdataoutput] = useState({
         id_cate: 0,
         id_brand: 0,
@@ -45,11 +46,15 @@ export default function EditProduct() {
                 setlistColor(response.data.content);
             }).catch((error) =>{
             });
+            axios.get(`http://localhost:9090/api/v1/product/${array[array.length-1]}`,token).then((response)=> {
+                console.log(response.data.content)
+            }).catch((error) =>{
+                console.log(error.response)
+            });
         }
         getdata()
     }, []);
     function save () {
-        let array = window.location.pathname.split("/");
         axios.patch(`http://localhost:9090/api/v1/product/${array[array.length-1]}`,dataoutput,token).then((response)=> {
                 alert(response.data.message);
                 history.push('/products')
@@ -70,7 +75,7 @@ export default function EditProduct() {
         <div className="page-breadcrumb">
             <div className="row">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">New Product</h4>
+                    <h4 className="page-title">Edit Product</h4>
                 </div>
                 <div className="col-7 align-self-center">
                     <div className="d-flex align-items-center justify-content-end">

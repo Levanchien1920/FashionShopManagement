@@ -112,7 +112,7 @@ export default function ProductDetail() {
                             ) : (
                                 <div>    </div>
                             )}
-                             { (datainput.XXL !== "") ? (
+                             { (datainput.xxl !== "") ? (
                                  <div className="form-group">
                                     <div className="row">
                                         <label className="idlabel" for="size">Size  :</label>

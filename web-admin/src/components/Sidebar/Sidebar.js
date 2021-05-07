@@ -41,6 +41,18 @@ function Sidebar() {
                                         </Link>
                                     </li>
                                     <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/image" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Image</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/color" aria-expanded="false">
+                                            <i className="mdi-account-network"></i>
+                                            <span className="hide-menu">Color</span>
+                                        </Link>
+                                    </li>
+                                    <li className="sidebar-item">
                                         <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/posts" aria-expanded="false">
                                             <i className="mdi-account-network"></i>
                                             <span className="hide-menu">Post</span>

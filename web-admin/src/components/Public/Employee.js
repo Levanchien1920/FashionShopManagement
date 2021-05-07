@@ -52,7 +52,7 @@ export default function Employee() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Employee <button className="btn1 btn" onClick ={e => {history.push("/newemployee")}}>new</button></h4>
+                                        <h4 className="card-title">List Employee <button className="btn1 btn btn-success" onClick ={e => {history.push("/newemployee")}}>new</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -63,8 +63,7 @@ export default function Employee() {
                                             <th scope="col">User Name</th>
                                             <th scope="col">Phone Number</th>
                                             <th scope="col">Address</th>
-                                            <th scope="col">Edit</th>
-                                            <th scope="col">Delete</th>
+                                            <th scope="col">Action</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -75,8 +74,8 @@ export default function Employee() {
                                                     <td>{Employee.userName}</td>
                                                     <td>{Employee.phoneNumber}</td>
                                                     <td>{Employee.address}</td>
-                                                    <td><button className="btn" onClick ={ e=> {history.push(`/editemployee/${Employee.id}`)}}>edit</button></td>
-                                                    <td><button className="btn" onClick = {deleteEmployee.bind(this,Employee.id)}>delete</button></td>
+                                                    <td><button className="btn btn-info" onClick ={ e=> {history.push(`/editemployee/${Employee.id}`)}}>edit</button>
+                                                    <button className="btn btn-danger" onClick = {deleteEmployee.bind(this,Employee.id)}>delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>
