@@ -126,8 +126,20 @@ public class ProductService {
         ProductRes productRes = new ProductRes();
 
         productRes.setId(product.getId_product());
-        productRes.setId_cate(category.getId());
-        productRes.setId_brand(brand.getId());
+        if (category.getId() != null) {
+            productRes.setId_cate(category.getId());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This category is not exist"));
+        }
+        if (brand.getId() != null) {
+            productRes.setId_brand(brand.getId());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This brand is not exist"));
+        }
         productRes.setBrandName(brand.getName());
         productRes.setCategoryName(category.getName());
         productRes.setGenderName(gender.getName());
@@ -135,8 +147,14 @@ public class ProductService {
         productRes.setName(product.getName());
         productRes.setPrice(product.getPrice());
         productRes.setDes(product.getDescription());
-        productRes.setLink(image1.getLink());
-        if(review != null) {
+        if (image1.getId() != null) {
+            productRes.setLink(image1.getLink());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Image of product is not exist"));
+        }
+        if (review != null) {
             productRes.setNumber_of_star(review.getNumberOfStar());
         } else {
             productRes.setNumber_of_star(0.0f);
@@ -211,17 +229,50 @@ public class ProductService {
                     .badRequest()
                     .body(Response.badRequest("Product name and name size cannot be empty or contain only space"));
         }
-
+        Optional<Category> optionalCategory = categoryRepository.findById(dto.getId_cate());
+        Optional<Brand> optionalBrand = brandRepository.findById_brand(dto.getId_brand());
+        Optional<Image> optionalImage = imageRepository.findByIdImage(dto.getId_image());
+        Optional<Color> optionalColor = colorProductRepository.findById(dto.getId_color());
+       Category category = optionalCategory.get();
+        Brand brand = optionalBrand.get();
+        Image image = optionalImage.get();
+        Color color = optionalColor.get();
         product = new Product();
-        product.setIdCategory(dto.getId_cate());
-        product.setIdBrand(dto.getId_brand());
+
+        if (category.getId() != null) {
+            product.setIdCategory(dto.getId_cate());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This category is not exist"));
+        }
+        if (brand.getId() != null) {
+            product.setIdBrand(dto.getId_brand());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This brand is not exist"));
+        }
         product.setIdGender(dto.getId_gender());
-        product.setIdImage(dto.getId_image());
+        if (image.getId() != null) {
+            product.setIdImage(dto.getId_image());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This image is not exist"));
+        }
         product.setName(dto.getName().trim());
         product.setDescription(dto.getDes());
         product.setPrice(dto.getPrice());
         product.setName_size(dto.getName_size());
-        product.setIdColor(dto.getId_color());
+        if (color.getId() != null) {
+            product.setIdColor(dto.getId_color());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This color is not exist"));
+        }
+
         product.setNumber(dto.getNumber());
 
 
@@ -240,6 +291,14 @@ public class ProductService {
     public ResponseEntity<Response> updateProductDto(Integer id, ProductDto dto) {
         Optional<Product> productOpt = productRepository.findById(id);
         Product product;
+        Optional<Category> optionalCategory = categoryRepository.findById(dto.getId_cate());
+        Optional<Brand> optionalBrand = brandRepository.findById_brand(dto.getId_brand());
+        Optional<Image> optionalImage = imageRepository.findByIdImage(dto.getId_image());
+        Optional<Color> optionalColor = colorProductRepository.findById(dto.getId_color());
+        Category category = optionalCategory.get();
+        Brand brand = optionalBrand.get();
+        Image image = optionalImage.get();
+        Color color = optionalColor.get();
 
         if (StringUtils.equals(StringUtils.trim(dto.getName()), "")) {
             return ResponseEntity
@@ -254,15 +313,39 @@ public class ProductService {
         }
 
         product = productOpt.get();
-        product.setIdCategory(dto.getId_cate());
-        product.setIdBrand(dto.getId_brand());
+        if (category.getId() != null) {
+            product.setIdCategory(dto.getId_cate());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This category is not exist"));
+        }
+        if (brand.getId() != null) {
+            product.setIdBrand(dto.getId_brand());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This brand is not exist"));
+        }
         product.setIdGender(dto.getId_gender());
-        product.setIdImage(dto.getId_image());
+        if (image.getId() != null) {
+            product.setIdImage(dto.getId_image());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This image is not exist"));
+        }
         product.setName(dto.getName().trim());
         product.setDescription(dto.getDes());
         product.setPrice(dto.getPrice());
         product.setName_size(dto.getName_size());
-        product.setIdColor(dto.getId_color());
+        if (color.getId() != null) {
+            product.setIdColor(dto.getId_color());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This color is not exist"));
+        }
         product.setNumber(dto.getNumber());
 
         try {

@@ -1,5 +1,6 @@
 package com.cnpm.fashion_shop.api.user.dto;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,7 @@ import javax.validation.constraints.Size;
 import java.util.ArrayList;
 import java.util.List;
 
-@NoArgsConstructor
+@AllArgsConstructor
 @Getter
 @Setter
 public class UserDto {
@@ -46,12 +47,14 @@ public class UserDto {
     List<String> role = new ArrayList<>();
 
 
-    public UserDto(int id, String fullName, String phone_number, String username, String address, int id_role) {
+    public UserDto(int id, String fullName, String phone_number, String username, String address, String password,String email, int id_role) {
         this.id = id;
         this.username = username;
         this.fullname = fullName;
         this.address = address;
+        this.password = password;
         this.phoneNumber = phone_number;
+        this.email = email;
         this.id_role = id_role;
     }
 }

@@ -57,7 +57,8 @@ public class UserService {
                 "address",
                 "fullName",
                 "userName",
-                "phoneNumber"
+                "phoneNumber",
+                "email"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
@@ -70,10 +71,10 @@ public class UserService {
     public Page<UserResponseDto> findAllCustomerDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
-                "username",
-                "fullname",
                 "address",
-                "phone_number",
+                "fullName",
+                "userName",
+                "phoneNumber",
                 "email"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
@@ -107,7 +108,7 @@ public class UserService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Employee with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new UserDto(user.getId(), user.getFullName(), user.getPhone_number(), user.getUsername(), user.getAddress(), user.getId_role()));
+        return ResponseEntity.ok(new UserDto(user.getId(), user.getFullName(), user.getPhone_number(), user.getUsername(), user.getAddress(),user.getPassword(), user.getEmail(), user.getId_role()));
     }
 
     public ResponseEntity getOneCustomer(Integer id) {
@@ -126,7 +127,7 @@ public class UserService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Customer with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new UserDto(user.getId(), user.getFullName(), user.getPhone_number(), user.getUsername(), user.getAddress(), user.getId_role()));
+        return ResponseEntity.ok(new UserDto(user.getId(), user.getFullName(), user.getPhone_number(), user.getUsername(), user.getAddress(), user.getPassword(), user.getEmail(), user.getId_role()));
     }
 
 
@@ -246,12 +247,46 @@ public class UserService {
         }
     }
 
-    public ResponseEntity<Response> deleteUser(Integer id) {
+    public ResponseEntity<Response> deleteCustomer(Integer id) {
+        Optional<User> customer = customerRepository.findById_customer(id);
+        if (customer.isEmpty()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This customer does not exist"));
+        }
+
+        User user = customer.get();
+
+        if (user.getIsDeleted()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This customer is deleted already"));
+        }
+        UserDetailDto employeeRole = userRepository.getUserDetailsWithRoleUser(user.getId(), RoleEnum.admin.name());
+        if (employeeRole != null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Cannot delete user with role Admin"));
+        }
+        user.setIsDeleted(true);
+
+        try {
+
+            this.userRepository.save(user);
+            return ResponseEntity.ok(SuccessfulResponse.DELETED);
+        } catch (Exception e) {
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.internalError(e.getMessage()));
+        }
+    }
+
+    public ResponseEntity<Response> deleteEmployee(Integer id) {
         Optional<User> employeeOpt = userRepository.findById(id);
         if (employeeOpt.isEmpty()) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("This user does not exist"));
+                    .body(Response.badRequest("This employee does not exist"));
         }
 
         User user = employeeOpt.get();
@@ -259,7 +294,7 @@ public class UserService {
         if (user.getIsDeleted()) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("This user is deleted already"));
+                    .body(Response.badRequest("This employee is deleted already"));
         }
         UserDetailDto employeeRole = userRepository.getUserDetailsWithRoleUser(user.getId(), RoleEnum.admin.name());
         if (employeeRole != null) {
@@ -292,6 +327,10 @@ public class UserService {
 
     public Optional<User> findByIdOptional(Integer id) {
         return this.userRepository.findById(id);
+    }
+
+    public Integer getTotalCustomers() {
+       return  this.customerRepository.findAllTotal();
     }
 
 }

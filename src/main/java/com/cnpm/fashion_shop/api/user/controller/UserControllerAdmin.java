@@ -85,6 +85,6 @@ public class UserControllerAdmin {
     @ApiOperation(value = "Delete employee", authorizations = {@Authorization(value = SECURITY_JWT_NAME)})
     @DeleteMapping("/{id}")
     public ResponseEntity<Response> deleteEmployee(@PathVariable("id") Integer id) {
-        return this.userService.deleteUser(id);
+        return this.userService.deleteEmployee(id);
     }
 }

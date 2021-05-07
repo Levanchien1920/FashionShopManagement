@@ -34,6 +34,7 @@ public class PostService {
     public Page<PostResponseDto> findAllPostDetails(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
+                "title",
                 "content",
                 "name",
                 "link"
@@ -64,13 +65,13 @@ public class PostService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("post with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new PostDto(post.getId(),post.getContent() ,post.getId_image()));
+        return ResponseEntity.ok(new PostDto(post.getId(),post.getTitle(), post.getContent() ,post.getId_image()));
     }
 
     public ResponseEntity<Response> createPost(PostDto dto) {
         Post post;
-        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getContent()));
-        if (StringUtils.trim(dto.getContent()).equals("")) {
+        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getTitle()));
+        if (StringUtils.trim(dto.getTitle()).equals("")) {
             return ResponseEntity
                     .badRequest()
                     .body(Response.badRequest("Post content cannot be empty or contain only space"));
@@ -98,10 +99,16 @@ public class PostService {
         }
 
         post = new Post();
+        post.setTitle(dto.getTitle().trim());
         post.setContent(dto.getContent().trim());
         post.setId(dto.getId());
-        post.setId_image(dto.getId_image());
-
+        if(dto.getId_image() != null) {
+            post.setId_image(dto.getId_image());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Cannot find any images, please create new one"));
+        }
 
         try {
             postRepository.save(post);
@@ -144,9 +151,15 @@ public class PostService {
         }
 
         post = postOpt.get();
+        post.setTitle(dto.getTitle());
         post.setContent(dto.getContent().trim());
-        post.setId_image(dto.getId_image());
-
+        if(dto.getId_image() != null) {
+            post.setId_image(dto.getId_image());
+        } else {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Cannot find any images, please create new one"));
+        }
 
         try {
             postRepository.save(post);

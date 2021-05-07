@@ -11,4 +11,6 @@ public interface UserResponseDto {
 
     String getPhoneNumber();
 
+    String getEmail();
+
 }

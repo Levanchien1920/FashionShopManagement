@@ -27,7 +27,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     User findByUsername(String username);
 
-    @Query(value = "SELECT * FROM user e WHERE e.id = :id AND e.is_deleted = FALSE", nativeQuery = true)
+    @Query(value = "SELECT * FROM user e WHERE e.id = :id AND e.is_deleted = FALSE AND e.id_role = 2", nativeQuery = true)
     Optional<User> findById(@Param("id") Integer id);
 
     User findByUsernameIgnoreCase(String username);

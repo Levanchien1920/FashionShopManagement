@@ -5,6 +5,8 @@ public interface PostResponseDto {
 
     String getName();
 
+    String getTitle();
+
     String getLink();
 
     String getContent();

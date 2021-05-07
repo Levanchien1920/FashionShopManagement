@@ -71,20 +71,26 @@ public class UserController {
         return this.userService.updateUser(id, dto);
     }
     @ApiOperation(value = "Get employee by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping("/{id}")
+    @GetMapping("/getOneEmployee/{id}")
     public ResponseEntity getOneEmployee(@PathVariable("id") Integer id) {
         return userService.getOneEmployee(id);
     }
 
     @ApiOperation(value = "Get customer by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping("/{id_customer}")
+    @GetMapping("/getOneCustomer/{id_customer}")
     public ResponseEntity getOneCustomer(@PathVariable("id_customer") Integer id) {
         return userService.getOneCustomer(id);
     }
 
     @ApiOperation(value = "Delete employee", authorizations = {@Authorization(value = SECURITY_JWT_NAME)})
     @DeleteMapping("/{id}")
-    public ResponseEntity<Response> deleteEmployee(@PathVariable("id") Integer id) {
-        return this.userService.deleteUser(id);
+    public ResponseEntity<Response> deleteCustomer(@PathVariable("id") Integer id) {
+        return this.userService.deleteCustomer(id);
+    }
+
+    @ApiOperation(value = "Get customers", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/getTotalCustomer")
+    public int getTotalCustomers() {
+        return userService.getTotalCustomers();
     }
 }
