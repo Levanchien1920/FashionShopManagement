@@ -1,7 +1,6 @@
 package com.cnpm.fashion_shop.core.salefigure.service;
 
 import com.cnpm.fashion_shop.api.salefigures.dto.SaleFigureDto;
-import com.cnpm.fashion_shop.api.salefigures.dto.SaleFigureEmployeeDto;
 import com.cnpm.fashion_shop.core.salefigure.repository.SaleFigureRepository;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.springframework.beans.factory.annotation.Autowired;

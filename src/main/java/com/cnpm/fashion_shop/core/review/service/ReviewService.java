@@ -50,7 +50,7 @@ public class ReviewService {
     }
 
     @Transactional
-    public Page<ReviewResponseDto> findAllReviewByProduct(Integer id,int size, int page, String sort, String search) {
+    public Page<ReviewResponseDto> findAllReviewByProduct(Integer id, int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
                 "content",
@@ -63,9 +63,10 @@ public class ReviewService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return reviewRepository.findAllReviewByProduct(pageable, search,id);
+        return reviewRepository.findAllReviewByProduct(pageable, search, id);
     }
 
+    @Transactional
     public ResponseEntity<Response> createReviewDto(ReviewDto dto) {
         Review review;
 
@@ -92,6 +93,7 @@ public class ReviewService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> updateReview(Integer id, ReviewDto dto) {
         Optional<Review> reviewOptional = reviewRepository.findById(id);
         Review review;
@@ -189,6 +191,7 @@ public class ReviewService {
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return reviewRepository.findAllGoodReview(pageable, search);
     }
+
     @Transactional
     public Page<ReviewResponseDto> findAllReviewByProduct(int size, int page, String sort, int id) {
         List<String> columnsAllow = Arrays.asList(

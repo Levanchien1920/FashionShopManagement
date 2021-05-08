@@ -220,6 +220,7 @@ public class ProductService {
         return ResponseEntity.ok(productRes);
     }
 
+    @Transactional
     public ResponseEntity<Response> createProductDto(ProductDto dto) {
         Product product;
         //Product existing_product = productRepository.findByNameAndNameSizeAndIdColor(StringUtils.trim(dto.getName()));
@@ -232,7 +233,7 @@ public class ProductService {
         Optional<Brand> optionalBrand = brandRepository.findById_brand(dto.getId_brand());
         Optional<Image> optionalImage = imageRepository.findByIdImage(dto.getId_image());
         Optional<Color> optionalColor = colorProductRepository.findById(dto.getId_color());
-       Category category = optionalCategory.get();
+        Category category = optionalCategory.get();
         Brand brand = optionalBrand.get();
         Image image = optionalImage.get();
         Color color = optionalColor.get();
@@ -286,6 +287,7 @@ public class ProductService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> updateProductDto(Integer id, ProductDto dto) {
         Optional<Product> productOpt = productRepository.findById(id);
         Product product;

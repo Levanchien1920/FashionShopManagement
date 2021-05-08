@@ -108,7 +108,7 @@ public class UserService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Employee with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new UserDto(user.getId(), user.getFullName(), user.getPhone_number(), user.getUsername(), user.getAddress(),user.getPassword(), user.getEmail(), user.getId_role()));
+        return ResponseEntity.ok(new UserDto(user.getId(), user.getFullName(), user.getPhone_number(), user.getUsername(), user.getAddress(), user.getPassword(), user.getEmail(), user.getId_role()));
     }
 
     public ResponseEntity getOneCustomer(Integer id) {
@@ -191,6 +191,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> updateUser(Integer id, UserDto dto) {
         Optional<User> userOpt = userRepository.findById(id);
         User user;
@@ -246,6 +247,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> deleteCustomer(Integer id) {
         Optional<User> customer = customerRepository.findById_customer(id);
         if (customer.isEmpty()) {
@@ -280,6 +282,7 @@ public class UserService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> deleteEmployee(Integer id) {
         Optional<User> employeeOpt = userRepository.findByIdEmployee(id);
         if (employeeOpt.isEmpty()) {
@@ -329,7 +332,7 @@ public class UserService {
     }
 
     public Integer getTotalCustomers() {
-       return  this.customerRepository.findAllTotal();
+        return this.customerRepository.findAllTotal();
     }
 
 }

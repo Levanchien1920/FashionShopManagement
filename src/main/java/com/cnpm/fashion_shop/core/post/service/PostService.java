@@ -65,9 +65,10 @@ public class PostService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("post with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new PostDto(post.getId(),post.getTitle(), post.getContent() ,post.getId_image()));
+        return ResponseEntity.ok(new PostDto(post.getId(), post.getTitle(), post.getContent(), post.getId_image()));
     }
 
+    @Transactional
     public ResponseEntity<Response> createPost(PostDto dto) {
         Post post;
         Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getTitle()));
@@ -102,7 +103,7 @@ public class PostService {
         post.setTitle(dto.getTitle().trim());
         post.setContent(dto.getContent().trim());
         post.setId(dto.getId());
-        if(dto.getId_image() != null) {
+        if (dto.getId_image() != null) {
             post.setId_image(dto.getId_image());
         } else {
             return ResponseEntity
@@ -121,6 +122,7 @@ public class PostService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> updatePost(Integer id, PostDto dto) {
         Optional<Post> postOpt = postRepository.findById(id);
         Post post;
@@ -152,7 +154,7 @@ public class PostService {
         post = postOpt.get();
         post.setTitle(dto.getTitle());
         post.setContent(dto.getContent().trim());
-        if(dto.getId_image() != null) {
+        if (dto.getId_image() != null) {
             post.setId_image(dto.getId_image());
         } else {
             return ResponseEntity

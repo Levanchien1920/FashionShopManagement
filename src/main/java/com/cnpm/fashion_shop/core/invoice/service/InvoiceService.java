@@ -56,7 +56,7 @@ public class InvoiceService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return invoiceRepository.findAllByIdCustomer( pageable, search);
+        return invoiceRepository.findAllByIdCustomer(pageable, search);
     }
 
     @Transactional
@@ -73,62 +73,58 @@ public class InvoiceService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return invoiceRepository.findAllByIdEmployee( pageable, search);
+        return invoiceRepository.findAllByIdEmployee(pageable, search);
     }
 
-
+    @Transactional
     public ResponseEntity<Response> createInvoiceDto(InvoiceDto dto) {
         try {
-        Invoice invoice;
-        InformationProductForEachInvoice details;
-        Optional<Product> productOpt ;
-        Product product;
+            Invoice invoice;
+            InformationProductForEachInvoice details;
+            Optional<Product> productOpt;
+            Product product;
 
-        invoice = new Invoice();
-        invoice.setTotalMoney(dto.getTotalMoney());
-        invoice.setId_employee(dto.getId_employee());
-        invoice.setId_customer(dto.getId_user());
-        invoice.set_paid(false);
-        invoiceRepository.save(invoice);
+            invoice = new Invoice();
+            invoice.setTotalMoney(dto.getTotalMoney());
+            invoice.setId_employee(dto.getId_employee());
+            invoice.setId_customer(dto.getId_user());
+            invoice.set_paid(false);
+            invoiceRepository.save(invoice);
 
 
-        List<Integer> allId = new ArrayList<Integer>();
-        for(int i=0; i<dto.listProducts.size();i++)
-        {
-            if(!allId.contains(dto.listProducts.get(i).getId()))
-            {
-                details= new InformationProductForEachInvoice();
-                details.setId_product(dto.listProducts.get(i).getId());
-                details.setId_invoice(invoice.getId());
-                details.setNumber(dto.listProducts.get(i).getNumber());
-                detailRepository.save(details);
-                allId.add(dto.listProducts.get(i).getId());
+            List<Integer> allId = new ArrayList<Integer>();
+            for (int i = 0; i < dto.listProducts.size(); i++) {
+                if (!allId.contains(dto.listProducts.get(i).getId())) {
+                    details = new InformationProductForEachInvoice();
+                    details.setId_product(dto.listProducts.get(i).getId());
+                    details.setId_invoice(invoice.getId());
+                    details.setNumber(dto.listProducts.get(i).getNumber());
+                    detailRepository.save(details);
+                    allId.add(dto.listProducts.get(i).getId());
 
 //              cap nnhat lai number cua san pham trong kho
-                productOpt = productRepository.findById(dto.listProducts.get(i).getId());
-                product = productOpt.get();
-                product.setNumber(product.getNumber()-dto.listProducts.get(i).getNumber());
+                    productOpt = productRepository.findById(dto.listProducts.get(i).getId());
+                    product = productOpt.get();
+                    product.setNumber(product.getNumber() - dto.listProducts.get(i).getNumber());
 
-                productRepository.save(product);
-            }
-            else
-            {
-                //tim ra details do
-                details=detailRepository.findByIdInfoForEach(dto.listProducts.get(i).getId());
-                details.setNumber(dto.listProducts.get(i).getNumber()+details.getNumber());
-                details.setId_product(details.getId_product());
-                details.setId_invoice(details.getId_invoice());
-                detailRepository.save(details);
+                    productRepository.save(product);
+                } else {
+                    //tim ra details do
+                    details = detailRepository.findByIdInfoForEach(dto.listProducts.get(i).getId());
+                    details.setNumber(dto.listProducts.get(i).getNumber() + details.getNumber());
+                    details.setId_product(details.getId_product());
+                    details.setId_invoice(details.getId_invoice());
+                    detailRepository.save(details);
 
 //              cap nnhat lai number cua san pham trong kho
-                productOpt = productRepository.findById(dto.listProducts.get(i).getId());
-                product = productOpt.get();
-                product.setNumber(product.getNumber()-dto.listProducts.get(i).getNumber());
+                    productOpt = productRepository.findById(dto.listProducts.get(i).getId());
+                    product = productOpt.get();
+                    product.setNumber(product.getNumber() - dto.listProducts.get(i).getNumber());
 
+                }
             }
-        }
 
-        return ResponseEntity.ok(SuccessfulResponse.CREATED);
+            return ResponseEntity.ok(SuccessfulResponse.CREATED);
         } catch (Exception e) {
             LOG.error(e.getMessage());
             return ResponseEntity
@@ -137,6 +133,7 @@ public class InvoiceService {
         }
     }
 
+    @Transactional
     public ResponseEntity<Response> updateInvoiceDto(Integer id) {
         Optional<Invoice> invoiceOpt = invoiceRepository.findById_invoice(id);
         Invoice invoice;
@@ -205,7 +202,7 @@ public class InvoiceService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return invoiceRepository.getOneByIdCustomer( pageable, search, id);
+        return invoiceRepository.getOneByIdCustomer(pageable, search, id);
     }
 
 }
