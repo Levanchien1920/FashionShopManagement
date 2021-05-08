@@ -16,7 +16,7 @@ export default function Sale() {
             console.log(response.data.content);
         }).catch((error) =>{
             });
-        axios.get('http://localhost:9090/api/v1/saleFigureByMonth',token).then((response)=> {
+        axios.get('http://localhost:9090/api/v1/saleFigure/ByMonth',token).then((response)=> {
             let data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             response.data.content.forEach(function(item, index, array) {
                 data[item.month -1] = item.total;

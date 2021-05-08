@@ -39,6 +39,11 @@ import Color from './components/Color/Color'
 import NewColor from './components/Color/NewColor'
 import EditColor from './components/Color/EditColor'
 import Role from './components/Role/Role'
+<<<<<<< HEAD
+=======
+import ListUserOfRole from './components/Role/ListUserOfRole'
+
+>>>>>>> 14ce30daeb3c9c3e21f3a95144e5268c67db3adf
 function App() {
   return (
     <Router>
@@ -52,6 +57,7 @@ function App() {
                 <Route path='/products' > <Products/>  </Route>
                 <Route path='/image' component={Image}/>
                 <Route path='/color' component={Color}/>
+                <Route path='/role' component={Role}/>
                 <Route path='/brands' > <Brands/>  </Route>
                 <Route path='/categorys' > <Categorys/>  </Route>
                 <Route path='/posts' component={Post}/> 
@@ -77,9 +83,13 @@ function App() {
                 <Route path='/editcategory/:id' component={EditCategory}/>
                 <Route path='/editimage/:id' component={EditImage}/>
                 <Route path='/editcolor/:id' component={EditColor}/>
+<<<<<<< HEAD
 
                 <Route path='/role' component={Role}/>
 
+=======
+                <Route path='/userofrole/:id' component={ListUserOfRole}/>
+>>>>>>> 14ce30daeb3c9c3e21f3a95144e5268c67db3adf
               
             </Switch>
           </LoginContextProvider>

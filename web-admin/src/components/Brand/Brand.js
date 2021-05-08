@@ -1,27 +1,41 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
+import Pagination from '../Pagination/index'
 import { Link, useHistory } from 'react-router-dom';
 export default function Brand() {
+    var token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
     const [ListBrand , setListBrand] = useState([]);
     const history = useHistory();
-    const [filter, setfilter] = useState(0)
+    const [filters, setFilters] = useState({
+        page: 0
+    })
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 5,
+        totalPages: 1
+    })
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/brand',
-        {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`
-        } 
-        }).then((response)=> {
+        axios.get(`http://localhost:9090/api/v1/brand?page=${filters.page}`,token).then((response)=> {
                 setListBrand(response.data.content);
+                setPagination({
+                    page: response.data.pageIndex,
+                    totalPages: response.data.totalPage
+                })
             }).catch((error) =>{
             });
-    }, [filter])
+    }, [filters])
+    function handlePageChange(newPage) {    
+        setFilters({
+            page: newPage
+        })
+        console.log(filters)
+        console.log('New page: ', newPage)
+    }
     function deletebrand (id) {
-        let token = {
-            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-        }
         axios.delete(`http://localhost:9090/api/v1/brand/${id}`,token).then((response)=> {
-            setfilter(id);
+            setFilters({...filters , page : id});
         }).catch((error) =>{
         });
     }
@@ -76,6 +90,10 @@ export default function Brand() {
                                             ))}
                                         </tbody>
                                     </table>
+                                    <Pagination
+                                        pagination={pagination}
+                                        onPageChange={handlePageChange}
+                    />
                                 </div>
                             </div>
                         </div>
