@@ -18,7 +18,8 @@ export default function EditPost(props) {
     }
     useEffect(() => {
         API.get('post/' + idPost, token).then((response)=> {
-            setPost(response.data);
+            let temp = response.data
+            setPost(temp);
             console.log(response.data)
         }).catch((error) =>{
 

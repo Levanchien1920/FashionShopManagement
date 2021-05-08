@@ -12,7 +12,6 @@ export default function Products() {
         limit: 5,
         totalPages: 1
     })
-
     const [filters, setFilters] = useState({
         id : 0,
         page: 0,
