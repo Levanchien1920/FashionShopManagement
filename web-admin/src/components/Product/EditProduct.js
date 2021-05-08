@@ -27,6 +27,13 @@ export default function EditProduct() {
         id_color : 0,
         des: "",
     })
+    const [search, setsearch] = useState(
+        {
+            bool : false , 
+            name : "brand",
+            string : ""
+        }
+    )
     useEffect(() => {
         async function getdata (){
             check.checklogin();
@@ -54,15 +61,48 @@ export default function EditProduct() {
         }
         getdata()
     }, []);
+    useEffect(() => {
+        async function getdatas (){
+            switch (search.name) {
+                case "brand":
+                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                        setlistBrand(response.data.content);
+                    }).catch((error) =>{
+                    }); 
+                    break;
+                case "category":
+                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                        setlistCategory(response.data.content);
+                    }).catch((error) =>{
+                    }); 
+                    break;
+                case "color":
+                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                        setlistColor(response.data.content);
+                    }).catch((error) =>{
+                    }); 
+                    break;
+                case "image":
+                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                        setlistImage(response.data.content);
+                    }).catch((error) =>{
+                    }); 
+                    break;
+                default:
+                    break;
+            }
+            
+        }
+        if(search.bool === true){ getdatas()}
+    }, [search]);
     function save () {
-        axios.patch(`http://localhost:9090/api/v1/product/${array[array.length-1]}`,dataoutput,token).then((response)=> {
-                alert(response.data.message);
-                history.push('/products')
-            }).catch((error) =>{
-                // alert(error.response.data.message)
-                console.log(error.response)
-
-            });
+        console.log(dataoutput.des);
+        // axios.patch(`http://localhost:9090/api/v1/product/${array[array.length-1]}`,dataoutput,token).then((response)=> {
+        //         alert(response.data.message);
+        //         history.push('/products')
+        //     }).catch((error) =>{
+        //         console.log(error.response)
+        //     });
     }
     return (
         <>
@@ -125,7 +165,10 @@ export default function EditProduct() {
                                 <div className="row">
                                     <label className="idlabel" for="brand">Brand</label>
                                     <input list="brand" className="col-md-3"  
-                                        onChange={e => setdataoutput({...dataoutput ,id_brand : e.target.value })}></input>
+                                        onChange={ e => {
+                                            setdataoutput({...dataoutput ,id_brand : e.target.value })
+                                            setsearch({...search , bool : true , name : "brand" , string : e.target.value})
+                                        }}></input>
                                     <datalist id="brand">
                                         {listBrand.map((brand) => (
                                            <option value={brand.id} >{brand.name}</option>
@@ -133,7 +176,10 @@ export default function EditProduct() {
                                     </datalist>
                                     <label className="idlabel" for="category">Category</label>
                                     <input list="cate" className="col-md-3"
-                                        onChange={e => setdataoutput({...dataoutput ,id_cate : e.target.value })}></input>
+                                        onChange={e => {
+                                            setdataoutput({...dataoutput ,id_cate : e.target.value })
+                                            setsearch({...search , bool : true , name : "category" , string : e.target.value})
+                                            }}></input>
                                     <datalist id="cate">
                                         {listCategory.map((category) => (
                                            <option value={category.id}>{category.name}</option>
@@ -141,7 +187,9 @@ export default function EditProduct() {
                                     </datalist>
                                     <label className="idlabel" for="image">Image</label>
                                     <input list="image" className="col-md-3"
-                                        onChange={e => setdataoutput({...dataoutput ,id_image : e.target.value })}></input>
+                                        onChange={e => {setdataoutput({...dataoutput ,id_image : e.target.value })
+                                        setsearch({...search , bool : true , name : "image" , string : e.target.value})
+                                        }}></input>
                                     <datalist id="image">
                                         {listImage.map((ima) => (
                                            <option value={ima.id}>{ima.name}</option>
@@ -162,7 +210,9 @@ export default function EditProduct() {
                                     </datalist>
                                     <label className="idlabel" for="Color">Color</label>
                                     <input list="color" className="col-md-3"
-                                    onChange={e => setdataoutput({...dataoutput ,id_color : e.target.value })}></input>
+                                    onChange={e => {setdataoutput({...dataoutput ,id_color : e.target.value })
+                                                    setsearch({...search , bool : true , name : "color" , string : e.target.value}) 
+                                            }}></input>
                                     <datalist id="color">
                                         {listColor.map((color) => (
                                            <option value={color.id}>{color.name}</option>
@@ -179,7 +229,9 @@ export default function EditProduct() {
                                 <input type="radio" id="male" value="Male" name="gender"
                                 onChange={e => setdataoutput({...dataoutput ,id_gender : 1})}/><label for="male" className="idlabel" >Male</label>
                                 <input type="radio" id="female" value="Female" name="gender"
-                                onChange={e => setdataoutput({...dataoutput ,id_gender : 0})}/><label for="female"className="idlabel" >Female</label><br></br>
+                                onChange={e => setdataoutput({...dataoutput ,id_gender : 2})}/><label for="female"className="idlabel" >Female</label>
+                                <input type="radio" id="couple" value="Couple" name="gender"
+                                onChange={e => setdataoutput({...dataoutput ,id_gender : 3})}/><label for="couple"className="idlabel" >Couple</label><br></br>
                             </div>
                             <div className="form-group">
                                 <button type="button" name="example-email" className="btn" onClick={save}>Save </button>

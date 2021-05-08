@@ -27,7 +27,7 @@ export default function Products() {
                 headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
             }
             check.checklogin();
-            axios.get('http://localhost:9090/api/v1/product',token).then((response)=> {
+            axios.get(`http://localhost:9090/api/v1/product?page=${pagination.page}`,token).then((response)=> {
                 setListProduct(response.data.content);
                 setPagination({
                     page: response.data.pageIndex,
@@ -43,14 +43,6 @@ export default function Products() {
         setFilters({
             page: newPage
         })
-        axios.get(`http://localhost:9090/api/v1/product?page=${newPage}`,token).then((response)=> {
-                setListProduct(response.data.content);
-                setPagination({
-                    page: response.data.pageIndex,
-                    totalPages: response.data.totalPage
-                })
-            }).catch((error) =>{
-            });
         console.log(filters)
         console.log('New page: ', newPage)
     }
@@ -105,17 +97,8 @@ export default function Products() {
                                             <th scope="col">Name</th>
                                             <th scope="col">Number</th>
                                             <th scope="col">Size</th>
-                                            {/* <th scope="col">Color</th>
-                                            <th scope="col">Description</th>
-                                            <th scope="col">Price</th>
-                                            <th scope="col">Brand</th>
-                                            <th scope="col">Gender</th>
-                                            <th scope="col">Category</th>
-                                            <th scope="col">Name Image</th> */}
                                             <th scope="col">Image</th>
-                                            <th scope="col">sold out</th>
                                             <th scope="col">Action</th>
-
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -125,15 +108,7 @@ export default function Products() {
                                                     <td>{product.name}</td>
                                                     <td>{product.number}</td>
                                                     <td>{product.name_Size}</td>
-                                                    {/* <td>{product.name_Color}</td>
-                                                    <td>{product.des}</td>
-                                                    <td>{product.price}</td>
-                                                    <td>{product.name_Brand}</td>
-                                                    <td>{product.name_Gender}</td>
-                                                    <td>{product.name_Category}</td>
-                                                    <td>{product.name_Image}</td> */}
                                                     <td><a href={product.link} target="_blank">click in here</a></td>
-                                                    <td>{(product.sold_Out === null) ? product.sold_Out : null }</td>
                                                     <td><button className="btn btn-success" onClick ={ e=> {history.push(`/product/${product.id}`)}}>View</button> 
                                                     <button className="btn btn-info" onClick ={ e=> {history.push(`/editproduct/${product.id}`)}}>Edit</button>
                                                     <button className="btn btn-danger" onClick = {deleteproduct.bind(this, product.id)}>Delete</button></td>
