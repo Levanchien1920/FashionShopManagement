@@ -4,7 +4,7 @@ import React from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Container from '../../components/common/Container';
 import HomeComponent from '../../components/Home';
-
+import Icon from '../../components/common/Icon';
 const Home = () => {
     const {setOptions,toggleDrawer}=useNavigation();
     
@@ -15,7 +15,8 @@ const Home = () => {
           onPress={() => {
             toggleDrawer();
           }}>
-         <Text style= {{padding:10}}>TK</Text>
+         <Icon type="material" style={{padding: 10}} size={25} name="menu" />
+      
         </TouchableOpacity>
       ),
     });

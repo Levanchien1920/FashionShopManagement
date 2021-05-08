@@ -4,6 +4,7 @@ import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native
 import {useNavigation } from '@react-navigation/native';
 import ComponentHeader from '../ComponentHeader';
 import axiosInstance from '../../helper/axiosInstance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyAccountComponent = () => {
     const {navigate} =useNavigation();
     const [ account, setaccount] = useState({
@@ -17,11 +18,17 @@ const MyAccountComponent = () => {
     })
    
     useEffect(() => {   
+
+       
       
-        axiosInstance.get(`/client/user/${localStorage.getItem("id")+""}`,
+        axiosInstance.get(`/client/user/${ AsyncStorage.getItem('id', (err, result) => {
+            return result
+          })}`,
             {
             headers: {
-              'Authorization': `Bearer ${localStorage.getItem("token")}`
+              'Authorization': `Bearer ${ AsyncStorage.getItem('token', (err, result) => {
+                return result
+              })}`
             } 
             }).then((response)=> {
                 setaccount(response.data);
@@ -30,8 +37,9 @@ const MyAccountComponent = () => {
     }, [])
     return (
         <View>
-                  <ComponentHeader />
+                  <View style={{marginTop:'20%'}}></View>
 
+                  <ComponentHeader />
                   <View>    
                                    <Text>Name : {account.fullname}</Text>
                                     <Text>UserName : {account.username}</Text>

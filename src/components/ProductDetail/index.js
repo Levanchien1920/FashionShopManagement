@@ -21,12 +21,20 @@ const ProductDetailComponent = () => {
         id  : 0,
         size : ""
     });
+
+    const [OutputReview, setOutputReview] = useState({
+        id_user : 1,
+        id_product : 1,
+        content : "",
+        number_of_star : 5
+    })
     const [colorSizeM , setcolorSizeM] = useState("")
     const [colorSizeL , setcolorSizeL] = useState("");
     const [colorSizeXL , setcolorSizeXL] = useState("")
     const [colorSizeXXL , setcolorSizeXXL] = useState("")
     const [brandRelated, setbrandRelated] = useState([]);
     const [cateRelated, setcateRelated] = useState([])
+    const [quantity, setquantity] = useState(1);
 
     useEffect(() => {
         if (filter.check === 1){
@@ -87,8 +95,6 @@ const ProductDetailComponent = () => {
                 console.log("no");
         }
     }
-
-
     return (
         <View>
       <ComponentHeader />
@@ -96,7 +102,7 @@ const ProductDetailComponent = () => {
      <ScrollView>
      <View style={styles.sectionContainer}>
 
-   <ScrollView horizontal={true} style={styles.scrollViewContainer} >
+   <ScrollView horizontal={true}  >
        <Image  source={{ uri: Product.link }}
                  style={{width: 100, height: 200, borderWidth: 1}} />
      
@@ -130,9 +136,16 @@ const ProductDetailComponent = () => {
                      ))}
                 </View>
 
-            <TouchableOpacity onPress= {() => {} }>
-             <Text >Add to card</Text>
-         </TouchableOpacity>
+                <TouchableOpacity  onPress= {() => {
+                             let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {};
+                             let id = Product.id+"";
+                             cart[id] = (cart[id] ? cart[id]: 0);
+                             let qty = cart[id] + parseInt(quantity);
+                             cart[id] = qty;
+                             localStorage.setItem('cart', JSON.stringify(cart));
+            }}> 
+                     <Text >Add to card</Text>
+                      </TouchableOpacity>
             </View>
          </View>
 
@@ -158,26 +171,20 @@ const ProductDetailComponent = () => {
     }}
 	multiline={true}
     numberOfLines={10}
-    onChangeText={text => setTextInputValue(text)}
-    value={textInputValue}
+    
+    onChangeText={e => setOutputReview({...OutputReview ,content : e, id_user : localStorage.getItem("id") , id_product : Product.id})} value={OutputReview.content}
+    // onChangeText={text => setTextInputValue(text)}
     placeholder="Insert your review!"
+    // value={OutputReview.content}
     />
 
-<Button  title="Submit"  onClick={e => {
-    const review ={
-        'id': AsyncStorage.getItem('id'),
-        'content':textInputValue,
-        'name_Product':Product.name,
-        'email':"",
-        'name_User':AsyncStorage.getItem('username'),
-        "number_Of_Star": 3
-
-    }
-
-    axiosInstance.get(`/client/review`,review).then((response)=> {
-        console.log("success");
+<Button  title="Submit"  onPress={() => {
+    console.log("OUTRRR");
+    console.log(OutputReview);
+    axiosInstance.get(`/client/review`, OutputReview).then((response)=> {
+        console.log("sussess");
     }).catch((error) =>{
-        console.log("error");
+        console.log("k rev");
     });
 }}></Button>
 

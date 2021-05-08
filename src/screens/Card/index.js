@@ -15,15 +15,14 @@ const Card = (props) => {
             style={{width: 100, height: 200, borderWidth: 1}}/>
             <Text>price:{product.price}</Text>
             <TouchableOpacity  onPress= {() => {
-                             console.log("this is card");
                              let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {};
                              let id = product.id.toString();
                              cart[id] = (cart[id] ? cart[id]: 0);
                              let qty = cart[id] + parseInt(quantity);
-                             cart[id] = qty
+                             cart[id] = qty;
                              localStorage.setItem('cart', JSON.stringify(cart));
             }}> 
-                     <Text >Add to card</Text>
+                     <Text style={styles.text} >Add to card</Text>
                       </TouchableOpacity>
          </View>
 

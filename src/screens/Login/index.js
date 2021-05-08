@@ -60,7 +60,7 @@ const Login = () => {
 
       AsyncStorage.setItem("token", token);
 
-      AsyncStorage.setItem("id", info.id);
+      AsyncStorage.setItem("id", (info.id).toString());
 
       AsyncStorage.setItem("username", info.username);
 
@@ -69,7 +69,6 @@ const Login = () => {
       authDispatch({
                   type: 'LoginSuccess',
                 });
-
        navigate('Home');
       
   }).catch((error) =>{
@@ -77,9 +76,6 @@ const Login = () => {
     Alert.alert(`Wrong username or password`);
 
       console.log("loi roi");
-
-  
-  
   });
 
     }

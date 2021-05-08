@@ -1,15 +1,17 @@
 
-import React, { useState ,useEffect} from 'react';
-import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,StatusBar,ScrollView ,Dimensions,FlatList} from 'react-native';
+import React, { useState ,useEffect, useContext} from 'react';
+import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,ScrollView ,Dimensions,FlatList,Button} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import ComponentHeader from '../ComponentHeader/index';
 import RNPickerSelect from "react-native-picker-select";
 import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
-
+import {GlobalContext} from '../../context/Provider';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const ProductComponent = () => {
+  const {authState : {isLoggedIn},}= useContext(GlobalContext);
   const [listProduct , setlistProduct] = useState([]);
   const [listCategory, setlistCategory] = useState([]);
   const [listBrand, setlistBrand] = useState([]);
@@ -52,9 +54,9 @@ useEffect(() => {
   });
 }, []);
 
-  const {navigate} =useNavigation();
+const {navigate} =useNavigation();
 
-  function SortName (c) {
+function SortName (c) {
 switch (c) {
   case 3: {
     listProduct.sort((a, b) => (a.name > b.name) ? 1 : -1);
@@ -78,75 +80,95 @@ switch (c) {
       });
  }
     return (
-      <View>
-      <ComponentHeader />
 
-    <View style={styles.bodyContainer}>
+ <View>
+           <View>
+                        <View style={styles.headerContainer}>
+                                <View style={styles.inputContainer}>
+                                    <FontAwesome name="search" size={24} color="#969696" />
+                                    <TextInput style={styles.inputText} />
+                                </View>
+                                <View style={styles.cartContainer}>
+                                      <FontAwesome name="shopping-cart" size={24} color="#fff" />
+                                </View>
+                        </View>
+
+                       <View  style = {styles.createSection}>
+                                <Button title= "Home" onPress= {() => {navigate('Home')}}>
+                                </Button>
+                                <Button title= "Product" onPress= {() => {navigate('Products')}}></Button>
+                                <Button  title= "Contact" onPress= {() => {navigate('Contact')}}></Button>
+                                <Button  title= "Post" onPress= {() => {navigate('Post')}}></Button>
+                                <Button title= "Cart" onPress= {() => {navigate('Cart')}}>
+              
+                                </Button>
+                       </View>
+              </View>      
+              
+ <View style={styles.bodyContainer}>
     <ScrollView horizontal={true} >
 
         <View>
 
-        <View style={styles.container} horizontal={true}>
-            <Text>Sorting:</Text>
-            <RNPickerSelect
+        <View style={styles.container} >
+          <View>
+            <Text>Sorting</Text>
+            <RNPickerSelect 
+             placeholder={{
+              value: 3,
+            }}
               items={[
                { label: "Name (A-Z)", value: 3 },
                { label: "Name (Z-A)", value: 4 },
                { label: "Price (Low to High)", value: 5 },
                { label: "Price (High to low)", value: 6 },
-             
-           ]}
+                     ]} 
                 onValueChange={(value) =>  { 
-                 console.log(value);
-                SortName(Number(value));
-                }
+                         SortName(Number(value));
+                        }
                }
             />
+
+        </View>
         </View>
         <View style={styles.listItemContainer}>
-              {listProduct.map((product) => (
-               <Card product={product} key={product.id}></Card>
+              {listProduct.map((product,index) => (
+                <View key={index}>
+                          <Card product={product}></Card>
+                </View>
                ))}  
         </View>
       </View>
 
           <View style={styles.scrollViewContainer}>
-       <View>
-           <Text>Category</Text>
-           {listCategory.map((category) => (
-             <View key={category.id}>
-               <TouchableOpacity  onPress={() => (setfilter({check : 1 ,id: category.id }))}>
-                <Text >{category.name}</Text>
-            </TouchableOpacity>
-             </View>
-                              
-                 ))} 
-           </View>
-
-           <View>
-            
-            <Text>Brand</Text>
- 
-            {listBrand.map((brand) => (
-              <View key={brand.id}>
-           <TouchableOpacity  onPress={() => (setfilter({check : 2 ,id: brand.id }))}>
-          <Text >{brand.name}</Text>
-             </TouchableOpacity>
-              </View>
-                               
-                  ))} 
-            </View>
+              <View>
+                      <Text>Category</Text>
+                      {listCategory.map((category,index) => (
+                        <View key={index}>
+                          <TouchableOpacity  onPress={() => (setfilter({check : 1 ,id: category.id }))}>
+                            <Text >{category.name}</Text>
+                        </TouchableOpacity>
+                        </View>
+                            ))} 
+                </View>
+                <View>
+                      <Text>Brand</Text>
+                      {listBrand.map((brand,index) => (
+                        <View key={index}>
+                              <TouchableOpacity  onPress={() => (setfilter({check : 2 ,id: brand.id }))}>
+                                    <Text >{brand.name}</Text>
+                              </TouchableOpacity>
+                        </View>
+                            ))} 
+                  </View>
 
             </View>
      </ScrollView>
           <View style={styles.seeMoreContainer}>
                <Text style={styles.seeMoreText}>Welcome </Text>
            </View>
-   </View>
-   
-     </View>
-      
-
+      </View>
+</View>
     );
 }
 

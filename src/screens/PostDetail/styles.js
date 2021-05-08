@@ -1,84 +1,113 @@
 import {StyleSheet} from 'react-native';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
 
-  container : {
-    height:100,
-    backgroundColor : "#fff",
-    alignItems      : "center",
-    justifyContent  : "center",
-  
-},
-space : {
-  paddingHorizontal: 20,
- marginTop:300,
- marginLeft:300,
-  backgroundColor : "#fff",
- 
-  
-},
+  screenContainer: {
+    flex: 1,
+    width:'100%',
+    height:hp('40%')
+  },
+  headerContainer: {
+    flexDirection: 'row',
+    paddingTop: 50,
+    backgroundColor: 'pink',
+    position:'relative',
+    display:'flex',
+    alignItems:'center',
 
-leftScreen : {
-  width: 2000,
-  height:200,
-  backgroundColor : "#fff",
-},
-    form : {
-       paddingTop:20,
-    },
-    createSection : {
-        flexDirection:'row',
-     },
-  
-   screenContainer: {
-      flex: 1,
-    },
-    headerContainer: {
-      flexDirection: 'row',
-      paddingTop: 50,
-      paddingBottom: 4,
-      backgroundColor: '#1e88e5',
-    },
-   
-    bodyContainer: {
-      flex: 1,
-      backgroundColor: '#fff',
-      width: '100%',
-    },
+  },
     
+    inputContainer: {
+      backgroundColor: '#fff',
+      flexDirection: 'row',
+      width:'85%',
+      position: 'absolute',
+      marginLeft: 10,
+      top:10,
+      paddingHorizontal: 12,
+      borderRadius: 2,
+      display:'flex',
+      alignItems:'center'
+    },
+    inputText: {
+      color: '#969696',
+      fontSize: 14,
+      marginLeft: 8,
+      fontWeight: '500',
+      height:30
+    },
+    cartContainer: {
+      position: 'absolute',
+      right:10,
+    },
+
+    createSection : {
+      flexDirection:'row',
+   },
+
+    bodyContainer: {
+      marginTop:'25%',
+      // padding:wp('10%'),
+      backgroundColor: 'gray',
+    },
+    linkBtn : {
+      borderWidth:0.3,
+      paddingRight: 30,
+      color:'blue',
+      fontSize:25,
+   },
+
     sectionContainer: {
       backgroundColor: '#fff',
       paddingHorizontal: 12,
-      width: '100%',
     },
-
+   
+    sectionImage: {
+      width: 500,
+      height: 130,
+      borderRadius: 4,
+    },
+    //
     filterContainer: {
       flexDirection: 'row',
       marginTop: 10,
     },
-
-    scrollViewContainer: {
-      width: '20%',
-      display: 'flex',
-      flexDirection:'row'
+    filterActiveButtonContainer: {
+      backgroundColor: '#242424',
+      paddingHorizontal: 12,
+      paddingVertical: 6,
+      borderRadius: 4,
+      marginRight: 10,
     },
-   
   
     listItemContainer: {
-      flexDirection: 'column',
-      flexWrap:'wrap',
-      width: '100%',
-      margin:10
-      
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      maxWidth:800,
+      width:'100%'
     },
     itemContainer: {
       width: 100,
       marginRight: 12,
       marginTop: 10,
     },
- 
-  
+    itemImage: {
+      width: 100,
+      height: 120,
+    },
+    text: {
+      fontSize: 14,
+      color: 'red',
+      marginVertical: 4,
+    },
+    textIndex: {
+      fontSize: 16,
+      color: 'red',
+      backgroundColor: 'white',
+      textAlign:'center',
+    },
+    //
     seeMoreContainer: {
       marginTop: 10,
       padding: 12,
@@ -86,6 +115,8 @@ leftScreen : {
       borderTopColor: '#ededed',
       alignItems: 'center',
     },
- 
+    seeMoreText: {
+      color: '#0e45b4',
+    },
      
 })

@@ -84,7 +84,7 @@ const Register = () => {
           return {...prev, retypepassword: 'Please add a retype password'};
         });
       }
-      if (form.username && form.password && form.fullname && form.address && form.email && form.phonenumber ) {
+      if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber) && (form.password== form.response) ) {
           const register= {
             "username": form.username,
             "password": form.password,
@@ -99,7 +99,6 @@ const Register = () => {
           navigate('LogIn');
           
       }).catch((error) =>{
-          console.log(error);
           console.log("fail");
           navigate('Register');
       });

@@ -7,6 +7,7 @@ import CustomButtom from '../common/CustomButton';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const UpdateAccountComponent = ({
     onSubmit,
     onChange,
@@ -22,6 +23,13 @@ const UpdateAccountComponent = ({
         "email": "",
         "phoneNumber": "",
 })
+console.log("idL");
+
+AsyncStorage.getItem('id')
+.then((value) => {
+  const data = JSON.parse(value);
+  console.log('name is ', data.name);
+});
 
 useEffect(() => {   
     axiosInstance.get(`/client/user/${localStorage.getItem("id")}`,

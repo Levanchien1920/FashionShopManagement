@@ -1,5 +1,5 @@
 import {StyleSheet} from 'react-native';
-
+import {widthPercentageToDP as wp, heightPercentageToDP as hp} from 'react-native-responsive-screen';
 
 export default StyleSheet.create({
     title : {
@@ -8,24 +8,15 @@ export default StyleSheet.create({
         paddingTop:20,
         fontWeight:'500',
     },
-    subTitle : {
-        fontSize:17,
-        textAlign:'center',
-        paddingVertical:20,
-        fontWeight:'500',
-    },
-    form : {
-       paddingTop:20,
-
-    },
+ 
     createSection : {
-        paddingLeft: 10,
         flexDirection:'row',
      },
      linkBtn : {
+        borderWidth:0.3,
         paddingRight: 30,
         color:'blue',
-        fontSize:16,
+        fontSize:25,
      },
 
      infoText : {
@@ -34,6 +25,8 @@ export default StyleSheet.create({
 
    screenContainer: {
       flex: 1,
+      width:'100%',
+      height:hp('40%')
     },
     headerContainer: {
       flexDirection: 'row',
@@ -41,7 +34,8 @@ export default StyleSheet.create({
       backgroundColor: 'pink',
       position:'relative',
       display:'flex',
-      alignItems:'center'
+      alignItems:'center',
+
     },
     inputContainer: {
       backgroundColor: '#fff',

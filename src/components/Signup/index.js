@@ -76,7 +76,6 @@ const RegisterComponent = ({
             }}
             error={errors.username}
 
-            
            />
 
              <Input
