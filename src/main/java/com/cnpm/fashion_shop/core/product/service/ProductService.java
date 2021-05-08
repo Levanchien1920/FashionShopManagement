@@ -1,6 +1,7 @@
 package com.cnpm.fashion_shop.core.product.service;
 
 import com.cnpm.fashion_shop.api.color.dto.ColorDto;
+import com.cnpm.fashion_shop.api.post.dto.PostDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductColor;
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductRes;
@@ -286,7 +287,27 @@ public class ProductService {
                     .body(Response.internalError(e.getMessage()));
         }
     }
+    public ResponseEntity getOneForUpdating(Integer id) {
+        //lay ra id, content va id_image
+        Optional<Product> optionalProduct = productRepository.findById(id);
+        Product product;
 
+
+        if (optionalProduct.isEmpty()) {
+            return ResponseEntity
+                    .status(HttpStatus.NOT_FOUND)
+                    .body(Response.notFound("Cannot find this product with id = " + id));
+        }
+
+        product = optionalProduct.get();
+
+        if (product.getIsDeleted()) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .body(Response.conflict("Product with id = " + id + " is deleted"));
+        }
+        return ResponseEntity.ok(new ProductDto(product.getId_product(),product.getIdCategory(), product.getIdBrand(), product.getIdGender(), product.getIdImage(),product.getIdColor(),product.getNumber(),  product.getPrice(),  product.getName(), product.getDescription(),product.getName_size()));
+    }
     @Transactional
     public ResponseEntity<Response> updateProductDto(Integer id, ProductDto dto) {
         Optional<Product> productOpt = productRepository.findById(id);

@@ -69,5 +69,12 @@ public class ProductController {
         return productService.getOne(id);
     }
 
+    @ApiOperation(value = "Get product by id")
+    @GetMapping("/getOneToUpdate/{product_id}")
+    public ResponseEntity getOneProductForUpdating(@PathVariable("product_id") Integer id) {
+        return productService.getOneForUpdating(id);
+    }
+
+
 
 }
