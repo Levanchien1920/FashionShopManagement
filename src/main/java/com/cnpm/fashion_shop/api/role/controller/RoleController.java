@@ -80,7 +80,7 @@ public class RoleController {
 
     @ApiOperation(value = "Get role by id")
     @GetMapping("/{id_role}")
-    public ResponseEntity getOneBrand(@PathVariable("id_role") Integer id) {
+    public ResponseEntity getOneRole(@PathVariable("id_role") Integer id) {
         return roleService.getOne(id);
     }
 

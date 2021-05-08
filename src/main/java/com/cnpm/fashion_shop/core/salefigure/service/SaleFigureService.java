@@ -44,5 +44,8 @@ public class SaleFigureService {
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return saleFigureRepository.findSaleFigureByDay(pageable);
     }
+    public Integer getTotalProducts() {
+        return this.saleFigureRepository.findAllProductSoldOut();
+    }
 
 }

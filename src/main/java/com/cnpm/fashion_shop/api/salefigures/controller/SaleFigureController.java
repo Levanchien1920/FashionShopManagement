@@ -43,4 +43,9 @@ public class SaleFigureController {
         return new PaginationResponse<>(data);
     }
 
+    @ApiOperation(value = "Get number of products", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/getTotalProductSold")
+    public int getTotalProducts() {
+        return saleFigureService.getTotalProducts();
+    }
 }
