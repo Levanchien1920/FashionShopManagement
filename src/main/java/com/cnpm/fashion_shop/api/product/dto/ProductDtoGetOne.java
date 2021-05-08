@@ -1,6 +1,5 @@
 package com.cnpm.fashion_shop.api.product.dto;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,12 +7,8 @@ import lombok.Setter;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
-@AllArgsConstructor
 @NoArgsConstructor
-public class ProductDto {
-    @Getter
-    @Setter
-    private Integer id;
+public class ProductDtoGetOne {
 
     @Getter
     @Setter
@@ -63,7 +58,7 @@ public class ProductDto {
     private String name_size;
 
 
-    public ProductDto(Integer idCategory, Integer idBrand, Integer idGender, Integer idImage, Integer idColor, Integer number, Long price, String name, String description, String name_size) {
+    public ProductDtoGetOne(Integer idCategory, Integer idBrand, Integer idGender, Integer idImage, Integer idColor, Integer number, Long price, String name, String description, String name_size) {
         this.id_cate = idCategory;
         this.id_brand = idBrand;
         this.id_gender = idGender;

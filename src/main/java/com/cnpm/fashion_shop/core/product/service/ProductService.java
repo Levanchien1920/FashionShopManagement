@@ -4,6 +4,7 @@ import com.cnpm.fashion_shop.api.color.dto.ColorDto;
 import com.cnpm.fashion_shop.api.post.dto.PostDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductColor;
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductDtoGetOne;
 import com.cnpm.fashion_shop.api.product.dto.ProductRes;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
@@ -306,7 +307,7 @@ public class ProductService {
                     .status(HttpStatus.CONFLICT)
                     .body(Response.conflict("Product with id = " + id + " is deleted"));
         }
-        return ResponseEntity.ok(new ProductDto(product.getId_product(),product.getIdCategory(), product.getIdBrand(), product.getIdGender(), product.getIdImage(),product.getIdColor(),product.getNumber(),  product.getPrice(),  product.getName(), product.getDescription(),product.getName_size()));
+        return ResponseEntity.ok(new ProductDtoGetOne(product.getIdCategory(), product.getIdBrand(), product.getIdGender(), product.getIdImage(),product.getIdColor(),product.getNumber(),  product.getPrice(),  product.getName(), product.getDescription(),product.getName_size()));
     }
     @Transactional
     public ResponseEntity<Response> updateProductDto(Integer id, ProductDto dto) {
