@@ -83,7 +83,6 @@ public class RoleService {
         return ResponseEntity.ok(new RoleDto(role.getId(), role.getName()));
     }
 
-    @Transactional
     public ResponseEntity<Response> createRole(RoleDto dto) {
         Role role;
         Role existingRole = roleRepository.findByName(StringUtils.trim(dto.getName()));
@@ -128,7 +127,6 @@ public class RoleService {
         }
     }
 
-    @Transactional
     public ResponseEntity<Response> updateRole(Integer id, RoleDto dto) {
         Optional<Role> roleOptional = roleRepository.findById(id);
         Role role;

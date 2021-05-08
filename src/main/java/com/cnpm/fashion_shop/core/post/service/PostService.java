@@ -121,7 +121,6 @@ public class PostService {
         }
     }
 
-    @Transactional
     public ResponseEntity<Response> updatePost(Integer id, PostDto dto) {
         Optional<Post> postOpt = postRepository.findById(id);
         Post post;

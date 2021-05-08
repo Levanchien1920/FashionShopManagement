@@ -66,7 +66,6 @@ public class ReviewService {
         return reviewRepository.findAllReviewByProduct(pageable, search,id);
     }
 
-    @Transactional
     public ResponseEntity<Response> createReviewDto(ReviewDto dto) {
         Review review;
 
@@ -92,7 +91,7 @@ public class ReviewService {
                     .body(Response.internalError(e.getMessage()));
         }
     }
-    @Transactional
+
     public ResponseEntity<Response> updateReview(Integer id, ReviewDto dto) {
         Optional<Review> reviewOptional = reviewRepository.findById(id);
         Review review;

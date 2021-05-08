@@ -191,7 +191,6 @@ public class UserService {
         }
     }
 
-    @Transactional
     public ResponseEntity<Response> updateUser(Integer id, UserDto dto) {
         Optional<User> userOpt = userRepository.findById(id);
         User user;

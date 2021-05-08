@@ -76,28 +76,6 @@ public class InvoiceService {
         return invoiceRepository.findAllByIdEmployee( pageable, search);
     }
 
-//    public ResponseEntity getOne(Integer id) {
-//        //lay ra id, content va id_image
-//        Optional<Post> optionalPost = postRepository.findById(id);
-//        Post post;
-//
-//
-//        if (optionalPost.isEmpty()) {
-//            return ResponseEntity
-//                    .status(HttpStatus.NOT_FOUND)
-//                    .body(Response.notFound("Cannot find this post with id = " + id));
-//        }
-//
-//        post = optionalPost.get();
-//
-//        if (post.getIsDeleted()) {
-//            return ResponseEntity
-//                    .status(HttpStatus.CONFLICT)
-//                    .body(Response.conflict("post with id = " + id + " is deleted"));
-//        }
-//        return ResponseEntity.ok(new PostDto(post.getId(),post.getContent() ,post.getId_image()));
-//    }
-
 
     public ResponseEntity<Response> createInvoiceDto(InvoiceDto dto) {
         try {
@@ -159,7 +137,6 @@ public class InvoiceService {
         }
     }
 
-    @Transactional
     public ResponseEntity<Response> updateInvoiceDto(Integer id) {
         Optional<Invoice> invoiceOpt = invoiceRepository.findById_invoice(id);
         Invoice invoice;

@@ -220,7 +220,6 @@ public class ProductService {
         return ResponseEntity.ok(productRes);
     }
 
-    @Transactional
     public ResponseEntity<Response> createProductDto(ProductDto dto) {
         Product product;
         //Product existing_product = productRepository.findByNameAndNameSizeAndIdColor(StringUtils.trim(dto.getName()));
@@ -287,7 +286,6 @@ public class ProductService {
         }
     }
 
-    @Transactional
     public ResponseEntity<Response> updateProductDto(Integer id, ProductDto dto) {
         Optional<Product> productOpt = productRepository.findById(id);
         Product product;
