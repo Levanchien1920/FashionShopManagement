@@ -1,18 +1,22 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { Link } from 'react-router-dom'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
+import {LoginContext} from '../Context/LoginContext'
 function EditCategory(props) {
+    const check = useContext(LoginContext);
     const [category, setCategory] = useState({
         id: "",
         category : ""
     });
     const history=useHistory();
     const id = props.match.params.id
-    
+    const token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
     useEffect(() => {
-        // check.checklogin();
-        API.get('category/' + id).then((response)=> {
+        check.checklogin();
+        API.get('category/' + id, token).then((response)=> {
             setCategory(response.data);
         }).catch((error) =>{
         });
@@ -26,7 +30,7 @@ function EditCategory(props) {
             "name": category.name
         }
 
-        API.patch('category/' + id, data).then((response) => {
+        API.patch('category/' + id, data, token).then((response) => {
             console.log(response.data)
             history.push('/categorys')  
             
@@ -69,7 +73,7 @@ function EditCategory(props) {
                         <h4 className="card-title">Edit</h4>
                         <form className="form-horizontal m-t-30" onSubmit={editCaegory}>
                             <div className="form-group" >
-                                <label>Name Category <span className="help"> e.g. "Luis Vutton"</span></label>
+                                <label>Name Category</label>
                                 <input type="text" className="form-control" 
                                     onChange={e => setCategory({...category, name : e.target.value})} value={category.name}/>
                                     

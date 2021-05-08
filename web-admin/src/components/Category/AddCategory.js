@@ -9,14 +9,16 @@ export default function AddCategory() {
     const [newValue, setNewValue] = useState({
         category : ""
     });
-
+    const token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
     const save =  (e) =>{
         console.log(newValue);
         const data = {
             name: newValue.category
         }
 
-        Api.post('category', data)
+        Api.post('category', data, token)
         .then(response => {
             console.log(response.data)
             history.push('/categorys')
@@ -59,7 +61,7 @@ export default function AddCategory() {
                                 onChange={e => setNewValue({...newValue ,category : e.target.value})} value={newValue.category}/>
                             </div>
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn" onClick={save}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-success" onClick={save}>Save </button>
                             </div>
                         </form>
                     </div>

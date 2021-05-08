@@ -1,8 +1,9 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect, useContext} from 'react'
 import API from '../Config/Api'
 import Pagination from '../Pagination/index'
 import { Link , useHistory } from 'react-router-dom';
 import queryString from 'query-string'
+import {LoginContext} from '../Context/LoginContext'
 const tableStyle = {
     // border: 1px solid black,
     // table-layout: fixed,
@@ -11,14 +12,14 @@ const tableStyle = {
 
 const thStyle = {
 //   border: '1px solid black',
-  width: '400px',
+  width: '300px',
   overflow: 'hidden'
 }
 
 function Post() {
     const history = useHistory();
     const [ListPost , setListPost] = useState([]);
-
+    const check = useContext(LoginContext);
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -30,17 +31,40 @@ function Post() {
         post_edit_id: 0
     })
 
+    var token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
+
     useEffect(() => {
-        const paramsString = queryString.stringify(filters)
-        const requestUrl = `post?${paramsString}`
-        API.get(requestUrl).then((response)=> {
+        // const paramsString = queryString.stringify(filters)
+        // const requestUrl = `post?${paramsString}`
+        // API.get(requestUrl).then((response)=> {
+        //         setListPost(response.data.content);
+        //         setPagination({
+        //             page: response.data.pageIndex,
+        //             totalPages: response.data.totalPage
+        //         })
+        //     }).catch((error) =>{
+        //     });
+
+        async function getData () {
+            let token = {
+                headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+            }
+            check.checklogin();
+            const paramsString = queryString.stringify(filters)
+            const requestUrl = `post?${paramsString}`
+            API.get(requestUrl,token).then((response)=> {
                 setListPost(response.data.content);
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
+                console.log(response.data);
             }).catch((error) =>{
             });
+        }
+        getData();     
     }, [filters])
 
     function handlePageChange(newPage) {
@@ -104,6 +128,7 @@ function Post() {
                                             <tr>
                                                 <th scope="col">Id</th>
                                                 <th scope="col">Name</th>
+                                                <th scope="col" style = {thStyle}>Title</th>
                                                 <th scope="col" style = {thStyle}>Content</th>
                                                 {/* <th scope="col">Detail</th> */}
                                                 <th scope="col">Action</th>
@@ -115,6 +140,7 @@ function Post() {
                                                 <tr key={Post.id}>
                                                     <th scope="row">{Post.id}</th>
                                                     <td>{Post.name}</td>
+                                                    <td>{Post.title}</td>
                                                     {/* <td></td> */}
                                                     <td>{Post.content}</td>
                                                     {/* <td ><a href={Post.link} target="_blank">click in here</a></td> */}

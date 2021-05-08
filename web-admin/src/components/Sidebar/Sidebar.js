@@ -80,7 +80,7 @@ function Sidebar() {
                                         </Link>
                                     </li>
                                     <li className="sidebar-item">
-                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/employee" aria-expanded="false">
+                                        <Link className="sidebar-link waves-effect waves-dark sidebar-link" to="/role" aria-expanded="false">
                                             <i className="mdi-account-network"></i>
                                             <span className="hide-menu">Roles</span>
                                         </Link>

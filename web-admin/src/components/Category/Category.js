@@ -1,9 +1,11 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect, useContext} from 'react'
 import API from '../Config/Api'
 import { Link, useHistory } from 'react-router-dom'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
+import { LoginContext } from '../Context/LoginContext'
 export default function Category() {
+    const check = useContext(LoginContext);
 
     const [pagination, setPagination] = useState({
         page: 0,
@@ -19,17 +21,36 @@ export default function Category() {
     const [ListCategory , setListCategory] = useState([]);
 
     useEffect(() => {
-        const paramsString = queryString.stringify(filters)
-        const requestUrl = `category?${paramsString}`
-        API.get(requestUrl).then((response)=> {
-                console.log(response.data)
+        // const paramsString = queryString.stringify(filters)
+        // const requestUrl = `category?${paramsString}`
+        // API.get(requestUrl).then((response)=> {
+        //         console.log(response.data)
+        //         setListCategory(response.data.content);
+        //         setPagination({
+        //             page: response.data.pageIndex,
+        //             totalPages: response.data.totalPage
+        //         })
+        //     }).catch((error) =>{
+        //         });
+
+        async function getData () {
+            let token = {
+                headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+            }
+            check.checklogin();
+            const paramsString = queryString.stringify(filters)
+            const requestUrl = `category?${paramsString}`
+            API.get(requestUrl,token).then((response)=> {
                 setListCategory(response.data.content);
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
+                console.log(response.data);
             }).catch((error) =>{
-                });
+            });
+        }
+        getData();     
     }, [filters])
 
     function handlePageChange(newPage) {
@@ -45,8 +66,10 @@ export default function Category() {
         e.preventDefault()
         let id = e.target.id.toString()
         // console.log(id)
-   
-        API.delete('category/' + id)
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
+        API.delete('category/' + id,token)
         .then(response => {
             setFilters({...filters, category_edit_id: id})
             console.log(response.data)

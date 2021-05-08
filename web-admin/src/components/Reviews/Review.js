@@ -1,10 +1,11 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect, useContext} from 'react'
 import API from '../Config/Api';
 import { Link } from 'react-router-dom'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
+import {LoginContext} from '../Context/LoginContext'
 export default function Review() {
-
+    const check = useContext(LoginContext);
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -19,17 +20,35 @@ export default function Review() {
 
 
     useEffect(() => {
-        const paramsString = queryString.stringify(filters)
-        const requestUrl = `review?${paramsString}`
-        API.get(requestUrl)
-            .then((response)=> {
+        // const paramsString = queryString.stringify(filters)
+        // const requestUrl = `review?${paramsString}`
+        // API.get(requestUrl)
+        //     .then((response)=> {
+        //         setListReview(response.data.content)
+        //         setPagination({
+        //             page: response.data.pageIndex,
+        //             totalPages: response.data.totalPage
+        //         })
+        //     }).catch((error) =>{
+        // });
+        async function getData () {
+            let token = {
+                headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+            }
+            check.checklogin();
+            const paramsString = queryString.stringify(filters)
+            const requestUrl = `review?${paramsString}`
+            API.get(requestUrl,token).then((response)=> {
                 setListReview(response.data.content)
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
+                console.log(response.data);
             }).catch((error) =>{
-        });
+            });
+        }
+        getData();  
     }, [filters])
 
     

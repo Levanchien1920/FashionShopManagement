@@ -1,10 +1,11 @@
-import React , {useState , useEffect} from 'react'
+import React , {useState , useEffect, useContext} from 'react'
 import API from '../Config/Api';
 import { Link } from 'react-router-dom'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
+import {LoginContext} from '../Context/LoginContext'
 export default function Invoice() {
-
+    const check = useContext(LoginContext);
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -16,20 +17,41 @@ export default function Invoice() {
     })
 
     const [ListInvoice , setListInvoice] = useState([]);
-
+    const token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
 
     useEffect(() => {
-        const paramsString = queryString.stringify(filters)
-        const requestUrl = `invoice/ByEmployee?${paramsString}`
-        API.get(requestUrl)
-            .then((response)=> {
+        // const paramsString = queryString.stringify(filters)
+        // const requestUrl = `invoice/ByEmployee?${paramsString}`
+        // API.get(requestUrl)
+        //     .then((response)=> {
+        //         setListInvoice(response.data.content)
+        //         setPagination({
+        //             page: response.data.pageIndex,
+        //             totalPages: response.data.totalPage
+        //         })
+        //     }).catch((error) =>{
+        // });
+
+        async function getData () {
+            let token = {
+                headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+            }
+            check.checklogin();
+            const paramsString = queryString.stringify(filters)
+            const requestUrl = `invoice/ByEmployee?${paramsString}`
+            API.get(requestUrl,token).then((response)=> {
                 setListInvoice(response.data.content)
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
+                
             }).catch((error) =>{
-        });
+            });
+        }
+        getData(); 
     }, [filters])
 
     
@@ -111,8 +133,8 @@ export default function Invoice() {
                                             {ListInvoice.map((Invoice) => (
                                                 <tr key={Invoice.id}>
                                                     <th scope="row">{Invoice.id}</th>
-                                                    <td>{Invoice.fullname_employee}</td>
-                                                    <td>{Invoice.is_paid}</td>
+                                                    <td>{(Invoice.fullname_employee) ? Invoice.fullname_employee : "Customer"}</td>
+                                                    <td>{(Invoice.is_paid) ? "Paid" : "Unpaid"}</td>
 
                                                     <td> <button id = {Invoice.id} onClick={viewInvoice} className="btn btn-success">View</button> <button id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button></td>
                                                 </tr>

@@ -38,7 +38,7 @@ import Image from './components/Image/Image';
 import Color from './components/Color/Color'
 import NewColor from './components/Color/NewColor'
 import EditColor from './components/Color/EditColor'
-
+import Role from './components/Role/Role'
 function App() {
   return (
     <Router>
@@ -77,6 +77,9 @@ function App() {
                 <Route path='/editcategory/:id' component={EditCategory}/>
                 <Route path='/editimage/:id' component={EditImage}/>
                 <Route path='/editcolor/:id' component={EditColor}/>
+
+                <Route path='/role' component={Role}/>
+
               
             </Switch>
           </LoginContextProvider>
