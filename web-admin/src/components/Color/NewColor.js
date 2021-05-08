@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import Api from '../Config/Api';
 
 export default function NewColor() {
     const [message , setmessage] = useState("");
@@ -11,7 +12,7 @@ export default function NewColor() {
             setmessage("You have not entered enough");
         }else {
             console.log(newvalue)
-            axios.post("http://localhost:9090/api/v1/color",newvalue,{
+            Api.post("color",newvalue,{
                 headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 

@@ -20,7 +20,7 @@ import Review from './components/Reviews/Review'
 import Invoice from './components/Invoice/Invoice'
 import Customer from './components/Public/Customer'
 import Login from './components/Public/Login'
-import Employee from './components/Public/Employee'
+import Employee from './components/Employee/Employee'
 import Sale from './components/Sale/Sale'
 import NewBrand from './components/Brand/NewBrand';
 import ProductDetail from './components/Product/ProductDetail';
@@ -31,8 +31,8 @@ import NewProduct from './components/Product/NewProduct';
 import NewImage from './components/Image/NewImage';
 import EditProduct from './components/Product/EditProduct';
 import EditBrand from './components/Brand/EditBrand';
-import NewEmployee from './components/New/NewEmployee';
-import EditEmployee from './components/Edit/EditEmployee';
+import NewEmployee from './components/Employee/NewEmployee';
+import EditEmployee from './components/Employee/EditEmployee';
 import EditImage from './components/Image/EditImage';
 import Image from './components/Image/Image';
 import Color from './components/Color/Color'

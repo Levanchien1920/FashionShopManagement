@@ -1,6 +1,7 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
+import Api from '../Config/Api';
 
 export default function NewImage() {
     const [message , setmessage] = useState("");
@@ -8,22 +9,33 @@ export default function NewImage() {
         name : "",
         link : ""
     });
+    var idImage = window.location.pathname.split('/')
+    var token = {
+        headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+                } 
+        }
     const history = useHistory()
+    useEffect(() => {
+        async function getData() {
+            Api.get('image/'+idImage[idImage.length-1],token).then((response)=> {
+                let temp = response.data
+                setnewvalue({...newvalue , name : temp.name , link : temp.link})
+                }).catch((error) =>{
+                    console.log(error)
+                });
+        }
+        getData()
+    }, [])
     const saveImage =  (e) =>{
         if( newvalue.Image === "" ) {
             setmessage("You have not entered enough");
         }else {
-            let id = window.location.pathname.split('/')
-            axios.patch(`http://localhost:9090/api/v1/image/${id[id.length-1]}`,newvalue,{
-                headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("token")}`
-                        } 
-                }).then((response)=> {
+            Api.patch('image/'+idImage[idImage.length-1],newvalue,token).then((response)=> {
                 alert(response.data.message);
                 history.push('/image')
             }).catch((error) =>{
                 alert(error.message);
-                console.log(error)
             });
         }
     }

@@ -1,31 +1,51 @@
 import React , {useState , useEffect} from 'react'
-import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom';
+import Api from '../Config/Api';
+import Pagination from '../Pagination';
 export default function Color() {
     const [ListColor , setListColor] = useState([]);
     const history = useHistory();
-    const [filter, setfilter] = useState(0)
+    const [filters, setFilters] = useState({
+        page: 0,
+        id : 0
+    })
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 5,
+        totalPages: 1
+    })
     useEffect(() => {
         let token =  {headers: {
               'Authorization': `Bearer ${localStorage.getItem("token")}`
             } 
         }
         function getData() {
-            axios.get('http://localhost:9090/api/v1/color', token).then((response)=> {
-                    setListColor(response.data.content);
-                }).catch((error) =>{
-                });
-            }
+            Api.get('color?page='+filters.page, token).then((response)=> {
+                setListColor(response.data.content);
+                setPagination({
+                    page: response.data.pageIndex,
+                    totalPages: response.data.totalPage
+                })
+            }).catch((error) =>{
+    
+            });
+        }
         getData()
-    }, [filter])
+    }, [filters])
+    function handlePageChange(newPage) {
+        setFilters({ ...filters ,
+            page: newPage
+        })
+    }
     function deleteColor (id) {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
-        axios.delete(`http://localhost:9090/api/v1/color/${id}`,token).then((response)=> {
-            setfilter(id);
+        Api.delete('color/'+id, token).then((response)=> {
+            setFilters({...filters , id :id });
         }).catch((error) =>{
-        });
+
+        }); 
     }
     return (
             <div className="page-wrapper">
@@ -78,6 +98,10 @@ export default function Color() {
                                         </tbody>
                                     </table>
                                 </div>
+                                <Pagination
+                                    pagination={pagination}
+                                    onPageChange={handlePageChange}
+                                />
                             </div>
                         </div>
                     </div>

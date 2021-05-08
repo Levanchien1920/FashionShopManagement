@@ -1,58 +1,50 @@
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
-import axios from 'axios'
 import { Link ,useHistory } from 'react-router-dom';
 import Pagination from '../Pagination/index'
+import Api from '../Config/Api';
 export default function Products() {
     const history =useHistory();
     const [ListProduct , setListProduct] = useState([]);
     const check = useContext(LoginContext);
+    const [filters, setFilters] = useState({
+        page: 0,
+        id : 0
+    })
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
         totalPages: 1
-    })
-    const [filters, setFilters] = useState({
-        id : 0,
-        page: 0,
-        post_edit_id: 0
     })
     var token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
     useEffect(() => {
         async function getData () {
-            let token = {
-                headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-            }
             check.checklogin();
-            axios.get(`http://localhost:9090/api/v1/product?page=${pagination.page}`,token).then((response)=> {
+            Api.get('product?page='+filters.page, token).then((response)=> {
                 setListProduct(response.data.content);
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
                 })
-                console.log(response.data);
             }).catch((error) =>{
-            });
+    
+            }); 
         }
         getData();     
     }, [filters])
     function handlePageChange(newPage) {
-        setFilters({
+        setFilters({ ...filters ,
             page: newPage
         })
-        console.log(filters)
-        console.log('New page: ', newPage)
     }
     function deleteproduct (id) {
-        let token = {
-            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-        }
-        axios.delete(`http://localhost:9090/api/v1/product/${id}`,token).then((response)=> {
+        Api.delete('product/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
         }).catch((error) =>{
-        });
+
+        }); 
     }
     return (
         <>

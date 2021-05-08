@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import {useHistory} from 'react-router-dom'
+import API from '../Config/Api';
 export default function EditProduct() {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -37,26 +37,32 @@ export default function EditProduct() {
     useEffect(() => {
         async function getdata (){
             check.checklogin();
-            axios.get('http://localhost:9090/api/v1/category',token).then((response)=> {
+            API.get('product/getOneToUpdate/' + array[array.length-1], token).then((response)=> {
+                let temp = response.data
+                setdataoutput(temp);
+                console.log(response.data)
+            }).catch((error) =>{
+    
+            });
+            API.get('category', token).then((response)=> {
                 setlistCategory(response.data.content);
             }).catch((error) =>{
+    
             });
-            axios.get('http://localhost:9090/api/v1/brand',token).then((response)=> {
-                setlistBrand(response.data.content);
-            }).catch((error) =>{
-            });
-            axios.get('http://localhost:9090/api/v1/image',token).then((response)=> {
+            API.get('image', token).then((response)=> {
                 setlistImage(response.data.content);
             }).catch((error) =>{
+    
             });
-            axios.get('http://localhost:9090/api/v1/color',token).then((response)=> {
+            API.get('brand', token).then((response)=> {
+                setlistBrand(response.data.content);
+            }).catch((error) =>{
+    
+            });
+            API.get('color', token).then((response)=> {
                 setlistColor(response.data.content);
             }).catch((error) =>{
-            });
-            axios.get(`http://localhost:9090/api/v1/product/${array[array.length-1]}`,token).then((response)=> {
-                console.log(response.data.content)
-            }).catch((error) =>{
-                console.log(error.response)
+    
             });
         }
         getdata()
@@ -65,44 +71,46 @@ export default function EditProduct() {
         async function getdatas (){
             switch (search.name) {
                 case "brand":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('brand?search='+search.string, token).then((response)=> {
                         setlistBrand(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 case "category":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('category?search='+search.string, token).then((response)=> {
                         setlistCategory(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 case "color":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('color?search='+search.string, token).then((response)=> {
                         setlistColor(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 case "image":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('image?search='+search.string, token).then((response)=> {
                         setlistImage(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 default:
                     break;
             }
-            
         }
         if(search.bool === true){ getdatas()}
     }, [search]);
     function save () {
-        console.log(dataoutput.des);
-        // axios.patch(`http://localhost:9090/api/v1/product/${array[array.length-1]}`,dataoutput,token).then((response)=> {
-        //         alert(response.data.message);
-        //         history.push('/products')
-        //     }).catch((error) =>{
-        //         console.log(error.response)
-        //     });
+        API.patch('product/'+array[array.length-1], dataoutput,token).then((response)=> {
+            alert(response.data.message);
+                history.push('/products')
+            }).catch((error) =>{
+                console.log(error.response)
+            });
     }
     return (
         <>
@@ -151,7 +159,7 @@ export default function EditProduct() {
                                 <CKEditor
                                     
                                     editor={ ClassicEditor }
-                                    data=""
+                                    data={dataoutput.des}
                                     onReady={ editor => {
                                         console.log( 'Editor is ready to use!', editor );
                                     } }
@@ -164,7 +172,7 @@ export default function EditProduct() {
                             <div className="form-group">
                                 <div className="row">
                                     <label className="idlabel" for="brand">Brand</label>
-                                    <input list="brand" className="col-md-3"  
+                                    <input list="brand" className="col-md-3" value={dataoutput.id_brand} 
                                         onChange={ e => {
                                             setdataoutput({...dataoutput ,id_brand : e.target.value })
                                             setsearch({...search , bool : true , name : "brand" , string : e.target.value})
@@ -175,7 +183,7 @@ export default function EditProduct() {
                                         ))}
                                     </datalist>
                                     <label className="idlabel" for="category">Category</label>
-                                    <input list="cate" className="col-md-3"
+                                    <input list="cate" className="col-md-3" value={dataoutput.id_cate}
                                         onChange={e => {
                                             setdataoutput({...dataoutput ,id_cate : e.target.value })
                                             setsearch({...search , bool : true , name : "category" , string : e.target.value})
@@ -186,7 +194,7 @@ export default function EditProduct() {
                                         ))}
                                     </datalist>
                                     <label className="idlabel" for="image">Image</label>
-                                    <input list="image" className="col-md-3"
+                                    <input list="image" className="col-md-3" value = {dataoutput.id_image}
                                         onChange={e => {setdataoutput({...dataoutput ,id_image : e.target.value })
                                         setsearch({...search , bool : true , name : "image" , string : e.target.value})
                                         }}></input>
@@ -200,7 +208,7 @@ export default function EditProduct() {
                             <div className="form-group">
                                 <div className="row">
                                     <label className="idlabel" for="size">Size  :</label>
-                                    <input list="size" className="col-md-3"
+                                    <input list="size" className="col-md-3" value={dataoutput.name_size}
                                     onChange={e => setdataoutput({...dataoutput ,name_size : e.target.value })}></input>
                                     <datalist id="size">
                                         <option value="M">M</option>
@@ -209,7 +217,7 @@ export default function EditProduct() {
                                         <option value="XXL">XXL</option>
                                     </datalist>
                                     <label className="idlabel" for="Color">Color</label>
-                                    <input list="color" className="col-md-3"
+                                    <input list="color" className="col-md-3" value={dataoutput.id_color}
                                     onChange={e => {setdataoutput({...dataoutput ,id_color : e.target.value })
                                                     setsearch({...search , bool : true , name : "color" , string : e.target.value}) 
                                             }}></input>

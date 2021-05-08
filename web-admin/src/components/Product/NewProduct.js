@@ -1,8 +1,8 @@
-import axios from 'axios';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
+import API from '../Config/Api';
 export default function NewProduct() {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -34,70 +34,73 @@ export default function NewProduct() {
     useEffect(() => {
         async function getdata (){
             check.checklogin();
-            axios.get('http://localhost:9090/api/v1/category',token).then((response)=> {
+            API.get('category', token).then((response)=> {
                 setlistCategory(response.data.content);
             }).catch((error) =>{
+    
             });
-            axios.get('http://localhost:9090/api/v1/brand',token).then((response)=> {
-                setlistBrand(response.data.content);
-            }).catch((error) =>{
-            });
-            axios.get('http://localhost:9090/api/v1/image',token).then((response)=> {
+            API.get('image', token).then((response)=> {
                 setlistImage(response.data.content);
             }).catch((error) =>{
+    
             });
-            axios.get('http://localhost:9090/api/v1/color',token).then((response)=> {
+            API.get('brand', token).then((response)=> {
+                setlistBrand(response.data.content);
+            }).catch((error) =>{
+    
+            });
+            API.get('color', token).then((response)=> {
                 setlistColor(response.data.content);
             }).catch((error) =>{
+    
             });
         }
         getdata()
     }, []);
     useEffect(() => {
         async function getdatas (){
-            console.log(search)
             switch (search.name) {
                 case "brand":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('brand?search='+search.string, token).then((response)=> {
                         setlistBrand(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 case "category":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('category?search='+search.string, token).then((response)=> {
                         setlistCategory(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 case "color":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('color?search='+search.string, token).then((response)=> {
                         setlistColor(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 case "image":
-                    axios.get(`http://localhost:9090/api/v1/${search.name}?search=${search.string}`,token).then((response)=> {
+                    API.get('image?search='+search.string, token).then((response)=> {
                         setlistImage(response.data.content);
                     }).catch((error) =>{
+            
                     }); 
                     break;
                 default:
                     break;
             }
-            
         }
         if(search.bool === true){ getdatas()}
     }, [search]);
     function save () {
         console.log(dataoutput);
-        axios.post('http://localhost:9090/api/v1/product',dataoutput,token).then((response)=> {
-                alert(response.data.message);
-            }).catch((error) =>{
-                alert(error.response.data.message)
-            });
-    }
-    function clog (){
-        console.log(search);
+        API.post('product', dataoutput,token).then((response)=> {
+            alert(response.data.message);
+        }).catch((error) =>{
+            console.log(error.response)
+        });
     }
     return (
         <>
@@ -230,7 +233,6 @@ export default function NewProduct() {
                             </div>
                             <div className="form-group">
                                 <button type="button" name="example-email" className="btn" onClick={save}>Save </button>
-                                <button type="button" name="example-email" className="btn" onClick={clog}>log </button>
                             </div>
                         </form>
                     </div>

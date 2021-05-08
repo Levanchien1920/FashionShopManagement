@@ -1,5 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
+import Api from '../Config/Api';
 
 export default function NewImage() {
     const [message , setmessage] = useState("");
@@ -8,11 +9,11 @@ export default function NewImage() {
         link : ""
     });
     const saveImage =  (e) =>{
-        if( newvalue.Image === "" ) {
+        if( newvalue.name === "" || newvalue.link ==="" ) {
             setmessage("You have not entered enough");
         }else {
             console.log(newvalue)
-            axios.post("http://localhost:9090/api/v1/image",newvalue,{
+            Api.post("image",newvalue,{
                 headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
@@ -61,6 +62,9 @@ export default function NewImage() {
                                     <input type="text" className="form-control" 
                                     onChange={e => setnewvalue({...newvalue ,link : e.target.value})} value={newvalue.link}></input>
                                 </div>
+                                {
+                                    message !== "" ? (<p>you need enter value</p>) :( <></>)
+                                }
                                 <div className="form-group">
                                     <button type="button" name="example-email" className="btn" onClick={saveImage}>Save </button>
                                 </div>

@@ -1,29 +1,39 @@
 import axios from 'axios';
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useHistory } from 'react-router';
+import Api from '../Config/Api';
 
 export default function NewColor() {
     const [message , setmessage] = useState("");
     const [newvalue, setnewvalue] = useState({
         name : "",
     });
+    var idColor = window.location.pathname.split('/')
+    var token = {headers: {
+                'Authorization': `Bearer ${localStorage.getItem("token")}`
+                } }
     const history = useHistory()
+    useEffect(() => {
+        async function getData() {
+            Api.get('color/'+idColor[idColor.length-1],token).then((response)=> {
+                let temp = response.data
+                setnewvalue({...newvalue , name : temp.name})
+                }).catch((error) =>{
+                    console.log(error)
+                });
+        }
+        getData()
+    }, [])
     const saveColor =  (e) =>{
         if( newvalue.Color === "" ) {
             setmessage("You have not entered enough");
         }else {
-            let id = window.location.pathname.split('/')
-            axios.patch(`http://localhost:9090/api/v1/color/${id[id.length-1]}`,newvalue,{
-                headers: {
-                        'Authorization': `Bearer ${localStorage.getItem("token")}`
-                        } 
-                }).then((response)=> {
+            Api.patch('color/'+idColor[idColor.length-1], newvalue,token).then((response)=> {
                 alert(response.data.message);
                 history.push('/color')
-            }).catch((error) =>{
-                alert(error.message);
-                console.log(error)
-            });
+                }).catch((error) =>{
+                    console.log(error)
+                });
         }
     }
     return (

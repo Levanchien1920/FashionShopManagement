@@ -1,22 +1,33 @@
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
-import axios from 'axios'
 import { Bar } from "react-chartjs-2";
+import Api from '../Config/Api';
 export default function Sale() {
     const [ListSale , setListSale] = useState([]);
     const [DataMonthly, setDataMonthly] = useState([])
+    const [totalProduct, settotalProduct] = useState(0)
+    const [totalUser, settotalUser] = useState(0)
     const check = useContext(LoginContext);
     useEffect(() => {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
         check.checklogin();
-        axios.get('http://localhost:9090/api/v1/saleFigureEmployee',token).then((response)=> {
+        Api.get('saleFigureEmployee',token).then((response)=> {
             setListSale(response.data.content);
-            console.log(response.data.content);
-        }).catch((error) =>{
+            }).catch((error) =>{
             });
-        axios.get('http://localhost:9090/api/v1/saleFigure/ByMonth',token).then((response)=> {
+        Api.get('saleFigure/getTotalProductSold',token).then((response)=> {
+            settotalProduct(response.data);
+            console.log(response.data);
+            }).catch((error) =>{
+            });
+        Api.get('admin/user/getTotalCustomer',token).then((response)=> {
+            settotalUser(response.data);
+            console.log(response.data);
+            }).catch((error) =>{
+            });
+        Api.get('saleFigure/ByMonth',token).then((response)=> {
             let data = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
             response.data.content.forEach(function(item, index, array) {
                 data[item.month -1] = item.total;
@@ -95,6 +106,7 @@ export default function Sale() {
                                         text: "Predicted world population (millions) in 2050"
                                     }
                                     }}
+                            
                                 />
                                 <div className="sales ct-charts mt-3"></div>
                             </div>
@@ -103,8 +115,21 @@ export default function Sale() {
                     <div className="col-md-4">
                         <div className="card">
                             <div className="card-body">
-                                <h5 className="card-title m-b-5">Referral Earnings</h5>
-                                <h3 className="font-light">$769.08</h3>
+                                <h4 className="card-title m-b-5">Products sold</h4>
+                                <h2 className="font-light">{totalProduct}</h2>
+                            </div>
+                        </div>
+                        <div className="card">
+                            <div className="card-body">
+                                <h4 className="card-title m-b-0">Users</h4>
+                                <h2 className="font-light">{totalUser}</h2>
+                               
+                            </div>
+                        </div>
+                        <div className="card">
+                            <div className="card-body">
+                                <h4 className="card-title m-b-5">Products sold</h4>
+                                <h2 className="font-light">{totalProduct}</h2>
                                 <div className="m-t-20 text-center">
                                     <div id="earnings"></div>
                                 </div>
@@ -113,19 +138,8 @@ export default function Sale() {
                         <div className="card">
                             <div className="card-body">
                                 <h4 className="card-title m-b-0">Users</h4>
-                                <h2 className="font-light">35,658 <span className="font-16 text-success font-medium">+23%</span></h2>
-                                <div className="m-t-30">
-                                    <div className="row text-center">
-                                        <div className="col-6 border-right">
-                                            <h4 className="m-b-0">58%</h4>
-                                            <span className="font-14 text-muted">New Users</span>
-                                        </div>
-                                        <div className="col-6">
-                                            <h4 className="m-b-0">42%</h4>
-                                            <span className="font-14 text-muted">Repeat Users</span>
-                                        </div>
-                                    </div>
-                                </div>
+                                <h2 className="font-light">{totalUser}</h2>
+                               
                             </div>
                         </div>
                     </div>

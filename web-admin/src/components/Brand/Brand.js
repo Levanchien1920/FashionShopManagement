@@ -1,7 +1,7 @@
 import React , {useState , useEffect} from 'react'
-import axios from 'axios'
 import Pagination from '../Pagination/index'
 import { Link, useHistory } from 'react-router-dom';
+import Api from '../Config/Api';
 export default function Brand() {
     var token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -9,7 +9,8 @@ export default function Brand() {
     const [ListBrand , setListBrand] = useState([]);
     const history = useHistory();
     const [filters, setFilters] = useState({
-        page: 0
+        page: 0,
+        id : 0
     })
     const [pagination, setPagination] = useState({
         page: 0,
@@ -17,27 +18,28 @@ export default function Brand() {
         totalPages: 1
     })
     useEffect(() => {
-        axios.get(`http://localhost:9090/api/v1/brand?page=${filters.page}`,token).then((response)=> {
-                setListBrand(response.data.content);
-                setPagination({
-                    page: response.data.pageIndex,
-                    totalPages: response.data.totalPage
-                })
-            }).catch((error) =>{
-            });
+        Api.get('brand?page='+filters.page, token).then((response)=> {
+            setListBrand(response.data.content);
+            setPagination({
+                page: response.data.pageIndex,
+                totalPages: response.data.totalPage
+            })
+        }).catch((error) =>{
+
+        }); 
     }, [filters])
     function handlePageChange(newPage) {    
-        setFilters({
+        setFilters({...filters,
             page: newPage
         })
-        console.log(filters)
-        console.log('New page: ', newPage)
+        console.log(newPage)
     }
     function deletebrand (id) {
-        axios.delete(`http://localhost:9090/api/v1/brand/${id}`,token).then((response)=> {
-            setFilters({...filters , page : id});
+        Api.delete('brand/'+id, token).then((response)=> {
+            setFilters({...filters , id :id });
         }).catch((error) =>{
-        });
+
+        }); 
     }
     return (
             <div className="page-wrapper">

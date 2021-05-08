@@ -1,9 +1,9 @@
-import axios from 'axios';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import { useHistory } from 'react-router';
+import Api from '../Config/Api';
 export default function ProductDetail() {
     const check = useContext(LoginContext);
     const [datainput, setdatainput] = useState({})
@@ -12,15 +12,14 @@ export default function ProductDetail() {
         async function getdata (){
             check.checklogin();
             let id = history.location.pathname.split("/")[2];
-            axios.get(`http://localhost:9090/api/v1/product/${id}`,{
-            headers: {
-                    'Authorization': `Bearer ${localStorage.getItem("token")}`
-                    } 
-            }).then((response)=> {
-            setdatainput(response.data);
-            console.log(response.data);
+            let token = {headers: {
+                        'Authorization': `Bearer ${localStorage.getItem("token")}`
+                        }}
+            Api.get('product/'+id, token).then((response)=> {
+                setdatainput(response.data);
             }).catch((error) =>{
-            });
+    
+            }); 
         }
         getdata()
     }, []);

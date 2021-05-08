@@ -19,8 +19,9 @@ export default function EditPost(props) {
     useEffect(() => {
         API.get('post/' + idPost, token).then((response)=> {
             let temp = response.data
-            setPost(temp);
-            console.log(response.data)
+            setPost({...post,content: temp.content,
+            id_image: temp.id_image,
+            title: temp.title });
         }).catch((error) =>{
 
         });
@@ -92,7 +93,6 @@ export default function EditPost(props) {
                                 <label for="name">Title </label>
                                 <input type="text" className="form-control" name="title"
                                     onChange={onChange} value={post.title}/>
-                                    
                             </div>
                             <div className="form-group">
                                 <label htmlFor="des">Description</label>

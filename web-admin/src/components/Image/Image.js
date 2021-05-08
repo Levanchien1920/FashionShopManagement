@@ -1,29 +1,49 @@
 import React , {useState , useEffect} from 'react'
 import axios from 'axios'
 import { Link, useHistory } from 'react-router-dom';
+import Api from '../Config/Api';
+import Pagination from '../Pagination';
 export default function Image() {
     const [Listimage , setListimage] = useState([]);
     const history = useHistory();
-    const [filter, setfilter] = useState(0)
+    const [filters, setFilters] = useState({
+        page: 0,
+        id : 0
+    })
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 5,
+        totalPages: 1
+    })
     useEffect(() => {
         let token =  {headers: {
               'Authorization': `Bearer ${localStorage.getItem("token")}`
             } 
         }
         function getData() {
-            axios.get('http://localhost:9090/api/v1/image', token).then((response)=> {
-                    setListimage(response.data.content);
-                }).catch((error) =>{
-                });
-            }
+            Api.get('image?page='+filters.page, token).then((response)=> {
+                setListimage(response.data.content);
+                setPagination({
+                    page: response.data.pageIndex,
+                    totalPages: response.data.totalPage
+                })
+            }).catch((error) =>{
+    
+            }); 
+        }
         getData()
-    }, [filter])
+    }, [filters])
+    function handlePageChange(newPage) {
+        setFilters({ ...filters ,
+            page: newPage
+        })
+    }
     function deleteimage (id) {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
         axios.delete(`http://localhost:9090/api/v1/image/${id}`,token).then((response)=> {
-            setfilter(id);
+            setFilters({...filters, id :id});
         }).catch((error) =>{
         });
     }
@@ -80,6 +100,10 @@ export default function Image() {
                                         </tbody>
                                     </table>
                                 </div>
+                                <Pagination
+                                    pagination={pagination}
+                                    onPageChange={handlePageChange}
+                                />
                             </div>
                         </div>
                     </div>
