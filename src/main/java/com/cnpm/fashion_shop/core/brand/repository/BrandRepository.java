@@ -1,6 +1,7 @@
 package com.cnpm.fashion_shop.core.brand.repository;
 
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
+import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.entity.Brand;
 import org.springframework.data.domain.Page;
@@ -10,12 +11,16 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface BrandRepository extends JpaRepository<Brand, Long> {
     @Query(value = "SELECT * FROM brand b WHERE LOWER(b.name) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
     Page<BrandResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
+
+    @Query(value = "SELECT * FROM brand b WHERE LOWER(b.name) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
+    List<BrandResponseDto> findAllByNameBrand(@Param("keyword") String keyword);
 
     Brand findByName(String name);
 

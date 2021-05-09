@@ -45,6 +45,18 @@ public class CategoryService {
     }
 
     @Transactional
+    public List<CategoryResponseDto> findAllCategoryNoPageDetails(String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        return categoryRepository.findAllByNameCategory(search);
+    }
+
+    @Transactional
     public Page<ProductResponseDto> findAllProductbyCategory(Integer id, int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",

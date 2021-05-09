@@ -10,12 +10,17 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
 public interface CategoryRepository extends JpaRepository<Category, Long> {
     @Query(value = "SELECT * FROM category b WHERE LOWER(b.name) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
     Page<CategoryResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
+
+    @Query(value = "SELECT * FROM category b WHERE LOWER(b.name) LIKE %:keyword% AND b.is_deleted = FALSE", nativeQuery = true)
+    List<CategoryResponseDto> findAllByNameCategory(@Param("keyword") String keyword);
+
 
     Category findByName(String name);
 

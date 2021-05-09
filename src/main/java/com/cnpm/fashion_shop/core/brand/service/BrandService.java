@@ -45,6 +45,18 @@ public class BrandService {
     }
 
     @Transactional
+    public List<BrandResponseDto> findAllBrandDetailNoPage(String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        return brandRepository.findAllByNameBrand(search);
+    }
+
+    @Transactional
     public Page<ProductResponseDto> findAllProductbyBrand(Integer id,int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
                 "id",

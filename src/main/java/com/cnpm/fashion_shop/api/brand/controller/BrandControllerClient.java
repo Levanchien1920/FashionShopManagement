@@ -1,6 +1,7 @@
 package com.cnpm.fashion_shop.api.brand.controller;
 
 import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
+import com.cnpm.fashion_shop.api.category.dto.CategoryResponseDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/client/brand")
@@ -47,4 +50,13 @@ public class BrandControllerClient {
         return brandService.getOne(id);
     }
 
+    @ApiOperation(value = "Get all brand")
+    @GetMapping("/all")
+    public List<BrandResponseDto> getBrandWithoutPage(RequestParamsForGettingList requestParamsForGettingList) {
+        List<BrandResponseDto> data = brandService.findAllBrandDetailNoPage(
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return data;
+    }
 }

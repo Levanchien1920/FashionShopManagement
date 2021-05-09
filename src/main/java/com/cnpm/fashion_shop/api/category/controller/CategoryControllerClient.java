@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/v1/client/category")
 public class CategoryControllerClient {
@@ -46,5 +48,15 @@ public class CategoryControllerClient {
     @GetMapping("/{category_id}")
     public ResponseEntity getOneCategory(@PathVariable("category_id") Integer id) {
         return categoryService.getOne(id);
+    }
+
+    @ApiOperation(value = "Get all category")
+    @GetMapping("/all")
+    public List<CategoryResponseDto> getCategoryWithoutPage(RequestParamsForGettingList requestParamsForGettingList) {
+        List<CategoryResponseDto> data = categoryService.findAllCategoryNoPageDetails(
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return data;
     }
 }
