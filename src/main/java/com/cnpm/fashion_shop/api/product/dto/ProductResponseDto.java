@@ -25,5 +25,7 @@ public interface ProductResponseDto {
 
     String getlink();
 
+    Float getNumberOfStar();
+
 
 }

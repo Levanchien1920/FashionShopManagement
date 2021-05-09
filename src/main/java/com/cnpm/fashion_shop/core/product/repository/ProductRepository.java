@@ -17,14 +17,15 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {//phai tao repository cho moi Entity==>sai ngu mat thoi gian
 
-    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color \n" +
-            "FROM ((((( product\n" +
+    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color, review.number_of_star as NumberOfStar \n" +
+            "FROM (((((( product\n" +
             "INNER JOIN brand ON product.id_brand = brand.id) \n" +
             "INNER JOIN category ON product.id_cate = category.id)\n" +
             "INNER JOIN image ON product.id_image = image.id) \n" +
             "INNER JOIN gender ON product.id_gender = gender.id)  \n" +
             "INNER JOIN color ON product.id_color = color.id)  \n" +
-            "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false AND image.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND color.is_deleted = false ", nativeQuery = true)
+            "LEFT JOIN review ON review.id_product = product.id)  \n" +
+            "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false AND image.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND color.is_deleted = false", nativeQuery = true)
     Page<ProductResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
 
     @Query(value = "SELECT * FROM product p WHERE p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)

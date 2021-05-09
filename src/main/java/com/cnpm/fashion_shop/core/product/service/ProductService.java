@@ -1,7 +1,6 @@
 package com.cnpm.fashion_shop.core.product.service;
 
 import com.cnpm.fashion_shop.api.color.dto.ColorDto;
-import com.cnpm.fashion_shop.api.post.dto.PostDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductColor;
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductDtoGetOne;
@@ -12,9 +11,17 @@ import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
 import com.cnpm.fashion_shop.core.category.repository.CategoryRepository;
 import com.cnpm.fashion_shop.core.image.repository.ImageRepository;
-import com.cnpm.fashion_shop.core.product.repository.*;
+import com.cnpm.fashion_shop.core.product.repository.ColorProductRepository;
+import com.cnpm.fashion_shop.core.product.repository.GenderRepository;
+import com.cnpm.fashion_shop.core.product.repository.ProductRepository;
 import com.cnpm.fashion_shop.core.review.repository.ReviewRepository;
-import com.cnpm.fashion_shop.entity.*;
+import com.cnpm.fashion_shop.entity.Brand;
+import com.cnpm.fashion_shop.entity.Category;
+import com.cnpm.fashion_shop.entity.Color;
+import com.cnpm.fashion_shop.entity.Gender;
+import com.cnpm.fashion_shop.entity.Image;
+import com.cnpm.fashion_shop.entity.Product;
+import com.cnpm.fashion_shop.entity.Review;
 import com.cnpm.fashion_shop.util.filterUtil.Implements.OrderFilterHelperImpl;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
@@ -70,6 +77,7 @@ public class ProductService {
                 "Name_Category",
                 "Name_Gender",
                 "Name_Image",
+                "numberOfStar",
                 "link",
                 "color"
         );
