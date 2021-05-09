@@ -3,6 +3,7 @@ package com.cnpm.fashion_shop.api.invoice.controller;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
+import com.cnpm.fashion_shop.api.invoice.dto.Invoice_Dto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
@@ -16,6 +17,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/invoice")
@@ -33,6 +35,27 @@ public class InvoiceController {
 
         return new PaginationResponse<>(data);
     }
+
+    @ApiOperation(value = "Get all invoices with id and status", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/ByCustomer/status")
+    public PaginationResponse<Invoice_Dto> getInvoiceStatusByCustomer(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<Invoice_Dto> data = invoiceService.findAllInvoiceIdAndStatusByCustomer(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
+
+    @ApiOperation(value = "Get all invoices", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/ByCustomer/all")
+    public List<InvoiceCustomerResponseDto> getInvoiceByCustomerWithoutPage(RequestParamsForGettingList requestParamsForGettingList) {
+        List<InvoiceCustomerResponseDto> data = invoiceService.findAllInvoiceDetailsByCustomer(
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return data;
+    }
     @GetMapping("/ByEmployee")
     public PaginationResponse<InvoiceEmployeeResponseDto> getInvoiceByEmployee(RequestParamsForGettingList requestParamsForGettingList) {
         Page<InvoiceEmployeeResponseDto> data = invoiceService.findAllInvoiceDetailsByEmployee(requestParamsForGettingList.getPage(),
@@ -41,6 +64,15 @@ public class InvoiceController {
                 requestParamsForGettingList.getSearch());
 
         return new PaginationResponse<>(data);
+    }
+
+    @GetMapping("/ByEmployee/all")
+    public List<InvoiceEmployeeResponseDto> getInvoiceByEmployeeWithoutPage(RequestParamsForGettingList requestParamsForGettingList) {
+        List<InvoiceEmployeeResponseDto> data = invoiceService.findAllInvoiceDetailsByEmployee(
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return data;
     }
 
 

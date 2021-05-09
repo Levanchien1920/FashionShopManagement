@@ -3,6 +3,7 @@ package com.cnpm.fashion_shop.core.invoice.service;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
+import com.cnpm.fashion_shop.api.invoice.dto.Invoice_Dto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.invoice.repository.DetailRepository;
@@ -59,6 +60,22 @@ public class InvoiceService {
         return invoiceRepository.findAllByIdCustomer(pageable, search);
     }
 
+    public List<InvoiceCustomerResponseDto> findAllInvoiceDetailsByCustomer(String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "total_money",
+                "name_customer",
+                "is_paid",
+                "name_product",
+                "price",
+                "number_product"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        return invoiceRepository.findAllByIdCustomerWithoutDividingPage(search);
+    }
+
     @Transactional
     public Page<InvoiceEmployeeResponseDto> findAllInvoiceDetailsByEmployee(int size, int page, String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
@@ -74,6 +91,35 @@ public class InvoiceService {
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return invoiceRepository.findAllByIdEmployee(pageable, search);
+    }
+
+    @Transactional
+    public List<InvoiceEmployeeResponseDto> findAllInvoiceDetailsByEmployee(String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "total_money",
+                "fullName_Employee",
+                "is_paid",
+                "name_product",
+                "number_product"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        return invoiceRepository.findAllByIdEmployeeWithoutDividingPage(search);
+    }
+
+    @Transactional
+    public Page<Invoice_Dto> findAllInvoiceIdAndStatusByCustomer(int size, int page, String sort, String id) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "is_paid"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return invoiceRepository.findAllStatusByIdCustomer(pageable, id);
     }
 
     @Transactional

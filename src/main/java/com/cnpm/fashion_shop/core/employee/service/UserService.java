@@ -1,5 +1,6 @@
 package com.cnpm.fashion_shop.core.employee.service;
 
+import com.cnpm.fashion_shop.api.user.dto.CustomerDto;
 import com.cnpm.fashion_shop.api.user.dto.UserDetailDto;
 import com.cnpm.fashion_shop.api.user.dto.UserDto;
 import com.cnpm.fashion_shop.api.user.dto.UserResponseDto;
@@ -134,7 +135,7 @@ public class UserService {
     public ResponseEntity<Response> createUser(UserDto dto) {
         User user;
         User existingUser = userRepository.findByUsername(StringUtils.trim(dto.getUsername()));
-        if (StringUtils.trim(dto.getFullname()).equals("")) {
+        if (StringUtils.trim(dto.getFullName()).equals("")) {
             return ResponseEntity
                     .badRequest()
                     .body(Response.badRequest("User name cannot be empty or contain only space"));
@@ -164,7 +165,7 @@ public class UserService {
         user = new User();
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setUsername(dto.getUsername());
-        user.setFullName(dto.getFullname().trim());
+        user.setFullName(dto.getFullName().trim());
         user.setAddress(dto.getAddress());
         user.setPhone_number(dto.getPhoneNumber());
         user.setEmail(dto.getEmail());
@@ -192,7 +193,7 @@ public class UserService {
     }
 
     @Transactional
-    public ResponseEntity<Response> updateUser(Integer id, UserDto dto) {
+    public ResponseEntity<Response> updateUser(Integer id, CustomerDto dto) {
         Optional<User> userOpt = userRepository.findById(id);
         User user;
         User existingUser = userRepository.findByUsername(StringUtils.trim(dto.getUsername()));
@@ -212,7 +213,7 @@ public class UserService {
         // Compare old and new name
         if (userOpt.get().getUsername().equals(StringUtils.trim(dto.getUsername()))) {
             user = userOpt.get();
-            user.setFullName(dto.getFullname().trim());
+            user.setFullName(dto.getFullName().trim());
             user.setPassword(encoder.encode(dto.getPassword()));
             user.setAddress(dto.getAddress());
             user.setEmail(dto.getEmail());
@@ -229,7 +230,7 @@ public class UserService {
 
         user = userOpt.get();
         user.setUsername(dto.getUsername());
-        user.setFullName(dto.getFullname().trim());
+        user.setFullName(dto.getFullName().trim());
         user.setPassword(encoder.encode(dto.getPassword()));
         user.setAddress(dto.getAddress());
         user.setEmail(dto.getEmail());

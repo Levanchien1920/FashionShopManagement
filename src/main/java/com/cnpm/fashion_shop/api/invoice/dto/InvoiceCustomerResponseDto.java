@@ -1,7 +1,5 @@
 package com.cnpm.fashion_shop.api.invoice.dto;
 
-import java.math.BigInteger;
-
 public interface InvoiceCustomerResponseDto {
     Integer getId();
 

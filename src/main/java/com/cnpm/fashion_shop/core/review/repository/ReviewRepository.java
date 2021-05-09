@@ -36,6 +36,6 @@ public interface ReviewRepository extends JpaRepository<Review, Long> {
             "WHERE LOWER(r.content) LIKE %:keyword% AND r.is_deleted = FALSE and r.number_of_star >=4", nativeQuery = true)
     Page<ReviewResponseDto> findAllGoodReview(Pageable pageable, @Param("keyword") String keyword);
 
-    @Query(value= "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product FROM review r inner join product p on r.id_product=p.id WHERE p.id = :id and r.is_deleted = FALSE", nativeQuery = true)
+    @Query(value= "SELECT r.id,r.content,r.number_of_star AS Number_Of_Star,p.name AS Name_Product FROM review r WHERE r.id_product = :id and r.is_deleted = FALSE", nativeQuery = true)
     Page<ReviewResponseDto> findAllReviewByIdProduct(Pageable pageable, @Param("id") Integer id);
 }

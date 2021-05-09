@@ -7,14 +7,12 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-import java.util.ArrayList;
-import java.util.List;
 
 @AllArgsConstructor
 @Getter
 @Setter
 @NoArgsConstructor
-public class UserDto {
+public class CustomerDto {
     private Integer id;
 
     @NotNull
@@ -41,21 +39,4 @@ public class UserDto {
     @Setter
     @NotNull
     private String email;
-
-    private Integer id_role;
-
-    List<RoleDto> roles = new ArrayList<>();
-    List<String> role = new ArrayList<>();
-
-
-    public UserDto(int id, String fullName, String phone_number, String username, String address, String password,String email, int id_role) {
-        this.id = id;
-        this.username = username;
-        this.fullName = fullName;
-        this.address = address;
-        this.password = password;
-        this.phoneNumber = phone_number;
-        this.email = email;
-        this.id_role = id_role;
-    }
 }

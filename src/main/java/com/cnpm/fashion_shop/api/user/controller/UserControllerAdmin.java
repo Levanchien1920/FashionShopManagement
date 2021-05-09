@@ -1,5 +1,6 @@
 package com.cnpm.fashion_shop.api.user.controller;
 
+import com.cnpm.fashion_shop.api.user.dto.CustomerDto;
 import com.cnpm.fashion_shop.api.user.dto.UserDto;
 import com.cnpm.fashion_shop.api.user.dto.UserResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
@@ -66,7 +67,7 @@ public class UserControllerAdmin {
     @PatchMapping("/{id}")
     public ResponseEntity<Response> updateEmployee(
             @PathVariable("id") Integer id,
-            @Valid @RequestBody UserDto dto
+            @Valid @RequestBody CustomerDto dto
     ) {
         return this.userService.updateUser(id, dto);
     }
