@@ -84,7 +84,7 @@ const Register = () => {
           return {...prev, retypepassword: 'Please add a retype password'};
         });
       }
-      if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber) && (form.password== form.response) ) {
+      if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber) ) {
           const register= {
             "username": form.username,
             "password": form.password,
@@ -97,8 +97,8 @@ const Register = () => {
     
         axiosInstance.post("/client/user", register).then((response)=> {
           navigate('LogIn');
-          
       }).catch((error) =>{
+        console.log("aaaaaaaaaaaaaa");
           console.log("fail");
           navigate('Register');
       });

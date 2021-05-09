@@ -17,7 +17,6 @@ export default StyleSheet.create({
     alignItems:'center',
 
   },
-    
     inputContainer: {
       backgroundColor: '#fff',
       flexDirection: 'row',
@@ -48,7 +47,6 @@ export default StyleSheet.create({
    },
    btn1 : {
     marginLeft: 20,
- 
    },
    btn2 : {
     marginLeft:10,
@@ -67,6 +65,7 @@ export default StyleSheet.create({
       marginTop:'5%',
       padding:wp('10%'),
       backgroundColor: 'gray',
+      height:'80%'
     },
     linkBtn : {
       borderWidth:0.3,
@@ -85,34 +84,29 @@ export default StyleSheet.create({
       height: 130,
       borderRadius: 4,
     },
-    //
     filterContainer: {
       flexDirection: 'row',
       marginTop: 10,
     },
-    filterActiveButtonContainer: {
-      backgroundColor: '#242424',
-      paddingHorizontal: 12,
-      paddingVertical: 6,
-      borderRadius: 4,
-      marginRight: 10,
-    },
-  
+   
     listItemContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
       maxWidth:800,
       width:'100%'
     },
+
     itemContainer: {
       width: 100,
       marginRight: 12,
       marginTop: 10,
     },
+
     itemImage: {
       width: 100,
       height: 120,
     },
+
     text: {
       fontSize: 14,
       color: 'red',
@@ -124,7 +118,7 @@ export default StyleSheet.create({
       backgroundColor: 'white',
       textAlign:'center',
     },
-    //
+  
     seeMoreContainer: {
       marginTop: 10,
       padding: 12,
@@ -132,8 +126,4 @@ export default StyleSheet.create({
       borderTopColor: '#ededed',
       alignItems: 'center',
     },
-    seeMoreText: {
-      color: '#0e45b4',
-    },
-     
 })

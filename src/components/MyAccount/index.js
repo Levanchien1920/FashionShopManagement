@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native';
+import { StyleSheet, Text, View,TextInput, TouchableOpacity ,Button} from 'react-native';
 import {useNavigation } from '@react-navigation/native';
 import ComponentHeader from '../ComponentHeader';
 import axiosInstance from '../../helper/axiosInstance';
@@ -18,41 +18,67 @@ const MyAccountComponent = () => {
     })
    
     useEffect(() => {   
-
-       
-      
-        axiosInstance.get(`/client/user/${ AsyncStorage.getItem('id', (err, result) => {
-            return result
-          })}`,
+     
+      AsyncStorage.getItem('token')
+      .then((res) => {
+          AsyncStorage.getItem('id')
+          .then((value) => {
+            axiosInstance.get(`/client/user/${value}`,
             {
             headers: {
-              'Authorization': `Bearer ${ AsyncStorage.getItem('token', (err, result) => {
-                return result
-              })}`
+                  
+              'Authorization': `Bearer ${res}`
             } 
             }).then((response)=> {
                 setaccount(response.data);
             }).catch((error) =>{
             });
+          })
+
+      })
     }, [])
     return (
         <View>
-                  <View style={{marginTop:'20%'}}></View>
+                  <View style={{marginTop:'20%'}}>
+                    <Text style= {{fontSize:30,color:'red',textAlign:'center'}}>Thông tin cá nhân</Text>
+                  </View>
+                  <View style={{marginTop:'30%',marginLeft:'30%',marginRight:'30%'}}> 
 
-                  <ComponentHeader />
-                  <View>    
-                                   <Text>Name : {account.fullname}</Text>
-                                    <Text>UserName : {account.username}</Text>
-                                    <Text>Email : {account.email}</Text>
-                                    <Text>Mobile: {account.phoneNumber}</Text>
-                                    <Text>Address : {account.address}</Text>
-                                    <TouchableOpacity onPress={() => navigate("UpdateAccount")}><Text>Update profile</Text></TouchableOpacity>
+                               <View style= {{flexDirection:'row'}}>
+                                    <Text style= {{color:'blue',fontSize:16}}>Full name:</Text> 
+                                    <Text>{account.fullName}</Text>
+                              </View>
+
+                              <View style= {{flexDirection:'row'}}>
+                                    <Text style= {{color:'blue',fontSize:16}}>User name:</Text> 
+                                    <Text>{account.username}</Text>
+                              </View>
+                              <View style= {{flexDirection:'row'}}>
+                                <Text style= {{color:'blue',fontSize:16}} >Email:</Text> 
+                                <Text>{account.email}</Text>
+                              </View>
+
+                              <View style= {{flexDirection:'row'}}>
+                                <Text style= {{color:'blue',fontSize:16}} >Phone number:</Text> 
+                                <Text>{account.phoneNumber}</Text>
+                              </View>
+
+                              <View style= {{flexDirection:'row'}}>
+                                <Text style= {{color:'blue',fontSize:16}} >Address:</Text> 
+                                <Text>{account.address}</Text>
+                              </View>
+                  </View>
+                  <View style={{margin:'20%'}}>
+                  <Button title="Update account" onPress={() => navigate("UpdateAccount")}></Button>
+                  </View>
+                  <View>
+                  <TouchableOpacity onPress={() => navigate("Home")}>
+
+                    <Text style= {{fontSize:20,color:'red'}}>Trở về trang chủ</Text>
+                  </TouchableOpacity>
                   </View>
 
         </View>
- 
-
-
     );
 }
 

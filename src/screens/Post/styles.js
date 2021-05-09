@@ -42,14 +42,13 @@ export default StyleSheet.create({
       right:10,
     },
 
-    createSection : {
-      flexDirection:'row',
-   },
+  
 
     bodyContainer: {
-      marginTop:'25%',
-      // padding:wp('10%'),
-      backgroundColor: 'gray',
+      marginTop:'5%',
+      // padding:wp('5%'),
+      backgroundColor: 'pink',
+      height:'80%'
     },
     linkBtn : {
       borderWidth:0.3,
@@ -118,5 +117,25 @@ export default StyleSheet.create({
     seeMoreText: {
       color: '#0e45b4',
     },
+    createSection : {
+      flexDirection:'row',
+      marginTop: 5
+   },
+   btn1 : {
+    marginLeft: 20,
+ 
+   },
+   btn2 : {
+    marginLeft:10,
+  },
+  btn3 : {
+    marginLeft:10,
+  },
+  btn4 : {
+    marginLeft:10,
+  },
+  btn5 : {
+    marginLeft:10,
+  },
      
 })

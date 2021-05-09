@@ -3,14 +3,15 @@ import React, { useState ,useEffect, useContext} from 'react';
 import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,ScrollView ,Dimensions,FlatList,Button} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
-import ComponentHeader from '../ComponentHeader/index';
 import RNPickerSelect from "react-native-picker-select";
 import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
 import {GlobalContext} from '../../context/Provider';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Input from '../common/Input';
 
 const ProductComponent = () => {
+  const [searchInput, setSearchInput] = React.useState('');
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
   const [listProduct , setlistProduct] = useState([]);
   const [listCategory, setlistCategory] = useState([]);
@@ -18,6 +19,7 @@ const ProductComponent = () => {
   const [filter , setfilter] = useState({
       check  : 0, 
       id  : 0,
+      search : "",
   });
 
 
@@ -40,6 +42,14 @@ const ProductComponent = () => {
             }).catch((error) =>{
             });
         }
+
+        if (filter.check === 3) {
+          axiosInstance.get(`client/product?search=${searchInput}`).then((response)=> {
+              setlistProduct(response.data.content);
+              console.log(response.data.content)
+          }).catch((error) =>{
+          });
+        }
 }, [filter]);
 
 
@@ -53,6 +63,11 @@ useEffect(() => {
   }).catch((error) =>{
   });
 }, []);
+function search(c) {
+  setfilter({
+      ...filter, check : c , search : searchInput
+  });
+}
 
 const {navigate} =useNavigation();
 
@@ -93,29 +108,62 @@ switch (c) {
                                 </View>
                         </View>
 
-                       <View  style = {styles.createSection}>
-                                <Button title= "Home" onPress= {() => {navigate('Home')}}>
+                        <View  style = {styles.createSection}>
+                              <View style = {styles.btn1}>   
+                                      <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
+                                </View>
+                                <View style = {styles.btn2}>
+                                      <Button  title= "Product" onPress= {() => {navigate('Products')}}>
+                                      </Button>
+                                </View>
+                                  <View style = {styles.btn3}> 
+                                  <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
+                                  </Button>
+                                  </View> 
+                                  <View style = {styles.btn4} >
+                                  <Button  title= "Post" onPress= {() => {navigate('Post')}}>
                                 </Button>
-                                <Button title= "Product" onPress= {() => {navigate('Products')}}></Button>
-                                <Button  title= "Contact" onPress= {() => {navigate('Contact')}}></Button>
-                                <Button  title= "Post" onPress= {() => {navigate('Post')}}></Button>
-                                <Button title= "Cart" onPress= {() => {navigate('Cart')}}>
-              
-                                </Button>
-                       </View>
+                                  </View>
+                                  <View style = {styles.btn5}>
+                                  <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
+                                        </Button>
+                                  </View>
+                      </View>
               </View>      
               
  <View style={styles.bodyContainer}>
-    <ScrollView horizontal={true} >
-
         <View>
 
-        <View style={styles.container} >
+          <View style= {{flexDirection:'row'}}>
+            <View style= {{width:"70%"}}>
+            <TextInput
+                style={{ 
+                    height: 40, 
+                    borderColor: 'white', 
+                    borderWidth: 1,
+                }}
+                onChangeText={text => setSearchInput(text)}
+                placeholder="Search"
+                />
+            </View>
+         
+            <Button title="Search"  onPress= {()=> {
+               setfilter({
+                ...filter, check : 3 , search : searchInput
+            });
+            }}>
+
+            </Button>
+
+            
+
+          </View>
+       
           <View>
-            <Text>Sorting</Text>
             <RNPickerSelect 
              placeholder={{
               value: 3,
+              label:"select"
             }}
               items={[
                { label: "Name (A-Z)", value: 3 },
@@ -128,9 +176,16 @@ switch (c) {
                         }
                }
             />
+        </View>
+
 
         </View>
-        </View>
+        
+    <ScrollView horizontal={true} style= {{marginTop:30}} >
+
+        <View>
+
+       
         <View style={styles.listItemContainer}>
               {listProduct.map((product,index) => (
                 <View key={index}>
@@ -163,10 +218,7 @@ switch (c) {
                   </View>
 
             </View>
-     </ScrollView>
-          <View style={styles.seeMoreContainer}>
-               <Text style={styles.seeMoreText}>Welcome </Text>
-           </View>
+  </ScrollView>
       </View>
 </View>
     );

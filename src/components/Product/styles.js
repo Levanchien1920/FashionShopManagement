@@ -15,7 +15,6 @@ export default StyleSheet.create({
     position:'relative',
     display:'flex',
     alignItems:'center',
-
   },
     
     inputContainer: {
@@ -42,12 +41,30 @@ export default StyleSheet.create({
       right:10,
     },
 
-    createSection : {
-      flexDirection:'row',
-   },
-    //
+   
+   createSection : {
+    flexDirection:'row',
+    marginTop: 5
+ },
+      btn1 : {
+        marginLeft: 20,
+
+      },
+      btn2 : {
+        marginLeft:10,
+      },
+      btn3 : {
+        marginLeft:10,
+      },
+      btn4 : {
+        marginLeft:10,
+      },
+      btn5 : {
+        marginLeft:10,
+      },
+    
     bodyContainer: {
-      marginTop:'30%',
+      marginTop:'5%',
       padding:wp('10%'),
       backgroundColor: 'gray',
     },
@@ -63,24 +80,7 @@ export default StyleSheet.create({
       paddingHorizontal: 12,
     },
    
-    sectionImage: {
-      width: 500,
-      height: 130,
-      borderRadius: 4,
-    },
-    //
-    filterContainer: {
-      flexDirection: 'row',
-      marginTop: 10,
-    },
-    filterActiveButtonContainer: {
-      backgroundColor: '#242424',
-      paddingHorizontal: 12,
-      paddingVertical: 6,
-      borderRadius: 4,
-      marginRight: 10,
-    },
-  
+
     listItemContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -107,7 +107,7 @@ export default StyleSheet.create({
       backgroundColor: 'white',
       textAlign:'center',
     },
-    //
+  
     seeMoreContainer: {
       marginTop: 10,
       padding: 12,
@@ -115,9 +115,7 @@ export default StyleSheet.create({
       borderTopColor: '#ededed',
       alignItems: 'center',
     },
-    seeMoreText: {
-      color: '#0e45b4',
-    },
+   
     linkBtn : {
       borderWidth:0.3,
       paddingRight: 30,

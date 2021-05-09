@@ -11,6 +11,11 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const UpdateAccountComponent = ({
     onSubmit,
     onChange,
+    form,
+    loading,
+    error,
+    errors,
+
   }) => {
     const {navigate} =useNavigation();
 
@@ -23,24 +28,29 @@ const UpdateAccountComponent = ({
         "email": "",
         "phoneNumber": "",
 })
-console.log("idL");
 
 AsyncStorage.getItem('id')
 .then((value) => {
   const data = JSON.parse(value);
-  console.log('name is ', data.name);
+  console.log("data"+data);
 });
 
 useEffect(() => {   
-    axiosInstance.get(`/client/user/${localStorage.getItem("id")}`,
-        {
-        headers: {
-          'Authorization': `Bearer ${localStorage.getItem("token")}`
-        } 
-        }).then((response)=> {
-            setaccount(response.data);
-        }).catch((error) =>{
-        });
+    AsyncStorage.getItem('token')
+        .then((res) => {
+            AsyncStorage.getItem('id')
+            .then((value) => {
+              axiosInstance.get(`/client/user/${value}`,
+              {
+              headers: {
+                'Authorization': `Bearer ${res}`
+              } 
+              }).then((response)=> {
+                  setaccount(response.data);
+              }).catch((error) =>{
+              });
+            })
+        })
 }, [])
 
     return (
@@ -49,40 +59,36 @@ useEffect(() => {
                 <Text style={styles.title}>Update Account </Text>
                 <Text style={styles.subTitle}>---------------</Text>
             </View>
-
          <View style= {styles.form}>
-
          <Input
             lable="Fullname"
             iconPosition= "left"
-            placeholder="Enter full name"
-            value={account.fullname}
-            onChangeText= {(value) =>  {
+            placeholder={account.fullName}
+            onChangeText= {(value) =>  { 
                 onChange({name:"fullname",value});
             }}
-      
+            error={errors.fullname}
+            
            />  
-
-      
             <Input
             lable="Email"
-            placeholder="Enter email"
+            placeholder={account.email}
             iconPosition= "left"
-            value={account.email}
             onChangeText= {(value) =>  {
                 onChange({name:"email",value});
             }}
+            error={errors.email}
             
            />
 
             <Input
             lable="Address"
-            placeholder="Enter address"
+            placeholder={account.address}
             iconPosition= "left"
-            value={account.address}
             onChangeText= {(value) =>  {
                 onChange({name:"address",value});
             }}
+            error={errors.address}
             
            />
 
@@ -90,21 +96,23 @@ useEffect(() => {
              <Input
             lable="PhoneNumber"
             iconPosition= "left"
-            placeholder="Enter PhoneNumber"
-            value={account.phoneNumber}
+            placeholder={account.phoneNumber}
+            // value={account.phoneNumber}
             onChangeText= {(value) =>  {
                 onChange({name:"phonenumber",value});
             }}
+            error={errors.phonenumber}
          
            />
            <Input
             lable="Username"
-            placeholder="Enter username"
+            placeholder={account.username}
             iconPosition= "left"
-            value={account.usename}
+            // value={account.usename}
             onChangeText= {(value) =>  {
                 onChange({name:"username",value});
             }}
+            error={errors.username}
           
 
             
@@ -114,11 +122,12 @@ useEffect(() => {
             lable="Password"
             iconPosition= "left"
             secureTextEntry={true}
-            value={account.password}
+            // value={account.password}
             placeholder="Enter password"
             onChangeText= {(value) =>  {
                 onChange({name:"password",value});
             }}
+            error={errors.password}
            />  
            
            

@@ -44,7 +44,24 @@ export default StyleSheet.create({
 
     createSection : {
       flexDirection:'row',
+      marginTop: 5
    },
+   btn1 : {
+    marginLeft: 20,
+ 
+   },
+   btn2 : {
+    marginLeft:10,
+  },
+  btn3 : {
+    marginLeft:10,
+  },
+  btn4 : {
+    marginLeft:10,
+  },
+  btn5 : {
+    marginLeft:10,
+  },
 
     bodyContainer: {
       marginTop:'25%',

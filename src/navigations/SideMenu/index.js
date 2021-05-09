@@ -26,14 +26,9 @@ const SideMenu = ({navigation}) => {
     authState: {error, loading},
   } = useContext(GlobalContext);
 
-  console.log('isloggedin:=>' ,isLoggedIn);
+  console.log('isloggedinIn:=>' ,isLoggedIn);
 
-    return ( (!isLoggedIn || !(
-      AsyncStorage.getItem('token', (err, result) => {
-       if(result) return true
-       return false
-     }))
-      ) ?( 
+    return (((!isLoggedIn) || fullName==null) ?( 
        <SafeAreaView>
                   <Image
                 source={require('../../assets/images/shoppinga.jpg')}
@@ -46,7 +41,6 @@ const SideMenu = ({navigation}) => {
                         </View>
                         
                         <View style={styles.btn}>
-                          
                               <Button title="Register" onPress= {() => navigation.navigate('Register')}>
                               </Button>
                         </View>

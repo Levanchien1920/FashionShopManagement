@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { ScrollView, StyleSheet, Text, View,TextInput } from 'react-native';
+import { Text, View,TextInput } from 'react-native';
 import styles from './styles';
 
 const Input = ({onChangeText,style,value,lable,error,...props}) => {

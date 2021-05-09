@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../helper/axiosInstance';
-import { ScrollView, StyleSheet, TouchableOpacity,Text, View,TextInput,Button } from 'react-native';
+import { ScrollView,  TouchableOpacity,Text, View,TextInput,Button } from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -16,54 +16,70 @@ const Post = () => {
     const {navigate} =useNavigation();
     return (
       <View>
-            <View>
-                        <View style={styles.headerContainer}>
-                                <View style={styles.inputContainer}>
-                                    <FontAwesome name="search" size={24} color="#969696" />
-                                    <TextInput style={styles.inputText} />
-                                </View>
-                                <View style={styles.cartContainer}>
-                                      <FontAwesome name="shopping-cart" size={24} color="#fff" />
-                                </View>
-                        </View>
-
-                       <View  style = {styles.createSection}>
-                                <Button title= "Home" onPress= {() => {navigate('Home')}}>
-                                </Button>
-                                <Button title= "Product" onPress= {() => {navigate('Products')}}></Button>
-                                <Button  title= "Contact" onPress= {() => {navigate('Contact')}}></Button>
-                                <Button  title= "Post" onPress= {() => {navigate('Post')}}></Button>
-                                <Button title= "Cart" onPress= {() => {navigate('Cart')}}>
-              
-                                </Button>
-                       </View>
+             <View>
+              <View style={styles.headerContainer}>
+                      <View style={styles.inputContainer}>
+                          <FontAwesome name="search" size={24} color="#969696" />
+                          <TextInput style={styles.inputText} />
+                      </View>
+                      <View style={styles.cartContainer}>
+                            <FontAwesome name="shopping-cart" size={24} color="#fff" />
+                      </View>
               </View>
+
+              <View  style = {styles.createSection}>
+                <View style = {styles.btn1}>   
+                        <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
+                   </View>
+                   <View style = {styles.btn2}>
+                        <Button  title= "Product" onPress= {() => {navigate('Products')}}>
+                        </Button>
+                   </View>
+                        
+                    <View style = {styles.btn3}> 
+                    <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
+                    </Button>
+                    </View> 
+
+                    <View style = {styles.btn4} >
+                    <Button  title= "Post" onPress= {() => {navigate('Post')}}>
+                   </Button>
+                    </View>
+                    <View style = {styles.btn5}>
+                    <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
+                           </Button>
+                    </View>
+              </View>
+           </View>
           
 
-              
-    
-      
-
-      <View style={styles.bodyContainer}>
-            <View >
-              <View style={styles.listItemContainer}>
+      <ScrollView style={styles.bodyContainer}>
+            <View>
+              <ScrollView style={styles.listItemContainer}>
                 {post.map((p) => (
-                  <View key={p.id}> 
-                      <Text>name:{p.name}</Text> 
-                      <Text>content:{p.content}</Text> 
+                  <View key={p.id} style= {{borderColor:'yellow',borderBottomWidth:1,margin:8,width:350}}> 
+                      <View>
+                            <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:</Text> 
+                            <Text>{p.name}</Text>
+                      </View>
+                      <View style={{}}>
+                         <Text style= {{color:'blue',fontSize:16}} >Nội dung:</Text> 
+                         <Text>{p.content}</Text>
+                      </View>
+                      
                   <TouchableOpacity onPress= {() => {navigate('PostDetail', {
                     id: p.id ,
                     })}}>
-                    <Text >Chi tiết</Text>
+                    <Text style= {{color:'red',fontSize:16,padding:5,left:250}}>Xem chi tiết</Text>
                 </TouchableOpacity>
+                    <View style= {{paddingTop:20}}></View>
                   </View>
+                  
                 ))}
-              </View>
+              </ScrollView>
             </View>
-            <View style={styles.seeMoreContainer}>
-              <Text style={styles.seeMoreText}>Welcome to app_shopping </Text>
-     </View>
-   </View> 
+        
+   </ScrollView> 
      
      </View>
 

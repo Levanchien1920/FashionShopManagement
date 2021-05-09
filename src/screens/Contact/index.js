@@ -20,16 +20,29 @@ const Contact = () => {
                                 </View>
                         </View>
 
-                       <View  style = {styles.createSection}>
-                                <Button title= "Home" onPress= {() => {navigate('Home')}}>
-                                </Button>
-                                <Button title= "Product" onPress= {() => {navigate('Products')}}></Button>
-                                <Button  title= "Contact" onPress= {() => {navigate('Contact')}}></Button>
-                                <Button  title= "Post" onPress= {() => {navigate('Post')}}></Button>
-                                <Button title= "Cart" onPress= {() => {navigate('Cart')}}>
-              
-                                </Button>
-                       </View>
+                        <View  style = {styles.createSection}>
+                <View style = {styles.btn1}>   
+                        <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
+                   </View>
+                   <View style = {styles.btn2}>
+                        <Button  title= "Product" onPress= {() => {navigate('Products')}}>
+                        </Button>
+                   </View>
+                        
+                    <View style = {styles.btn3}> 
+                    <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
+                    </Button>
+                    </View> 
+
+                    <View style = {styles.btn4} >
+                    <Button  title= "Post" onPress= {() => {navigate('Post')}}>
+                   </Button>
+                    </View>
+                    <View style = {styles.btn5}>
+                    <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
+                           </Button>
+                    </View>
+              </View>
               </View>
         </View>
  
