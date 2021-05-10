@@ -2,8 +2,9 @@ package com.cnpm.fashion_shop.core.invoice.service;
 
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
-import com.cnpm.fashion_shop.api.invoice.dto.Invoice_Dto;
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.invoice.repository.DetailRepository;
@@ -110,16 +111,31 @@ public class InvoiceService {
     }
 
     @Transactional
-    public Page<Invoice_Dto> findAllInvoiceIdAndStatusByCustomer(int size, int page, String sort, String id) {
+    public Page<InvoiceCustomerDto> findAllInvoiceIdAndStatusByCustomer(int size, int page, String sort, String id) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
-                "is_paid"
+                "is_paid",
+                "id_customer"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return invoiceRepository.findAllStatusByIdCustomer(pageable, id);
+    }
+
+    @Transactional
+    public Page<InvoiceEmployeeDto> findAllInvoiceIdAndStatusByEmployee(int size, int page, String sort, String id) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "is_paid",
+                "id_employee"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return invoiceRepository.findAllStatusByIdEmployee(pageable, id);
     }
 
     @Transactional

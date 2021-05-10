@@ -2,8 +2,9 @@ package com.cnpm.fashion_shop.api.invoice.controller;
 
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceEmployeeResponseDto;
-import com.cnpm.fashion_shop.api.invoice.dto.Invoice_Dto;
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
@@ -38,14 +39,26 @@ public class InvoiceController {
 
     @ApiOperation(value = "Get all invoices with id and status", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping("/ByCustomer/status")
-    public PaginationResponse<Invoice_Dto> getInvoiceStatusByCustomer(RequestParamsForGettingList requestParamsForGettingList) {
-        Page<Invoice_Dto> data = invoiceService.findAllInvoiceIdAndStatusByCustomer(requestParamsForGettingList.getPage(),
+    public PaginationResponse<InvoiceCustomerDto> getInvoiceStatusByCustomer(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<InvoiceCustomerDto> data = invoiceService.findAllInvoiceIdAndStatusByCustomer(requestParamsForGettingList.getPage(),
                 requestParamsForGettingList.getSize(),
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch());
 
         return new PaginationResponse<>(data);
     }
+
+    @ApiOperation(value = "Get all invoices with id and status", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/ByEmployee/status")
+    public PaginationResponse<InvoiceEmployeeDto> getInvoiceStatusByEmployee(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<InvoiceEmployeeDto> data = invoiceService.findAllInvoiceIdAndStatusByEmployee(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return new PaginationResponse<>(data);
+    }
+
 
     @ApiOperation(value = "Get all invoices", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping("/ByCustomer/all")
