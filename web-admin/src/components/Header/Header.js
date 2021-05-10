@@ -16,22 +16,9 @@ function Header() {
             <nav className="navbar top-navbar navbar-expand-md navbar-light">
                 <div className="navbar-header" data-logobg="skin5">
                     <div className="navbar-brand">
-                        <a href="index.html" className="logo">
-                    
-                            <b className="logo-icon">
-                                <i className="wi wi-sunset"></i>
-                            
-                                <img src="../../../assets/images/logo-icon.png" alt="homepage" className="dark-logo" />
-                            
-                                <img src="../../../assets/images/logo-light-icon.png" alt="homepage" className="light-logo" />
-                            </b>
-                            <span className="logo-text">
-                            
-                                <img src="../../../assets/images/logo-text.png" alt="homepage" className="dark-logo" />
-                        
-                                <img src="../../../assets/images/logo-light-text.png" className="light-logo" alt="homepage" />
-                            </span>
-                        </a>
+                        <Link to="/">
+                                <h1>E-STORE</h1>
+                        </Link>
                     </div>
                 </div>
                 <div className="navbar-collapse collapse" id="navbarSupportedContent" data-navbarbg="skin6">

@@ -756,6 +756,7 @@ h2 {
 .product-item .product-image {
     position: relative;
     overflow: hidden;
+    height: 350px;
 }
 
 .product-item .product-image a {

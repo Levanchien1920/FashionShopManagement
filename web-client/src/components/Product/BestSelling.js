@@ -1,7 +1,7 @@
-import axios from 'axios';
 import React , {useState , useEffect} from 'react'
 import Card from './Card'
 import Carousel from 'react-elastic-carousel';
+import Api from '../Config/Api';
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -11,7 +11,7 @@ const breakPoints = [
 function BestSelling() {
     const [listProductBL , setlistProductBL] = useState([]);
     useEffect(() => {
-             axios.get('http://localhost:9090/api/v1/client/product/best').then((response)=> {
+            Api.get('client/product/best').then((response)=> {
                 setlistProductBL(response.data.content);
             }).catch((error) =>{
             })

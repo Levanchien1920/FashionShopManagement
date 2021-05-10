@@ -12,10 +12,10 @@ function Contact() {
                             <h3><i className="fa fa-envelope"></i>EstoreOffice@gmail.com</h3>
                             <h3><i className="fa fa-phone"></i>0339905697</h3>
                             <div className="social">
-                                <a href="https://www.facebook.com/chien.le.52090008"><i classNameName="fab fa-twitter"></i></a>
-                                <a href="https://www.facebook.com/vietthanh1999"><i classNameName="fab fa-facebook-f"></i></a>
-                                <a href="https://www.facebook.com/van.hoang.99er/"><i classNameName="fab fa-linkedin-in"></i></a>
-                                <a href="https://www.facebook.com/lvc150599"><i classNameName="fab fa-instagram"></i></a>
+                                <a href="https://www.facebook.com/chien.le.52090008"><i className="fab fa-twitter"></i></a>
+                                <a href="https://www.facebook.com/vietthanh1999"><i className="fab fa-facebook-f"></i></a>
+                                <a href="https://www.facebook.com/van.hoang.99er/"><i className="fab fa-linkedin-in"></i></a>
+                                <a href="https://www.facebook.com/lvc150599"><i className="fab fa-instagram"></i></a>
                                 <a href="https://www.facebook.com/quangnhan.nguyen.771"><i className="fab fa-youtube"></i></a>
                             </div>
                         </div>

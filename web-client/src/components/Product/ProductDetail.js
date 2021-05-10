@@ -1,9 +1,11 @@
-import axios from 'axios';
 import React, { useContext, useEffect , useState } from 'react'
 import { useHistory } from 'react-router';
 import Card from './Card';
 import Carousel from 'react-elastic-carousel';
 import {LoginContext} from '../../context/LoginContext'
+import { Markup } from 'interweave';
+import Api from '../Config/Api'
+import { Link } from 'react-router-dom';
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -52,50 +54,39 @@ function ProductDetail() {
         number_of_star : 0
     })
     useEffect(() => {
-        if (filter.check === 1){
-                axios.get(`http://localhost:9090/api/v1/client/category/${filter.id}`).then((response)=> {
-                    setlistProduct(response.data.content);
-                }).catch((error) =>{
-                });
-            }
-        if (filter.check === 2){
-                axios.get(`http://localhost:9090/api/v1/client/brand/${filter.id}`).then((response)=> {
-                    setlistProduct(response.data.content);
-                }).catch((error) =>{
-                });
-            }
         if (filter.check === 0){
                 colorinsize(filter.size);
             }
     }, [filter]);
     useEffect(() => {
         const id = history.location.pathname.split("/")[2];
-        axios.get(`http://localhost:9090/api/v1/client/product/${id}`).then((response)=> {
+        Api.get(`client/product/${id}`).then((response)=> {
             setProduct(response.data);
+            console.log(response.data)
             setcolorSizeM(response.data.m);
             setcolorSizeL(response.data.l);
             setcolorSizeXL(response.data.xl);
             setcolorSizeXXL(response.data.xxl);
-            axios.get(`http://localhost:9090/api/v1/client/brand/relateProduct/${response.data.id_brand}`).then((response)=> {
+            Api.get(`client/brand/relateProduct/${response.data.id_brand}`).then((response)=> {
                 setbrandRelated(response.data.content);
             }).catch((error) =>{
             });
-            axios.get(`http://localhost:9090/api/v1/client/category/relateProduct/${response.data.id_cate}`).then((response)=> {
+            Api.get(`client/category/relateProduct/${response.data.id_cate}`).then((response)=> {
                 setcateRelated(response.data.content);
             }).catch((error) =>{
             });
         }).catch((error) =>{
         });
-        axios.get(`http://localhost:9090/api/v1/client/review/${id}`).then((response)=> {
+        Api.get(`client/review/${id}`).then((response)=> {
                 setreview(response.data.content);
             }).catch((error) =>{
             });
-        axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
-            setlistCategory(response.data.content);
+        Api.get('client/category/all').then((response)=> {
+            setlistCategory(response.data);
         }).catch((error) =>{
         });
-        axios.get('http://localhost:9090/api/v1/client/brand').then((response)=> {
-            setlistBrand(response.data.content);
+        Api.get('client/brand/all').then((response)=> {
+            setlistBrand(response.data);
         }).catch((error) =>{
         });
     }, [filter.review]);
@@ -126,7 +117,7 @@ function ProductDetail() {
     }
     function submitReview() { 
         if (Login.IsLogin === true) {
-            axios.post(`http://localhost:9090/api/v1/client/review`, OutputReview).then((response)=> {
+            Api.post(`client/review`, OutputReview).then((response)=> {
                 alert(response.data.message);
                 setfilter({...filter , review : OutputReview.content})
             }).catch((error) =>{
@@ -141,7 +132,6 @@ function ProductDetail() {
         <div className="product-detail">
             <div className="container-fluid">
                 <div className="row">
-                    { (filter.check === 0) ? (
                         <div className="col-lg-8">
                             <div className="product-detail-top">
                                 <div className="row align-items-center">
@@ -155,15 +145,15 @@ function ProductDetail() {
                                         <div className="product-content">
                                             <div className="title"><h2>{Product.name}</h2></div>
                                             <div className="ratting">
-                                                <i className={Product.number_Of_Star >=1 ?"fa fa-star": Product.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_Of_Star >=2 ?"fa fa-star": Product.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_Of_Star >=3 ?"fa fa-star": Product.number_Of_Star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_Of_Star >=4 ?"fa fa-star": Product.number_Of_Star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                <i className={Product.number_Of_Star >=5 ?"fa fa-star": Product.number_Of_Star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=1 ?"fa fa-star": Product.number_of_star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=2 ?"fa fa-star": Product.number_of_star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=3 ?"fa fa-star": Product.number_of_star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=4 ?"fa fa-star": Product.number_of_star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <i className={Product.number_of_star >=5 ?"fa fa-star": Product.number_of_star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                             </div>
                                             <div className="price">
                                                 <h4>Price:</h4>
-                                                <p>{Product.price} <span>$149</span></p>
+                                                <p>{Product.price+" "} VND</p>
                                             </div>
                                             <div className="quantity">
                                                 <h4>Quantity:</h4>
@@ -213,9 +203,7 @@ function ProductDetail() {
                                     </ul>
                                     <div className="tab-content">
                                         <div id="description" className="container tab-pane active">
-                                            <p>
-                                                {Product.des} 
-                                            </p>
+                                        <   Markup content={Product.des} />           
                                         </div>
                                     </div>
                                     <ul className="nav nav-pills nav-justified">
@@ -273,67 +261,6 @@ function ProductDetail() {
                                 </div>
                             </div>
                     </div>
-                    ):(
-                                    <div class="col-lg-8">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <div class="product-view-top">
-                                                    <div class="row">
-                                                        <div class="col-md-4">
-                                                            <div class="product-search">
-                                                                <input type="email" value="Search"></input>
-                                                                <button><i class="fa fa-search"></i></button>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="product-short">
-                                                                <div class="dropdown">
-                                                                    <button className="dropdown-toggle">Product short by</button>
-                                                                        <div className="dropdown-content">
-                                                                        </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="col-md-4">
-                                                            <div class="product-price-range">
-                                                                <div class="dropdown">
-                                                                <button className="dropdown-toggle">Product price range</button>
-                                                                    <div class="dropdown-content">
-                                                                        <button>$0 to $50</button>
-                                                                        <button>$51 to $100</button>
-                                                                        <button>$101 to $150</button>
-                                                                        <button>$151 to $200</button>
-                                                                        <button>$201 to $250</button>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            {listProduct.map((product) => (
-                                                <Card product={product}></Card>
-                                            ))} 
-                                        </div>
-                                        
-                                        <div class="col-md-12">
-                                            <nav aria-label="Page navigation example">
-                                                <ul class="pagination justify-content-center">
-                                                    <li class="page-item disabled">
-                                                        <a class="page-link" href="#" tabindex="-1">Previous</a>
-                                                    </li>
-                                                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                                    <li class="page-item">
-                                                        <a class="page-link" href="#">Next</a>
-                                                    </li>
-                                                </ul>
-                                            </nav>
-                                    </div>
-                                </div>         
-                    )}
-        
                     <div className="col-lg-4 sidebar">
                         <div className="sidebar-widget category">
                             <h2 className="title">Category</h2>
@@ -341,9 +268,15 @@ function ProductDetail() {
                                 <ul class="navbar-nav">
                                     {listCategory.map((category) => (
                                         <li class="nav-item">
-                                        <button class="nav-link" onClick={() => (setfilter({check : 1 ,id: category.id }))}>{category.name}</button>
-                                    </li>
-                                    ))} 
+                                            <Link class="nav-link"  to={{
+                                                pathname: '/products',
+                                                state: {
+                                                    check: 1, 
+                                                    id : category.id
+                                                }
+                                                }}>{category.name}</Link>
+                                            </li>
+                                        ))} 
                                 </ul>
                             </nav>
                         </div>
@@ -362,7 +295,13 @@ function ProductDetail() {
                             <ul>
                                 {listBrand.map((brand) => (
                                     <li class="nav-item">
-                                        <button class="nav-link" onClick={() => (setfilter({check : 2 ,id: brand.id }))}>{brand.name}</button>
+                                        <Link class="nav-link" to={{
+                                                pathname: '/products',
+                                                state: {
+                                                    check: 1, 
+                                                    id : brand.id
+                                                }
+                                                }}>{brand.name}</Link>
                                     </li>
                                 ))} 
                             </ul>

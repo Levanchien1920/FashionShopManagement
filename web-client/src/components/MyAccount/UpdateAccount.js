@@ -1,42 +1,48 @@
-import axios from 'axios';
 import React, { useEffect, useState , useContext } from 'react'
 import {Link} from 'react-router-dom'
 import {LoginContext} from '../../context/LoginContext'
+import Api from '../Config/Api';
+import {useHistory} from 'react-router-dom'
 export default function UpdateAccount() {
     const login = useContext(LoginContext);
     const [userUpdate , setuserUpdate] = useState({
         username: "",
         password: "",
-        fullname: "",
+        fullName: "",
         address: "",
         email: "",
-        phone_number: "",
+        phoneNumber: "",
+        id_role : 3
     });
+    const history = useHistory()
+    var token ={headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} }
     useEffect(() => {
             async function getdata() {
-                let token ={headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} }
-                axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.id}`, token ).then((response)=> {
+                
+                Api.get(`client/user/${localStorage.id}`, token ).then((response)=> {
                     let temp = {
                         username : response.data.username,
-                        password : response.data.password,
-                        fullname: response.data.fullname,
+                        password : "",
+                        fullName: response.data.fullName,
                         address :response.data.address ,
                         email: response.data.email,
-                        phone_number: response.data.phone_number  
+                        phoneNumber: response.data.phoneNumber ,
+                        id_role : 3
                     }
-                    console.log(temp);
                     setuserUpdate(temp);
                 }).catch((error) =>{
                 });
             }
             getdata()
+           
     }, [])
     function submitHandle() {
-        axios.patch(`http://localhost:9090/api/v1/customer/${localStorage.id}`, userUpdate).then((response)=> {
+        Api.patch(`client/user/${localStorage.id}`, userUpdate , token).then((response)=> {
             alert(response.data.message);
+            history.push('/myaccount')
         }).catch((error) =>{
-            console.log(error);
-        });     
+            console.log(error.response.data);
+        });      
     }
     const LogoutHandle = () =>{
         login.LogoutDispatch();
@@ -60,12 +66,12 @@ export default function UpdateAccount() {
                                 <div className="col-md-12">
                                     <label>Full Name</label>
                                     <input className="form-control" type="text" placeholder="fullName"
-                                    onChange={e => setuserUpdate({...userUpdate ,fullname : e.target.value})} value={userUpdate.fullname}></input>
+                                    onChange={e => setuserUpdate({...userUpdate ,fullName : e.target.value})} value={userUpdate.fullName}></input>
                                 </div>
                                 <div className="col-md-12">
                                     <label>Phone Number</label>
                                     <input className="form-control" type="text" placeholder="Phone Number"
-                                    onChange={e => setuserUpdate({...userUpdate ,phone_number : e.target.value})} value={userUpdate.phone_number}></input>
+                                    onChange={e => setuserUpdate({...userUpdate ,phoneNumber : e.target.value})} value={userUpdate.phoneNumber}></input>
                                 </div>
                                 <div className="col-md-12">
                                     <label>Email</label>

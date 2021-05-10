@@ -1,24 +1,25 @@
-import axios from 'axios';
+import Api from '../Config/Api';
 import React, {useEffect, useState} from 'react'
 import Card from './Card';
 import {Link} from 'react-router-dom'
-function Products() {
+function Products(props) {
     const [listProduct , setlistProduct] = useState([]);
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
     const [filter , setfilter] = useState({
-        check  : 0, 
-        id  : 0,
+        check  : props.location.state.check, 
+        id  : props.location.state.id,
         search : ""
     });
     const [pageIndex, setpageIndex] = useState(0)
     const [totalPage, settotalPage] = useState(0)
     const [searchInput, setsearchInput] = useState("");
     useEffect(() => {
+        console.log(filter)
         async function get() {
             switch (filter.check) {
                 case 0:
-                    axios.get('http://localhost:9090/api/v1/client/product').then((response)=> {
+                    Api.get('client/product').then((response)=> {
                         setlistProduct(response.data.content);
                         setpageIndex(response.data.pageIndex)
                         settotalPage(response.data.totalPage)
@@ -26,7 +27,7 @@ function Products() {
                     });
                     break;
                 case 1:
-                    axios.get(`http://localhost:9090/api/v1/client/category/relateProduct/${filter.id}`).then((response)=> {
+                    Api.get(`client/category/relateProduct/${filter.id}`).then((response)=> {
                         setlistProduct(response.data.content);
                         setpageIndex(response.data.pageIndex)
                         settotalPage(response.data.totalPage)
@@ -34,7 +35,7 @@ function Products() {
                     });
                     break;
                 case 2:
-                    axios.get(`http://localhost:9090/api/v1/client/brand/relateProduct/${filter.id}`).then((response)=> {
+                    Api.get(`client/brand/relateProduct/${filter.id}`).then((response)=> {
                         setlistProduct(response.data.content);
                         setpageIndex(response.data.pageIndex)
                         settotalPage(response.data.totalPage)
@@ -44,7 +45,7 @@ function Products() {
                 case 7:
                     console.log(pageIndex)
                     let id = pageIndex-1;
-                    axios.get(`http://localhost:9090/api/v1/client/product?page=${id}`).then((response)=> {
+                    Api.get(`client/product?page=${id}`).then((response)=> {
                         setlistProduct(response.data.content);
                         setpageIndex(response.data.pageIndex)
                         settotalPage(response.data.totalPage)
@@ -53,7 +54,7 @@ function Products() {
                     break;
                 case 8 :
                     let id8 = pageIndex+1;
-                    axios.get(`http://localhost:9090/api/v1/client/product?page=${id8}`).then((response)=> {
+                    Api.get(`client/product?page=${id8}`).then((response)=> {
                         setlistProduct(response.data.content);
                         setpageIndex(response.data.pageIndex)
                         settotalPage(response.data.totalPage)
@@ -61,7 +62,7 @@ function Products() {
                     });
                     break;
                 case 9 :
-                    axios.get(`http://localhost:9090/api/v1/client/product?search=${searchInput}`).then((response)=> {
+                    Api.get(`client/product?search=${searchInput}`).then((response)=> {
                         setlistProduct(response.data.content);
                         console.log(response.data.content)
                     }).catch((error) =>{
@@ -76,12 +77,12 @@ function Products() {
     }, [filter]);
     useEffect(() => {
         async function getCategoryAndBrand() {
-            axios.get('http://localhost:9090/api/v1/client/category').then((response)=> {
-                setlistCategory(response.data.content);
+            Api.get('client/category/all').then((response)=> {
+                setlistCategory(response.data);
             }).catch((error) =>{
             });
-            axios.get('http://localhost:9090/api/v1/client/brand').then((response)=> {
-                setlistBrand(response.data.content);
+            Api.get('client/brand/all').then((response)=> {
+                setlistBrand(response.data);
             }).catch((error) =>{
             });
         }

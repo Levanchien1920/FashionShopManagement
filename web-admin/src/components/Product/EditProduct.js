@@ -35,15 +35,26 @@ export default function EditProduct() {
         }
     )
     useEffect(() => {
-        async function getdata (){
+        // async function getdata (){
             check.checklogin();
             API.get('product/getOneToUpdate/' + array[array.length-1], token).then((response)=> {
                 let temp = response.data
-                setdataoutput(temp);
-                console.log(response.data)
+                setdataoutput({...dataoutput ,
+                    id_cate: temp.id_cate,
+                    id_brand: temp.id_brand,
+                    id_gender : temp.id_gender,
+                    name: temp.name,
+                    price: temp.price,
+                    name_size : temp.name_size,
+                    number : temp.number,
+                    id_image : temp.id_image,
+                    id_color : temp.id_color,
+                })
+                setdataoutput({...dataoutput , des: temp.des})
             }).catch((error) =>{
-    
+             
             });
+          
             API.get('category', token).then((response)=> {
                 setlistCategory(response.data.content);
             }).catch((error) =>{
@@ -64,8 +75,8 @@ export default function EditProduct() {
             }).catch((error) =>{
     
             });
-        }
-        getdata()
+        // }
+        // getdata()
     }, []);
     useEffect(() => {
         async function getdatas (){
@@ -111,6 +122,9 @@ export default function EditProduct() {
             }).catch((error) =>{
                 console.log(error.response)
             });
+    }
+    function clog (){
+        console.log(dataoutput);
     }
     return (
         <>
@@ -243,6 +257,7 @@ export default function EditProduct() {
                             </div>
                             <div className="form-group">
                                 <button type="button" name="example-email" className="btn" onClick={save}>Save </button>
+                                <button type="button" name="example-email" className="btn" onClick={clog}>clog </button>
                             </div>
                         </form>
                     </div>

@@ -3,10 +3,12 @@ import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import API from '../Config/Api';
+import {useHistory} from 'react-router-dom'
 export default function NewProduct() {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
+    const history = useHistory()
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
     const [listImage, setlistImage] = useState([]);
@@ -98,6 +100,7 @@ export default function NewProduct() {
         console.log(dataoutput);
         API.post('product', dataoutput,token).then((response)=> {
             alert(response.data.message);
+            window.location.reload()
         }).catch((error) =>{
             console.log(error.response)
         });

@@ -1,32 +1,35 @@
-import axios from 'axios';
 import React, { useState } from 'react'
 import { useHistory } from 'react-router';
 import { Link } from 'react-router-dom';
+import Api from '../Config/Api'
 function Register() {
     const history=useHistory();
     const [user , setuser] = useState({
-        username: "",
+        userName: "",
         password: "",
         fullname: "",
         address: "",
         email: "",
-        phone_number: ""
+        phoneNumber: "",
+        id_role: 3
     });
     const [message , setmessage] = useState("")
     const [RetypePassword, setRetypePassword] = useState("");
     const register =  (e) =>{
-        if( user.fullname === "" || user.phone_number === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
+        console.log(user);
+        if( user.fullName === "" || user.phoneNumber === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
             setmessage("You have not entered enough");
         }else {
             if(RetypePassword !== user.password){
                 setmessage(" Retype Password Don't Correct ");
             }
             else {
-                axios.post("http://localhost:9090/api/v1/customer", user).then((response)=> {
-                    alert(response.message);
+                Api.post("client/register/user", user).then((response)=> {
+                    alert(response.data.message);
                     history.push("/login");
                 }).catch((error) =>{
                     alert(error.message);
+                    console.log(error.response.data)
                 });
             }
         }
@@ -51,7 +54,7 @@ function Register() {
                                     <div className="col-md-6">
                                         <label>Full Name</label>
                                         <input className="form-control" type="text" placeholder="Full Name"
-                                         onChange={e => setuser({...user ,fullname : e.target.value})} value={user.fullName}></input>
+                                         onChange={e => setuser({...user ,fullName : e.target.value})} value={user.fullName}></input>
                                     </div>
                                     <div className="col-md-6">
                                         <label>Email "</label>
@@ -66,12 +69,12 @@ function Register() {
                                     <div className="col-md-6">
                                         <label>Phone Number</label>
                                         <input className="form-control" type="text" placeholder="Phone Number"
-                                         onChange={e => setuser({...user ,phone_number : e.target.value})} value={user.phone_Number}></input>
+                                         onChange={e => setuser({...user ,phoneNumber : e.target.value})} value={user.phoneNumber}></input>
                                     </div>
                                     <div className="col-md-6">
                                         <label>User Name</label>
                                         <input className="form-control" type="text" placeholder="username"
-                                         onChange={e => setuser({...user ,username : e.target.value})} value={user.userName}></input>
+                                         onChange={e => setuser({...user ,userName : e.target.value})} value={user.userName}></input>
                                     </div>
                                     <div className="col-md-6">
                                         <label>Password</label>

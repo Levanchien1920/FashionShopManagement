@@ -21,7 +21,7 @@ function Cart() {
           }
         if (!cart) return; 
 
-        API.get('product')
+        API.get('client/product')
         .then(response => {
             console.log(response.data.content)
             let total = 0;

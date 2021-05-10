@@ -2,7 +2,8 @@ import React, {useState , useContext } from 'react'
 import {Link} from 'react-router-dom'
 function Card(props) {
     const {product} = props;
-    console.log(product);
+    var name = product.name.split(' ')
+    if (name.length > 5) { product.name = name[0]+" "+name[1]+" "+name[2]+" "+name[3]+" "+name[4]+"..."}
     const [quantity, setquantity] = useState(1);
     const addToCart = (e) => {
         console.log(e.target)
@@ -23,11 +24,11 @@ function Card(props) {
                            {product.name}
                         </Link>
                         <div className="ratting">
-                            <i className={product.number_of_star >=1 ?"fa fa-star": product.number_of_star >= 0.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
-                            <i className={product.number_of_star >=2 ?"fa fa-star": product.number_of_star >= 1.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
-                            <i className={product.number_of_star >=3 ?"fa fa-star": product.number_of_star >= 2.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
-                            <i className={product.number_of_star >=4 ?"fa fa-star": product.number_of_star >= 3.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
-                            <i className={product.number_of_star >=5 ?"fa fa-star": product.number_of_star >= 4.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.numberOfStar >=1 ?"fa fa-star": product.numberOfStar >= 0.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.numberOfStar >=2 ?"fa fa-star": product.numberOfStar >= 1.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.numberOfStar >=3 ?"fa fa-star": product.numberOfStar >= 2.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.numberOfStar >=4 ?"fa fa-star": product.numberOfStar >= 3.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
+                            <i className={product.numberOfStar >=5 ?"fa fa-star": product.numberOfStar >= 4.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
                         </div>
                     </div>
                     <div className="product-image">
@@ -41,7 +42,7 @@ function Card(props) {
                         </div>
                     </div>
                     <div className="product-price">
-                        <h3><span><h3>$</h3></span>{product.price}</h3>
+                        <h3>{product.price+" "}<span><h3> VND</h3></span></h3>
                         <a className="btn" href="/cart"><i className="fa fa-shopping-cart"></i>Buy Now</a>
                     </div>
                     
