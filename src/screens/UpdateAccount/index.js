@@ -1,6 +1,6 @@
 
-import React, { useContext, useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { StyleSheet, Text, View ,Alert} from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UpdateAccountComponent from '../../components/UpdateAccount';
 import {useNavigation } from '@react-navigation/native';
@@ -9,6 +9,23 @@ import {GlobalContext} from '../../context/Provider';
 const UpdateAccount = () => {
     const [form, setForm] = useState({});
     const {navigate} = useNavigation();
+    const [test,setTest] =useState(false)
+    const [success,setSuccess] =useState(false)
+    useEffect(()=>{
+        if(test) {
+            Alert.alert(`Update account is failed,please try again!!`)
+        }
+        setTest(false)
+    }
+      ,[test])
+
+      useEffect(()=>{
+        if(success) {
+            Alert.alert(`Update account success`)
+        }
+        setSuccess(false)
+    }
+      ,[success])
 
     const [errors, setErrors] = useState({});
     const {
@@ -78,7 +95,6 @@ const UpdateAccount = () => {
             });
           }
 
-
           if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber) ) {
             const userUpdate= {
               "username": form.username,
@@ -88,16 +104,20 @@ const UpdateAccount = () => {
               "email": form.email,
               "phoneNumber": form.phonenumber
           }
+
+          
             AsyncStorage.getItem('id')
             .then((value) => {
-                axiosInstance.patch(`/client/user/${value}`, userUpdate).then((response)=> {
-                    navigate('MyAccount');
+              console.log("value:"+value);
+                axiosInstance.patch(`/customer/${value}`, userUpdate).then((response)=> {
+                  setSuccess(true)
+                   navigate('MyAccount');
+                   
                 }).catch((error) =>{
+                  setTest(true);
                     console.log(error);
                 });     
             });
-
-        
       }
     }
   

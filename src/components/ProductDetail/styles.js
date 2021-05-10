@@ -61,12 +61,6 @@ export default StyleSheet.create({
     marginLeft:10,
   },
 
-    bodyContainer: {
-      marginTop:'5%',
-      padding:wp('10%'),
-      backgroundColor: 'gray',
-      height:'80%'
-    },
     linkBtn : {
       borderWidth:0.3,
       paddingRight: 30,
@@ -92,11 +86,17 @@ export default StyleSheet.create({
    
     listItemContainer: {
       flexDirection: 'row',
+      left:30,
       flexWrap: 'wrap',
       maxWidth:800,
-      width:'100%'
+      width:300
     },
+    textTitle: {
+      color:'blue',
+      fontSize:16,
 
+    },
+  
     itemContainer: {
       width: 100,
       marginRight: 12,
@@ -127,4 +127,10 @@ export default StyleSheet.create({
       borderTopColor: '#ededed',
       alignItems: 'center',
     },
+    bodyContainer: {
+      marginTop:'5%',
+      padding:wp('10%'),
+      backgroundColor: 'gray',
+      height:'80%'
+    }
 })

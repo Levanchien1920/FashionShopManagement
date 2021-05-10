@@ -1,6 +1,6 @@
 
-import React, { useState } from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import { StyleSheet, Text, View ,Alert} from 'react-native';
 import RegisterComponent from '../../components/Signup';
 import {useNavigation } from '@react-navigation/native';
 import {GlobalContext} from '../../context/Provider';
@@ -11,6 +11,29 @@ const Register = () => {
     const [form, setForm] = useState({});
     const {navigate} = useNavigation();
     const [errors, setErrors] = useState({});
+    const [test,setTest] =useState(false)
+    const [reType,setRetype] =useState(false)
+  useEffect(()=>{
+      if(test) {
+          Alert.alert(`Register is fail,please try again!`)
+      }
+      if(reType) {
+        Alert.alert(`Register is fail,please try again!`)
+    }
+      setTest(false)
+      setRetype(false)
+  }
+    ,[test])
+
+     useEffect(()=>{
+     
+      if(reType) {
+        Alert.alert(`Password and Retype password  is not equal!!`)
+    }
+    
+      setRetype(false)
+  }
+    ,[reType])
     const {
       authDispatch,
       authState: {error, loading, data},
@@ -44,6 +67,9 @@ const Register = () => {
 
       setErrors((prev) => {
         return {...prev, password: ''};
+      });
+      setErrors((prev) => {
+        return {...prev, retypepassword: ''};
       });
 
       if (!form.username) {
@@ -84,24 +110,32 @@ const Register = () => {
           return {...prev, retypepassword: 'Please add a retype password'};
         });
       }
-      if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber) ) {
-          const register= {
+      if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber&& form.retypepassword)) {
+
+        if(form.password!==form.retypepassword) {
+          console.log("nonoooo");
+          setRetype(true);
+        
+        }else {
+
+         const register= {
             "username": form.username,
             "password": form.password,
             "fullname": form.fullname,
             "address": form.address,
             "email": form.email,
             "phone_number": form.phonenumber
-        }
+             }
         console.log(register);
     
-        axiosInstance.post("/client/user", register).then((response)=> {
+        axiosInstance.post("/customer", register).then((response)=> {
           navigate('LogIn');
       }).catch((error) =>{
-        console.log("aaaaaaaaaaaaaa");
+        setTest(true);
           console.log("fail");
           navigate('Register');
       });
+        }
     }
 
   }

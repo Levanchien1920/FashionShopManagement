@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState ,useContext} from 'react';
-import {Image, Text, View, TouchableOpacity,ScrollView,Button,TextInput} from 'react-native';
+import {Image, Text, View, TouchableOpacity,ScrollView,Button,TextInput,SafeAreaView} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
@@ -29,7 +29,7 @@ const HomeComponent = () => {
 
   const {navigate} =useNavigation();
     return (
-        <View>
+        <View style= {{height:'100%'}}>
               <View>
               <View style={styles.headerContainer}>
                       <View style={styles.inputContainer}>
@@ -63,14 +63,13 @@ const HomeComponent = () => {
                     </View>
                   </View>
               </View>
-               
+         
                <ScrollView style={styles.bodyContainer}>
-                  <ScrollView horizontal={true}>
                         <View style = {{flexDirection:'column'}}>
                           <Text style={styles.textIndex}>Best Selling</Text>
                           <View style={styles.listItemContainer}>
                             {listProductBest.map((product,index) => (
-                              <View  key={index}>
+                              <View style={{marginLeft:32}} key={index}>
                                       <Card product={product}></Card>
                                        <TouchableOpacity onPress= {() => {
                                          navigate('ProductDetail', {
@@ -81,34 +80,68 @@ const HomeComponent = () => {
                                </View> ))}
                           </View>
                        </View>
-                    </ScrollView>
-                    <View style={styles.listItemContainer}>
-                            {listProductNew.map((product,index) => (
-                              <View  key={index}>
-                            <Card product={product}></Card>
-                                      <TouchableOpacity onPress= {() => {navigate('ProductDetail', {
-                                        id: product.id ,
-                                      })}}>
-                                        <Text  style={styles.text} >Chi tiết</Text>
-                                    </TouchableOpacity>
-                            </View>
-                            ))}  
-                      </View>
-                    <View style={styles.listItemContainer}>
-                      {listBestReview.map((review,index) => (
-                        <View key= {index}>
-                          <Text>content:{review.content}</Text> 
-                          <Text>name product:{review.name_Product}</Text> 
-                          <Text>name user:{review.name_User}</Text> 
-                        </View>
-                      ))}  
+
+                       <View style = {{flexDirection:'column'}}>
+                             <Text style={styles.textIndex}>New product</Text>
+                            <View style={styles.listItemContainer}>
+                                    {listProductNew.map((product,index) => (
+                                      <View style={{marginLeft:30}} key={index}>
+                                    <Card product={product}></Card>
+                                              <TouchableOpacity onPress= {() => {navigate('ProductDetail', {
+                                                id: product.id,
+                                              })}}>
+                                                <Text  style={styles.text} >Chi tiết</Text>
+                                            </TouchableOpacity>
+                                    </View>
+                                    ))}  
+                              </View>
                       </View>
 
-                    <View style={styles.seeMoreContainer}>
-                      <Text style={styles.seeMoreText}>Welcome to app_shopping </Text>
-                    </View>
+                   <View style = {{flexDirection:'column'}}>
+                      <Text style={styles.textIndex}>Review</Text>
+                       <View style={styles.listItemContainer}>
+                      {listBestReview.map((review,index) => (
+                        <View key= {index}>
+
+                          <View style= {{flexDirection:'row'}}>
+                            
+                         
+                              <View style= {{flexDirection:'column'}}>
+                            
+                                    <Image
+                                          source={require('../../assets/images/avt.jpg')}
+                                          style={styles.logoImage}
+                                      />
+
+                                  <Text style={{color:'blue',fontSize:16}}>{review.name_User}</Text> 
+                                  
+                              </View>
+
+
+                              
+                              <View style= {{flexDirection:'column',margin:10}}>
+                                    <View style={{flexDirection:'row'}}>
+                                           <Text style={{color:'blue',fontSize:16}}>Tên sản phẩm: </Text>
+                                             <Text>:{review.name_Product}</Text> 
+                                    </View>
+
+                                    <View style={{flexDirection:'row'}}>
+                                           <Text style={{color:'blue',fontSize:16}}>Nội dung: </Text>
+                                             <Text>:{review.content}</Text> 
+                                    </View>
+                              </View>
+                          </View>
+                         
+                        </View>
+
+                        
+                      ))}  
+                      </View>
+                  </View>
+
+                  
             </ScrollView> 
-        </View>
+      </View>
     );
  
 }

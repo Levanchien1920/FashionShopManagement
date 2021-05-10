@@ -12,11 +12,11 @@ const Card = (props) => {
     const {navigate} =useNavigation();
     return (
        <View>
-             <Text>name:{product.name}</Text> 
+             <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.name}</Text> 
              <Image  source={{ uri: product.link }}
-            style={{width: 100, height: 200, borderWidth: 1}}/>
-            <Text>price:{product.price}</Text>
-            <Button  title="Add to cart" onPress= {() => {
+                style={{width: 100, height: 100}}/>
+            <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.price}$</Text>
+            <Button color='orange' title="Add to cart" onPress= {() => {
                         AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
                             const cart=JSON.parse(res);
@@ -37,7 +37,6 @@ const Card = (props) => {
                             }
                         )}} >
                      </Button>
-                    
          </View>
 
 

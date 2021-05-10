@@ -1,6 +1,6 @@
 
 import {useRoute} from '@react-navigation/native';
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useContext} from 'react';
 import LoginComponent from '../../components/Login';
 import { Alert } from 'react-native';
@@ -9,13 +9,24 @@ import {useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axiosInstance from '../../helper/axiosInstance';
 
+
 const Login = () => {
- 
   
+ 
   const [form, setForm] = useState({});
   const {params} = useRoute();
   const [errors, setErrors] = useState({});
   const {navigate} =useNavigation();
+
+  const [test,setTest] =useState(false)
+  useEffect(()=>{
+      if(test) {
+          Alert.alert(`Wrong username or password`)
+      }
+      setTest(false)
+  }
+    ,[test])
+
   React.useEffect(() => {
     if (params?.data) {
       setForm({...form, username: params.data.username});
@@ -72,8 +83,8 @@ const Login = () => {
        navigate('Home');
       
   }).catch((error) =>{
-
-    Alert.alert(`Wrong username or password`);
+    setTest(true)
+    
 
       console.log("loi roi");
   });

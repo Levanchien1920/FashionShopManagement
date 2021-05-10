@@ -1,15 +1,6 @@
 import React, { useEffect, useState } from "react";
 import CartComponent from "../../components/Cart";
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  TouchableOpacity,
-  Image,
-  Button,
-  ScrollView,
-} from "react-native";
+import {Text,View,TextInput,Image,Button,ScrollView,} from "react-native";
 import axiosInstance from "../../helper/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";

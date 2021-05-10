@@ -64,7 +64,7 @@ export default StyleSheet.create({
     bodyContainer: {
       marginTop:'5%',
       padding:wp('10%'),
-      backgroundColor: 'gray',
+      backgroundColor: 'pink',
       height:'80%'
     },
     linkBtn : {
@@ -106,11 +106,13 @@ export default StyleSheet.create({
       width: 100,
       height: 120,
     },
+    
 
     text: {
-      fontSize: 14,
+      fontSize: 16,
       color: 'red',
       marginVertical: 4,
+      textAlign:'center'
     },
     textIndex: {
       fontSize: 16,
@@ -126,4 +128,9 @@ export default StyleSheet.create({
       borderTopColor: '#ededed',
       alignItems: 'center',
     },
+    logoImage: {
+      height:50,
+      width:50,
+      marginTop:10,
+  },
 })

@@ -58,10 +58,7 @@ const PostDetail = () => {
 
             <View style={styles.bodyContainer}>
                 <View>
-                      <View style= {{flexDirection:'row'}}>
-                            <Text style= {{color:'blue',fontSize:16}}>Id:</Text> 
-                            <Text>{post.id}</Text>
-                      </View>
+                     
 
                       <View>
                             <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:</Text> 

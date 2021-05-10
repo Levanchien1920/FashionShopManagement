@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity,ScrollView ,Image, Button} from 'react-native';
+import { StyleSheet,Alert,Text, View,TextInput, TouchableOpacity,ScrollView ,Image, Button} from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
@@ -29,7 +29,7 @@ const ProductDetailComponent = () => {
         id_user : 1,
         id_product : 1,
         content : "",
-        number_of_star : 5
+        number_of_star : 2
     })
     const [colorSizeM , setcolorSizeM] = useState("")
     const [colorSizeL , setcolorSizeL] = useState("");
@@ -39,6 +39,15 @@ const ProductDetailComponent = () => {
     const [cateRelated, setcateRelated] = useState([])
     const [quantity, setquantity] = useState(1);
     const {navigate} =useNavigation();
+
+    const [test,setTest] =useState(false)
+    useEffect(()=>{
+        if(test) {
+            Alert.alert(`Review is failed,Please log in or fill out my review`)
+        }
+        setTest(false)
+    }
+      ,[test])
 
 
     useEffect(()=>{
@@ -109,20 +118,20 @@ const ProductDetailComponent = () => {
 
     function submitReview() {
        
-            
-        if (isLoggedIn == true) {
+        if (isLoggedIn == true && OutputReview.content!=="") {
             axiosInstance.post(`/client/review`, OutputReview).then((response)=> {
                 console.log("review success");
             }).catch((error) =>{
                 console.log(error);
             });
         } else {
+            setTest(true)
             console.log("moi ban dang nhap");
         }
         
     }
     return (
- <View>
+ <View style= {{height:'100%',width:'100%'}}>
             <View>
               <View style={styles.headerContainer}>
                       <View style={styles.inputContainer}>
@@ -159,44 +168,80 @@ const ProductDetailComponent = () => {
               </View>
            </View>
 
-
-
-
-          <View>
+          <ScrollView style={{backgroundColor:'pink',height:'100%',marginTop:'5%'}}>
             <ScrollView>
-                <View style={styles.sectionContainer}>
-            <ScrollView horizontal={true}  >
-                <Image  source={{ uri: Product.link }}
-                            style={{width: 100, height: 200, borderWidth: 1}} />
-                
+              
+            <ScrollView horizontal={true} style= {{flexDirection:'row',height:250, marginTop:"5%", borderBottomWidth: 1}}  >
+                <View style= {{top:5}}>  
+                    <Image  source={{ uri: Product.link }}
+                            style={{width: 110, height: 245}} />
+                </View>
                 <View style={styles.listItemContainer}>
                         <View>
-                            <Text>Name:{Product.name}</Text>
-                            <Text>Price:{Product.price}</Text>
-                            <Text>brandName:{Product.brandName}</Text>
-                            <View style={{ flexDirection: 'row',}} >
-                            <Button  title="+" onPress= {() => { onChangeNumber(number+1)} }>    
-                                    </Button>
-                            <TextInput
-                                style={{ textAlign:'center',}}
-                                value={number.toString()}
-                            />
-                            <Button   title="-" onPress= {() => { if(number>0) {
-                                onChangeNumber(number-1)} } }>
-                            </Button>
+                            <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.textTitle}>Name: </Text>
+                                    <Text>{Product.name}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row',}}>
-                            <Button  title="M"  onPress={()=> {setfilter({...filter , check : 0 , size : "m" })}}></Button>
-                            <Button  title="L"  onPress={() => {setfilter({...filter , check : 0 , size : "l" })}}></Button>
-                            <Button  title="XL"  onPress={() => {setfilter({...filter , check : 0 , size : "xl" })}}></Button>
-                            <Button  title="XXL"  onPress={() => {setfilter({...filter , check : 0 , size : "xxl" })}}></Button>
+
+                            <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.textTitle}>Price: </Text>
+                                    <Text>{Product.price}</Text>
                             </View>
-                            <View>
+                           
+
+                            <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.textTitle}>Brand: </Text>
+                                    <Text>{Product.brandName}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row',left:20}} >
+                                    <View style= {{width:40,height:40}}>
+                                        <Button color='orange'  title="+" onPress= {() => { onChangeNumber(number+1)}}>    
+                                        </Button>
+                                    </View>
+                                   <View style= {{width:40,height:40}}>
+                                        <TextInput
+                                                style={{ textAlign:'center',}}
+                                                value={number.toString()}
+                                            />
+                                   </View>
+
+                                   <View style= {{width:40,height:40}}> 
+                                        <Button  color='orange'  title="-" onPress= {() => { if(number>0) {
+                                                onChangeNumber(number-1)} } }>
+                                            </Button>
+
+                                   </View>
+                                    
+                                  
+                            </View>
+
+                     <View style={{ flexDirection: 'row',top:5}}>
+                                <View style= {{width:40,height:40}}>
+                                <Button  title="M"  onPress={()=> {setfilter({...filter , check : 0 , size : "m" })}}></Button>
+                                </View>
+                           
+                                <View  style= {{left:5,width:40,height:40}}>
+                                        <Button  title="L"  onPress={() => {setfilter({...filter , check : 0 , size : "l" })}}></Button>
+                                </View>
+                           
+                                <View style= {{left:10,width:40,height:40}}>
+                                    <Button  title="XL"  onPress={() => {setfilter({...filter , check : 0 , size : "xl" })}}></Button>
+                                </View>
+                           
+                                <View style= {{left:15,width:40,height:40}}>
+                                <Button  title="XXL"  onPress={() => {setfilter({...filter , check : 0 , size : "xxl" })}}></Button>
+                                </View>
+                           
+                            </View>
+
+                            <View style= {{left:20,width:100,height:40,top:10}}>
                                 {color.map((color) => (                       
                                 <Button title={color} ></Button>
                                 ))}
                             </View>
 
+                <View style= {{left:20,width:100,height:40,top:10}}>
                    <Button  title="Add to cart" onPress= {() => {
                               AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
@@ -218,17 +263,20 @@ const ProductDetailComponent = () => {
                             }
                         )}} >
                      </Button>
+                     </View>
                         </View>
                     </View>
             </ScrollView>
 
             <View>
-                        <Text style={{ textAlign:'center',}}>Description</Text>
-                        <Text style={{ textAlign:'center',}}>{Product.des}</Text>
+
+                 <View>
+                        <Text style={{textAlign:'center',fontSize:16,color:'blue'}}>Description</Text>
+                        <Text style={{ textAlign:'center',top:5}}>{Product.des}</Text>
                 </View>
 
-                < View>
-                <Text style={{ textAlign:'center',}}>Review</Text>
+                <View style={{top:10}}>
+                <Text style={{ textAlign:'center',fontSize:16,color:'blue'}}>Review</Text>
                 <TextInput
                 style={{ 
                     height: 40, 
@@ -242,14 +290,16 @@ const ProductDetailComponent = () => {
                 placeholder="Insert your review!"
                 />
 
-            <Button  title="Submit"  onPress={submitReview}></Button>
+                <Button  title="Submit"  onPress={submitReview}></Button>
+
+                </View>
 
                 </View>
                 
-            </View>
+            
             </ScrollView>
             
-        </View>
+        </ScrollView>
 </View>
         
     );

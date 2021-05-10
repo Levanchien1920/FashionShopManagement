@@ -96,7 +96,7 @@ switch (c) {
  }
     return (
 
- <View>
+ <View style= {{height:'100%',width:'100%'}}>
            <View>
                         <View style={styles.headerContainer}>
                                 <View style={styles.inputContainer}>
@@ -131,35 +131,35 @@ switch (c) {
                       </View>
               </View>      
               
- <View style={styles.bodyContainer}>
+    <ScrollView style={styles.bodyContainer}>
         <View>
 
-          <View style= {{flexDirection:'row'}}>
-            <View style= {{width:"70%"}}>
-            <TextInput
-                style={{ 
-                    height: 40, 
-                    borderColor: 'white', 
-                    borderWidth: 1,
-                }}
-                onChangeText={text => setSearchInput(text)}
-                placeholder="Search"
-                />
-            </View>
-         
-            <Button title="Search"  onPress= {()=> {
-               setfilter({
-                ...filter, check : 3 , search : searchInput
-            });
-            }}>
+              <View style= {{flexDirection:'row'}}>
+                      <View style= {{width:"70%"}}>
+                      <TextInput
+                          style={{ 
+                              height: 40, 
+                              borderColor: 'yellow', 
+                              borderWidth: 1,
+                          }}
+                          onChangeText={text => setSearchInput(text)}
+                          placeholder="Search"
+                          />
+                      </View>
+                          
+                      <View style={{left:'15%'}}>
+                              <Button title="Search"  onPress= {()=> {
+                                setfilter({
+                                  ...filter, check : 3 , search : searchInput
+                              });
+                              }}>
 
-            </Button>
+                              </Button>
+                      </View>
 
-            
-
-          </View>
+             </View>
        
-          <View>
+          <View style={{top:20,backgroundColor:'red',height:50}}>
             <RNPickerSelect 
              placeholder={{
               value: 3,
@@ -179,47 +179,59 @@ switch (c) {
         </View>
 
 
-        </View>
+   </View>
         
     <ScrollView horizontal={true} style= {{marginTop:30}} >
+        
+        <View style={{width:250}}>
+                      <View style={styles.listItemContainer}>
+                            {listProduct.map((product,index) => (
+                              <View style={{marginLeft:10,marginTop:5}} key={index}>
+                                        <Card product={product}></Card>
 
-        <View>
+                                        <TouchableOpacity onPress= {() => {
+                                           navigate('ProductDetail', {
+                                            id: product.id ,
+                                          })}}>
+                                         <Text style={styles.text} >Chi tiết</Text>
+                               </TouchableOpacity>
+                              </View>
+                            ))}  
 
-       
-        <View style={styles.listItemContainer}>
-              {listProduct.map((product,index) => (
-                <View key={index}>
-                          <Card product={product}></Card>
-                </View>
-               ))}  
-        </View>
+                            
+                      </View>
       </View>
 
-          <View style={styles.scrollViewContainer}>
+       <View style={{width:70}}>
               <View>
-                      <Text>Category</Text>
+                      <Text style={{color:'red',fontSize:18}}>Category</Text>
                       {listCategory.map((category,index) => (
                         <View key={index}>
                           <TouchableOpacity  onPress={() => (setfilter({check : 1 ,id: category.id }))}>
-                            <Text >{category.name}</Text>
+                          <View style={{marginTop:20}}>
+                            <Text style= {{borderBottomWidth:1,fontSize:15}}>{category.name}</Text>
+                            </View>
                         </TouchableOpacity>
                         </View>
                             ))} 
-                </View>
-                <View>
-                      <Text>Brand</Text>
+              </View>
+                <View style={{top:20}}>
+                      <Text style={{color:'red',fontSize:18}}>Brand</Text>
                       {listBrand.map((brand,index) => (
                         <View key={index}>
                               <TouchableOpacity  onPress={() => (setfilter({check : 2 ,id: brand.id }))}>
-                                    <Text >{brand.name}</Text>
+                                  <View style={{marginTop:20}}>
+                                  <Text style= {{borderBottomWidth:1,fontSize:15}} >{brand.name}</Text>
+                                  </View>
+                                   
                               </TouchableOpacity>
                         </View>
                             ))} 
                   </View>
 
             </View>
-  </ScrollView>
-      </View>
+      </ScrollView>
+   </ScrollView>
 </View>
     );
 }

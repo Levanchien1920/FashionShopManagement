@@ -65,8 +65,8 @@ export default StyleSheet.create({
     
     bodyContainer: {
       marginTop:'5%',
-      padding:wp('10%'),
-      backgroundColor: 'gray',
+      padding:wp('5%'),
+      backgroundColor: 'pink',
     },
     linkBtn : {
       borderWidth:0.3,
@@ -74,6 +74,13 @@ export default StyleSheet.create({
       color:'blue',
       fontSize:25,
    },
+   text: {
+    fontSize: 16,
+    color: 'red',
+    marginVertical: 4,
+    textAlign:'center'
+  },
+ 
 
     sectionContainer: {
       backgroundColor: '#fff',
@@ -87,6 +94,7 @@ export default StyleSheet.create({
       maxWidth:800,
       width:'100%'
     },
+    
     itemContainer: {
       width: 100,
       marginRight: 12,
@@ -96,11 +104,7 @@ export default StyleSheet.create({
       width: 100,
       height: 120,
     },
-    text: {
-      fontSize: 14,
-      color: 'red',
-      marginVertical: 4,
-    },
+   
     textIndex: {
       fontSize: 16,
       color: 'red',
