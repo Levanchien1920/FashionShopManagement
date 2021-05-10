@@ -1,9 +1,6 @@
 package com.cnpm.fashion_shop.core.image.repository;
 
-import com.cnpm.fashion_shop.api.brand.dto.BrandResponseDto;
 import com.cnpm.fashion_shop.api.image.dto.ImageResponseDto;
-import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
-import com.cnpm.fashion_shop.entity.Brand;
 import com.cnpm.fashion_shop.entity.Image;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +16,7 @@ public interface ImageRepository extends JpaRepository<Image, Long> {
     @Query(value = "SELECT * FROM image i WHERE LOWER(i.name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     Page<ImageResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
 
-    Image findByLink(String link);
+    Image findByName(String name);
 
     @Query(value = "SELECT * FROM image b WHERE b.id = :id AND b.is_deleted = FALSE", nativeQuery = true)
     Optional<Image> findByIdImage(@Param("id") Integer id);

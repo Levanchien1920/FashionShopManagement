@@ -66,7 +66,7 @@ public class ImageService {
 @Transactional
     public ResponseEntity<Response> createImage(ImageDto dto) {
         Image image;
-        Image existingImage = imageRepository.findByLink(StringUtils.trim(dto.getName()));
+        Image existingImage = imageRepository.findByName(StringUtils.trim(dto.getName()));
         if (StringUtils.trim(dto.getName()).equals("")) {
             return ResponseEntity
                     .badRequest()
@@ -113,9 +113,9 @@ public class ImageService {
     public ResponseEntity<Response> updateImage(Integer id, ImageDto dto) {
         Optional<Image> imageOptional = imageRepository.findByIdImage(id);
         Image image;
-        Image existingImage = imageRepository.findByLink(StringUtils.trim(dto.getLink()));
+        Image existingImage = imageRepository.findByName(StringUtils.trim(dto.getName()));
 
-        if (StringUtils.equals(StringUtils.trim(dto.getLink()), "")) {
+        if (StringUtils.equals(StringUtils.trim(dto.getName()), "")) {
             return ResponseEntity
                     .badRequest()
                     .body(Response.badRequest("Image's name cannot be empty"));
@@ -128,7 +128,7 @@ public class ImageService {
         }
 
         // Compare old and new name
-        if (imageOptional.get().getLink().equals(StringUtils.trim(dto.getLink()))) {
+        if (imageOptional.get().getLink().equals(StringUtils.trim(dto.getName()))) {
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);
         }
 
