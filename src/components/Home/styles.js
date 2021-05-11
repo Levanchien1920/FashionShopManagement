@@ -66,6 +66,7 @@ export default StyleSheet.create({
       padding:wp('10%'),
       backgroundColor: 'pink',
       height:'80%'
+      
     },
     linkBtn : {
       borderWidth:0.3,

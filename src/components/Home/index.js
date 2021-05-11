@@ -29,7 +29,7 @@ const HomeComponent = () => {
 
   const {navigate} =useNavigation();
     return (
-        <View style= {{height:'100%'}}>
+        <View >
               <View>
               <View style={styles.headerContainer}>
                       <View style={styles.inputContainer}>
@@ -65,7 +65,7 @@ const HomeComponent = () => {
               </View>
          
                <ScrollView style={styles.bodyContainer}>
-                        <View style = {{flexDirection:'column'}}>
+                        <View >
                           <Text style={styles.textIndex}>Best Selling</Text>
                           <View style={styles.listItemContainer}>
                             {listProductBest.map((product,index) => (
@@ -81,7 +81,7 @@ const HomeComponent = () => {
                           </View>
                        </View>
 
-                       <View style = {{flexDirection:'column'}}>
+                       <View >
                              <Text style={styles.textIndex}>New product</Text>
                             <View style={styles.listItemContainer}>
                                     {listProductNew.map((product,index) => (
@@ -101,7 +101,7 @@ const HomeComponent = () => {
                       <Text style={styles.textIndex}>Review</Text>
                        <View style={styles.listItemContainer}>
                       {listBestReview.map((review,index) => (
-                        <View key= {index}>
+                        <View key= {index} style= {{flexDirection:'column'}}>
 
                           <View style= {{flexDirection:'row'}}>
                             

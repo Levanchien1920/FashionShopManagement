@@ -159,8 +159,9 @@ switch (c) {
 
              </View>
        
-          <View style={{top:20,backgroundColor:'red',height:50}}>
-            <RNPickerSelect 
+          <View style={{top:20,height:50, margin:50}}>
+            
+            <RNPickerSelect pickerProps={{ style: { margin:50, height: 50, overflow: 'hidden' } }}
              placeholder={{
               value: 3,
               label:"select"
@@ -173,7 +174,7 @@ switch (c) {
                      ]} 
                 onValueChange={(value) =>  { 
                          SortName(Number(value));
-                        }
+                }
                }
             />
         </View>
