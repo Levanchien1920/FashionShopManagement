@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(path = "/api/v1/client/product")
 public class ProductControllerClient {
@@ -33,6 +35,16 @@ public class ProductControllerClient {
                 requestParamsForGettingList.getSearch());
 
         return new PaginationResponse<>(data);
+    }
+
+    @ApiOperation(value = "Get all product")
+    @GetMapping("/all")
+    public List<ProductResponseDto> getProductsWithoutPage(RequestParamsForGettingList requestParamsForGettingList) {
+        List<ProductResponseDto> data = productService.findAllProductDetailsWithOutPage(
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return data;
     }
 
 

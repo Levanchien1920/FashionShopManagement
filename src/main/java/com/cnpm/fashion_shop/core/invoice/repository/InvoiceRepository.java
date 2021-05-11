@@ -30,8 +30,9 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "WHERE i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceCustomerDto> findAllStatusByIdCustomer(Pageable pageable, @Param("id") String id);
 
-    @Query(value = "SELECT i.id as Id , i.is_paid as Is_paid, i.id_employee as idEmployee " +
-            "FROM invoice i " +
+    @Query(value = "SELECT i.id as Id , i.is_paid as Is_paid, i.id_employee as idEmployee, u.full_name as Employee " +
+            "FROM (invoice i " +
+            "inner join user u on u.id = i.id_employee )"+
             "WHERE i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceEmployeeDto> findAllStatusByIdEmployee(Pageable pageable, @Param("id") String id);
 
@@ -66,6 +67,13 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id= :id", nativeQuery = true)
+    Page<InvoiceCustomerResponseDto> getOneByIdInvoice(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id);
+
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
+            "FROM (((invoice i inner join user e on i.id_customer=e.id) " +
+            "inner join info_for_each info on info.id_invoice=i.id) " +
+            "inner join product p on p.id=info.id_product) " +
+            "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id_customer= :id", nativeQuery = true)
     Page<InvoiceCustomerResponseDto> getOneByIdCustomer(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id);
 
 

@@ -114,9 +114,19 @@ public class InvoiceController {
     }
 
     @ApiOperation(value = "Get invoice by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping("/{id_invoice}")
+    @GetMapping("/ByIdInvoice/{id_invoice}")
     public PaginationResponse<InvoiceCustomerResponseDto> getOneInvoice(RequestParamsForGettingList requestParamsForGettingList, @PathVariable("id_invoice") Integer id) {
         Page<InvoiceCustomerResponseDto> data = invoiceService.getOne(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch(), id);
+
+        return new PaginationResponse<>(data);
+    }
+    @ApiOperation(value = "Get invoice by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/ByIdCustomer/{id_customer}")
+    public PaginationResponse<InvoiceCustomerResponseDto> getOneByIdCustomer(RequestParamsForGettingList requestParamsForGettingList, @PathVariable("id_customer") Integer id) {
+        Page<InvoiceCustomerResponseDto> data = invoiceService.getOneByIdCustomer(requestParamsForGettingList.getPage(),
                 requestParamsForGettingList.getSize(),
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch(), id);

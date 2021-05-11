@@ -87,6 +87,28 @@ public class ProductService {
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return productRepository.findAllByName(pageable, search);
     }
+    @Transactional
+    public List<ProductResponseDto> findAllProductDetailsWithOutPage(String sort, String search) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "name",
+                "price",
+                "number",
+                "Name_Size",
+                "des",
+                "Name_Brand",
+                "Name_Category",
+                "Name_Gender",
+                "Name_Image",
+                "numberOfStar",
+                "link",
+                "color"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        return productRepository.findAllByName(search);
+    }
 
     public ResponseEntity getOne(Integer id) {
         Optional<Product> optionalProduct = productRepository.findById(id);

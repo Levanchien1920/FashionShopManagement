@@ -264,6 +264,24 @@ public class InvoiceService {
         orderFilterHelperImpl.validate();
 
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return invoiceRepository.getOneByIdInvoice(pageable, search, id);
+    }
+
+    @Transactional
+    public Page<InvoiceCustomerResponseDto> getOneByIdCustomer(int size, int page, String sort, String search, int id) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "total_money",
+                "name_customer",
+                "is_paid",
+                "name_product",
+                "price",
+                "number_product"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return invoiceRepository.getOneByIdCustomer(pageable, search, id);
     }
 

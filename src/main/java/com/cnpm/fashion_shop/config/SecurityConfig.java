@@ -55,7 +55,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .hasAnyAuthority(RoleEnum.admin.name())
                 .antMatchers("/api/v1/user/**","/api/v1/brand/**", "/api/v1/category/**", "/api/v1/product/**", "/api/v1/post/**", "/api/v1/review/**", "/api/v1/invoice/**","/api/v1/customer/**","/api/v1/image/**","/api/v1/color/**")
                 .hasAnyAuthority(RoleEnum.employee.name())
-                .antMatchers( "/api/v1/customer/**","/api/v1/client/user/**")
+                .antMatchers( "/api/v1/customer/**","/api/v1/client/user/**", "/api/v1/client/invoice/**")
                 .hasAnyAuthority(RoleEnum.customer.name())
                 .anyRequest().permitAll()
                 .and()

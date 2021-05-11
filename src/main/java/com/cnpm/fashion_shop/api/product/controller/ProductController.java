@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/product")
@@ -41,6 +42,16 @@ public class ProductController {
                 requestParamsForGettingList.getSearch());
 
         return new PaginationResponse<>(data);
+    }
+
+    @ApiOperation(value = "Get all product")
+    @GetMapping("/all")
+    public List<ProductResponseDto> getProductsWithoutPage(RequestParamsForGettingList requestParamsForGettingList) {
+        List<ProductResponseDto> data = productService.findAllProductDetailsWithOutPage(
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
+        return data;
     }
 
 

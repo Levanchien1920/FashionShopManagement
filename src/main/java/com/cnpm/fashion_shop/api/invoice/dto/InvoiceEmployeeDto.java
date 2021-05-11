@@ -8,4 +8,6 @@ public interface InvoiceEmployeeDto {
 
     Integer getIdEmployee();
 
+    String getEmployee();
+
 }
