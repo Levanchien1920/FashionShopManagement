@@ -112,7 +112,6 @@ const UpdateAccount = () => {
                 axiosInstance.patch(`/client/user/${value}`, userUpdate).then((response)=> {
                   setSuccess(true)
                    navigate('MyAccount');
-                   
                 }).catch((error) =>{
                   setTest(true);
                     console.log("loi roi");

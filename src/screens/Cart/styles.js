@@ -66,7 +66,7 @@ export default StyleSheet.create({
     bodyContainer: {
       marginTop:'5%',
       backgroundColor: 'pink',
-      height:'75%',
+      height:'80%',
     
     },
     linkBtn : {

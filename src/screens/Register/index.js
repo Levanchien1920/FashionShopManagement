@@ -30,7 +30,6 @@ const Register = () => {
       if(reType) {
         Alert.alert(`Password and Retype password  is not equal!!`)
     }
-    
       setRetype(false)
   }
     ,[reType])

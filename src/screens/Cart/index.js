@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
-import CartComponent from "../../components/Cart";
-import {Text,View,TextInput,Image,Button,ScrollView,} from "react-native";
+import React, { useContext, useEffect, useState } from "react";
+import {Text,View,TextInput,Image,Button,ScrollView,Alert} from "react-native";
 import axiosInstance from "../../helper/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
+import {GlobalContext} from '../../context/Provider';
 const Cart = () => {
   const { navigate } = useNavigation();
   const [productItem, setProductItem] = useState([]);
@@ -13,6 +13,16 @@ const Cart = () => {
   const [number, onChangeNumber] = React.useState(0);
   const [quantity,setQuantity]= useState([]);
   const [totalPrice,setTotalPrice]=useState([]);
+  const [test,setTest] =useState(false)
+  const {authState : {isLoggedIn},}= useContext(GlobalContext);
+  console.log(isLoggedIn);
+  useEffect(()=>{
+    if(test) {
+        Alert.alert(`Checkout is fail,please log in!`)
+    }
+    setTest(false);
+    }
+  ,[test])
 
   useEffect(() => {
 
@@ -62,16 +72,8 @@ const Cart = () => {
             }
             setProductItem(productItem);
             setQuantity(arrQuantity);
-           
             setTotalPrice(arrTotalPrice);
             setTotal(total);
-    // console.log("all total:",total);
-
-            // console.log("total:" + total);
-         
-            
-
-
           })
           .catch(function (error) {
             console.log(error);
@@ -196,7 +198,7 @@ const addQty = (product,index) => {
         </View>
       </View>
 
-      <ScrollView style={styles.bodyContainer} horizontal={true}>
+      <ScrollView style={styles.bodyContainer} >
         <ScrollView>
           {Array.isArray(productItem) && productItem.length > 0 ? (
             productItem.map((product, index) => (
@@ -217,7 +219,7 @@ const addQty = (product,index) => {
                       source={{ uri: product.link}}
                       style={{ width: 100, height: 100, borderWidth: 1 }}
                     />
-                    <Text style={styles.textList}>{product.price}VDN</Text>
+                    <Text style={styles.textList}>{product.price}$</Text>
                   </View>
                 </View>
                 <View style={{ width: "40%", flexDirection: "column" }}>
@@ -253,7 +255,7 @@ const addQty = (product,index) => {
                     </View>
                   </View>
 
-                  <Text style={styles.textList1}>Total:{totalPrice[index]} VDN</Text>
+                  <Text style={styles.textList1}>Total:{totalPrice[index]}$</Text>
                 </View>
 
                 <View style={{ width: "16%" }}>
@@ -275,20 +277,28 @@ const addQty = (product,index) => {
             <View></View>
           )}
         </ScrollView>
+
+
+            <View style={{marginTop:10}}>
+
+                      <View>
+                        <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>Total all product:{total}</Text>
+                      </View>
+                      <View>
+                          <Button color="chocolate"  title="Checkout" onPress={() => { if(!isLoggedIn) {
+                            setTest(true);
+                          }else {
+                            navigate("Checkout")
+                          }
+                           }}>
+                        
+                        </Button>
+                      </View>
+
+              </View>
       </ScrollView>
 
-      <View>
-
-            <View>
-              <Text>Total all product:{total}</Text>
-            </View>
-            <View>
-                <Button color="chocolate"  title="Checkout" onPress={() => {}}>
-              
-              </Button>
-            </View>
-       
-      </View>
+     
     </View>
   );
 };
