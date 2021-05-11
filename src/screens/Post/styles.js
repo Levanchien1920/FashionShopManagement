@@ -8,6 +8,7 @@ export default StyleSheet.create({
     width:'100%',
     height:hp('40%')
   },
+
   headerContainer: {
     flexDirection: 'row',
     paddingTop: 50,
@@ -15,9 +16,8 @@ export default StyleSheet.create({
     position:'relative',
     display:'flex',
     alignItems:'center',
-
   },
-    
+
     inputContainer: {
       backgroundColor: '#fff',
       flexDirection: 'row',
@@ -41,8 +41,6 @@ export default StyleSheet.create({
       position: 'absolute',
       right:10,
     },
-
-  
 
     bodyContainer: {
       marginTop:'5%',

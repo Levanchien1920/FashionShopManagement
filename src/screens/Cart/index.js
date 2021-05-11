@@ -11,6 +11,10 @@ const Cart = () => {
   const [productItem, setProductItem] = useState([]);
   const [total, setTotal] = useState(0);
   const [number, onChangeNumber] = React.useState(0);
+
+  const [quantity,setQuantity]= useState(1);
+  const [totalPrice,setTotalPrice]=useState(0);
+
   useEffect(() => {
     let keys = [];
     AsyncStorage.getItem("cart").then((res) => {
@@ -22,7 +26,6 @@ const Cart = () => {
             console.log(item);
           }
         }
-
         axiosInstance
           .get("client/product")
           .then((response) => {
@@ -74,28 +77,101 @@ const Cart = () => {
         setTotal(total - product.qty * product.price);
       }
     });
-
-    // this.setState({productItem, total});
   };
 
-  // const changeQty = (product, qty) => {
-  //     let cart = JSON.parse(localStorage.getItem('cart')); //get cart form localStorage and convert to array
-  //     // let {productItem} = this.state
-  //     setProductItem(productItem)
-  //     let total = 0;
-  //     // console.log(product.item.id)
-  //     for (var i = 0; i < productItem.length; i++) {
+    const handleChangeQty = (product) => {
 
-  //         if(productItem[i].id === product.id) {
-  //             productItem[i].qty = qty
-  //             cart[product.id] = qty;  //and set qty to cart
-  //         }
-  //         total += productItem[i].price * productItem[i].qty;
-  //     }
-  //     localStorage.setItem('cart', JSON.stringify(cart)); //convert cart to json and save to localStorage
-  //     // this.setState({total});
-  //     setTotal(total)
+    };
+
+
+
+  //   handleChangeQty(e) {
+  //     const { product } = this.props;
+  //     this.props.changeQty(this.props.product, e.target.value)
+  //     this.setState({
+  //         quantity: e.target.value,
+  //         totalPrice: product.price * e.target.value
+  //     })
   // }
+
+  const addQty = (product) => {
+    setQuantity(parseInt(quantity)+1)
+    setTotalPrice(product.price * (parseInt(quantity) + 1))
+    changeQty(product,parseInt(quantity) + 1)
+  };
+  
+  // addQty(e) {
+  //     e.preventDefault();
+  //     const { product } = this.props;
+  //     let {quantity} = this.state
+     
+  //     this.setState({
+  //         quantity: parseInt(quantity) + 1,
+  //         totalPrice: product.price * (parseInt(quantity) + 1) 
+  //     })
+  //     this.props.changeQty(product, parseInt(quantity) + 1)
+  // }
+  const removeQty = (product) => {
+    if(quantity>0) {
+      setQuantity(parseInt(quantity)-1)
+      setTotalPrice(product.price * (parseInt(quantity) - 1))
+    }
+  
+    changeQty(product,parseInt(quantity) - 1)
+  };
+  // removeQty(e) {
+  //     e.preventDefault();
+  //     const { product } = this.props;
+  //     let {quantity} = this.state
+  //     if(quantity > 0) {
+  //         this.setState({
+  //             quantity: parseInt(quantity) - 1,
+  //             totalPrice: product.price * (parseInt(quantity) - 1) 
+  //         })
+  //         this.props.changeQty(product, parseInt(quantity) - 1)
+  //     }
+         
+  // }
+
+    // this.setState({productItem, total});
+
+
+  const changeQty = (product, qty) => {
+
+    AsyncStorage.getItem("cart").then((res) => {
+        const cart = JSON.parse(res);
+        let total=0;
+        for (var i = 0; i < productItem.length; i++) {
+          if(productItem[i].id === product.id) {
+              productItem[i].qty = qty
+              cart[product.id] = qty; 
+          }
+          total += productItem[i].price * productItem[i].qty;
+      }
+
+      AsyncStorage.setItem("cart", JSON.stringify(cart));
+      setTotal(total)
+      console.log('alltotal:'+total);
+    });
+
+
+      // let cart = JSON.parse(localStorage.getItem('cart')); //get cart form localStorage and convert to array
+      // // let {productItem} = this.state
+      // setProductItem(productItem)
+      // let total = 0;
+      // // console.log(product.item.id)
+      // for (var i = 0; i < productItem.length; i++) {
+
+      //     if(productItem[i].id === product.id) {
+      //         productItem[i].qty = qty
+      //         cart[product.id] = qty;  //and set qty to cart
+      //     }
+      //     total += productItem[i].price * productItem[i].qty;
+      // }
+      // localStorage.setItem('cart', JSON.stringify(cart)); //convert cart to json and save to localStorage
+      // // this.setState({total});
+      // setTotal(total)
+  }
 
   return (
     <View>
@@ -175,7 +251,7 @@ const Cart = () => {
                     <Text style={styles.textList}>{product.name}</Text>
                     <Image
                       source={{ uri: product.link }}
-                      style={{ width: 70, height: 100, borderWidth: 1 }}
+                      style={{ width: 100, height: 100, borderWidth: 1 }}
                     />
                     <Text style={styles.textList}>{product.price}VDN</Text>
                   </View>
@@ -188,7 +264,7 @@ const Cart = () => {
                       <Button
                         title="+"
                         onPress={() => {
-                          product.qty = product.qty + 1;
+                         addQty(product)
                         }}
                       ></Button>
                     </View>
@@ -198,23 +274,26 @@ const Cart = () => {
                         style={{ textAlign: "center" }}
                         value={product.qty}
                         borderWidth={2}
+                        onChangeText= {e => { changeQty(product,e); 
+                        
+                                  setQuantity(e);
+                                  setTotalPrice (product.price * e);
+                            }}
+
+                          value={quantity}
                       />
                     </View>
                     <View style={styles.button}>
                       <Button
                         title="-"
                         onPress={() => {
-                          if (number > 0) {
-                            {
-                              product.qty = product.qty - 1;
-                            }
-                          }
+                         removeQty(product)
                         }}
                       ></Button>
                     </View>
                   </View>
 
-                  <Text style={styles.textList1}>Total: {total[index]} VDN</Text>
+                  <Text style={styles.textList1}>Total:{totalPrice} VDN</Text>
                 </View>
 
                 <View style={{ width: "16%" }}>

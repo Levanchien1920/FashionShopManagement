@@ -60,7 +60,6 @@ const UpdateAccount = () => {
           setErrors((prev) => {
             return {...prev, password: ''};
           });
-    
 
 
         if (!form.username) {
@@ -99,23 +98,24 @@ const UpdateAccount = () => {
             const userUpdate= {
               "username": form.username,
               "password": form.password,
-              "fullname": form.fullname,
+              "fullName": form.fullname,
               "address": form.address,
               "email": form.email,
               "phoneNumber": form.phonenumber
-          }
 
-          
+          }
+          console.log(userUpdate);
+
             AsyncStorage.getItem('id')
             .then((value) => {
               console.log("value:"+value);
-                axiosInstance.patch(`/customer/${value}`, userUpdate).then((response)=> {
+                axiosInstance.patch(`/client/user/${value}`, userUpdate).then((response)=> {
                   setSuccess(true)
                    navigate('MyAccount');
                    
                 }).catch((error) =>{
                   setTest(true);
-                    console.log(error);
+                    console.log("loi roi");
                 });     
             });
       }

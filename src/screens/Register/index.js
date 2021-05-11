@@ -121,14 +121,17 @@ const Register = () => {
          const register= {
             "username": form.username,
             "password": form.password,
-            "fullname": form.fullname,
+            "fullName": form.fullname,
             "address": form.address,
             "email": form.email,
-            "phone_number": form.phonenumber
+            "phoneNumber": form.phonenumber,
+            "id_role":3
              }
+
+   
         console.log(register);
     
-        axiosInstance.post("/customer", register).then((response)=> {
+        axiosInstance.post("/client/register/user", register).then((response)=> {
           navigate('LogIn');
       }).catch((error) =>{
         setTest(true);

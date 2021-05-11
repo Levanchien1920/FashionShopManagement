@@ -10,7 +10,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
 const ProductDetailComponent = () => {
     const route = useRoute();
     const [id, setId] = useState("");
-    const [number, onChangeNumber] = React.useState(0);
+    const [number, onChangeNumber] = React.useState(1);
     const [textInputValue, setTextInputValue] = React.useState('');
     const [color , setcolor] =useState([]);
     const [listProduct , setlistProduct] = useState([]);
@@ -48,6 +48,11 @@ const ProductDetailComponent = () => {
         setTest(false)
     }
       ,[test])
+
+      useEffect(()=>{
+        setquantity(number)
+    }
+      ,[number])
 
 
     useEffect(()=>{
@@ -172,9 +177,9 @@ const ProductDetailComponent = () => {
             <ScrollView>
               
             <ScrollView horizontal={true} style= {{flexDirection:'row',height:250, marginTop:"5%", borderBottomWidth: 1}}  >
-                <View style= {{top:5}}>  
+                <View style= {{top:5,left:5}}>  
                     <Image  source={{ uri: Product.link }}
-                            style={{width: 110, height: 245}} />
+                            style={{width: 150, height: 220}} />
                 </View>
                 <View style={styles.listItemContainer}>
                         <View>
@@ -182,38 +187,34 @@ const ProductDetailComponent = () => {
                                     <Text style={styles.textTitle}>Name: </Text>
                                     <Text>{Product.name}</Text>
                             </View>
-
                             <View style={{flexDirection:'row'}}>
                                     <Text style={styles.textTitle}>Price: </Text>
                                     <Text>{Product.price}</Text>
                             </View>
-                           
-
                             <View style={{flexDirection:'row'}}>
                                     <Text style={styles.textTitle}>Brand: </Text>
                                     <Text>{Product.brandName}</Text>
                             </View>
-
                             <View style={{ flexDirection: 'row',left:20}} >
                                     <View style= {{width:40,height:40}}>
-                                        <Button color='orange'  title="+" onPress= {() => { onChangeNumber(number+1)}}>    
+                                        <Button color='orange'  title="+" onPress= {() => {  onChangeNumber(number+1) 
+                                        }}>    
                                         </Button>
                                     </View>
                                    <View style= {{width:40,height:40}}>
                                         <TextInput
                                                 style={{ textAlign:'center',}}
                                                 value={number.toString()}
+                                              
                                             />
                                    </View>
-
                                    <View style= {{width:40,height:40}}> 
-                                        <Button  color='orange'  title="-" onPress= {() => { if(number>0) {
-                                                onChangeNumber(number-1)} } }>
+                                        <Button  color='orange'  title="-" onPress= {() => { if(number>1) {
+                                                onChangeNumber(number-1)
+                                             }
+                                                 } }>
                                             </Button>
-
                                    </View>
-                                    
-                                  
                             </View>
 
                      <View style={{ flexDirection: 'row',top:5}}>
@@ -228,7 +229,6 @@ const ProductDetailComponent = () => {
                                 <View style= {{left:10,width:40,height:40}}>
                                     <Button  title="XL"  onPress={() => {setfilter({...filter , check : 0 , size : "xl" })}}></Button>
                                 </View>
-                           
                                 <View style= {{left:15,width:40,height:40}}>
                                 <Button  title="XXL"  onPress={() => {setfilter({...filter , check : 0 , size : "xxl" })}}></Button>
                                 </View>
@@ -243,6 +243,7 @@ const ProductDetailComponent = () => {
 
                 <View style= {{left:20,width:100,height:40,top:10}}>
                    <Button  title="Add to cart" onPress= {() => {
+                            //  setquantity(number)
                               AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
                             const cart=JSON.parse(res);

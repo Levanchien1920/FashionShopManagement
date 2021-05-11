@@ -17,39 +17,38 @@ const Post = () => {
     return (
       <View>
              <View>
-              <View style={styles.headerContainer}>
-                      <View style={styles.inputContainer}>
-                          <FontAwesome name="search" size={24} color="#969696" />
-                          <TextInput style={styles.inputText} />
-                      </View>
-                      <View style={styles.cartContainer}>
-                            <FontAwesome name="shopping-cart" size={24} color="#fff" />
-                      </View>
-              </View>
+                  <View style={styles.headerContainer}>
+                          <View style={styles.inputContainer}>
+                              <FontAwesome name="search" size={24} color="#969696" />
+                              <TextInput style={styles.inputText} />
+                          </View>
+                          <View style={styles.cartContainer}>
+                                <FontAwesome name="shopping-cart" size={24} color="#fff" />
+                          </View>
+                  </View>
 
-              <View  style = {styles.createSection}>
-                <View style = {styles.btn1}>   
-                        <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
-                   </View>
-                   <View style = {styles.btn2}>
-                        <Button  title= "Product" onPress= {() => {navigate('Products')}}>
+                  <View  style = {styles.createSection}>
+                    <View style = {styles.btn1}>   
+                            <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
+                      </View>
+                      <View style = {styles.btn2}>
+                            <Button  title= "Product" onPress= {() => {navigate('Products')}}>
+                            </Button>
+                      </View>
+                        <View style = {styles.btn3}> 
+                        <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
                         </Button>
-                   </View>
-                        
-                    <View style = {styles.btn3}> 
-                    <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
-                    </Button>
-                    </View> 
+                        </View> 
 
-                    <View style = {styles.btn4} >
-                    <Button  title= "Post" onPress= {() => {navigate('Post')}}>
-                   </Button>
-                    </View>
-                    <View style = {styles.btn5}>
-                    <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
-                           </Button>
-                    </View>
-              </View>
+                        <View style = {styles.btn4} >
+                        <Button  title= "Post" onPress= {() => {navigate('Post')}}>
+                      </Button>
+                        </View>
+                        <View style = {styles.btn5}>
+                        <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
+                              </Button>
+                        </View>
+                  </View>
            </View>
           
 
