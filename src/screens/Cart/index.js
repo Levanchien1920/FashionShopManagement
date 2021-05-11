@@ -11,11 +11,11 @@ const Cart = () => {
   const [productItem, setProductItem] = useState([]);
   const [total, setTotal] = useState(0);
   const [number, onChangeNumber] = React.useState(0);
-
-  const [quantity,setQuantity]= useState(1);
-  const [totalPrice,setTotalPrice]=useState(0);
+  const [quantity,setQuantity]= useState([]);
+  const [totalPrice,setTotalPrice]=useState([]);
 
   useEffect(() => {
+
     let keys = [];
     AsyncStorage.getItem("cart").then((res) => {
       if (res != null) {
@@ -33,6 +33,8 @@ const Cart = () => {
             let total = 0;
             let listProduct = response.data.content;
             let productItem = [];
+            let arrTotalPrice=[];
+            let arrQuantity=[];
 
             listProduct.forEach(function (element) {
               keys.forEach(function (key) {
@@ -45,7 +47,11 @@ const Cart = () => {
                       return false;
                     }
                   });
-                  if (dem == 0) productItem.push(element);
+                  if (dem == 0) {
+                    productItem.push(element);
+                    arrQuantity.push(element.qty);
+                    arrTotalPrice.push(element.qty*element.price);
+                  } 
                 }
               });
             });
@@ -54,10 +60,18 @@ const Cart = () => {
             for (var i = 0; i < productItem.length; i++) {
               total += productItem[i].price * productItem[i].qty;
             }
-
             setProductItem(productItem);
+            setQuantity(arrQuantity);
+           
+            setTotalPrice(arrTotalPrice);
             setTotal(total);
-            console.log("total:" + total);
+    // console.log("all total:",total);
+
+            // console.log("total:" + total);
+         
+            
+
+
           })
           .catch(function (error) {
             console.log(error);
@@ -65,6 +79,7 @@ const Cart = () => {
       }
     });
   }, []);
+ 
 
   const removeFromCart = (product) => {
     setProductItem(productItem.filter((item) => item.id !== product.id));
@@ -73,71 +88,38 @@ const Cart = () => {
         const cart = JSON.parse(res);
         delete cart[product.id.toString()];
         AsyncStorage.setItem("cart", JSON.stringify(cart));
-        // let total = this.state.total - (product.qty * product.price)
         setTotal(total - product.qty * product.price);
       }
     });
   };
 
-    const handleChangeQty = (product) => {
-
-    };
-
-
-
-  //   handleChangeQty(e) {
-  //     const { product } = this.props;
-  //     this.props.changeQty(this.props.product, e.target.value)
-  //     this.setState({
-  //         quantity: e.target.value,
-  //         totalPrice: product.price * e.target.value
-  //     })
-  // }
-
-  const addQty = (product) => {
-    setQuantity(parseInt(quantity)+1)
-    setTotalPrice(product.price * (parseInt(quantity) + 1))
-    changeQty(product,parseInt(quantity) + 1)
+const addQty = (product,index) => {
+    const temp1=[...quantity];
+    temp1[index]=parseInt(quantity[index])+1;
+    setQuantity(temp1)
+    const temp2=[...totalPrice];
+    temp2[index]= product.price * temp1[index];
+    setTotalPrice(temp2)
+    console.log(quantity[index]);
+    changeQty(product,parseInt(quantity[index]) + 1)
   };
-  
-  // addQty(e) {
-  //     e.preventDefault();
-  //     const { product } = this.props;
-  //     let {quantity} = this.state
-     
-  //     this.setState({
-  //         quantity: parseInt(quantity) + 1,
-  //         totalPrice: product.price * (parseInt(quantity) + 1) 
-  //     })
-  //     this.props.changeQty(product, parseInt(quantity) + 1)
-  // }
-  const removeQty = (product) => {
-    if(quantity>0) {
-      setQuantity(parseInt(quantity)-1)
-      setTotalPrice(product.price * (parseInt(quantity) - 1))
+
+ 
+
+  const removeQty = (product,index) => {
+    if(quantity[index]>0) {
+      const temp1=[...quantity];
+      temp1[index]=parseInt(quantity[index])-1;
+      setQuantity(temp1)
+      const temp2=[...totalPrice];
+      temp2[index]= product.price * temp1[index];
+      setTotalPrice(temp2)
+      console.log(totalPrice);
     }
-  
-    changeQty(product,parseInt(quantity) - 1)
+    changeQty(product,parseInt(quantity[index]) - 1)
   };
-  // removeQty(e) {
-  //     e.preventDefault();
-  //     const { product } = this.props;
-  //     let {quantity} = this.state
-  //     if(quantity > 0) {
-  //         this.setState({
-  //             quantity: parseInt(quantity) - 1,
-  //             totalPrice: product.price * (parseInt(quantity) - 1) 
-  //         })
-  //         this.props.changeQty(product, parseInt(quantity) - 1)
-  //     }
-         
-  // }
-
-    // this.setState({productItem, total});
-
 
   const changeQty = (product, qty) => {
-
     AsyncStorage.getItem("cart").then((res) => {
         const cart = JSON.parse(res);
         let total=0;
@@ -148,29 +130,11 @@ const Cart = () => {
           }
           total += productItem[i].price * productItem[i].qty;
       }
-
       AsyncStorage.setItem("cart", JSON.stringify(cart));
       setTotal(total)
-      console.log('alltotal:'+total);
     });
 
 
-      // let cart = JSON.parse(localStorage.getItem('cart')); //get cart form localStorage and convert to array
-      // // let {productItem} = this.state
-      // setProductItem(productItem)
-      // let total = 0;
-      // // console.log(product.item.id)
-      // for (var i = 0; i < productItem.length; i++) {
-
-      //     if(productItem[i].id === product.id) {
-      //         productItem[i].qty = qty
-      //         cart[product.id] = qty;  //and set qty to cart
-      //     }
-      //     total += productItem[i].price * productItem[i].qty;
-      // }
-      // localStorage.setItem('cart', JSON.stringify(cart)); //convert cart to json and save to localStorage
-      // // this.setState({total});
-      // setTotal(total)
   }
 
   return (
@@ -250,13 +214,12 @@ const Cart = () => {
                   <View style={{ flexDirection: "column" }}>
                     <Text style={styles.textList}>{product.name}</Text>
                     <Image
-                      source={{ uri: product.link }}
+                      source={{ uri: product.link}}
                       style={{ width: 100, height: 100, borderWidth: 1 }}
                     />
                     <Text style={styles.textList}>{product.price}VDN</Text>
                   </View>
                 </View>
-
                 <View style={{ width: "40%", flexDirection: "column" }}>
                  
                   <View style={{ flexDirection: "row", width: "40%", marginTop:30, marginBottom:10 }}>
@@ -264,36 +227,33 @@ const Cart = () => {
                       <Button
                         title="+"
                         onPress={() => {
-                         addQty(product)
+                         addQty(product,index)
                         }}
                       ></Button>
-                    </View>
+                     </View>
 
                     <View style={{ left: 5, top: "60%" }}>
                       <TextInput
                         style={{ textAlign: "center" }}
-                        value={product.qty}
+                       
                         borderWidth={2}
-                        onChangeText= {e => { changeQty(product,e); 
                         
-                                  setQuantity(e);
-                                  setTotalPrice (product.price * e);
-                            }}
-
-                          value={quantity}
+                        onChangeText= {e => handleChangeQty(e,product,index)}
+                        value={quantity[index]+""}
+                         
                       />
                     </View>
                     <View style={styles.button}>
                       <Button
                         title="-"
                         onPress={() => {
-                         removeQty(product)
+                         removeQty(product,index)
                         }}
                       ></Button>
                     </View>
                   </View>
 
-                  <Text style={styles.textList1}>Total:{totalPrice} VDN</Text>
+                  <Text style={styles.textList1}>Total:{totalPrice[index]} VDN</Text>
                 </View>
 
                 <View style={{ width: "16%" }}>
@@ -307,7 +267,10 @@ const Cart = () => {
                   </View>
                 </View>
               </View>
-            ))
+
+            )
+            )
+            
           ) : (
             <View></View>
           )}
@@ -315,9 +278,16 @@ const Cart = () => {
       </ScrollView>
 
       <View>
-        <Button color="chocolate"  title="Checkout" onPress={() => {}}>
-           
-        </Button>
+
+            <View>
+              <Text>Total all product:{total}</Text>
+            </View>
+            <View>
+                <Button color="chocolate"  title="Checkout" onPress={() => {}}>
+              
+              </Button>
+            </View>
+       
       </View>
     </View>
   );

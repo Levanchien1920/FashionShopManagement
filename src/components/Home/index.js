@@ -105,26 +105,20 @@ const HomeComponent = () => {
 
                           <View style= {{flexDirection:'row'}}>
                             
-                         
                               <View style= {{flexDirection:'column'}}>
-                            
                                     <Image
                                           source={require('../../assets/images/avt.jpg')}
                                           style={styles.logoImage}
                                       />
-
                                   <Text style={{color:'blue',fontSize:16}}>{review.name_User}</Text> 
                                   
                               </View>
-
-
                               
                               <View style= {{flexDirection:'column',margin:10}}>
                                     <View style={{flexDirection:'row'}}>
                                            <Text style={{color:'blue',fontSize:16}}>Tên sản phẩm: </Text>
                                              <Text>:{review.name_Product}</Text> 
                                     </View>
-
                                     <View style={{flexDirection:'row'}}>
                                            <Text style={{color:'blue',fontSize:16}}>Nội dung: </Text>
                                              <Text>:{review.content}</Text> 

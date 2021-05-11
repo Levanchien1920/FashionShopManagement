@@ -19,7 +19,7 @@ const ProductComponent = () => {
   const [filter , setfilter] = useState({
       check  : 0, 
       id  : 0,
-      search : "",g
+      search : "",
   });
 
 
@@ -159,12 +159,12 @@ switch (c) {
 
              </View>
        
-          <View style={{top:20,height:50, margin:50}}>
+          <View style={{top:20,height:50,width:"70%"}}>
             
-            <RNPickerSelect pickerProps={{ style: { margin:50, height: 50, overflow: 'hidden' } }}
+            <RNPickerSelect pickerProps={{ style: { height: 50, color:"green" } }}
              placeholder={{
               value: 3,
-              label:"select"
+              label:"Sắp xếp"
             }}
               items={[
                { label: "Name (A-Z)", value: 3 },
@@ -203,7 +203,7 @@ switch (c) {
                       </View>
       </View>
 
-       <View style={{width:70}}>
+       <View style={{width:80}}>
               <View>
                       <Text style={{color:'red',fontSize:18}}>Category</Text>
                       {listCategory.map((category,index) => (
