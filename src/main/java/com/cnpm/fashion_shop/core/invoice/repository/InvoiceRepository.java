@@ -74,7 +74,7 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id_customer= :id", nativeQuery = true)
-    Page<InvoiceCustomerResponseDto> getOneByIdCustomer(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id);
+    List<InvoiceCustomerResponseDto> getOneByIdCustomer(@Param("keyword") String keyword, @Param("id") Integer id);
 
 
     @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +

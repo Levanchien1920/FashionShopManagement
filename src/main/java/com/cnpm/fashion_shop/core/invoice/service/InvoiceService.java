@@ -268,7 +268,7 @@ public class InvoiceService {
     }
 
     @Transactional
-    public Page<InvoiceCustomerResponseDto> getOneByIdCustomer(int size, int page, String sort, String search, int id) {
+    public List<InvoiceCustomerResponseDto> getOneByIdCustomer(String sort, String search, int id) {
         List<String> columnsAllow = Arrays.asList(
                 "id",
                 "total_money",
@@ -281,8 +281,7 @@ public class InvoiceService {
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
 
-        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return invoiceRepository.getOneByIdCustomer(pageable, search, id);
+        return invoiceRepository.getOneByIdCustomer(search ,id);
     }
 
 }

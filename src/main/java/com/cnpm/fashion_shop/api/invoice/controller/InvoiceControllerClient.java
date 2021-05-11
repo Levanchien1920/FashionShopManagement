@@ -1,6 +1,7 @@
 package com.cnpm.fashion_shop.api.invoice.controller;
 
 
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
 import com.cnpm.fashion_shop.api.invoice.dto.InvoiceDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping(path = "/api/v1/client/invoice")
@@ -36,15 +38,25 @@ public class InvoiceControllerClient {
         return invoiceService.createInvoiceDto(dto);
     }
 
+
+
     @ApiOperation(value = "Get invoice by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @GetMapping("/{id_customer}")
-    public PaginationResponse<InvoiceCustomerResponseDto> getOneInvoiceByIdCustomer(RequestParamsForGettingList requestParamsForGettingList, @PathVariable("id_customer") Integer id) {
-        Page<InvoiceCustomerResponseDto> data = invoiceService.getOneByIdCustomer(requestParamsForGettingList.getPage(),
-                requestParamsForGettingList.getSize(),
+    public List<InvoiceCustomerResponseDto> getOneInvoiceByIdCustomer(RequestParamsForGettingList requestParamsForGettingList, @PathVariable("id_customer") Integer id) {
+        List<InvoiceCustomerResponseDto> data = invoiceService.getOneByIdCustomer(
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch(), id);
 
+        return data;
+    }
+    @ApiOperation(value = "Get all invoices with id and status", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/ByCustomer/status")
+    public PaginationResponse<InvoiceCustomerDto> getInvoiceStatusByCustomer(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<InvoiceCustomerDto> data = invoiceService.findAllInvoiceIdAndStatusByCustomer(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort(),
+                requestParamsForGettingList.getSearch());
+
         return new PaginationResponse<>(data);
     }
-
 }
