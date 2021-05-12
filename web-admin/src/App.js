@@ -20,7 +20,7 @@ import Invoice from './components/Invoice/Invoice'
 import ViewInvoice from './components/Invoice/ViewInvoice'
 
 import Customer from './components/Public/Customer'
-import Login from './components/Public/Login'
+import Login from './components/Login/Login'
 import Employee from './components/Employee/Employee'
 import Sale from './components/Sale/Sale'
 import NewBrand from './components/Brand/NewBrand';

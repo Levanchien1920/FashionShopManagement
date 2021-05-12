@@ -2,6 +2,7 @@ import axios from 'axios';
 import React , {useState , useEffect} from 'react'
 import Card from './Card'
 import Carousel from 'react-elastic-carousel';
+import Api from '../Config/Api'
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -11,8 +12,9 @@ const breakPoints = [
 export default function NewProduct() {
     const [listProductNP , setlistProductNP] = useState([]);
     useEffect(() => {
-             axios.get('http://localhost:9090/api/v1/client/product/new').then((response)=> {
+            Api.get('client/product/new').then((response)=> {
                 setlistProductNP(response.data.content);
+                console.log(response.data.content);
             }).catch((error) =>{
             })
     },[])

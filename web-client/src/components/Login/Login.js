@@ -1,8 +1,8 @@
 import React, {useState , useContext } from 'react'
 import {LoginContext} from '../../context/LoginContext'
-import axios from 'axios'
 import {useHistory} from 'react-router'
 import {Link} from 'react-router-dom'
+import Api from '../Config/Api'
 function Login() {
     const [userInput , setuserInput] = useState({username:"", password:""});
     const [errorMessage, setErrorMessage] = useState(null);
@@ -10,16 +10,22 @@ function Login() {
     const { LoginDispatch} = useContext(LoginContext);
     const history = useHistory();
     const OnSubmitHandle =  (e) =>{
+        setErrorMessage("");
+        setspace("");
         if (userInput.username !== "" && userInput.password !== ""){
-            axios.post("http://localhost:9090/api/v1/auth/login", userInput).then((response)=> {
-                setErrorMessage(null);
+            Api.post("auth/login", userInput).then((response)=> { 
                 const {token, info} = response.data;
-                localStorage.setItem("token", token);
-                localStorage.setItem("id", info.id);
-                localStorage.setItem("username", info.username);
-                localStorage.setItem("fullname", info.fullName);
-                LoginDispatch();
-                history.push("/");
+                console.log(response.data)
+                if(response.data.info.roleNames[0] === "customer"){
+                    localStorage.setItem("token", token);
+                    localStorage.setItem("id", info.id);
+                    localStorage.setItem("username", info.username);
+                    localStorage.setItem("fullname", info.fullName);
+                    LoginDispatch();
+                    history.push("/");
+                }else{
+                    setErrorMessage("account dont'correct");
+                }
             }).catch((error) =>{
                 setErrorMessage(error.response.data.message);
                 setspace("");
@@ -59,7 +65,7 @@ function Login() {
                                         <div className="error-mesage"><h3>{space}</h3></div>
                                     )}
                                     {errorMessage && (
-                                        <div className="error-mesage"><h3>Username or Password wrong</h3></div>
+                                        <div className="error-mesage"><h3>{errorMessage}</h3></div>
                                     )}
                                     <div className="col-md-12">
                                         <button className="btn" onClick={OnSubmitHandle}>Submit</button>

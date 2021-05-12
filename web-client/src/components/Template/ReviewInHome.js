@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Api from '../Config/Api';
 import React, { useState } from 'react'
 import { useEffect } from 'react';
 import Carousel from 'react-elastic-carousel';
@@ -9,7 +9,7 @@ const breakPoints = [
 export default function ReviewInHome() {
     const [state, setstate] = useState([]);
     useEffect(() => {
-        axios.get('http://localhost:9090/api/v1/client/review/good').then((response)=> {
+        Api.get('client/review/good').then((response)=> {
             setstate(response.data.content);
         }).catch((error) =>{
         })
@@ -22,7 +22,7 @@ export default function ReviewInHome() {
                         {state.map((review) => (
                             <div class="review-slider-item">
                                 <div class="review-img">
-                                    <img src="img/review-1.jpg" alt="Image"></img>
+                                    <img src="img/review-4.jpg" alt="Image"></img>
                                 </div>
                                 <div class="review-text">
                                     <h2>{review.name_User}</h2>

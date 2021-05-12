@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import {Link} from 'react-router-dom'
-import API from '../Config/Api';
+import API from '../../Config/Api';
 import OrderItem from './OrderItem'
-export default function Order() {
+export default function ViewOrder(props) {
 
     const [user , setuser] = useState("");
     const [orderItem, setOrderItem] = useState([]);
+    // const [listInvoice, setListInvoice] = ([])
+    const [totalMoney, setTotalMoney] = useState(0)
+    const id = props.match.params.id
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
@@ -15,8 +18,19 @@ export default function Order() {
 
            API.get('/client/invoice/' + idUser, token)
            .then(response => {
-               console.log(response.data.content)
-                setOrderItem(response.data.content)
+                // setOrderItem(response.data)
+                let listProductOfInvoiceGetApi = response.data
+                let listProductOfInvoiceHandled = [];
+                let total_Money = 0
+                listProductOfInvoiceGetApi.forEach(element => {
+                    if(element.id == id) {
+                        listProductOfInvoiceHandled.push(element)
+                        total_Money += element.total_Money
+                    }
+                });
+
+                setOrderItem(listProductOfInvoiceHandled)
+                setTotalMoney(total_Money)
            })
            .catch(function (error) {
              console.log(error)
@@ -43,32 +57,33 @@ export default function Order() {
                                 <table className="table table-bordered">
                                     <thead className="thead-dark">
                                         <tr>
-                                            <th>No</th>
                                             <th>Product</th>
-                                            <th>Date</th>
                                             <th>Price</th>
-                                            <th>Status</th>
-                                            <th>Action</th>
+                                            <th>Nummber</th>
+                                            <th>Total Money</th>
+                                           
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {/* <tr>
-                                            <td>1</td>
-                                            <td>Product Name</td>
-                                            <td>01 Jan 2020</td>
-                                            <td>$99</td>
-                                            <td>Approved</td>
-                                            <td><button className="btn">View</button></td>
-                                        </tr> */}
                                         {(Array.isArray(orderItem) && orderItem.length > 0) ? (
                                             orderItem.map((order, index) =>          
-                                            <OrderItem order={order}  key={index}  />
+                                            <tr>
+                                                <td>{order.name_Product}</td>
+                                                <td>{order.price}</td>
+                                                <td>{order.number_Product}</td>
+                                                <td>{order.total_Money}</td>
+                                            </tr>
                                             )
+
                                             ) :(
-                                                <div>
-                                                    
-                                                </div>
+                                                <tr></tr>
                                             )}
+                                            <tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>{"Total Money: " + totalMoney}</td>
+                                            </tr>
                                     </tbody>
                                 </table>
                             </div>

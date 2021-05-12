@@ -1,41 +1,45 @@
-import API from '../Config/Api';
-import React , {useState , useEffect, useContext} from 'react'
-import {LoginContext} from '../Context/LoginContext'
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
-import { useHistory } from 'react-router';
+import React , {useState , useEffect, useContext} from 'react'
+import {LoginContext} from '../Context/LoginContext'
+import {useHistory} from 'react-router-dom'
+import API from '../Config/Api';
 export default function EditPost(props) {
-    const [post, setPost] = useState({
-        content: "",
-        id_image: 1,
-        title: ""
-    });
-    const history=useHistory();
-    const check = useContext(LoginContext);
-    const idPost = props.match.params.id
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
+    const history = useHistory();
+    const [post, setPost] = useState({
+        // title : "",
+        // content : "",
+        // id_image : 0
+    });
+    const check = useContext(LoginContext);
+    const idPost = props.match.params.id
     useEffect(() => {
-        API.get('post/' + idPost, token).then((response)=> {
-            let temp = response.data
-            setPost({...post,content: temp.content,
-            id_image: temp.id_image,
-            title: temp.title });
-        }).catch((error) =>{
+            check.checklogin();
+          
+            API.get('post/' + idPost, token).then((response)=> {
+                let temp = response.data
+                console.log(response.data)
+                setPost({...post,
+                    title: temp.title,
+                    content: temp.content,
+                    id_image: temp.id_image
+                });
 
-        });
+                console.log(post)
+            }).catch((error) =>{
+    
+            });
+
     }, []);
-
-    const onChange = (e) => {  
-        e.persist();  
-        setPost({...post, [e.target.name]: e.target.value});  
-        console.log(post)
-    } 
 
     const editPost =  (e) =>{
         e.preventDefault();  
+        console.log(post)
         const data = {
+            name : "hello",
             content: post.content,
             id_image: 1,
             title: post.title
@@ -82,35 +86,31 @@ export default function EditPost(props) {
             <div className="row">
                 <div className="col-12">
                     <div className="card card-body">
-                        <form className="form-horizontal m-t-30" onSubmit={editPost}>
+                        <form className="form-horizontal m-t-30">
                             <div className="form-group">
-                                {/* <label for="name">Name</label>
-                                <input type="text" className="form-control"  id="name"
-                                    onChange = {onChange} value={post.name}
-                                 /> */}
-                            </div>
-                            <div className="form-group" >
-                                <label for="name">Title </label>
-                                <input type="text" className="form-control" name="title"
-                                    onChange={onChange} value={post.title}/>
+                                <label htmlFor="title">Title</label>
+                                <input type="text" className="form-control" value={post.title} id="title" name="title"
+                                    onChange={e => setPost({...post ,title : e.target.value})}/>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="des">Description</label>
+                                <label htmlFor="content">Content</label>
                                 <CKEditor
-                                    editor = { ClassicEditor }
-                                    data = {post.content}
-                                    onReady = { editor => {
+                                    
+                                    editor={ ClassicEditor }
+                                    data={post.content}
+                                    onReady={ editor => {
                                         // console.log( 'Editor is ready to use!', editor );
                                     } }
                                     onChange={ ( event, editor ) => {
-                                        const data = editor.getData();
-                                        setPost({...post, content : data})
-                                        // console.log( { event, editor, data } );
+                                        let data = editor.getData();
+                                        setPost({...post , content : data});
                                     } }
                                 />
                             </div>
+  
                             <div className="form-group">
-                                <button type="submit" name="example-email" className="btn btn-info" >Save </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={editPost}>Save </button>
+                               
                             </div>
                         </form>
                     </div>
@@ -118,7 +118,7 @@ export default function EditPost(props) {
             </div>
         </div>
     </div>
-     )}
-     </>
+    )}
+    </>
     )
 }

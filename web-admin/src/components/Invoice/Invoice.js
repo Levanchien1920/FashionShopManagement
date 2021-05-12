@@ -78,7 +78,7 @@ export default function Invoice() {
                 <div className="page-breadcrumb">
                     <div className="row">
                         <div className="col-5 align-self-center">
-                            <h4 className="page-title">Review</h4>
+                            <h4 className="page-title">Invoice</h4>
                         </div>
                         <div className="col-7 align-self-center">
                             <div className="d-flex align-items-center justify-content-end">
@@ -87,7 +87,7 @@ export default function Invoice() {
                                         <li className="breadcrumb-item">
                                             <Link to="/">Home</Link>
                                         </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Review</li>
+                                        <li className="breadcrumb-item active" aria-current="page">Invoice</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -115,7 +115,7 @@ export default function Invoice() {
                                             {ListInvoice.map((Invoice) => (
                                                 <tr key={Invoice.id}>
                                                     <th scope="row">{Invoice.id}</th>
-                                                    <td>{(Invoice.idEmployee) ? Invoice.idEmployee : "Customer"}</td>
+                                                    <td>{(Invoice.employee) ? Invoice.employee : "Customer"}</td>
                                                     <td>{(Invoice.is_paid) ? "Paid" : "Unpaid"} </td>
 
                                                     <td> <button id = {Invoice.id} onClick ={ e=> {history.push(`/view-invoice/${Invoice.id}`)}} className="btn btn-success">View</button> <button

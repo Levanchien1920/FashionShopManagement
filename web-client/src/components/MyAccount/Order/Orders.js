@@ -6,13 +6,44 @@ export default function Order() {
 
     const [user , setuser] = useState("");
     const [orderItem, setOrderItem] = useState([]);
-
+    const [listInvoice, setListInvoice] = ([])
+    const token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
+    let idUser = localStorage.getItem("id")
     useEffect(() => {
            setuser(localStorage.getItem("token"));
 
-           API.get('invoice')
+           API.get('/client/invoice/' + idUser, token)
            .then(response => {
-                setOrderItem(response.data.content)
+                // setOrderItem(response.data)
+                let listInvoiceGetApi = response.data
+                let invoice = {
+                    id: listInvoiceGetApi[0].id,
+                    total_Money: listInvoiceGetApi[0].total_Money,
+                    is_paid: listInvoiceGetApi[0].is_paid
+                }
+                let listInvoiceHandled = [];
+                listInvoiceHandled.push(invoice)
+                listInvoiceGetApi.forEach(element => {
+                    console.log(listInvoiceHandled)
+                    invoice = {
+                        id : element.id,
+                        total_Money : element.total_Money,
+                        is_paid : element.is_paid
+                    }
+                    let checkExistence = false
+                    for(let index = 0; index < listInvoiceHandled.length; index++) {
+                        if (invoice.id == listInvoiceHandled[index].id){
+                            checkExistence = true
+                        } 
+                    }
+                    if(!checkExistence) 
+                        listInvoiceHandled.push(invoice)                
+                });
+
+                // console.log(listInvoiceHandled)
+                setOrderItem(listInvoiceHandled)
            })
            .catch(function (error) {
              console.log(error)
@@ -40,9 +71,9 @@ export default function Order() {
                                     <thead className="thead-dark">
                                         <tr>
                                             <th>No</th>
-                                            <th>Product</th>
-                                            <th>Date</th>
-                                            <th>Price</th>
+                                            {/* <th>Product</th> */}
+                                            {/* <th>Date</th> */}
+                                            <th>Total Money</th>
                                             <th>Status</th>
                                             <th>Action</th>
                                         </tr>
@@ -61,9 +92,7 @@ export default function Order() {
                                             <OrderItem order={order}  key={index}  />
                                             )
                                             ) :(
-                                                <div>
-                                                    
-                                                </div>
+                                                <tr></tr>
                                             )}
                                     </tbody>
                                 </table>

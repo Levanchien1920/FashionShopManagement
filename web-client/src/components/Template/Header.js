@@ -56,7 +56,13 @@ function Header() {
                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div className="navbar-nav mr-auto">
                                 <Link to='/'className="nav-item nav-link active" >Home</Link>
-                                <Link to='/products'className="nav-item nav-link active" >Products</Link>  
+                                <Link  to={{
+                                        pathname: '/products',
+                                        state: {
+                                            check: 0, 
+                                            id : 0
+                                        }
+                                        }}className="nav-item nav-link active" >Products</Link>  
                                 {fullname  &&                              
                                 <Link to='/myaccount'className="nav-item nav-link active" >account</Link>
                                 }

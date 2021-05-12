@@ -1,24 +1,23 @@
 import React, { useEffect, useState,useContext } from 'react'
 import {Link , useHistory} from 'react-router-dom'
-import axios from 'axios'
 import {LoginContext} from '../../context/LoginContext'
+import Api from '../Config/Api';
 export default function MyAccount() {
     const login = useContext(LoginContext);
     const history = useHistory();
     const [ account, setaccount] = useState({
-            "id": 0,
-            "username": "",
-            "password": "",
-            "fullname": "",
-            "address": "",
-            "email": "",
-            "phone_number": "",
+            username: "",
+            password: "",
+            fullName: "",
+            address: "",
+            email: "",
+            phoneNumber: "",
     })
     useEffect(() => {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
-        axios.get(`http://localhost:9090/api/v1/client/user/${localStorage.getItem("id")}`,token).then((response)=> {
+        Api.get(`client/user/${localStorage.getItem("id")}`,token).then((response)=> {
             setaccount(response.data);
         }).catch((error) =>{
         });
@@ -46,12 +45,17 @@ export default function MyAccount() {
                             <div className="row">
                                 <div className="col-md-12">
                                     <h5>Payment Address</h5>
-                                    <p> Name : {account.fullname}</p>
-                                    <p> UserName : {account.username}</p>
-                                    <p> Email : {account.email}</p>
-                                    <p> Mobile: {account.phoneNumber}</p>
-                                    <p> Address : {account.address}</p>
-                                    <button className="btn"onClick={() => ( history.push("/updateaccount"))}>Edit Address</button>
+                                    <p> Name : </p>
+                                    <input className="form-control inputdisable" type="text" value={account.fullName} disabled></input>
+                                    <p> UserName :</p>
+                                    <input className="form-control inputdisable" type="text" value= {account.username} disabled></input>
+                                    <p> Email : </p>
+                                    <input className="form-control inputdisable" type="text" value={account.email} disabled></input>
+                                    <p> Mobile: </p>
+                                    <input className="form-control inputdisable" type="text" value={account.phoneNumber} disabled></input>
+                                    <p> Address :</p>
+                                    <input className="form-control inputdisable" type="text" value= {account.address} disabled></input>
+                                    <button className="btn"onClick={() => ( history.push("/updateaccount"))}>Edit Account</button>
                                 </div>
                             </div>
                         </div>

@@ -12,8 +12,13 @@ const tableStyle = {
 
 const thStyle = {
 //   border: '1px solid black',
-  width: '300px',
+  width: '400px',
   overflow: 'hidden'
+}
+
+const titleStyle = {
+    width: '200px',
+    overflow: 'hidden'
 }
 
 function Post() {
@@ -128,7 +133,7 @@ function Post() {
                                             <tr>
                                                 <th scope="col">Id</th>
                                                 <th scope="col">Name</th>
-                                                <th scope="col" style = {thStyle}>Title</th>
+                                                <th scope="col" style = {titleStyle}>Title</th>
                                                 <th scope="col" style = {thStyle}>Content</th>
                                                 {/* <th scope="col">Detail</th> */}
                                                 <th scope="col">Action</th>

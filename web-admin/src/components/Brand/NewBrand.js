@@ -1,4 +1,4 @@
-import axios from 'axios';
+import Api from '../Config/Api';
 import React, { useState } from 'react'
 
 export default function NewBrand() {
@@ -7,11 +7,11 @@ export default function NewBrand() {
         name : ""
     });
     const savebrand =  (e) =>{
-        if( newvalue.brand === "" ) {
+        if( newvalue.name === "" ) {
             setmessage("You have not entered enough");
         }else {
             console.log(newvalue)
-            axios.post("http://localhost:9090/api/v1/brand",newvalue,{
+            Api.post("v1/brand",newvalue,{
                 headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
@@ -55,6 +55,7 @@ export default function NewBrand() {
                                     <input type="text" className="form-control" 
                                     onChange={e => setnewvalue({...newvalue ,name : e.target.value})} value={newvalue.name}></input>
                                 </div>
+                                { (message !=="") ? (<p>{message}</p>):(<></>)}
                                 <div className="form-group">
                                     <button type="button" name="example-email" className="btn" onClick={savebrand}>Save </button>
                                 </div>
