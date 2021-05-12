@@ -3,9 +3,11 @@ import API from '../Config/Api';
 import { Link } from 'react-router-dom'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
+import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
 export default function Invoice() {
     const check = useContext(LoginContext);
+    const history = useHistory()
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -22,27 +24,19 @@ export default function Invoice() {
     }
 
     useEffect(() => {
-        // const paramsString = queryString.stringify(filters)
-        // const requestUrl = `invoice/ByEmployee?${paramsString}`
-        // API.get(requestUrl)
-        //     .then((response)=> {
-        //         setListInvoice(response.data.content)
-        //         setPagination({
-        //             page: response.data.pageIndex,
-        //             totalPages: response.data.totalPage
-        //         })
-        //     }).catch((error) =>{
-        // });
-
         async function getData () {
             let token = {
                 headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
             }
             check.checklogin();
             const paramsString = queryString.stringify(filters)
-            const requestUrl = `invoice/ByEmployee?${paramsString}`
+            const requestUrl = `/invoice/ByEmployee/status?${paramsString}`
             API.get(requestUrl,token).then((response)=> {
+                
+                console.log(response.data.content)
+
                 setListInvoice(response.data.content)
+
                 setPagination({
                     page: response.data.pageIndex,
                     totalPages: response.data.totalPage
@@ -63,28 +57,16 @@ export default function Invoice() {
         console.log(filters)
         console.log('New page: ', newPage)
     }
-    const viewInvoice = (e) => {
-        e.preventDefault()
-        let id = e.target.id.toString()
-        console.log(id)
-    }
+
 
     const deleteInvoice = (e) => {
         e.preventDefault()
         let id = e.target.id.toString()
-        console.log(id)
 
-        var path = 'review/'
-        path += id
-
-        API.delete(path)
-        .then(response => {
-           
+        API.delete('invoice/' + id, token)
+        .then(response => {       
             console.log(response.data)
             alert("Xóa review thành công")
-            // window.localStorage.removeItem("cart")
-            // history.push('/home')
-    
         })
         .catch(errors => {
               console.log(errors)
@@ -133,10 +115,12 @@ export default function Invoice() {
                                             {ListInvoice.map((Invoice) => (
                                                 <tr key={Invoice.id}>
                                                     <th scope="row">{Invoice.id}</th>
-                                                    <td>{(Invoice.fullname_employee) ? Invoice.fullname_employee : "Customer"}</td>
-                                                    <td>{(Invoice.is_paid) ? "Paid" : "Unpaid"}</td>
+                                                    <td>{(Invoice.idEmployee) ? Invoice.idEmployee : "Customer"}</td>
+                                                    <td>{(Invoice.is_paid) ? "Paid" : "Unpaid"} </td>
 
-                                                    <td> <button id = {Invoice.id} onClick={viewInvoice} className="btn btn-success">View</button> <button id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button></td>
+                                                    <td> <button id = {Invoice.id} onClick ={ e=> {history.push(`/view-invoice/${Invoice.id}`)}} className="btn btn-success">View</button> <button
+                                                                 id = {Invoice.id} onClick ={ e=> {history.push(`/edit-invoice/${Invoice.id}`)}} className="btn btn-info">Edit</button> <button 
+                                                                id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

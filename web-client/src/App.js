@@ -15,6 +15,7 @@ import Order from './components/MyAccount/Order/Orders'
 import UpdateAccount from './components/MyAccount/UpdateAccount'
 import Post from './components/Post/Post';
 import Checkout from './components/Checkout/Checkout'
+import PostDetail from './components/Post/PostDetail';
 
 function App() {
   return (
@@ -34,7 +35,9 @@ function App() {
             <Route path='/contact' component={Contact} /> 
             <Route path='/checkout' component={Checkout} />  
             <Route path='/productdetail/:id' component={ProductDetail} /> 
+            
             <Route path='/post' component={Post} /> 
+            <Route path='/post-detail/:id' component={PostDetail} /> 
           <Footer/>
           </LoginContextProvider>
       </BrowserRouter>

@@ -62,7 +62,7 @@ export default function EditPost(props) {
         <div className="page-breadcrumb">
             <div className="row">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">New Product</h4>
+                    <h4 className="page-title">Edit Post</h4>
                 </div>
                 <div className="col-7 align-self-center">
                     <div className="d-flex align-items-center justify-content-end">
@@ -71,7 +71,7 @@ export default function EditPost(props) {
                                 <li className="breadcrumb-item">
                                     <a href="#">Home</a>
                                 </li>
-                                <li className="breadcrumb-item active" aria-current="page">New Product</li>
+                                <li className="breadcrumb-item active" aria-current="page">Edit Post</li>
                             </ol>
                         </nav>
                     </div>

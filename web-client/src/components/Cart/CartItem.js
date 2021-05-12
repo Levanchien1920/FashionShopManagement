@@ -38,12 +38,13 @@ class CartItem extends Component {
         e.preventDefault();
         const { product } = this.props;
         let {quantity} = this.state
-       
-        this.setState({
-            quantity: parseInt(quantity) + 1,
-            totalPrice: product.price * (parseInt(quantity) + 1) 
-        })
-        this.props.changeQty(product, parseInt(quantity) + 1)
+        if(product.number > quantity) {
+            this.setState({
+                quantity: parseInt(quantity) + 1,
+                totalPrice: product.price * (parseInt(quantity) + 1) 
+            })
+            this.props.changeQty(product, parseInt(quantity) + 1)
+        }
     }
 
     removeQty(e) {
@@ -56,8 +57,9 @@ class CartItem extends Component {
                 totalPrice: product.price * (parseInt(quantity) - 1) 
             })
             this.props.changeQty(product, parseInt(quantity) - 1)
-        }
-           
+        }    else {
+
+        }     
     }
 
     render(){

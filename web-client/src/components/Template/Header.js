@@ -5,7 +5,7 @@ import {LoginContext} from '../../context/LoginContext'
 function Header() {
     const login = useContext(LoginContext);
     const [countCart, setCountCart] = useState(0);
-
+    const [keyword, setKeyword] = useState("");
     var fullname = login.Fullname;
     const history = useHistory();
     useEffect(() => {
@@ -28,6 +28,11 @@ function Header() {
     const ChangeToMyAccount = () => {
         history.push("/myaccount");
     }
+
+    const onHandleChange = (e) => {  
+        e.persist();  
+        setKeyword(e.target.value);  
+    }  
     return (
         <div>
             <div className="top-bar">
@@ -95,7 +100,12 @@ function Header() {
                         </div>
                         <div className="col-md-6">
                             <div className="search">
-                                <input type="text" placeholder="Search"></input>
+                                <input 
+                                    type="text" 
+                                    placeholder="Search"
+                                    value={keyword}
+                                    onChange={onHandleChange}
+                                ></input>
                                 <button><i className="fa fa-search"></i></button>
                             </div>
                         </div>

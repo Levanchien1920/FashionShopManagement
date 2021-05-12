@@ -3,9 +3,7 @@ import { Link } from "react-router-dom";
 import API from '../Config/Api';
 import NumberFormat from 'react-number-format';
 import CartItem from './CartItem'
-import Header from '../Header';
-import Footer from '../Footer';
-import axios from 'axios';
+
 function Cart() {
 
     const [productItem, setProductItem] = useState([]);
@@ -13,7 +11,9 @@ function Cart() {
 
 	useEffect(() => {
         let cart = JSON.parse(localStorage.getItem('cart'));
+        
         let keys = [];
+
         for (var item in cart) {
             if(cart.hasOwnProperty(item)){
               keys.push(item)
@@ -21,13 +21,13 @@ function Cart() {
           }
         if (!cart) return; 
 
-        API.get('product')
+        API.get('client/product/')
         .then(response => {
-            console.log(response.data.content)
+            // console.log(response.data.content)
             let total = 0;
             let listProduct = response.data.content
             let productItem = []
-           
+           console.log(keys)
             listProduct.forEach(function(element){
                 keys.forEach(function(key){
                     if(key == element.id) {
@@ -43,11 +43,13 @@ function Cart() {
                     }
                 })
             });
+
             console.log(productItem)
+
             for (var i = 0; i < productItem.length; i++) {
                 total += productItem[i].price * productItem[i].qty;
             }
-
+            
             setProductItem(productItem)
             setTotal(total)
 
@@ -174,8 +176,7 @@ function Cart() {
                                             <h2>Grand Total<span><NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'VND'} /></span></h2>
                                         </div>
                                         <div className="cart-btn">
-                                            <button>Update Cart</button>
-                                            <button><Link to="/checkout" style={{color: "white"}}>Checkout</Link></button>
+                                            <button><Link to="/checkout" style={{color: "black"}}>Checkout</Link></button>
                                         </div>
                                     </div>
                                 </div>
