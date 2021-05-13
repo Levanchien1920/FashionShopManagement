@@ -17,7 +17,6 @@ export default StyleSheet.create({
     alignItems:'center',
 
   },
-    
     inputContainer: {
       backgroundColor: '#fff',
       flexDirection: 'row',

@@ -10,7 +10,6 @@ const Cart = () => {
   const { navigate } = useNavigation();
   const [productItem, setProductItem] = useState([]);
   const [total, setTotal] = useState(0);
-  const [number, onChangeNumber] = React.useState(0);
   const [quantity,setQuantity]= useState([]);
   const [totalPrice,setTotalPrice]=useState([]);
   const [test,setTest] =useState(false)

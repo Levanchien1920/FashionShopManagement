@@ -1,8 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity ,Button} from 'react-native';
+import { Text, View, TouchableOpacity ,Button} from 'react-native';
 import {useNavigation } from '@react-navigation/native';
-import ComponentHeader from '../ComponentHeader';
 import axiosInstance from '../../helper/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyAccountComponent = () => {

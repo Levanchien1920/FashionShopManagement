@@ -1,6 +1,6 @@
 
 import React, { useState ,useEffect, useContext} from 'react';
-import { StyleSheet,Image, Text, View,TextInput, TouchableOpacity,ScrollView ,Dimensions,FlatList,Button} from 'react-native';
+import { Text, View,TextInput, TouchableOpacity,ScrollView ,Button} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import RNPickerSelect from "react-native-picker-select";
@@ -25,7 +25,7 @@ const ProductComponent = () => {
 
   useEffect(() => {
     if (filter.check === 0) {
-      axiosInstance.get('/client/product/').then((response)=> {
+      axiosInstance.get('/client/product').then((response)=> {
             setlistProduct(response.data.content);
         }).catch((error) =>{
         });
@@ -51,8 +51,6 @@ const ProductComponent = () => {
           });
         }
 }, [filter]);
-
-
 useEffect(() => {
   axiosInstance.get('/client/category').then((response)=> {
       setlistCategory(response.data.content);
@@ -63,6 +61,7 @@ useEffect(() => {
   }).catch((error) =>{
   });
 }, []);
+
 function search(c) {
   setfilter({
       ...filter, check : c , search : searchInput
@@ -198,8 +197,6 @@ switch (c) {
                                </TouchableOpacity>
                               </View>
                             ))}  
-
-                            
                       </View>
       </View>
 
@@ -224,12 +221,10 @@ switch (c) {
                                   <View style={{marginTop:20}}>
                                   <Text style= {{borderBottomWidth:1,fontSize:15}} >{brand.name}</Text>
                                   </View>
-                                   
                               </TouchableOpacity>
                         </View>
                             ))} 
                   </View>
-
             </View>
       </ScrollView>
       <View style= {{paddingTop:50}}></View>

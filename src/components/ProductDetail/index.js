@@ -13,12 +13,9 @@ const ProductDetailComponent = () => {
     const [id, setId] = useState("");
     const [number, onChangeNumber] = React.useState(1);
     const [star, setStar] = useState(1);
-    const [textInputValue, setTextInputValue] = React.useState('');
     const [color , setcolor] =useState([]);
     const [listProduct , setlistProduct] = useState([]);
     const [Product , setProduct] = useState([]);
-    const [listCategory, setlistCategory] = useState([]);
-    const [listBrand, setlistBrand] = useState([]);
     const {authState : {isLoggedIn},}= useContext(GlobalContext);
     const [filter , setfilter] = useState({
         check  : 0, 
@@ -36,8 +33,6 @@ const ProductDetailComponent = () => {
     const [colorSizeL , setcolorSizeL] = useState("");
     const [colorSizeXL , setcolorSizeXL] = useState("")
     const [colorSizeXXL , setcolorSizeXXL] = useState("")
-    const [brandRelated, setbrandRelated] = useState([]);
-    const [cateRelated, setcateRelated] = useState([])
     const [quantity, setquantity] = useState(1);
     const {navigate} =useNavigation();
 
@@ -223,7 +218,6 @@ const ProductDetailComponent = () => {
                                         <TextInput
                                                 style={{ textAlign:'center',}}
                                                 value={number.toString()}
-                                              
                                             />
                                    </View>
                                    <View style= {{width:40,height:40}}> 
@@ -288,29 +282,32 @@ const ProductDetailComponent = () => {
 
             <View>
 
-                    <View>
+                    <View style={{margin:10}}>
                             <Text style={{textAlign:'center',fontSize:16,color:'blue'}}>Description</Text>
-                            <Text style={{ textAlign:'center',top:5}}>{Product.des}</Text>
+                            <Text style={{ textAlign:'center',top:5,borderBottomWidth:1}}>{Product.des}</Text>
                     </View>
 
-                <View style={{top:80}}>
+                <View style={{top:10}}>
                 <Text style={{ textAlign:'center',fontSize:16,color:'blue'}}>Review</Text>
-             
-                <Stars
+            <View style={{marginTop:10}}>
+            <Stars
                         default={2.5}
                         update= {(val) => {
                             setStar(val)
                         console.log(val);}}
+                        spacing={8}
                         count={5}
-                        half={true}
-                        starSize={1000} 
+                        // half={true}
+                        starSize={50} 
                         fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
                         emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
                         halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
                     />
-                
-                
 
+            </View>
+              
+                
+                <View style={{margin:10}}>
                 <TextInput
                 style={{ 
                     height: 40, 
@@ -329,15 +326,17 @@ const ProductDetailComponent = () => {
                 placeholder="Insert your review!"
                 />
 
-                <Button  title="Submit"  onPress={submitReview}></Button>
+                </View>
+
+               <View style={{marginLeft:50,marginRight:50}}>
+               <Button  title="Submit"  onPress={submitReview}></Button>
+               </View>
 
                 </View>
 
                 <View style= {{paddingTop:50}}></View> 
 
                 </View>
-               
-               
                 <View style= {{paddingTop:50}}></View> 
            
         </ScrollView>

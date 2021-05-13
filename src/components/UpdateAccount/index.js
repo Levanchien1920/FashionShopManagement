@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { Text, View,TextInput, TouchableOpacity } from 'react-native';
+import { Text, View} from 'react-native';
 import Container from '../common/Container';
 import Input from '../common/Input';
 import CustomButtom from '../common/CustomButton';
@@ -11,12 +11,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 const UpdateAccountComponent = ({
     onSubmit,
     onChange,
-    form,
-    loading,
-    error,
     errors,
-    setError
-
   }) => {
     const {navigate} =useNavigation();
 
@@ -33,7 +28,6 @@ const UpdateAccountComponent = ({
 AsyncStorage.getItem('id')
 .then((value) => {
   const data = JSON.parse(value);
-  console.log("data"+data);
 });
 
 useEffect(() => {   
@@ -69,7 +63,6 @@ useEffect(() => {
                 onChange({name:"fullname",value});
             }}
             error={errors.fullname}
-            
            />  
             <Input
             lable="Email"
@@ -130,19 +123,8 @@ useEffect(() => {
             }}
             error={errors.password}
            />  
-           
-           
-            
         <CustomButtom onPress={onSubmit} title="Save change"  secondary />
-
-        {/* <View  style = {styles.createSection}>
-            <Text  style = {styles.infoText}> You already have account ? </Text>
-            <TouchableOpacity onPress= {() => {navigate('LogIn')}}>
-                <Text  style = {styles.linkBtn}>Login</Text>
-            </TouchableOpacity>
-        </View> */}
          </View>
-       
         
         </Container>
     );

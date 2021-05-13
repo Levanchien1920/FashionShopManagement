@@ -91,14 +91,6 @@ export default StyleSheet.create({
       flexDirection: 'row',
       marginTop: 10,
     },
-    filterActiveButtonContainer: {
-      backgroundColor: '#242424',
-      paddingHorizontal: 12,
-      paddingVertical: 6,
-      borderRadius: 4,
-      marginRight: 10,
-    },
-  
     listItemContainer: {
       flexDirection: 'row',
       flexWrap: 'wrap',
@@ -124,17 +116,6 @@ export default StyleSheet.create({
       color: 'red',
       backgroundColor: 'white',
       textAlign:'center',
-    },
-    //
-    seeMoreContainer: {
-      marginTop: 10,
-      padding: 12,
-      borderTopWidth: 0.6,
-      borderTopColor: '#ededed',
-      alignItems: 'center',
-    },
-    seeMoreText: {
-      color: '#0e45b4',
-    },
+    }
      
 })

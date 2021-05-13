@@ -1,10 +1,6 @@
-import React, {useContext ,useState} from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import HomeNavigator from './HomeNavigator';
 import DrawerNavigator from './DrawerNavigator';
-import CustomButton from '../components/common/CustomButton';
-import {GlobalContext} from '../context/Provider';
 const AppNavContainer = () => {
 
     return (

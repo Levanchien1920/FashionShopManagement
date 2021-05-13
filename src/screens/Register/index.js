@@ -1,6 +1,6 @@
 
 import React, { useEffect, useState } from 'react';
-import { StyleSheet, Text, View ,Alert} from 'react-native';
+import {Alert} from 'react-native';
 import RegisterComponent from '../../components/Signup';
 import {useNavigation } from '@react-navigation/native';
 import {GlobalContext} from '../../context/Provider';
@@ -144,15 +144,12 @@ const Register = () => {
     }
 
   }
-
     return (
         <RegisterComponent
       onSubmit={onSubmit}
       onChange={onChange}
-      form={form}
       errors={errors}
-      error={error}
-      loading={loading}
+     
     />
     );
     }

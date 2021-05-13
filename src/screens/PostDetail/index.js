@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../helper/axiosInstance';
-import { ScrollView, StyleSheet, TouchableOpacity,Text, View,TextInput,Button } from 'react-native';
+import { Text, View,TextInput,Button } from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -61,8 +61,8 @@ const PostDetail = () => {
                      
 
                       <View>
-                            <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:</Text> 
-                            <Text>{post.name}</Text>
+                            <Text style= {{color:'blue',fontSize:16}}>Tiêu đề:</Text> 
+                            <Text>{post.title}</Text>
                       </View>
                       <View>
                          <Text style= {{color:'blue',fontSize:16}} >Nội dung:</Text> 
@@ -70,8 +70,8 @@ const PostDetail = () => {
                       </View>
 
                       <View>
-                         <Text style= {{color:'blue',fontSize:16}} >Link:</Text> 
-                         <Text>{post.link}</Text>
+                         <Text style= {{color:'blue',fontSize:16}} >Id image:</Text> 
+                         <Text>{post.id_image}</Text>
                       </View>
                       
                  </View>

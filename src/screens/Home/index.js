@@ -1,8 +1,7 @@
 
 import { useNavigation } from '@react-navigation/core';
 import React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
-import Container from '../../components/common/Container';
+import { TouchableOpacity} from 'react-native';
 import HomeComponent from '../../components/Home';
 import Icon from '../../components/common/Icon';
 const Home = () => {

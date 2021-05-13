@@ -1,15 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import {Text,View,TextInput,Image,Button,ScrollView,Alert} from "react-native";
+import {Text,View,ScrollView} from "react-native";
 import axiosInstance from "../../helper/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
-import { useNavigation } from "@react-navigation/native";
 import {GlobalContext} from '../../context/Provider';
 const Invoice = () => {
-  const {navigate} =useNavigation();
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
   console.log(isLoggedIn);
-  const [invoice,setInvoice] = useState([]);
+  const [invoices,setInvoice] = useState([]);
   useEffect(() => {   
     AsyncStorage.getItem('token')
     .then((res) => {
@@ -22,7 +20,8 @@ const Invoice = () => {
           } 
           }).then((response)=> {
               setInvoice(response.data.content);
-              console.log(invoice);
+              console.log("invoice s");
+              console.log(invoices);
           }).catch((error) =>{
           });
         })
@@ -35,8 +34,8 @@ const Invoice = () => {
     </View>
     <ScrollView style={styles.bodyContainer}>
     <ScrollView style={{marginTop:'10%',marginLeft:'10%',marginRight:'10%'}}> 
-          { Array.isArray(invoice) && invoice.length > 0  ? (
-          invoice.map((invoice,index) => (
+          { Array.isArray(invoices) && invoices.length > 0  ? (
+          invoices.map((invoice,index) => (
             <View key={index} style={{marginTop:20, borderBottomWidth:1,borderColor:"yellow"}}>
                  <View style= {{flexDirection:'row',top:5}}>
                       <Text style= {{color:'blue',fontSize:16}}>Full name:</Text> 

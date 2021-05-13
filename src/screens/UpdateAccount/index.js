@@ -1,12 +1,11 @@
 
 import React, { useContext, useEffect, useState } from 'react';
-import { StyleSheet, Text, View ,Alert} from 'react-native';
+import { View ,Alert} from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import UpdateAccountComponent from '../../components/UpdateAccount';
 import {useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
 import {GlobalContext} from '../../context/Provider';
-// import isEmail from 'validator';
 
 
 const UpdateAccount = () => {
@@ -144,7 +143,7 @@ const UpdateAccount = () => {
         onSubmit={onSubmit}
         errors={errors}
         error={error}
-         onChange={onChange}/>
+        onChange={onChange}/>
         </View>
         
     );

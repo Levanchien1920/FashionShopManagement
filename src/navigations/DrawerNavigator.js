@@ -19,8 +19,6 @@ const DrawerNavigator = () => {
           <Drawer.Screen name={'Register'} component= {Register}></Drawer.Screen>
           <Drawer.Screen name={'MyAccount'} component= {MyAccount}></Drawer.Screen>
           <Drawer.Screen name={'Invoice'} component= {Invoice}></Drawer.Screen>
-
-
         </Drawer.Navigator>
 
     );

@@ -12,7 +12,6 @@ import axiosInstance from '../../helper/axiosInstance';
 
 const Login = () => {
   
- 
   const [form, setForm] = useState({});
   const {params} = useRoute();
   const [errors, setErrors] = useState({});
@@ -100,9 +99,7 @@ const Login = () => {
     <LoginComponent
       onSubmit={onSubmit}
       onChange={onChange}
-      form={form}
       error={error}
-      loading={loading}
       errors={errors}
     />
   );
