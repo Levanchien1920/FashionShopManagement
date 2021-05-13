@@ -73,6 +73,14 @@ const SideMenu = ({navigation}) => {
 
                           </Button>
                     </View>
+
+                    <View style = {{ marginTop :20}}>
+                          <Button  title="Xem hóa đơn" onPress= {() =>  {
+                                  navigation.navigate('Invoice')
+                                  }} >
+
+                          </Button>
+                    </View>
                 
                     
                     <View style = {{ marginTop :40}}>

@@ -6,7 +6,11 @@ import UpdateAccountComponent from '../../components/UpdateAccount';
 import {useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
 import {GlobalContext} from '../../context/Provider';
+// import isEmail from 'validator';
+
+
 const UpdateAccount = () => {
+  const validator = require('validator');
     const [form, setForm] = useState({});
     const {navigate} = useNavigation();
     const [test,setTest] =useState(false)
@@ -35,6 +39,7 @@ const UpdateAccount = () => {
 
     const onChange = ({name, value}) => {
         setForm({...form, [name]: value});
+        setErrors({...errors, [name]: ''})
       }
       const onSubmit = () => {
         setErrors((prev) => {
@@ -81,6 +86,12 @@ const UpdateAccount = () => {
             setErrors((prev) => {
               return {...prev, email: 'Please add a email'};
             });
+          }else {
+              if(!validator.isEmail(form.email)) {
+                setErrors((prev) => {
+                  return {...prev, email: 'Email invalid'};
+                });
+              }
           }
           if (!form.password) {
             setErrors((prev) => {
@@ -94,7 +105,7 @@ const UpdateAccount = () => {
             });
           }
 
-          if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber) ) {
+          if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber && validator.isEmail(form.email) ) ) {
             const userUpdate= {
               "username": form.username,
               "password": form.password,
@@ -106,10 +117,16 @@ const UpdateAccount = () => {
           }
           console.log(userUpdate);
 
+        AsyncStorage.getItem('token')
+        .then((res) => {
             AsyncStorage.getItem('id')
             .then((value) => {
               console.log("value:"+value);
-                axiosInstance.patch(`/client/user/${value}`, userUpdate).then((response)=> {
+                axiosInstance.patch(`/client/user/${value}`, userUpdate,  {
+                  headers: {
+                    'Authorization': `Bearer ${res}`
+                  } 
+                  }).then((response)=> {
                   setSuccess(true)
                    navigate('MyAccount');
                 }).catch((error) =>{
@@ -117,6 +134,7 @@ const UpdateAccount = () => {
                     console.log("loi roi");
                 });     
             });
+          })
       }
     }
   

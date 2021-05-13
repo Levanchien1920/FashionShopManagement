@@ -14,15 +14,24 @@ const Cart = () => {
   const [quantity,setQuantity]= useState([]);
   const [totalPrice,setTotalPrice]=useState([]);
   const [test,setTest] =useState(false)
+  const [empty,setEmpty] =useState(false)
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
   console.log(isLoggedIn);
   useEffect(()=>{
     if(test) {
-        Alert.alert(`Checkout is fail,please log in!`)
+        Alert.alert(`Checkout is failed,please log in!`)
     }
     setTest(false);
     }
   ,[test])
+
+  useEffect(()=>{
+    if(empty) {
+        Alert.alert(`Cart is empty!`)
+    }
+    setEmpty(false);
+    }
+  ,[empty])
 
   useEffect(() => {
 
@@ -285,10 +294,16 @@ const addQty = (product,index) => {
                         <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>Total all product:{total}</Text>
                       </View>
                       <View>
-                          <Button color="chocolate"  title="Checkout" onPress={() => { if(!isLoggedIn) {
+                          <Button color="chocolate"  title="Checkout" onPress={() => { 
+                            if(isLoggedIn===false) {
                             setTest(true);
-                          }else {
-                            navigate("Checkout")
+                           }else {
+                            if(productItem.length===0) {
+                              setEmpty(true)
+                            }else {
+                              navigate("Checkout")
+                            }
+                            
                           }
                            }}>
                         

@@ -15,6 +15,7 @@ const UpdateAccountComponent = ({
     loading,
     error,
     errors,
+    setError
 
   }) => {
     const {navigate} =useNavigation();

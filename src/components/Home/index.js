@@ -131,6 +131,7 @@ const HomeComponent = () => {
                         
                       ))}  
                       </View>
+                      <View style= {{paddingTop:50}}></View>
                   </View>
 
                   

@@ -8,25 +8,22 @@ import {useContext} from 'react';
 import axiosInstance from '../../helper/axiosInstance';
 
 const Register = () => {
+  const validator = require('validator');
     const [form, setForm] = useState({});
     const {navigate} = useNavigation();
     const [errors, setErrors] = useState({});
-    const [test,setTest] =useState(false)
+  
     const [reType,setRetype] =useState(false)
-  useEffect(()=>{
+    const [test,setTest] =useState(false)
+    useEffect(()=>{
       if(test) {
           Alert.alert(`Register is fail,please try again!`)
       }
-      if(reType) {
-        Alert.alert(`Register is fail,please try again!`)
-    }
       setTest(false)
-      setRetype(false)
-  }
+      }
     ,[test])
 
      useEffect(()=>{
-     
       if(reType) {
         Alert.alert(`Password and Retype password  is not equal!!`)
     }
@@ -90,7 +87,13 @@ const Register = () => {
         setErrors((prev) => {
           return {...prev, email: 'Please add a email'};
         });
-      }
+      }else {
+        if(!validator.isEmail(form.email)) {
+          setErrors((prev) => {
+            return {...prev, email: 'Email invalid'};
+          });
+        }
+    }
       if (!form.password) {
         setErrors((prev) => {
           return {...prev, password: 'Please add a password'};
@@ -109,7 +112,7 @@ const Register = () => {
           return {...prev, retypepassword: 'Please add a retype password'};
         });
       }
-      if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber&& form.retypepassword)) {
+      if ((form.username && form.password && form.fullname && form.address && form.email && form.phonenumber&& form.retypepassword && validator.isEmail(form.email))) {
 
         if(form.password!==form.retypepassword) {
           console.log("nonoooo");

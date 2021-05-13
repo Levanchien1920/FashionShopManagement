@@ -6,15 +6,16 @@ import axiosInstance from '../../helper/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GlobalContext} from '../../context/Provider';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-
+import Stars from 'react-native-stars';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 const ProductDetailComponent = () => {
     const route = useRoute();
     const [id, setId] = useState("");
     const [number, onChangeNumber] = React.useState(1);
+    const [star, setStar] = useState(1);
     const [textInputValue, setTextInputValue] = React.useState('');
     const [color , setcolor] =useState([]);
     const [listProduct , setlistProduct] = useState([]);
-    const [star , setstar] = useState(0);
     const [Product , setProduct] = useState([]);
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
@@ -41,13 +42,29 @@ const ProductDetailComponent = () => {
     const {navigate} =useNavigation();
 
     const [test,setTest] =useState(false)
+    const [success,setSuccess] =useState(false)
     useEffect(()=>{
         if(test) {
             Alert.alert(`Review is failed,Please log in or fill out my review`)
         }
         setTest(false)
-    }
-      ,[test])
+    },[test])
+
+    
+    useEffect(()=>{
+        if(success) {
+            Alert.alert(`Review success`)
+        }
+        setSuccess(false)
+    },[success])
+
+    const [login,setLogin] =useState(false)
+    useEffect(()=>{
+        if(login) {
+            Alert.alert(`Review is failed,Please log in`)
+        }
+        setLogin(false)
+    },[login])
 
       useEffect(()=>{
         setquantity(number)
@@ -122,21 +139,25 @@ const ProductDetailComponent = () => {
     }
 
     function submitReview() {
-       
-        if (isLoggedIn == true && OutputReview.content!=="") {
-            axiosInstance.post(`/client/review`, OutputReview).then((response)=> {
-                console.log("review success");
-            }).catch((error) =>{
-                console.log(error);
-            });
-        } else {
-            setTest(true)
-            console.log("moi ban dang nhap");
+        if(!isLoggedIn) {
+            setLogin(true)
+        }else {
+            if(OutputReview.content==="") {
+                setTest(true)
+            }else {
+                axiosInstance.post(`/client/review`, OutputReview).then((response)=> {
+                    setSuccess(true);
+                }).catch((error) =>{
+                    setTest(true)
+                });
+            } 
         }
+       
+  
         
     }
     return (
- <View style= {{height:'100%',width:'100%'}}>
+ <View>
             <View>
               <View style={styles.headerContainer}>
                       <View style={styles.inputContainer}>
@@ -172,11 +193,8 @@ const ProductDetailComponent = () => {
                     </View>
               </View>
            </View>
-
-          <ScrollView style={{backgroundColor:'pink',height:'100%',marginTop:'5%'}}>
-            <ScrollView>
-              
-            <ScrollView horizontal={true} style= {{flexDirection:'row',height:250, marginTop:"5%", borderBottomWidth: 1}}  >
+          <ScrollView style={styles.bodyContainer}>
+            <View style= {{flexDirection:'row',height:250, marginTop:"5%", borderBottomWidth: 1}}  >
                 <View style= {{top:5,left:5}}>  
                     <Image  source={{ uri: Product.link }}
                             style={{width: 150, height: 220}} />
@@ -243,7 +261,6 @@ const ProductDetailComponent = () => {
 
                 <View style= {{left:20,width:100,height:40,top:10}}>
                    <Button  title="Add to cart" onPress= {() => {
-                            //  setquantity(number)
                               AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
                             const cart=JSON.parse(res);
@@ -267,17 +284,33 @@ const ProductDetailComponent = () => {
                      </View>
                         </View>
                     </View>
-            </ScrollView>
+            </View>
 
             <View>
 
-                 <View>
-                        <Text style={{textAlign:'center',fontSize:16,color:'blue'}}>Description</Text>
-                        <Text style={{ textAlign:'center',top:5}}>{Product.des}</Text>
-                </View>
+                    <View>
+                            <Text style={{textAlign:'center',fontSize:16,color:'blue'}}>Description</Text>
+                            <Text style={{ textAlign:'center',top:5}}>{Product.des}</Text>
+                    </View>
 
-                <View style={{top:10}}>
+                <View style={{top:80}}>
                 <Text style={{ textAlign:'center',fontSize:16,color:'blue'}}>Review</Text>
+             
+                <Stars
+                        default={2.5}
+                        update= {(val) => {
+                            setStar(val)
+                        console.log(val);}}
+                        count={5}
+                        half={true}
+                        starSize={1000} 
+                        fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
+                        emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
+                        halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
+                    />
+                
+                
+
                 <TextInput
                 style={{ 
                     height: 40, 
@@ -286,7 +319,12 @@ const ProductDetailComponent = () => {
                 }}
                 multiline={true}
                 numberOfLines={10}
-                onChangeText={e => setOutputReview({...OutputReview ,content : e, id_user : id , id_product : Product.id})} 
+                onChangeText={e => {
+                    setOutputReview({...OutputReview ,content : e, id_user : id , id_product : Product.id,number_of_star:star}
+                       )
+                 
+                }
+            } 
                 value={OutputReview.content}
                 placeholder="Insert your review!"
                 />
@@ -295,12 +333,16 @@ const ProductDetailComponent = () => {
 
                 </View>
 
+                <View style= {{paddingTop:50}}></View> 
+
                 </View>
-                
-            
-            </ScrollView>
-            
+               
+               
+                <View style= {{paddingTop:50}}></View> 
+           
         </ScrollView>
+        
+        
 </View>
         
     );

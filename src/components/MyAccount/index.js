@@ -38,42 +38,40 @@ const MyAccountComponent = () => {
       })
     }, [])
     return (
-        <View>
+        <View style={{backgroundColor:'pink',height:'100%'}}>
                   <View style={{marginTop:'20%'}}>
                     <Text style= {{fontSize:30,color:'red',textAlign:'center'}}>Thông tin cá nhân</Text>
                   </View>
-                  <View style={{marginTop:'30%',marginLeft:'30%',marginRight:'30%'}}> 
-
+                  <View style={{marginTop:'20%',marginLeft:'30%',marginRight:'30%',borderBottomWidth:1}}> 
                                <View style= {{flexDirection:'row'}}>
-                                    <Text style= {{color:'blue',fontSize:16}}>Full name:</Text> 
+                                    <Text style= {{color:'blue',fontSize:16}}>Full name:   </Text> 
                                     <Text>{account.fullName}</Text>
                               </View>
 
                               <View style= {{flexDirection:'row'}}>
-                                    <Text style= {{color:'blue',fontSize:16}}>User name:</Text> 
+                                    <Text style= {{color:'blue',fontSize:16}}>User name:   </Text> 
                                     <Text>{account.username}</Text>
                               </View>
                               <View style= {{flexDirection:'row'}}>
-                                <Text style= {{color:'blue',fontSize:16}} >Email:</Text> 
+                                <Text style= {{color:'blue',fontSize:16}} >Email:   </Text> 
                                 <Text>{account.email}</Text>
                               </View>
 
                               <View style= {{flexDirection:'row'}}>
-                                <Text style= {{color:'blue',fontSize:16}} >Phone number:</Text> 
+                                <Text style= {{color:'blue',fontSize:16}} >Phone number:   </Text> 
                                 <Text>{account.phoneNumber}</Text>
                               </View>
 
                               <View style= {{flexDirection:'row'}}>
-                                <Text style= {{color:'blue',fontSize:16}} >Address:</Text> 
+                                <Text style= {{color:'blue',fontSize:16}} >Address:   </Text> 
                                 <Text>{account.address}</Text>
                               </View>
                   </View>
                   <View style={{margin:'20%'}}>
                   <Button title="Update account" onPress={() => navigate("UpdateAccount")}></Button>
                   </View>
-                  <View>
+                  <View style={{left:'10%'}}>
                   <TouchableOpacity onPress={() => navigate("Home")}>
-
                     <Text style= {{fontSize:20,color:'red'}}>Trở về trang chủ</Text>
                   </TouchableOpacity>
                   </View>

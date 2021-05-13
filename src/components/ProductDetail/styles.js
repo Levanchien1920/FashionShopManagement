@@ -129,8 +129,19 @@ export default StyleSheet.create({
     },
     bodyContainer: {
       marginTop:'5%',
-      padding:wp('10%'),
-      backgroundColor: 'gray',
+      // padding:wp('10%'),
+      backgroundColor: 'pink',
       height:'80%'
+    }
+    ,
+    myStarStyle: {
+      color: 'yellow',
+      backgroundColor: 'transparent',
+      textShadowColor: 'black',
+      textShadowOffset: {width: 1, height: 1},
+      textShadowRadius: 2,
+    },
+    myEmptyStarStyle: {
+      color: 'white',
     }
 })

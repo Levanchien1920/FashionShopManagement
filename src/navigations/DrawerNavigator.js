@@ -5,6 +5,7 @@ import SideMenu from './SideMenu';
 import Login from '../screens/Login';
 import Register from '../screens/Register';
 import MyAccount from '../screens/MyAccount';
+import Invoice from '../screens/Invoice';
 
 const getDrawerContent= navigation => {
   return <SideMenu  navigation= {navigation} />
@@ -17,6 +18,7 @@ const DrawerNavigator = () => {
           <Drawer.Screen name={'LogIn'} component= {Login}></Drawer.Screen>
           <Drawer.Screen name={'Register'} component= {Register}></Drawer.Screen>
           <Drawer.Screen name={'MyAccount'} component= {MyAccount}></Drawer.Screen>
+          <Drawer.Screen name={'Invoice'} component= {Invoice}></Drawer.Screen>
 
 
         </Drawer.Navigator>

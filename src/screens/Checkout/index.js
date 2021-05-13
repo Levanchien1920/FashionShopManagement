@@ -127,7 +127,6 @@ const Checkout = () => {
             "id" : Number(item),
             "number" : cart[item],
         }
-        console.log(element)
         listItem.push(element);      
     }
 
@@ -140,9 +139,6 @@ const Checkout = () => {
             "listProducts": listItem
         } 
  
-
-
-   
  AsyncStorage.getItem('token')
   .then((res) => {
     axiosInstance.post('client/invoice', data, {
@@ -154,6 +150,7 @@ const Checkout = () => {
         console.log(response.data)
         AsyncStorage.removeItem("cart");
         setTest(true);
+        navigate("Invoice")
       
     })
     .catch(errors => {

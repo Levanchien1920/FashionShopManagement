@@ -8,7 +8,7 @@ import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
 import {GlobalContext} from '../../context/Provider';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import Input from '../common/Input';
+
 
 const ProductComponent = () => {
   const [searchInput, setSearchInput] = React.useState('');
@@ -25,7 +25,7 @@ const ProductComponent = () => {
 
   useEffect(() => {
     if (filter.check === 0) {
-      axiosInstance.get('/client/product').then((response)=> {
+      axiosInstance.get('/client/product/').then((response)=> {
             setlistProduct(response.data.content);
         }).catch((error) =>{
         });
@@ -164,10 +164,10 @@ switch (c) {
             <RNPickerSelect pickerProps={{ style: { height: 50, color:"green" } }}
              placeholder={{
               value: 3,
-              label:"Sắp xếp"
+              label:"Name (A-Z)"
             }}
               items={[
-               { label: "Name (A-Z)", value: 3 },
+              //  { label: "Name (A-Z)", value: 3 },
                { label: "Name (Z-A)", value: 4 },
                { label: "Price (Low to High)", value: 5 },
                { label: "Price (High to low)", value: 6 },
@@ -232,6 +232,7 @@ switch (c) {
 
             </View>
       </ScrollView>
+      <View style= {{paddingTop:50}}></View>
    </ScrollView>
 </View>
     );
