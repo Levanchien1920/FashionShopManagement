@@ -71,7 +71,7 @@ public class PostService {
     @Transactional
     public ResponseEntity<Response> createPost(PostDto dto) {
         Post post;
-        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getTitle()));
+        Post existing_post = postRepository.findByTitle(StringUtils.trim(dto.getTitle()));
         if (StringUtils.trim(dto.getTitle()).equals("")) {
             return ResponseEntity
                     .badRequest()
@@ -126,9 +126,9 @@ public class PostService {
     public ResponseEntity<Response> updatePost(Integer id, PostDto dto) {
         Optional<Post> postOpt = postRepository.findById(id);
         Post post;
-        Post existing_post = postRepository.findByContent(StringUtils.trim(dto.getContent()));
+        Post existing_post = postRepository.findByTitle(StringUtils.trim(dto.getTitle()));
 
-        if (StringUtils.equals(StringUtils.trim(dto.getContent()), "")) {
+        if (StringUtils.equals(StringUtils.trim(dto.getTitle()), "")) {
             return ResponseEntity
                     .badRequest()
                     .body(Response.badRequest("Post's content cannot be empty"));
@@ -152,7 +152,7 @@ public class PostService {
         }
 
         post = postOpt.get();
-        post.setTitle(dto.getTitle());
+        post.setTitle(dto.getTitle().trim());
         post.setContent(dto.getContent().trim());
         if (dto.getId_image() != null) {
             post.setId_image(dto.getId_image());

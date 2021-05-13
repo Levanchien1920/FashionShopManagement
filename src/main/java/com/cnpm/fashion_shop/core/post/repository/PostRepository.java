@@ -18,7 +18,7 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Page<PostResponseDto> findAll(Pageable pageable, @Param("keyword") String keyword);
 
 
-    Post findByContent(String content);
+    Post findByTitle(String title);
 
     @Query(value = "SELECT * FROM post p where p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
     Optional<Post> findById(@Param("id") Integer id);
