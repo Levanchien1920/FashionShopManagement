@@ -36,7 +36,6 @@ public class PostService {
                 "id",
                 "title",
                 "content",
-                "name",
                 "link"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
@@ -127,11 +126,11 @@ public class PostService {
         Optional<Post> postOpt = postRepository.findById(id);
         Post post;
         Post existing_post = postRepository.findByTitle(StringUtils.trim(dto.getTitle()));
-
+        post = postOpt.get();
         if (StringUtils.equals(StringUtils.trim(dto.getTitle()), "")) {
             return ResponseEntity
                     .badRequest()
-                    .body(Response.badRequest("Post's content cannot be empty"));
+                    .body(Response.badRequest("Post's title cannot be empty"));
         }
 
         if (postOpt.isEmpty() || postOpt.get().getIsDeleted()) {
@@ -141,7 +140,10 @@ public class PostService {
         }
 
         // Compare old and new name
-        if (postOpt.get().getContent().equals(StringUtils.trim(dto.getContent()))) {
+        if (postOpt.get().getTitle().equals(StringUtils.trim(dto.getTitle()))) {
+            post.setContent(dto.getContent().trim());
+            post.setId_image(dto.getId_image());
+            postRepository.save(post);
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);
         }
 
@@ -150,18 +152,9 @@ public class PostService {
                     .badRequest()
                     .body(Response.badRequest("This post already exists"));
         }
-
-        post = postOpt.get();
         post.setTitle(dto.getTitle().trim());
         post.setContent(dto.getContent().trim());
-        if (dto.getId_image() != null) {
-            post.setId_image(dto.getId_image());
-        } else {
-            return ResponseEntity
-                    .badRequest()
-                    .body(Response.badRequest("Cannot find any images, please create new one"));
-        }
-
+        post.setId_image(dto.getId_image());
         try {
             postRepository.save(post);
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);

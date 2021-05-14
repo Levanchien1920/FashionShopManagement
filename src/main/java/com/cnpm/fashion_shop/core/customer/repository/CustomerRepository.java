@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @Repository
 public interface  CustomerRepository extends JpaRepository<User, Long> {
-    @Query(value = "SELECT b.id, b.username, b.full_name, b.address, b.email,b.phone_number, b.password FROM user b WHERE LOWER(b.full_name) LIKE %:keyword% AND b.is_deleted = FALSE AND b.id_role = 3", nativeQuery = true)
+    @Query(value = "SELECT b.id, b.username, b.full_name as fullName, b.address, b.email,b.phone_number as phoneNumber, b.password FROM user b WHERE LOWER(b.full_name) LIKE %:keyword% AND b.is_deleted = FALSE AND b.id_role = 3", nativeQuery = true)
     Page<UserResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
 
     User findByEmail(String email);

@@ -258,7 +258,8 @@ public class InvoiceService {
                 "is_paid",
                 "name_product",
                 "price",
-                "number_product"
+                "number_product",
+                "linkImage"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
@@ -276,7 +277,8 @@ public class InvoiceService {
                 "is_paid",
                 "name_product",
                 "price",
-                "number_product"
+                "number_product",
+                "link"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();

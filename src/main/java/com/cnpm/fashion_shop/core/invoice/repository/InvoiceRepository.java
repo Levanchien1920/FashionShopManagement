@@ -62,17 +62,19 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     List<InvoiceEmployeeResponseDto> findAllByIdEmployeeWithoutDividingPage(@Param("keyword") String keyword);
 
 
-    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
-            "FROM (((invoice i inner join user e on i.id_customer=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product,image.link as linkImage " +
+            "FROM ((((invoice i inner join user e on i.id_customer=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id= :id", nativeQuery = true)
     Page<InvoiceCustomerResponseDto> getOneByIdInvoice(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id);
 
-    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
-            "FROM (((invoice i inner join user e on i.id_customer=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product, image.link as linkImage " +
+            "FROM ((((invoice i inner join user e on i.id_customer=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id_customer= :id", nativeQuery = true)
     List<InvoiceCustomerResponseDto> getOneByIdCustomer(@Param("keyword") String keyword, @Param("id") Integer id);
 

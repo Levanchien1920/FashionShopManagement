@@ -15,4 +15,6 @@ public interface InvoiceCustomerResponseDto {
 
     Integer getNumber_Product();
 
+    String getLinkImage();
+
 }
