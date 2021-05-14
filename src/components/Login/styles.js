@@ -3,10 +3,11 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
     title : {
-        fontSize:21,
+        fontSize:23,
         textAlign:'center',
         paddingTop:20,
         fontWeight:'500',
+        color:"red"
     },
     subTitle : {
         fontSize:17,
@@ -25,7 +26,7 @@ export default StyleSheet.create({
      linkBtn : {
         paddingLeft:30,
         color:'blue',
-        fontSize:16
+        fontSize:18
      },
 
      infoText : {

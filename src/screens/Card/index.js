@@ -2,7 +2,7 @@
 import React, { useState,useEffect } from 'react';
 import {useNavigation } from '@react-navigation/native';
 import styles from './styles';
-import {Image, Text, View, TouchableOpacity,ScrollView, Button} from 'react-native';
+import {Image, Text, View, Button} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';

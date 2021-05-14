@@ -25,9 +25,7 @@ const PostDetail = () => {
                                     <FontAwesome name="search" size={24} color="#969696" />
                                     <TextInput style={styles.inputText} />
                                 </View>
-                                <View style={styles.cartContainer}>
-                                      <FontAwesome name="shopping-cart" size={24} color="#fff" />
-                                </View>
+                             
                         </View>
 
                     <View  style = {styles.createSection}>
@@ -69,10 +67,7 @@ const PostDetail = () => {
                          <Text>{post.content}</Text>
                       </View>
 
-                      <View>
-                         <Text style= {{color:'blue',fontSize:16}} >Id image:</Text> 
-                         <Text>{post.id_image}</Text>
-                      </View>
+                     
                       
                  </View>
 

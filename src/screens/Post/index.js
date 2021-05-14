@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../helper/axiosInstance';
-import { ScrollView,  TouchableOpacity,Text, View,TextInput,Button } from 'react-native';
+import { ScrollView,  TouchableOpacity,Text, View,TextInput,Button,Image } from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -21,9 +21,6 @@ const Post = () => {
                           <View style={styles.inputContainer}>
                               <FontAwesome name="search" size={24} color="#969696" />
                               <TextInput style={styles.inputText} />
-                          </View>
-                          <View style={styles.cartContainer}>
-                                <FontAwesome name="shopping-cart" size={24} color="#fff" />
                           </View>
                   </View>
 
@@ -57,9 +54,21 @@ const Post = () => {
               <ScrollView style={styles.listItemContainer}>
                 {post.map((p) => (
                   <View key={p.id} style= {{borderColor:'yellow',borderBottomWidth:1,margin:8,width:350}}> 
-                      <View>
+
+                    <View style={{flexDirection:'row'}}>
+                      <View style= {{width:230}}>
                             <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:</Text> 
                             <Text>{p.name}</Text>
+                      </View>
+
+                     
+                              <View style={{marginLeft:10}}>
+                                          <Image
+                                  source={{ uri: p.link}}
+                                  style={{ width: 100, height: 100, borderWidth: 1 }}
+                                />
+                              </View>
+                      
                       </View>
                       <View style={{}}>
                          <Text style= {{color:'blue',fontSize:16}} >Nội dung:</Text> 

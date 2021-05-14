@@ -159,9 +159,7 @@ const ProductDetailComponent = () => {
                           <FontAwesome name="search" size={24} color="#969696" />
                           <TextInput style={styles.inputText} />
                       </View>
-                      <View style={styles.cartContainer}>
-                            <FontAwesome name="shopping-cart" size={24} color="#fff" />
-                      </View>
+                   
               </View>
 
               <View  style = {styles.createSection}>
@@ -254,7 +252,7 @@ const ProductDetailComponent = () => {
                             </View>
 
                 <View style= {{left:20,width:100,height:40,top:10}}>
-                   <Button  title="Add to cart" onPress= {() => {
+                   <Button color="orange"  title="Add to cart" onPress= {() => {
                               AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
                             const cart=JSON.parse(res);

@@ -33,9 +33,7 @@ const Contact = () => {
                                     <FontAwesome name="search" size={24} color="#969696" />
                                     <TextInput style={styles.inputText} />
                                 </View>
-                                <View style={styles.cartContainer}>
-                                      <FontAwesome name="shopping-cart" size={24} color="#fff" />
-                                </View>
+                          
                         </View>
 
                         <View  style = {styles.createSection}>

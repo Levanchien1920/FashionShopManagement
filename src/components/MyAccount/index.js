@@ -6,7 +6,7 @@ import axiosInstance from '../../helper/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const MyAccountComponent = () => {
     const {navigate} =useNavigation();
-    const [ account, setaccount] = useState({
+    const [account, setaccount] = useState({
             "id": 0,
             "username": "",
             "password": "",

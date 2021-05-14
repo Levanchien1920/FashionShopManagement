@@ -8,10 +8,7 @@ import {GlobalContext} from '../../context/Provider';
 import {useNavigation } from '@react-navigation/native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axiosInstance from '../../helper/axiosInstance';
-
-
 const Login = () => {
-  
   const [form, setForm] = useState({});
   const {params} = useRoute();
   const [errors, setErrors] = useState({});

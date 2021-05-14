@@ -22,7 +22,7 @@ export default StyleSheet.create({
       flexDirection: 'row',
       width:'85%',
       position: 'absolute',
-      marginLeft: 10,
+      marginLeft: 20,
       top:10,
       paddingHorizontal: 12,
       borderRadius: 2,
@@ -83,7 +83,7 @@ export default StyleSheet.create({
    textList1 : {
     color:'blue',
     fontSize:16,
-    // textAlign:'center',
+    textAlign:'center',
     left:5,
     marginTop:40
 

@@ -52,9 +52,8 @@ useEffect(() => {
         <Container>
             <View>
                 <Text style={styles.title}>Update Account </Text>
-                <Text style={styles.subTitle}>---------------</Text>
             </View>
-         <View style= {styles.form}>
+         <View>
          <Input
             lable="Fullname"
             iconPosition= "left"

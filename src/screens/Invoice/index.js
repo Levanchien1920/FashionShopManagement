@@ -19,7 +19,7 @@ const Invoice = () => {
             'Authorization': `Bearer ${res}`
           } 
           }).then((response)=> {
-              setInvoice(response.data.content);
+              setInvoice(response.data);
               console.log("invoice s");
               console.log(invoices);
           }).catch((error) =>{
@@ -29,7 +29,7 @@ const Invoice = () => {
   }, [])
   return (
     <View>
-    <View style={{marginTop:'15%'}}>
+    <View style={{marginTop:'5%'}}>
       <Text style= {{fontSize:30,color:'red',textAlign:'center'}}>Thông tin hóa đơn</Text>
     </View>
     <ScrollView style={styles.bodyContainer}>
@@ -38,23 +38,23 @@ const Invoice = () => {
           invoices.map((invoice,index) => (
             <View key={index} style={{marginTop:20, borderBottomWidth:1,borderColor:"yellow"}}>
                  <View style= {{flexDirection:'row',top:5}}>
-                      <Text style= {{color:'blue',fontSize:16}}>Full name:</Text> 
+                      <Text style= {{color:'blue',fontSize:16}}>Họ tên:   </Text> 
                       <Text>{invoice.name_Customer}</Text>
                 </View>
                 <View style= {{flexDirection:'row'}}>
-                      <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:</Text> 
+                      <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:   </Text> 
                       <Text>{invoice.name_Product}</Text>
                 </View>
                 <View style= {{flexDirection:'row'}}>
-                  <Text style= {{color:'blue',fontSize:16}}>Giá tiền:</Text> 
+                  <Text style= {{color:'blue',fontSize:16}}>Giá tiền:   </Text> 
                     <Text>{invoice.price}</Text>
                 </View>
                 <View style= {{flexDirection:'row'}}>
-                  <Text style= {{color:'blue',fontSize:16}}>Tổng tiền:</Text> 
+                  <Text style= {{color:'blue',fontSize:16}}>Tổng tiền:   </Text> 
                   <Text>{invoice.total_Money}</Text>
                 </View>
                 <View style= {{flexDirection:'row'}}>
-                  <Text style= {{color:'blue',fontSize:16}}>Số lượng sản phẩm:</Text> 
+                  <Text style= {{color:'blue',fontSize:16}}>Số lượng sản phẩm:   </Text> 
                   <Text>{invoice.number_Product}</Text>
                 </View>
                 </View>

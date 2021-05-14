@@ -1,6 +1,6 @@
 
 import React from 'react';
-import { StyleSheet, Text, View,TextInput, TouchableOpacity } from 'react-native';
+import {Text, View, TouchableOpacity } from 'react-native';
 import Container from '../common/Container';
 import Input from '../common/Input';
 import CustomButtom from '../common/CustomButton';
@@ -16,11 +16,11 @@ const RegisterComponent = ({
         <Container>
 
             <View>
-                <Text style={styles.title}>Welcome to app  </Text>
+                <Text style={styles.title}>Welcome to E-Store</Text>
                 <Text style={styles.subTitle}>Create a free account</Text>
             </View>
 
-         <View style= {styles.form}>
+         <View>
 
          <Input
             lable="Fullname"

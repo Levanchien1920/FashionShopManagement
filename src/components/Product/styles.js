@@ -22,7 +22,7 @@ export default StyleSheet.create({
       flexDirection: 'row',
       width:'85%',
       position: 'absolute',
-      marginLeft: 10,
+      marginLeft: 20,
       top:10,
       paddingHorizontal: 12,
       borderRadius: 2,

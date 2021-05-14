@@ -6,17 +6,15 @@ import {useNavigation } from '@react-navigation/native';
 import RNPickerSelect from "react-native-picker-select";
 import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
-import {GlobalContext} from '../../context/Provider';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 
 const ProductComponent = () => {
-  const [searchInput, setSearchInput] = React.useState('');
-  const {authState : {isLoggedIn},}= useContext(GlobalContext);
-  const [listProduct , setlistProduct] = useState([]);
-  const [listCategory, setlistCategory] = useState([]);
-  const [listBrand, setlistBrand] = useState([]);
-  const [filter , setfilter] = useState({
+  const [searchInput,setSearchInput] = React.useState('');
+  const [listProduct,setlistProduct] = useState([]);
+  const [listCategory,setlistCategory] = useState([]);
+  const [listBrand,setlistBrand] = useState([]);
+  const [filter,setfilter] = useState({
       check  : 0, 
       id  : 0,
       search : "",
@@ -25,8 +23,8 @@ const ProductComponent = () => {
 
   useEffect(() => {
     if (filter.check === 0) {
-      axiosInstance.get('/client/product').then((response)=> {
-            setlistProduct(response.data.content);
+      axiosInstance.get('/client/product/all').then((response)=> {
+            setlistProduct(response.data);
         }).catch((error) =>{
         });
     }
@@ -102,9 +100,7 @@ switch (c) {
                                     <FontAwesome name="search" size={24} color="#969696" />
                                     <TextInput style={styles.inputText} />
                                 </View>
-                                <View style={styles.cartContainer}>
-                                      <FontAwesome name="shopping-cart" size={24} color="#fff" />
-                                </View>
+                            
                         </View>
 
                         <View  style = {styles.createSection}>
@@ -163,10 +159,10 @@ switch (c) {
             <RNPickerSelect pickerProps={{ style: { height: 50, color:"green" } }}
              placeholder={{
               value: 3,
-              label:"Name (A-Z)"
+              label:""
             }}
               items={[
-              //  { label: "Name (A-Z)", value: 3 },
+               { label: "Name (A-Z)", value: 3 },
                { label: "Name (Z-A)", value: 4 },
                { label: "Price (Low to High)", value: 5 },
                { label: "Price (High to low)", value: 6 },
@@ -184,11 +180,13 @@ switch (c) {
     <ScrollView horizontal={true} style= {{marginTop:30}} >
         
         <View style={{width:250}}>
+                    <View style={{marginRight:20}}>
+                    <Text style={styles.textIndex}>All product</Text>
+                    </View>
                       <View style={styles.listItemContainer}>
                             {listProduct.map((product,index) => (
                               <View style={{marginLeft:10,marginTop:5}} key={index}>
                                         <Card product={product}></Card>
-
                                         <TouchableOpacity onPress= {() => {
                                            navigate('ProductDetail', {
                                             id: product.id ,
@@ -198,6 +196,42 @@ switch (c) {
                               </View>
                             ))}  
                       </View>
+
+                      <View style={{marginRight:20}}>
+                      <Text style={styles.textIndex}>Category relative</Text>
+                      </View>
+                      <View style={styles.listItemContainer}>
+                            {listCategory.map((product,index) => (
+                              <View style={{marginLeft:10,marginTop:5}} key={index}>
+                                        <Card product={product}></Card>
+                                        <TouchableOpacity onPress= {() => {
+                                           navigate('ProductDetail', {
+                                            id: product.id ,
+                                          })}}>
+                                         <Text style={styles.text} >Chi tiết</Text>
+                               </TouchableOpacity>
+                              </View>
+                            ))}  
+                      </View>
+
+                      <View style={{marginRight:20}}>
+                      <Text style={styles.textIndex}>Brand relative</Text>
+                      </View>
+                      <View style={styles.listItemContainer}>
+                            {listBrand.map((product,index) => (
+                              <View style={{marginLeft:10,marginTop:5}} key={index}>
+                                        <Card product={product}></Card>
+                                        <TouchableOpacity onPress= {() => {
+                                           navigate('ProductDetail', {
+                                            id: product.id ,
+                                          })}}>
+                                         <Text style={styles.text} >Chi tiết</Text>
+                               </TouchableOpacity>
+                              </View>
+                            ))}  
+                      </View>
+
+
       </View>
 
        <View style={{width:80}}>

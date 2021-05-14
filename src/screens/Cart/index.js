@@ -155,9 +155,7 @@ const addQty = (product,index) => {
             <FontAwesome name="search" size={24} color="#969696" />
             <TextInput style={styles.inputText} />
           </View>
-          <View style={styles.cartContainer}>
-            <FontAwesome name="shopping-cart" size={24} color="#fff" />
-          </View>
+   
         </View>
 
         <View style={styles.createSection}>
@@ -232,10 +230,10 @@ const addQty = (product,index) => {
                 </View>
                 <View style={{ width: "40%", flexDirection: "column" }}>
                  
-                  <View style={{ flexDirection: "row", width: "40%", marginTop:30, marginBottom:10 }}>
+                  <View style={{ flexDirection: "row", width: "40%", marginTop:20, marginBottom:10 ,marginLeft:20}}>
                     <View style={styles.button}>
                       <Button
-                        title="+"
+                        title="+" color="orange"
                         onPress={() => {
                          addQty(product,index)
                         }}
@@ -255,7 +253,7 @@ const addQty = (product,index) => {
                     </View>
                     <View style={styles.button}>
                       <Button
-                        title="-"
+                        title="-" color="orange"
                         onPress={() => {
                          removeQty(product,index)
                         }}
@@ -308,7 +306,6 @@ const addQty = (product,index) => {
                         
                         </Button>
                       </View>
-
               </View>
       </ScrollView>
 

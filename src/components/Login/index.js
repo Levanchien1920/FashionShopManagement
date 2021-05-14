@@ -9,8 +9,6 @@ import {useNavigation } from '@react-navigation/native';
 const LoginComponent = (  {
     onSubmit,
     onChange,
-    form,
-    loading,
     error,
     errors,
   }) => {
@@ -18,7 +16,7 @@ const LoginComponent = (  {
     return (
         <Container>
             <View>
-                <Text style={styles.title}>Welcome to app</Text>
+                <Text style={styles.title}>Welcome to E-Store</Text>
                 <Text style={styles.subTitle}>Please login here</Text>
             </View>
 
@@ -47,7 +45,7 @@ const LoginComponent = (  {
            />
 
            
-        <CustomButtom title="Submit"  onPress={onSubmit} secondary />
+        <CustomButtom title="LOG IN"  onPress={onSubmit} secondary />
 
         <View  style = {styles.createSection}>
             <Text  style = {styles.infoText}> You need a new account ? </Text>
