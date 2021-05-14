@@ -33,7 +33,7 @@ public class PostControllerClient {
 
     @ApiOperation(value = "Get post by id")
     @GetMapping("/{post_id}")
-    public ResponseEntity getOneBrand(@PathVariable("post_id") Integer id) {
+    public ResponseEntity getOnePost(@PathVariable("post_id") Integer id) {
         return postService.getOne(id);
     }
 

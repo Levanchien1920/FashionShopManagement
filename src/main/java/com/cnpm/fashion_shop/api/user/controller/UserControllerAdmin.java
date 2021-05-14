@@ -71,17 +71,6 @@ public class UserControllerAdmin {
     ) {
         return this.userService.updateUser(id, dto);
     }
-    @ApiOperation(value = "Get employee by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping("/{id}")
-    public ResponseEntity getOneEmployee(@PathVariable("id") Integer id) {
-        return userService.getOneEmployee(id);
-    }
-
-    @ApiOperation(value = "Get customer by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
-    @GetMapping("/{id_customer}")
-    public ResponseEntity getOneCustomer(@PathVariable("id_customer") Integer id) {
-        return userService.getOneCustomer(id);
-    }
 
     @ApiOperation(value = "Delete employee", authorizations = {@Authorization(value = SECURITY_JWT_NAME)})
     @DeleteMapping("/{id}")
@@ -93,4 +82,17 @@ public class UserControllerAdmin {
     public int getTotalCustomers() {
         return userService.getTotalCustomers();
     }
+
+    @ApiOperation(value = "Get employee by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/getOneEmployee/{id}")
+    public ResponseEntity getOneEmployee(@PathVariable("id") Integer id) {
+        return userService.getOneEmployee(id);
+    }
+
+    @ApiOperation(value = "Get customer by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/getOneCustomer/{id_customer}")
+    public ResponseEntity getOneCustomer(@PathVariable("id_customer") Integer id) {
+        return userService.getOneCustomer(id);
+    }
+
 }
