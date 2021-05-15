@@ -4,6 +4,7 @@ import com.cnpm.fashion_shop.api.user.dto.CustomerDto;
 import com.cnpm.fashion_shop.api.user.dto.UserDetailDto;
 import com.cnpm.fashion_shop.api.user.dto.UserDto;
 import com.cnpm.fashion_shop.api.user.dto.UserResponseDto;
+import com.cnpm.fashion_shop.api.user.dto.UsersDto;
 import com.cnpm.fashion_shop.common.enums.RoleEnum;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
@@ -247,6 +248,61 @@ public class UserService {
                     .body(Response.internalError(e.getMessage()));
         }
     }
+
+    @Transactional
+    public ResponseEntity<Response> updateCustomer(Integer id, UsersDto dto) {
+        Optional<User> userOpt = userRepository.findById(id);
+        User user;
+        User existingUser = userRepository.findByUsername(StringUtils.trim(dto.getUsername()));
+
+        if (StringUtils.equals(StringUtils.trim(dto.getUsername()), "")) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("User's name cannot be empty"));
+        }
+
+        if (userOpt.isEmpty() || userOpt.get().getIsDeleted()) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("Not found user to be updated"));
+        }
+
+        // Compare old and new name
+        if (userOpt.get().getUsername().equals(StringUtils.trim(dto.getUsername()))) {
+            user = userOpt.get();
+            user.setFullName(dto.getFullName().trim());
+            user.setAddress(dto.getAddress());
+            user.setEmail(dto.getEmail());
+            user.setPhone_number(dto.getPhoneNumber());
+            userRepository.save(user);
+            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
+        }
+
+        if (existingUser != null) {
+            return ResponseEntity
+                    .badRequest()
+                    .body(Response.badRequest("This email user already exists"));
+        }
+
+        user = userOpt.get();
+        user.setUsername(dto.getUsername());
+        user.setFullName(dto.getFullName().trim());
+        user.setAddress(dto.getAddress());
+        user.setEmail(dto.getEmail());
+        user.setPhone_number(dto.getPhoneNumber());
+
+
+        try {
+            userRepository.save(user);
+            return ResponseEntity.ok(SuccessfulResponse.UPDATED);
+        } catch (Exception e) {
+            LOG.error(e.getMessage());
+            return ResponseEntity
+                    .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body(Response.internalError(e.getMessage()));
+        }
+    }
+
 
     @Transactional
     public ResponseEntity<Response> deleteCustomer(Integer id) {

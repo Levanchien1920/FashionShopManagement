@@ -3,6 +3,7 @@ package com.cnpm.fashion_shop.api.user.controller;
 import com.cnpm.fashion_shop.api.user.dto.CustomerDto;
 import com.cnpm.fashion_shop.api.user.dto.UserDto;
 import com.cnpm.fashion_shop.api.user.dto.UserResponseDto;
+import com.cnpm.fashion_shop.api.user.dto.UsersDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
@@ -65,11 +66,21 @@ public class UserControllerAdmin {
     //
     @ApiOperation(value = "Update employee", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PatchMapping("/{id}")
-    public ResponseEntity<Response> updateEmployee(
+    public ResponseEntity<Response> update(
             @PathVariable("id") Integer id,
             @Valid @RequestBody CustomerDto dto
     ) {
         return this.userService.updateUser(id, dto);
+    }
+
+    //
+    @ApiOperation(value = "Update employee", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @PatchMapping("updateEmployee/{id}")
+    public ResponseEntity<Response> updateEmployee(
+            @PathVariable("id") Integer id,
+            @Valid @RequestBody UsersDto dto
+    ) {
+        return this.userService.updateCustomer(id, dto);
     }
 
     @ApiOperation(value = "Delete employee", authorizations = {@Authorization(value = SECURITY_JWT_NAME)})
