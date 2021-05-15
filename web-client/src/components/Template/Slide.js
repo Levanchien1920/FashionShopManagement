@@ -1,28 +1,32 @@
 import React from 'react'
 import { Carousel } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
 export default function Slide() {
     return (
-        <div class="header">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-3">
-                    <div class="header-img">
-                        <div class="img-item">
-                            <img src="img/category-1.jpg" />
-                            <a class="img-text" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
+        <div className="header">
+        <div className="container-fluid">
+            <div className="row">
+                <div className="col-md-3">
+                    <div className="header-img">
+                        <div className="img-item">
+                            <img src="img/category-8.jpg"/>
                         </div>
-                        <div class="img-item">
-                            <img src="img/category-2.jpg" />
-                            <a class="img-text" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
+                        <div className="img-item">
+                            <img src="img/category-3.jpg" />
                         </div>
+                        <Link  to={{
+                                        pathname: '/products',
+                                        state: {
+                                            check: 0, 
+                                            id : 0
+                                        }
+                                        }}className="img-text" href="">
+                            <p>Shopping Now</p>
+                        </Link>
                     </div>
                 </div>
-                <div class="col-md-6">
-                    <div class="header-slider normal-slider">
+                <div className="col-md-6">
+                    <div className="header-slider normal-slider">
                         <Carousel>
                             <Carousel.Item>
                                 <img
@@ -60,20 +64,23 @@ export default function Slide() {
                          </Carousel>
                         </div>
                 </div>
-                <div class="col-md-3">
-                    <div class="header-img">
-                        <div class="img-item">
+                <div className="col-md-3">
+                    <div className="header-img">
+                        <div className="img-item">
                             <img src="img/category-1.jpg" />
-                            <a class="img-text" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
                         </div>
-                        <div class="img-item">
+                        <div className="img-item">
                             <img src="img/category-2.jpg" />
-                            <a class="img-text" href="">
-                                <p>Some text goes here that describes the image</p>
-                            </a>
                         </div>
+                        <Link  to={{
+                                        pathname: '/products',
+                                        state: {
+                                            check: 0, 
+                                            id : 0
+                                        }
+                                        }}className="img-text" href="">
+                            <p>Shopping Now</p>
+                        </Link>
                     </div>
                 </div>
             </div>

@@ -80,18 +80,7 @@ export default function Invoice() {
                         <div className="col-5 align-self-center">
                             <h4 className="page-title">Invoice</h4>
                         </div>
-                        <div className="col-7 align-self-center">
-                            <div className="d-flex align-items-center justify-content-end">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/">Home</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Invoice</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <div className="container-fluid">

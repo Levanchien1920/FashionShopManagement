@@ -17,7 +17,7 @@ function Header() {
                 <div className="navbar-header" data-logobg="skin5">
                     <div className="navbar-brand">
                         <Link to="/">
-                                <h1>E-STORE</h1>
+                                <h1>E STORE</h1>
                         </Link>
                     </div>
                 </div>

@@ -23,7 +23,7 @@ function Cart() {
 
         API.get('client/product')
         .then(response => {
-            // console.log(response.data.content)
+            console.log(response.data.content)
             let total = 0;
             let listProduct = response.data.content
             let productItem = []

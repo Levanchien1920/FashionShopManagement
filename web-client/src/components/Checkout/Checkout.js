@@ -86,7 +86,7 @@ function Checkout() {
         
         const data = {
                 id_user: idUser,
-                id_employee: 0,
+                id_employee: 1,
                 totalMoney: total,
                 listProducts: listItem
             } 

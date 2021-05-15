@@ -20,7 +20,7 @@ export default function Customer() {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
         }
-        API.delete(`user/getOneCustomer/${id}`,token).then((response)=> {
+        API.delete(`user/${id}`,token).then((response)=> {
             alert(response.data.message)
             setrunuseEff(id)
         }).catch((error) =>{
@@ -34,18 +34,7 @@ export default function Customer() {
                         <div className="col-5 align-self-center">
                             <h4 className="page-title">Customer</h4>
                         </div>
-                        <div className="col-7 align-self-center">
-                            <div className="d-flex align-items-center justify-content-end">
-                                <nav aria-label="breadcrumb">
-                                    <ol className="breadcrumb">
-                                        <li className="breadcrumb-item">
-                                            <Link to="/">Home</Link>
-                                        </li>
-                                        <li className="breadcrumb-item active" aria-current="page">Customer</li>
-                                    </ol>
-                                </nav>
-                            </div>
-                        </div>
+
                     </div>
                 </div>
                 <div className="container-fluid">

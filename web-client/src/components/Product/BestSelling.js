@@ -19,26 +19,26 @@ function BestSelling() {
     return (
     <div>
         {( listProductBL.length === 0 ) ? (
-            <div class="isloading">
+            <div className="isloading">
                 Loading....
             </div>
         ) : (
         <div>
-                 <div class="call-to-action">
-                    <div class="container-fluid">
-                        <div class="row align-items-center">
-                            <div class="col-md-6">
+                 <div className="call-to-action">
+                    <div className="container-fluid">
+                        <div className="row align-items-center">
+                            <div className="col-md-6">
                                 <h1>call us for any queries</h1>
                             </div>
-                            <div class="col-md-6">
+                            <div className="col-md-6">
                                 <a href="tel:0123456789">0339905697</a>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="featured-product product">
-                    <div class="container-fluid">
-                        <div class="section-header">
+                <div className="featured-product product">
+                    <div className="container-fluid">
+                        <div className="section-header">
                             <h1>Best-Selling</h1>
                         </div>
                         <div className="row align-items-center product-slider product-slider-4">

@@ -8,7 +8,7 @@ export default function EditCustomer(props) {
     const [user , setUser] = useState({
         username: "",
         password: "",
-        fullname: "",
+        fullName: "",
         address: "",
         email: "",
         phoneNumber: "",
@@ -33,7 +33,7 @@ export default function EditCustomer(props) {
     const edit =  (e) =>{
 
         let array = window.location.pathname.split("/");
-        if( user.fullname === "" || user.phone_number === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
+        if( user.fullName === "" || user.phone_number === "" || user.password === "" || user.address === "" || user.email === "" || user.username === ""  ) {
             setmessage("You have not entered enough");
         }else {
             let token = {
@@ -41,15 +41,15 @@ export default function EditCustomer(props) {
             }
             let customer = {
                 username: user.username,
-                fullname: user.fullname,
-                address: "",
-                email: "",
-                phoneNumber: "",
+                fullName: user.fullName,
+                address: user.address,
+                email: user.email,
+                phoneNumber: user.phoneNumber,
                 id_role : 3,
             }
-            API.patch('user/' + id, user , token).then((response)=> {
+            API.patch('user/updateCustomer/' + id, customer , token).then((response)=> {
                 alert(response.data.message);
-                history.push("/employee")
+                history.push("/customer")
             }).catch((error) =>{
                 alert(error.data.message);
             });
@@ -61,32 +61,21 @@ export default function EditCustomer(props) {
         <div className="page-breadcrumb">
             <div className="row">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">Edit Customer</h4>
+                    <h4 className="page-title">Customer</h4>
                 </div>
-                <div className="col-7 align-self-center">
-                    <div className="d-flex align-items-center justify-content-end">
-                        <nav aria-label="breadcrumb">
-                            <ol className="breadcrumb">
-                                <li className="breadcrumb-item">
-                                    <a href="#">Home</a>
-                                </li>
-                                <li className="breadcrumb-item active" aria-current="page">Edit Customer</li>
-                            </ol>
-                        </nav>
-                    </div>
-                </div>
+
             </div>
         </div>
         <div className="container-fluid">
             <div className="row">
                 <div className="col-12">
                     <div className="card card-body">
-                        <h4 className="card-title">New</h4>
+                        <h4 className="card-title">Edit Customer</h4>
                         <form className="form-horizontal m-t-30">
                             <div className="form-group">
                                 <label>Full Name</label>
                                 <input type="text" className="form-control"
-                                onChange={e => setUser({...user ,fullname : e.target.value})} value={user.fullName}></input>
+                                onChange={e => setUser({...user , fullName : e.target.value})} value={user.fullName}></input>
                             </div>
                             <div className="form-group">
                                 <label>User Name</label>

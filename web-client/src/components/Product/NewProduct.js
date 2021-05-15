@@ -20,15 +20,15 @@ export default function NewProduct() {
     },[])
     return (
     <div>
-       <div class="newsletter">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-6">
+       <div className="newsletter">
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-md-6">
                         <h1>Subscribe Our Newsletter</h1>
                     </div>
-                    <div class="col-md-6">
-                        <div class="form">
-                            <input type="email" value="Your email here"></input>
+                    <div className="col-md-6">
+                        <div className="form">
+                            <input type="email" value="Your email here" readOnly></input>
                             <button>Submit</button>
                         </div>
                     </div>
@@ -36,12 +36,12 @@ export default function NewProduct() {
             </div>
         </div>
         
-        <div class="recent-product product">
-            <div class="container-fluid">
-                <div class="section-header">
+        <div className="recent-product product">
+            <div className="container-fluid">
+                <div className="section-header">
                     <h1>Recent Product</h1>
                 </div>
-                <div class="row align-items-center product-slider product-slider-4">
+                <div className="row align-items-center product-slider product-slider-4">
                     <Carousel breakPoints={breakPoints}>
                         {listProductNP.map((product) => (
                                 <Card product={product} key={product.id}></Card>
