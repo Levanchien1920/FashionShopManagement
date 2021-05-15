@@ -27,7 +27,7 @@ export default function UserOfRole() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List UserOfRole <button className="btn1 btn" onClick ={e => {history.push("/role")}}>back</button></h4>
+                                        <h4 className="card-title">List UserOfRole <button className="btn1 btn btn-info" onClick ={e => {history.push("/role")}}>Back</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

@@ -7,7 +7,7 @@ function OrderItem(props) {
     const { order } = props;
     console.log(order);
     const view = (e) => {
-        console.log(e.target)
+        // console.log(e.target)
     } 
     return (
         <tr>

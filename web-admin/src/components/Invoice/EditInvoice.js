@@ -3,7 +3,8 @@ import { Link } from 'react-router-dom'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
-function ViewInvoice(props) {
+import Select from 'react-select-2';
+function EditInvoice(props) {
     const check = useContext(LoginContext);
     const [invoice, setInvoice] = useState({
         id: -1,
@@ -12,11 +13,25 @@ function ViewInvoice(props) {
         is_paid: false,
         totalMoney: 0
     });
-    const history=useHistory();
+    const history = useHistory();
     const id = props.match.params.id
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
+    var Data  = [
+        {
+            key: "Paid",
+            value: true
+        },
+        {
+            key: "UnPaid",
+            value: false
+        },
+    ],
+    MakeItem = function(X) {
+        return <option value={X.value} selected= {X.value == invoice.is_paid ? "selected" : ""} >{X.key}</option>;
+    };
+
     useEffect(() => {
         check.checklogin();
         API.get('/invoice/ByEmployee/all', token).then((response)=> {
@@ -63,7 +78,19 @@ function ViewInvoice(props) {
         });
     }, []);
 
-          
+    
+    const changeIsPaid = (e) => {  
+        e.persist();  
+        setInvoice({...invoice, [e.target.name]: e.target.value});  
+    }  
+    const editIsPaid = (e) => {
+        e.preventDefault();  
+        const data = {
+            is_paid: invoice.is_paid
+        }
+        console.log(data)
+    }
+    
     return (
         <div className="page-wrapper">
         <div className="page-breadcrumb">
@@ -129,8 +156,12 @@ function ViewInvoice(props) {
                             </div>
                             <div className="form-group" >
                                 <label>Status</label>
-                                <input type="text" className="form-control" value={(invoice.id_paid) ? "Paid" : "UnPaid"} disabled/>
-                                    
+                                {/* <input type="text" className="form-control" value={(invoice.is_paid) ? "Paid" : "UnPaid"} /> */}
+                                <select className="form-control" name="is_paid" onChange={changeIsPaid}
+                                > {Data.map(MakeItem)} </select>
+                            </div>
+                            <div className="form-group">
+                                <button type="button" name="example-email" className="btn btn-success" onClick={editIsPaid}>Save</button>
                             </div>
                         </form>
                     </div>
@@ -141,4 +172,4 @@ function ViewInvoice(props) {
     )
 }
 
-export default  ViewInvoice
+export default  EditInvoice

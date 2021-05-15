@@ -12,6 +12,10 @@ function Checkout() {
     let history = useHistory();
     const IsLogin = useContext(LoginContext)
     console.log(IsLogin.IsLogin)
+    const token = {
+        headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+    }
+    let idUser = localStorage.getItem("id")
     useEffect(() => {
         let cart = JSON.parse(localStorage.getItem('cart'));
         let keys = [];
@@ -22,7 +26,7 @@ function Checkout() {
         }
         if (!cart) return; 
 
-        API.get('product')
+        API.get('client/product/')
         .then(response => {
             // console.log(response.data.content)
             let total = 0;
@@ -72,10 +76,8 @@ function Checkout() {
             var element = {
                 "id" : Number(item),
                 "number" : cart[item],
-                "price" : 100,
-                "name" : "AO KI Zi"
             }
-            // console.log(element)
+
             listItem.push(element);      
         }
     
@@ -83,21 +85,22 @@ function Checkout() {
         let flag = true
         
         const data = {
-                // id_user: Number(id),
-                // paid: true,
-                id_user: 1,
-                id_employee: 1,
+                id_user: idUser,
+                id_employee: 0,
                 totalMoney: total,
                 listProducts: listItem
             } 
         console.log(data)
-        API.post('invoice/', data)
+        API.post('client/invoice', data, token)
         .then(response => {
            
             console.log(response.data)
             alert("Đặt hàng thành công")
             window.localStorage.removeItem("cart")
-            history.push('/home')
+            history.push({
+                pathname: '/home',
+                state: { report: 'Đặt hàng thành công' }
+            })
     
         })
         .catch(errors => {
@@ -178,7 +181,7 @@ function Checkout() {
 
                                     <div className="cart-btn ">
                                         {/* <button>Update Cart</button> */}
-                                        <button><Link to="/checkout" id = {id} style={{color: "black"}} onClick={addBill}>Checkout</Link></button>
+                                        <button><Link to="/checkout" id = {id} style={{color: "black"}} onClick={addBill}>Pay</Link></button>
                                     </div>
                                 </div>
                             </div>
