@@ -6,6 +6,8 @@ import {LoginContext} from '../../context/LoginContext'
 import { Markup } from 'interweave';
 import Api from '../Config/Api'
 import { Link } from 'react-router-dom';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 const breakPoints = [
     { width: 1, itemsToShow: 1 },
     { width: 550, itemsToShow: 2, itemsToScroll: 2 },
@@ -16,7 +18,6 @@ function ProductDetail() {
     const Login = useContext(LoginContext);
     const history=useHistory();
     const [color , setcolor] =useState([]);
-    const [listProduct , setlistProduct] = useState([]);
     const [Product , setProduct] = useState([]);
     const [listCategory, setlistCategory] = useState([]);
     const [listBrand, setlistBrand] = useState([]);
@@ -118,7 +119,7 @@ function ProductDetail() {
     function submitReview() { 
         if (Login.IsLogin === true) {
             Api.post(`client/review`, OutputReview).then((response)=> {
-                alert(response.data.message);
+                //alert(response.data.message);
                 setfilter({...filter , review : OutputReview.content})
             }).catch((error) =>{
                 console.log(error);
@@ -126,7 +127,6 @@ function ProductDetail() {
         } else {
             history.push("/login")
         }
-        
     }
     return (
         <div className="product-detail">
@@ -180,9 +180,7 @@ function ProductDetail() {
                                                 <h4>Color:</h4>
                                                 <div className="btn-group btn-group-sm">
                                                     {color.map((color) => (
-                                                    
-                                                            <button type="button" className="btn">{color}</button>
-                                                        
+                                                        <button type="button" className="btn" key={color.id}>{color}</button>
                                                     ))}
                                                 </div> 
                                             </div>
@@ -213,19 +211,19 @@ function ProductDetail() {
                                     </ul>
                                     <div id="reviews" className="container tab-pane active">
                                             {review.map((review) => (
-                                                <div className="reviews-submitted">
-                                                <div className="reviewer">{review.name_User}</div>
-                                                <div className="ratting">
-                                                <i className={review.number_Of_Star >=1 ?"fa fa-star": review.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_Of_Star >=2 ?"fa fa-star": review.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_Of_Star >=3 ?"fa fa-star": review.number_Of_Star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_Of_Star >=4 ?"fa fa-star": review.number_Of_Star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
-                                                    <i className={review.number_Of_Star >=5 ?"fa fa-star": review.number_Of_Star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                <div className="reviews-submitted" key={review.id}>
+                                                    <div className="reviewer">{review.name_User}</div>
+                                                    <div className="ratting">
+                                                        <i className={review.number_Of_Star >=1 ?"fa fa-star": review.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                        <i className={review.number_Of_Star >=2 ?"fa fa-star": review.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                        <i className={review.number_Of_Star >=3 ?"fa fa-star": review.number_Of_Star >= 2.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                        <i className={review.number_Of_Star >=4 ?"fa fa-star": review.number_Of_Star >= 3.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                        <i className={review.number_Of_Star >=5 ?"fa fa-star": review.number_Of_Star >= 4.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
+                                                    </div>
+                                                    <p>
+                                                    <Markup content={review.content} />
+                                                    </p>
                                                 </div>
-                                                <p>
-                                                    {review.content}
-                                                </p>
-                                            </div>
                                             ))}
                                             <div className="reviews-submit">
                                                 <h4>Give your Review:</h4>
@@ -238,11 +236,19 @@ function ProductDetail() {
                                                 </div>
                                             </div>
                                             <div className="row form">
-                                                    <label>Review :</label>
-                                                    <textarea placeholder="Review" className="col-sm-12" 
-                                                    onChange={e => setOutputReview({...OutputReview ,content : e.target.value, id_user : localStorage.getItem("id") , id_product : Product.id})} value={OutputReview.content}></textarea>
-                                                    <button className="submit" onClick={submitReview}>Submit</button>
-                                                
+                                                <label>Review :</label>
+                                                <div  className="col-sm-12">
+                                                <CKEditor
+                                                    editor={ ClassicEditor }
+                                                    data={OutputReview.content}
+                                                    onChange={ ( event, editor ) => {
+                                                        setOutputReview({...OutputReview ,content :editor.getData(),
+                                                                                        id_user : localStorage.getItem("id") ,
+                                                                                        id_product : Product.id})
+                                                    } }
+                                                />
+                                                <button className="submit" onClick={submitReview}>Submit</button>
+                                                </div>
                                             </div>
                                         </div>
                                 </div>
@@ -252,7 +258,7 @@ function ProductDetail() {
                                 <div className="section-header">
                                     <h1>Related Products (brand)</h1>
                                 </div>
-                                <div class="row align-items-center product-slider product-slider-4">
+                                <div className="row align-items-center product-slider product-slider-4">
                                     <Carousel breakPoints={breakPoints}>
                                         {brandRelated.map((product) => (
                                                 <Card product={product} key={product.id}></Card>
@@ -265,10 +271,10 @@ function ProductDetail() {
                         <div className="sidebar-widget category">
                             <h2 className="title">Category</h2>
                             <nav className="navbar bg-light">
-                                <ul class="navbar-nav">
+                                <ul className="navbar-nav">
                                     {listCategory.map((category) => (
-                                        <li class="nav-item">
-                                            <Link class="nav-link"  to={{
+                                        <li className="nav-item" key={category.id}>
+                                            <Link className="nav-link"  to={{
                                                 pathname: '/products',
                                                 state: {
                                                     check: 1, 
@@ -280,8 +286,8 @@ function ProductDetail() {
                                 </ul>
                             </nav>
                         </div>
-                        <div class="sidebar-widget widget-slider">
-                            <div class="sidebar-slider normal-slider">
+                        <div className="sidebar-widget widget-slider">
+                            <div className="sidebar-slider normal-slider">
                                 <h2 className="title">Related Products (Category)</h2>
                                 <Carousel breakPoints={breakPoints}>
                                     {cateRelated.map((product) => (
@@ -294,8 +300,8 @@ function ProductDetail() {
                             <h2 className="title">Brands</h2>
                             <ul>
                                 {listBrand.map((brand) => (
-                                    <li class="nav-item">
-                                        <Link class="nav-link" to={{
+                                    <li className="nav-item" key={brand.id}>
+                                        <Link className="nav-link" to={{
                                                 pathname: '/products',
                                                 state: {
                                                     check: 1, 

@@ -2,16 +2,16 @@ import React, {useContext, useEffect, useState} from 'react'
 import {useHistory} from 'react-router'
 import {Link} from 'react-router-dom'
 import {LoginContext} from '../../context/LoginContext'
+import logo from './image/logo.png'
 function Header() {
     const login = useContext(LoginContext);
     const [countCart, setCountCart] = useState(0);
-
+    const [searchStr, setsearchStr] = useState("")
     var fullname = login.Fullname;
     const history = useHistory();
     useEffect(() => {
            login.LoginDispatch();
     }, [fullname])
-
    
     useEffect(() => {
         let cart = JSON.parse(localStorage.getItem('cart'));
@@ -27,6 +27,16 @@ function Header() {
     }
     const ChangeToMyAccount = () => {
         history.push("/myaccount");
+    }
+    function search() {
+        history.push({
+            pathname: '/products',
+            state: {
+                check: 9, 
+                id :0 ,
+                search : searchStr
+                }
+            })
     }
     return (
         <div>
@@ -50,20 +60,20 @@ function Header() {
                     <nav className="navbar navbar-expand-md bg-dark navbar-dark">
                         <div className="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                             <div className="navbar-nav mr-auto">
-                                <Link to='/'className="nav-item nav-link active" >Home</Link>
+                                <Link to='/'className="nav-item nav-link" >Home</Link>
                                 <Link  to={{
                                         pathname: '/products',
                                         state: {
                                             check: 0, 
                                             id : 0
                                         }
-                                        }}className="nav-item nav-link active" >Products</Link>  
+                                        }}className="nav-item nav-link" >Products</Link>  
                                 {fullname  &&                              
-                                <Link to='/myaccount'className="nav-item nav-link active" >account</Link>
+                                <Link to='/myaccount'className="nav-item nav-link" >account</Link>
                                 }
-                                <Link to='/cart'className="nav-item nav-link active" >Cart</Link>
-                                <Link to='/contact'className="nav-item nav-link active" >Contact</Link>
-                                <Link to='/post'className="nav-item nav-link active" >Post</Link>
+                                <Link to='/cart'className="nav-item nav-link" >Cart</Link>
+                                <Link to='/contact'className="nav-item nav-link" >Contact</Link>
+                                <Link to='/post'className="nav-item nav-link" >Post</Link>
                             </div>
                             <div className="navbar-nav ml-auto">                               
                                 {(login.IsLogin ===true ) ? ( 
@@ -95,14 +105,15 @@ function Header() {
                         <div className="col-md-3">
                             <div className="logo">
                                 <a href="/">
-                                    <img src="img/logo.png" alt="Logo"></img>
+                                    <img src={logo} alt="Logo"></img>
                                 </a>
                             </div>
                         </div>
                         <div className="col-md-6">
                             <div className="search">
-                                <input type="text" placeholder="Search"></input>
-                                <button><i className="fa fa-search"></i></button>
+                                <input type="text" placeholder="Search" 
+                                    onChange={e=>{setsearchStr(e.target.value)}} value={searchStr}></input>
+                                <button><i className="fa fa-search" onClick={search}></i></button>
                             </div>
                         </div>
                         <div className="col-md-3">

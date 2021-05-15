@@ -9,11 +9,12 @@ function Products(props) {
     const [filter , setfilter] = useState({
         check  : props.location.state.check, 
         id  : props.location.state.id,
-        search : ""
+        search : props.location.state.search
     });
     const [pageIndex, setpageIndex] = useState(0)
     const [totalPage, settotalPage] = useState(0)
-    const [searchInput, setsearchInput] = useState("");
+    const [searchInput, setsearchInput] = useState( props.location.state.search);
+    var cout = 0
     useEffect(() => {
         console.log(filter)
         async function get() {
@@ -73,7 +74,6 @@ function Products(props) {
             }
          }
         get()
-       // console.log(pageIndex)
     }, [filter]);
     useEffect(() => {
         async function getCategoryAndBrand() {
@@ -103,7 +103,6 @@ function Products(props) {
                 listProduct.sort((a, b) => (a.price < b.price) ? 1 : -1);
                 break;
         }
-        // để chạy lại useEfect
         setfilter({
             ...filter, check : c
         });
@@ -125,32 +124,32 @@ function Products(props) {
     }
     return (
         <div>
-            <div class="breadcrumb-wrap">
-                <div class="container-fluid">
-                    <ul class="breadcrumb">
-                        <Link to="/"  class="breadcrumb-item">Home</Link>
-                        <Link to="/products"  class="breadcrumb-item">Products</Link>
-                        <li class="breadcrumb-item active">Product List</li>
+            <div className="breadcrumb-wrap">
+                <div className="container-fluid">
+                    <ul className="breadcrumb">
+                        <Link to="/"  className="breadcrumb-item">Home</Link>
+                        <Link to="/products"  className="breadcrumb-item">Products</Link>
+                        <li className="breadcrumb-item active">Product List</li>
                     </ul>
                 </div>
             </div>
-        <div class="product-view">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-8">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="product-view-top">
-                                    <div class="row">
-                                        <div class="col-md-4">
-                                            <div class="product-search">
+        <div className="product-view">
+            <div className="container-fluid">
+                <div className="row">
+                    <div className="col-lg-8">
+                        <div className="row">
+                            <div className="col-md-12">
+                                <div className="product-view-top">
+                                    <div className="row">
+                                        <div className="col-md-4">
+                                            <div className="product-search">
                                                 <input type="input"  onChange={e => setsearchInput(e.target.value)}value={searchInput}></input>
-                                                <button><i class="fa fa-search" onClick={search.bind(this,9)}></i></button>
+                                                <button><i className="fa fa-search" onClick={search.bind(this,9)}></i></button>
                                             </div>
                                         </div>
-                                        <div class="col-md-4">
-                                            <div class="product-short">
-                                                <div class="dropdown">
+                                        <div className="col-md-4">
+                                            <div className="product-short">
+                                                <div className="dropdown">
                                                     <button className="dropdown-toggle">Product short by</button>
                                                         <div className="dropdown-content">
                                                         <button onClick={SortName.bind(this,3)}>Name (A-Z)</button>
@@ -166,51 +165,51 @@ function Products(props) {
                                 </div>
                             </div>
                             {listProduct.map((product) => (
-                                <Card product={product}></Card>
+                                <Card product={product} key={cout++}></Card>
                             ))} 
                         </div>
                         
-                        <div class="col-md-12">
+                        <div className="col-md-12">
                             <nav aria-label="Page navigation example">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item">
-                                        <button class="page-link"  disabled={pageIndex === 0 } onClick={buttonPrev.bind(this,7)}>Prev</button>
+                                <ul className="pagination justify-content-center">
+                                    <li className="page-item">
+                                        <button className="page-link"  disabled={pageIndex === 0 } onClick={buttonPrev.bind(this,7)}>Prev</button>
                                     </li>
-                                    <li class="page-item">
-                                        <button class="page-link" disabled={pageIndex === totalPage-1} onClick={buttonNext.bind(this,8)}>Next</button>
+                                    <li className="page-item">
+                                        <button className="page-link" disabled={pageIndex === totalPage-1} onClick={buttonNext.bind(this,8)}>Next</button>
                                     </li>
                                 </ul>
                             </nav>
                         </div>
                     </div>           
                     
-                    <div class="col-lg-4 sidebar">
-                        <div class="sidebar-widget category">
-                            <h2 class="title">Category</h2>
-                            <nav class="navbar bg-light">
-                                <ul class="navbar-nav">
+                    <div className="col-lg-4 sidebar">
+                        <div className="sidebar-widget category">
+                            <h2 className="title">Category</h2>
+                            <nav className="navbar bg-light">
+                                <ul className="navbar-nav">
                                 {listCategory.map((category) => (
-                                     <li class="nav-item">
-                                     <button class="nav-link" onClick={() => (setfilter({check : 1 ,id: category.id }))}>{category.name}</button>
-                                 </li>
+                                     <li className="nav-item" key={category.id}>
+                                        <button className="nav-link" onClick={() => (setfilter({check : 1 ,id: category.id }))}>{category.name}</button>
+                                    </li>
                                 ))} 
                                 </ul>
                             </nav>
                         </div>
                         
-                        <div class="sidebar-widget brands">
-                            <h2 class="title">Brands</h2>
+                        <div className="sidebar-widget brands">
+                            <h2 className="title">Brands</h2>
                             <ul>
                                 {listBrand.map((brand) => (
-                                    <li class="nav-item">
-                                        <button class="nav-link" onClick={() => (setfilter({check : 2 ,id: brand.id }))}>{brand.name}</button>
+                                    <li className="nav-item"  key={brand.id}>
+                                        <button className="nav-link" onClick={() => (setfilter({check : 2 ,id: brand.id }))}>{brand.name}</button>
                                     </li>
                                 ))} 
                             </ul>
                         </div>
                         
-                        <div class="sidebar-widget tag">
-                            <h2 class="title">Tags Cloud</h2>
+                        <div className="sidebar-widget tag">
+                            <h2 className="title">Tags Cloud</h2>
                             <a href="a">Lorem ipsum</a>
                             <a href="b">Vivamus</a>
                             <a href="c">Phasellus</a>

@@ -19,7 +19,7 @@ function Card(props) {
     return (
         <div className="Product">
             <div className="product-item">
-                    <div class="product-title">
+                    <div className="product-title">
                         <Link to={`/productdetail/${product.id}`}>
                            {product.name}
                         </Link>

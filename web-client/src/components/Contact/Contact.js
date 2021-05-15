@@ -59,7 +59,7 @@ function Contact() {
                     <div className="col-lg-12">
                         <div className="contact-map">
                            
-                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.8338458060866!2d108.14767365069093!3d16.074109688823363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314218d6915ae09d%3A0xecb3afdb4ead6f32!2zNTggTmd1eeG7hW4gTMawxqFuZyBC4bqxbmcsIEhvw6AgS2jDoW5oIELhuq9jLCBMacOqbiBDaGnhu4N1LCDEkMOgIE7hurVuZyA1NTAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1618234894093!5m2!1svi!2s"frameborder="0"allowfullscreen="" aria-hidden="false" tabindex="0"></iframe>
+                            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3833.8338458060866!2d108.14767365069093!3d16.074109688823363!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x314218d6915ae09d%3A0xecb3afdb4ead6f32!2zNTggTmd1eeG7hW4gTMawxqFuZyBC4bqxbmcsIEhvw6AgS2jDoW5oIELhuq9jLCBMacOqbiBDaGnhu4N1LCDEkMOgIE7hurVuZyA1NTAwMDAsIFZp4buHdCBOYW0!5e0!3m2!1svi!2s!4v1618234894093!5m2!1svi!2s"frameBorder="0"allowFullScreen="" aria-hidden="false" tabIndex="0"></iframe>
                         </div>
                     </div>
                 </div>

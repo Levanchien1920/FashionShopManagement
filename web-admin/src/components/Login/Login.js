@@ -31,7 +31,6 @@ export default function Login() {
        
     }
     const handleKeypress = e => {
-        console.log(e);
         //it triggers by pressing the enter key
       if (e.charCode === 13) {
         OnSubmitHandle();
