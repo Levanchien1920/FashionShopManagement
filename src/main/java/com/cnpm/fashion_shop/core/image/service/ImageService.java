@@ -114,6 +114,8 @@ public class ImageService {
         Optional<Image> imageOptional = imageRepository.findByIdImage(id);
         Image image;
         Image existingImage = imageRepository.findByName(StringUtils.trim(dto.getName()));
+        image=imageOptional.get();
+
 
         if (StringUtils.equals(StringUtils.trim(dto.getName()), "")) {
             return ResponseEntity
@@ -128,7 +130,9 @@ public class ImageService {
         }
 
         // Compare old and new name
-        if (imageOptional.get().getLink().equals(StringUtils.trim(dto.getName()))) {
+        if (imageOptional.get().getName().equals(StringUtils.trim(dto.getName()))) {
+            image.setLink(dto.getLink());
+            imageRepository.save(image);
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);
         }
 
@@ -138,7 +142,6 @@ public class ImageService {
                     .body(Response.badRequest("This image already exists"));
         }
 
-        image=imageOptional.get();
         image.setName(dto.getName().trim());
         image.setLink(dto.getLink().trim());
 
