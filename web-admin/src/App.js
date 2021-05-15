@@ -19,14 +19,14 @@ import Review from './components/Reviews/Review'
 import Invoice from './components/Invoice/Invoice'
 import ViewInvoice from './components/Invoice/ViewInvoice'
 
-import Customer from './components/Public/Customer'
+// import Customer from './components/Public/Customer'
 import Login from './components/Login/Login'
 import Employee from './components/Employee/Employee'
 import Sale from './components/Sale/Sale'
 import NewBrand from './components/Brand/NewBrand';
 import ProductDetail from './components/Product/ProductDetail';
 import AddCategory from './components/Category/AddCategory'
-import NewCustomer from './components/New/NewCustomer';
+// import NewCustomer from './components/New/NewCustomer';
 
 import NewProduct from './components/Product/NewProduct';
 import NewImage from './components/Image/NewImage';
@@ -43,7 +43,9 @@ import Role from './components/Role/Role'
 import ListUserOfRole from './components/Role/ListUserOfRole'
 import viewReview from './components/Reviews/ViewReview';
 import EditInvoice from './components/Invoice/EditInvoice';
-
+import Customer from './components/Customer/Customer';
+import NewCustomer from './components/Customer/NewCustomer'
+import EditCustomer from './components/Customer/EditCustomer';
 function App() {
   return (
     <Router>
@@ -77,11 +79,16 @@ function App() {
                 <Route path='/edit-invoice/:id' component={EditInvoice} />
 
                 <Route path='/sale' > <Sale/>  </Route>
-                <Route path='/customer' > <Customer/>  </Route>
+
+                <Route path='/customer' component={Customer}/>
+                <Route path='/new-customer' component={NewCustomer}/>
+                <Route path='/edit-customer/:id' component={EditCustomer}/>
+
+
                 <Route path='/Employee' > <Employee/>  </Route>
                 <Route path='/newbrand' > <NewBrand/>  </Route>
 
-                <Route path='/newcustomer' > <NewCustomer/>  </Route>
+                
                 <Route path='/newimage' component={NewImage} />
                 <Route path='/newcolor' component={NewColor}/>
                 {/* <Route path='/newpost' > <NewPost/>  </Route> */}

@@ -32,7 +32,7 @@ function ProductDetail() {
     const [colorSizeXXL , setcolorSizeXXL] = useState("")
     const [brandRelated, setbrandRelated] = useState([]);
     // const [cateRelated, setcateRelated] = useState([])
-    const [quantity, setquantity] = useState(1);
+    const [quantity, setQuantity] = useState(1);
     const addToCart = (e) => {
         console.log(e.target)
         let cart = localStorage.getItem('cart') ? JSON.parse(localStorage.getItem('cart')) : {};
@@ -43,8 +43,18 @@ function ProductDetail() {
         let qty = cart[id] + parseInt(quantity);
         cart[id] = qty
         localStorage.setItem('cart', JSON.stringify(cart));
-      }
+    }
+    const addQty= (e) => {
+        e.preventDefault();
+        setQuantity(parseInt(quantity) + 1)
+        
+    }
 
+    const removeQty = (e) => {
+        e.preventDefault();
+        if(quantity > 1)
+            setQuantity(parseInt(quantity) - 1)    
+    }
     const [cateRelated, setcateRelated] = useState([]);
     const [review, setreview] = useState([]);
     const [OutputReview, setOutputReview] = useState({
@@ -158,9 +168,9 @@ function ProductDetail() {
                                             <div className="quantity">
                                                 <h4>Quantity:</h4>
                                                 <div className="qty">
-                                                    <button className="btn-minus"><i className="fa fa-minus"></i></button>
-                                                    <input type="text" value="1"></input>
-                                                    <button className="btn-plus"><i className="fa fa-plus"></i></button>
+                                                    <button className="btn-minus" onClick={removeQty}><i className="fa fa-minus"></i></button>
+                                                    <input type="text" onChange = {e => setQuantity(e.target.value)} value={quantity}></input>
+                                                    <button className="btn-plus" onClick={addQty}><i className="fa fa-plus"></i></button>
                                                 </div>
                                             </div>
                                             <div className="p-size">

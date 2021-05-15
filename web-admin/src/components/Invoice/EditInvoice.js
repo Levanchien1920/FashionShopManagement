@@ -7,7 +7,6 @@ import Select from 'react-select-2';
 function EditInvoice(props) {
     const check = useContext(LoginContext);
     const [invoice, setInvoice] = useState({
-        id: -1,
         fullName_Employee : "",
         listProduct: [],
         is_paid: false,
@@ -28,6 +27,7 @@ function EditInvoice(props) {
             value: false
         },
     ],
+
     MakeItem = function(X) {
         return <option value={X.value} selected= {X.value == invoice.is_paid ? "selected" : ""} >{X.key}</option>;
     };
@@ -89,14 +89,22 @@ function EditInvoice(props) {
             is_paid: invoice.is_paid
         }
         console.log(data)
+
+        API.patch('/invoice/ByEmployee/' + id, data, token).then((response) => {
+            console.log(response.data)
+            history.push('/posts')  
+        }).catch((error) => {
+
+        });
     }
+
     
     return (
         <div className="page-wrapper">
         <div className="page-breadcrumb">
             <div className="row">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">View Invoice</h4>
+                    <h4 className="page-title">Edit Invoice</h4>
                 </div>
                 <div className="col-7 align-self-center">
                     <div className="d-flex align-items-center justify-content-end">
@@ -105,7 +113,7 @@ function EditInvoice(props) {
                                 <li className="breadcrumb-item">
                                     <Link to="/">Home</Link>
                                 </li>
-                                <li className="breadcrumb-item active" aria-current="page">View Invoice</li>
+                                <li className="breadcrumb-item active" aria-current="page">Edit Invoice</li>
                             </ol>
                         </nav>
                     </div>
@@ -137,12 +145,13 @@ function EditInvoice(props) {
                                         </thead>
                                         <tbody>
                                             {   
-                                                invoice.listProduct.map((element) => (                                                
-                                                    <tr>
+                                                invoice.listProduct.map((element) => (   
+
+                                                    <tr key = {element.total_Money}>
                                                         <td>{element.name_Product}</td>
                                                         <td>{element.number_Product}</td>
                                                         <td>{element.total_Money} VND</td>
-                                                </tr>
+                                                    </tr>
                                             ))}
                                             <tr>
 

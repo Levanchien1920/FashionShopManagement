@@ -3,7 +3,12 @@ import {Link} from 'react-router-dom'
 import API from '../../Config/Api';
 import OrderItem from './OrderItem'
 export default function ViewOrder(props) {
-
+    const imgStyle = {
+        // border: '2px solid red',
+        // borderRadius: '8px',
+        width: '50px',
+        display: 'inline'
+    };
     const [user , setuser] = useState("");
     const [orderItem, setOrderItem] = useState([]);
     // const [listInvoice, setListInvoice] = ([])
@@ -50,6 +55,7 @@ export default function ViewOrder(props) {
                         <button className="nav-link" href="index.html"><i className="fa fa-sign-out-alt"></i>Logout</button>
                     </div>
                 </div>
+
                 <div className="col-md-9">
                     <div className="tab-content">
                         <div className="tab-pane fade show active" id="orders-tab" role="tabpanel" aria-labelledby="orders-nav">
@@ -57,28 +63,39 @@ export default function ViewOrder(props) {
                                 <table className="table table-bordered">
                                     <thead className="thead-dark">
                                         <tr>
-                                            <th>Product</th>
+                                            <th>Image</th>
+                                            <th>Name Product</th>
                                             <th>Price</th>
                                             <th>Nummber</th>
                                             <th>Total Money</th>
                                            
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    <tbody className="align-middle">
                                         {(Array.isArray(orderItem) && orderItem.length > 0) ? (
                                             orderItem.map((order, index) =>          
-                                            <tr>
-                                                <td>{order.name_Product}</td>
-                                                <td>{order.price}</td>
-                                                <td>{order.number_Product}</td>
-                                                <td>{order.total_Money}</td>
-                                            </tr>
+                                                <tr>
+                                                    <td>
+                                                    <img src={order.linkImage} alt="Image" style={imgStyle}></img>
+                                                    </td>
+                                                    <td>
+                                                        <div className="img">
+                                                            
+                                                            <p>{order.name_Product}</p>
+                                                        </div>
+                                                    </td>
+                                                    
+                                                    <td>{order.price}</td>
+                                                    <td>{order.number_Product}</td>
+                                                    <td>{order.total_Money}</td>
+                                                </tr>
                                             )
 
                                             ) :(
                                                 <tr></tr>
                                             )}
                                             <tr>
+                                                <td></td>
                                                 <td></td>
                                                 <td></td>
                                                 <td></td>

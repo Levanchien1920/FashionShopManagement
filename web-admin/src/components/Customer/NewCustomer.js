@@ -1,22 +1,22 @@
-import axios from 'axios';
+import API from '../Config/Api'
 import React, { useState } from 'react'
 import { useHistory } from 'react-router';
 
-export default function NewEmployee() {
+export default function NewCustomer() {
     const history=useHistory();
     const [user , setuser] = useState({
+        address: "",
+        fullName: "",
         username: "",
         password: "",
-        fullname: "",
-        address: "",
         email: "",
         phoneNumber: "",
-        id_role : 2,
+        id_role: 3
     });
     const [message , setmessage] = useState("")
     const [RetypePassword, setRetypePassword] = useState("");
     const register =  (e) =>{
-        if( user.fullname === "" || user.phone_number === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
+        if( user.fullName === "" || user.phoneNumber === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
             setmessage("You have not entered enough");
         }else {
             if(RetypePassword !== user.password){
@@ -26,9 +26,9 @@ export default function NewEmployee() {
                 let token = {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
-                axios.post("http://localhost:9090/api/v1/admin/user", user , token).then((response)=> {
+                API.post("user", user , token).then((response)=> {
                     alert(response.data.message);
-                    history.push("/employee")
+                    history.push("/customer")
                 }).catch((error) =>{
                     alert(error.response.data.message);
                 });
@@ -40,7 +40,7 @@ export default function NewEmployee() {
         <div className="page-breadcrumb">
             <div className="row">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">New Employee</h4>
+                    <h4 className="page-title">New Customer</h4>
                 </div>
                 <div className="col-7 align-self-center">
                     <div className="d-flex align-items-center justify-content-end">
@@ -49,7 +49,7 @@ export default function NewEmployee() {
                                 <li className="breadcrumb-item">
                                     <a href="#">Home</a>
                                 </li>
-                                <li className="breadcrumb-item active" aria-current="page">New Employee</li>
+                                <li className="breadcrumb-item active" aria-current="page">New Customer</li>
                             </ol>
                         </nav>
                     </div>
@@ -65,12 +65,12 @@ export default function NewEmployee() {
                             <div className="form-group">
                                 <label>Full Name</label>
                                 <input type="text" className="form-control"
-                                onChange={e => setuser({...user ,fullname : e.target.value})} value={user.fullName}></input>
+                                onChange={e => setuser({...user ,fullName : e.target.value})} value={user.fullName}></input>
                             </div>
                             <div className="form-group">
                                 <label>User Name</label>
                                 <input type="text" className="form-control"
-                                onChange={e => setuser({...user ,username : e.target.value})} value={user.userName}></input>
+                                onChange={e => setuser({...user ,username : e.target.value})} value={user.username}></input>
                             </div>
                             <div className="form-group">
                                 <label>Email</label>

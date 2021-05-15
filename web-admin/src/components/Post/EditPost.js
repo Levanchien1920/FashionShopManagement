@@ -10,9 +10,9 @@ export default function EditPost(props) {
     }
     const history = useHistory();
     const [post, setPost] = useState({
-        // title : "",
-        // content : "",
-        // id_image : 0
+        title : "",
+        content : "",
+        id_image : 0
     });
     const check = useContext(LoginContext);
     const idPost = props.match.params.id
@@ -21,14 +21,16 @@ export default function EditPost(props) {
           
             API.get('post/' + idPost, token).then((response)=> {
                 let temp = response.data
-                console.log(response.data)
+                // console.log(response.data)
                 setPost({...post,
                     title: temp.title,
-                    content: temp.content,
+                    
                     id_image: temp.id_image
                 });
+                setPost({...post, 
+                    content: temp.content,
+                })
 
-                console.log(post)
             }).catch((error) =>{
     
             });
@@ -38,15 +40,14 @@ export default function EditPost(props) {
     const editPost =  (e) =>{
         e.preventDefault();  
         console.log(post)
-        const data = {
-            name : "hello",
+        const dataPost = {
             content: post.content,
             id_image: 1,
             title: post.title
         }
-        console.log(data)
+        console.log(dataPost)
         
-        API.patch('post/' + idPost, data, token).then((response) => {
+        API.patch('post/' + idPost, dataPost, token).then((response) => {
             console.log(response.data)
             history.push('/posts')  
         }).catch((error) => {
@@ -96,14 +97,14 @@ export default function EditPost(props) {
                                 <label htmlFor="content">Content</label>
                                 <CKEditor
                                     
-                                    editor={ ClassicEditor }
-                                    data={post.content}
+                                    editor = { ClassicEditor }
+                                    data = {post.content}
                                     onReady={ editor => {
                                         // console.log( 'Editor is ready to use!', editor );
                                     } }
                                     onChange={ ( event, editor ) => {
-                                        let data = editor.getData();
-                                        setPost({...post , content : data});
+                                        // let data = editor.getData();
+                                        setPost({...post , content : editor.getData()});
                                     } }
                                 />
                             </div>

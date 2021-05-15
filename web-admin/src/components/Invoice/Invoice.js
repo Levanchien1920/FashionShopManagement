@@ -99,7 +99,7 @@ export default function Invoice() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                    <h4 className="card-title">List Review </h4>
+                                    <h4 className="card-title">List Invoice <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-invoice")}}>New</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

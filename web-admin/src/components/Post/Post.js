@@ -132,7 +132,7 @@ function Post() {
                                         <thead>
                                             <tr>
                                                 <th scope="col">Id</th>
-                                                <th scope="col">Name</th>
+                                                {/* <th scope="col">Name</th> */}
                                                 <th scope="col" style = {titleStyle}>Title</th>
                                                 <th scope="col" style = {thStyle}>Content</th>
                                                 {/* <th scope="col">Detail</th> */}
@@ -144,7 +144,7 @@ function Post() {
                                             {ListPost.map((Post) => (
                                                 <tr key={Post.id}>
                                                     <th scope="row">{Post.id}</th>
-                                                    <td>{Post.name}</td>
+                                                    {/* <td>{Post.name}</td> */}
                                                     <td>{Post.title}</td>
                                                     {/* <td></td> */}
                                                     <td>{Post.content}</td>
