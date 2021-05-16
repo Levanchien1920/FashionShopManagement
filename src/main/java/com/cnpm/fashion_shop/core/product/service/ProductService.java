@@ -6,6 +6,7 @@ import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductDtoGetOne;
 import com.cnpm.fashion_shop.api.product.dto.ProductRes;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductStarResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
 import com.cnpm.fashion_shop.common.response.SuccessfulResponse;
 import com.cnpm.fashion_shop.core.brand.repository.BrandRepository;
@@ -87,6 +88,20 @@ public class ProductService {
         Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
         return productRepository.findAllByName(pageable, search);
     }
+
+    @Transactional
+    public Page<ProductStarResponseDto> findAllProductStar(int size, int page, String sort) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+                "numberOfStar"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+        return productRepository.findNumberOfStarForProducts(pageable);
+    }
+
     @Transactional
     public List<ProductResponseDto> findAllProductDetailsWithOutPage(String sort, String search) {
         List<String> columnsAllow = Arrays.asList(
@@ -100,7 +115,6 @@ public class ProductService {
                 "Name_Category",
                 "Name_Gender",
                 "Name_Image",
-                "numberOfStar",
                 "link",
                 "color"
         );

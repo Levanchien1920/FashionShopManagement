@@ -3,6 +3,7 @@ package com.cnpm.fashion_shop.core.product.repository;
 import com.cnpm.fashion_shop.api.product.dto.ProductColor;
 import com.cnpm.fashion_shop.api.product.dto.ProductDto;
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductStarResponseDto;
 import com.cnpm.fashion_shop.entity.Product;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,26 +18,24 @@ import java.util.Optional;
 @Repository
 public interface ProductRepository extends JpaRepository<Product, Long> {//phai tao repository cho moi Entity==>sai ngu mat thoi gian
 
-    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color, AVG(review.number_of_star) as NumberOfStar \n" +
-            "FROM (((((( product\n" +
+    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color \n" +
+            "FROM ((((( product\n" +
             "INNER JOIN brand ON product.id_brand = brand.id) \n" +
             "INNER JOIN category ON product.id_cate = category.id)\n" +
             "INNER JOIN image ON product.id_image = image.id) \n" +
             "INNER JOIN gender ON product.id_gender = gender.id)  \n" +
             "INNER JOIN color ON product.id_color = color.id)  \n" +
-            "INNER JOIN review ON review.id_product = product.id)  \n" +
-            "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false AND image.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND color.is_deleted = false group by review.id_product", nativeQuery = true)
+            "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false AND image.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND color.is_deleted = false", nativeQuery = true)
     Page<ProductResponseDto> findAllByName(Pageable pageable, @Param("keyword") String keyword);
 
-    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color, AVG(review.number_of_star) as NumberOfStar \n" +
-            "FROM (((((( product\n" +
+    @Query(value = "SELECT product.id,product.name,product.price,product.number,product.name_size,product.des,brand.name AS Name_Brand,category.name AS Name_Category,gender.name AS Name_Gender,image.name AS Name_Image,image.link, color.name AS Name_Color\n" +
+            "FROM ((((( product\n" +
             "INNER JOIN brand ON product.id_brand = brand.id) \n" +
             "INNER JOIN category ON product.id_cate = category.id)\n" +
             "INNER JOIN image ON product.id_image = image.id) \n" +
             "INNER JOIN gender ON product.id_gender = gender.id)  \n" +
             "INNER JOIN color ON product.id_color = color.id)  \n" +
-            "INNER JOIN review ON review.id_product = product.id)  \n" +
-            "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false AND image.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND color.is_deleted = false group by review.id_product", nativeQuery = true)
+            "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false AND image.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND color.is_deleted = false", nativeQuery = true)
     List<ProductResponseDto> findAllByName(@Param("keyword") String keyword);
 
     @Query(value = "SELECT * FROM product p WHERE p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
@@ -77,7 +76,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "where product.is_deleted = false", nativeQuery = true)
     Page<ProductResponseDto> findProducts(Pageable pageable, @Param("keyword") String keyword);
 
-    @Query(value = "select * from (SELECT product.id,product.name as Name,product.number as number,avg(review.number_of_star) as numberOfStar, product.price, product.name_size, color.name as NameColor,sum(info.number) as Sold_Out,product.des,brand.name as Name_Brand,category.name as Name_Category,gender.name as Name_Gender,image.name as Name_Image,image.link , color.name as name_Color\n" +
+    @Query(value = "select * from (SELECT product.id,product.name as Name,product.number as number,review.number_of_star as numberOfStar, product.price, product.name_size, color.name as NameColor,sum(info.number) as Sold_Out,product.des,brand.name as Name_Brand,category.name as Name_Category,gender.name as Name_Gender,image.name as Name_Image,image.link , color.name as name_Color\n" +
             "FROM (((((((product \n" +
             "INNER JOIN brand on product.id_brand = brand.id) \n" +
             "INNER JOIN category on product.id_cate = category.id) \n" +
@@ -88,4 +87,11 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "INNER JOIN review on product.id = review.id_product )\n"+
             "Where product.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND image.is_deleted = false  GROUP By product.id Order by sum(info.number) DESC limit 4) as c1", nativeQuery = true)
     Page<ProductResponseDto> findBestProducts(Pageable pageable, @Param("keyword") String keyword);
+
+
+    @Query(value = "SELECT product.id,avg(review.number_of_star) as numberOfStar\n" +
+            "FROM (product \n" +
+            "INNER JOIN review on product.id = review.id_product )\n"+
+            "Where product.is_deleted = false and review.is_deleted =false group by review.id_product", nativeQuery = true)
+    Page<ProductStarResponseDto> findNumberOfStarForProducts(Pageable pageable);
 }
