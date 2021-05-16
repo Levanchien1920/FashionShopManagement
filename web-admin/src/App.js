@@ -46,6 +46,7 @@ import EditInvoice from './components/Invoice/EditInvoice';
 import Customer from './components/Customer/Customer';
 import NewCustomer from './components/Customer/NewCustomer'
 import EditCustomer from './components/Customer/EditCustomer';
+import NewInvoice from './components/Invoice/NewInvoice';
 function App() {
   return (
     <Router>
@@ -75,6 +76,7 @@ function App() {
                 <Route path='/product/:id' component={ProductDetail}/>
 
                 <Route path='/invoice' component={Invoice} />
+                <Route path='/new-invoice' component={NewInvoice} />
                 <Route path='/view-invoice/:id' component={ViewInvoice} />
                 <Route path='/edit-invoice/:id' component={EditInvoice} />
 

@@ -1,6 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { Markup } from 'interweave';
 import API from '../Config/Api'
     const imgStyle = {
         border: '2px solid red',
@@ -52,8 +53,7 @@ export default function Post() {
                                         <Link to={`/post-detail/${post.id}`}>
                                             {post.name}                                            
                                         </Link>
-                                        <p>{post.content}</p>
-                                
+                                        <Markup content={post.content} />
                                 </div>                                                                 
                             ))} 
                             </div>                              
