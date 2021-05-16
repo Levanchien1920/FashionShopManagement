@@ -11,6 +11,10 @@ public interface InvoiceCustomerResponseDto {
 
     String getName_Product();
 
+    String getNameSize();
+
+    String getNameColor();
+
     Integer getPrice();
 
     Integer getNumber_Product();

@@ -52,7 +52,10 @@ public class InvoiceService {
                 "is_paid",
                 "name_product",
                 "price",
-                "number_product"
+                "number_product",
+                "linkImage",
+                "nameSize",
+                "nameColor"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
@@ -69,7 +72,10 @@ public class InvoiceService {
                 "is_paid",
                 "name_product",
                 "price",
-                "number_product"
+                "number_product",
+                "nameSize",
+                "nameColor",
+                "linkImage"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
@@ -85,6 +91,9 @@ public class InvoiceService {
                 "fullName_Employee",
                 "is_paid",
                 "name_product",
+                "nameSize",
+                "nameColor",
+                "linkImage",
                 "number_product"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
@@ -102,7 +111,10 @@ public class InvoiceService {
                 "fullName_Employee",
                 "is_paid",
                 "name_product",
-                "number_product"
+                "number_product",
+                "nameColor",
+                "nameSize",
+                "linkImage"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
@@ -259,7 +271,9 @@ public class InvoiceService {
                 "name_product",
                 "price",
                 "number_product",
-                "linkImage"
+                "linkImage",
+                "nameSize",
+                "nameColor"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
@@ -278,7 +292,9 @@ public class InvoiceService {
                 "name_product",
                 "price",
                 "number_product",
-                "link"
+                "linkImage",
+                "nameSize",
+                "nameColor"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();

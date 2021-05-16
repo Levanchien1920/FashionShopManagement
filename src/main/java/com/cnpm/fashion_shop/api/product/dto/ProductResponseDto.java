@@ -1,5 +1,7 @@
 package com.cnpm.fashion_shop.api.product.dto;
 
+import java.util.List;
+
 public interface ProductResponseDto {
     Integer getId();
 
@@ -25,7 +27,7 @@ public interface ProductResponseDto {
 
     String getlink();
 
-    Float getNumberOfStar();
+    List<Float> getNumberOfStar();
 
 
 }

@@ -18,10 +18,12 @@ import java.util.Optional;
 
 @Repository
 public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
-    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
-            "FROM (((invoice i inner join user e on i.id_customer=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product, p.name_size as nameSize, color.name as nameColor, image.link as linkImage " +
+            "FROM (((((invoice i inner join user e on i.id_customer=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join color color on color.id=p.id_color) " +
+            "inner join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceCustomerResponseDto> findAllByIdCustomer(Pageable pageable, @Param("keyword") String keyword);
 
@@ -36,10 +38,12 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "WHERE i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceEmployeeDto> findAllStatusByIdEmployee(Pageable pageable, @Param("id") String id);
 
-    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
-            "FROM (((invoice i inner join user e on i.id_customer=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product, p.name_size as nameSize, color.name as nameColor, image.link as linkImage  " +
+            "FROM (((((invoice i inner join user e on i.id_customer=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join color color on p.id_color=color.id) " +
+            "left join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     List<InvoiceCustomerResponseDto> findAllByIdCustomerWithoutDividingPage(@Param("keyword") String keyword);
 
@@ -47,33 +51,39 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
     Optional<Invoice> findById_invoice(@Param("id") Integer id);
 
 
-    @Query(value = "SELECT i.id as Id,e.full_name as fullName_Employee, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
-            "FROM (((invoice i inner join user e on i.id_employee=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as fullName_Employee, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product,image.link as linkImage,p.name_size as nameSize, color.name as nameColor " +
+            "FROM (((((invoice i inner join user e on i.id_employee=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join color color on p.id_color=color.id) " +
+            "inner join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceEmployeeResponseDto> findAllByIdEmployee(Pageable pageable, @Param("keyword") String keyword);
 
-    @Query(value = "SELECT i.id as Id,e.full_name as fullName_Employee, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product " +
-            "FROM (((invoice i inner join user e on i.id_employee=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as fullName_Employee, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product ,image.link as linkImage,p.name_size as nameSize, color.name as nameColor " +
+            "FROM (((((invoice i inner join user e on i.id_employee=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join color color on p.id_color=color.id) " +
+            "inner join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     List<InvoiceEmployeeResponseDto> findAllByIdEmployeeWithoutDividingPage(@Param("keyword") String keyword);
 
 
-    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product,image.link as linkImage " +
-            "FROM ((((invoice i inner join user e on i.id_customer=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product,image.link as linkImage,p.name_size as nameSize, color.name as nameColor " +
+            "FROM (((((invoice i inner join user e on i.id_customer=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join color color on p.id_color=color.id) " +
             "inner join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id= :id", nativeQuery = true)
     Page<InvoiceCustomerResponseDto> getOneByIdInvoice(Pageable pageable, @Param("keyword") String keyword, @Param("id") Integer id);
 
-    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product, image.link as linkImage " +
-            "FROM ((((invoice i inner join user e on i.id_customer=e.id) " +
+    @Query(value = "SELECT i.id as Id,e.full_name as Name_Customer, info.number*p.price as Total_Money, i.is_paid as Is_paid, info.number as Number_Product,p.price as Price, p.name as Name_Product ,image.link as linkImage, p.name_size as nameSize, color.name as nameColor " +
+            "FROM (((((invoice i inner join user e on i.id_customer=e.id) " +
             "inner join info_for_each info on info.id_invoice=i.id) " +
             "inner join product p on p.id=info.id_product) " +
+            "inner join color color on p.id_color=color.id) " +
             "inner join image image on image.id=p.id_image) " +
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE AND i.id_customer= :id", nativeQuery = true)
     List<InvoiceCustomerResponseDto> getOneByIdCustomer(@Param("keyword") String keyword, @Param("id") Integer id);

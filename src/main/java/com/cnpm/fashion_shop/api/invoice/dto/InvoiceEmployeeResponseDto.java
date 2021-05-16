@@ -13,5 +13,11 @@ public interface InvoiceEmployeeResponseDto {
 
     Integer getNumber_Product();
 
+    String getNameSize();
+
+    String getNameColor();
+
+    String getLinkImage();
+
 
 }
