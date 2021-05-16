@@ -1,6 +1,7 @@
 package com.cnpm.fashion_shop.api.product.controller;
 
 import com.cnpm.fashion_shop.api.product.dto.ProductResponseDto;
+import com.cnpm.fashion_shop.api.product.dto.ProductStarResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
 import com.cnpm.fashion_shop.common.request.RequestParamsForGettingList;
 import com.cnpm.fashion_shop.common.response.PaginationResponse;
@@ -47,6 +48,15 @@ public class ProductControllerClient {
         return data;
     }
 
+    @ApiOperation(value = "Get all product")
+    @GetMapping("/star")
+    public PaginationResponse<ProductStarResponseDto> getProductStar(RequestParamsForGettingList requestParamsForGettingList) {
+        Page<ProductStarResponseDto> data = productService.findAllProductStar(requestParamsForGettingList.getPage(),
+                requestParamsForGettingList.getSize(),
+                requestParamsForGettingList.getSort());
+
+        return new PaginationResponse<>(data);
+    }
 
     @ApiOperation(value = "Get product by id")
     @GetMapping("/{product_id}")
