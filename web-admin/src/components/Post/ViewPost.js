@@ -4,7 +4,7 @@ import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import {useHistory} from 'react-router-dom'
 import API from '../Config/Api';
-export default function EditPost(props) {
+export default function ViewPost(props) {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
@@ -37,26 +37,12 @@ export default function EditPost(props) {
 
     }, []);
 
-    const editPost =  (e) =>{
+    const back =  (e) =>{
         e.preventDefault();  
-        console.log(post)
-        const dataPost = {
-            content: post.content,
-            id_image: 1,
-            title: post.title
-        }
-        console.log(dataPost)
-        
-        API.patch('post/' + idPost, dataPost, token).then((response) => {
-            console.log(response.data)
-            history.push({
-                pathname: '/posts',
-                state: { report: 'Edit Success Post' }
-            }) 
-        }).catch((error) => {
-
-        });
-        // console.log(category);
+        history.push({
+            pathname: '/posts',
+            
+        }) 
     }
 
     return (
@@ -82,7 +68,7 @@ export default function EditPost(props) {
                             <div className="form-group">
                                 <label htmlFor="title">Title</label>
                                 <input type="text" className="form-control" value={post.title} id="title" name="title"
-                                    onChange={e => setPost({...post ,title : e.target.value})}/>
+                                    onChange={e => setPost({...post ,title : e.target.value})} readOnly/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="content">Content</label>
@@ -101,7 +87,7 @@ export default function EditPost(props) {
                             </div>
   
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn btn-info" onClick={editPost}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={back}>Back </button>
                                
                             </div>
                         </form>

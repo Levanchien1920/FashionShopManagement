@@ -24,6 +24,16 @@ function NewInvoice(props) {
         number: 0
     })
     const [listProductAll, setListProductAll] = useState([])
+    const [listProductInput, setListProductInput] = useState([])
+    const [listCustomerInput, setListCustomerInput] = useState([])
+
+    const [search, setSearch] = useState(
+        {
+            bool : false , 
+            name : "customer",
+            string : ""
+        }
+    )
     useEffect(() => {
         API.get('/product/all', token).then((response)=> {
             setListProductAll(response.data)               
@@ -60,6 +70,30 @@ function NewInvoice(props) {
         
     }, [product]);
 
+    useEffect(() => {
+        async function getdatas (){
+            switch (search.name) {
+                case "product":
+                    API.get('product?search='+search.string, token).then((response)=> {
+                        setListProductInput(response.data.content);
+                    }).catch((error) =>{
+            
+                    }); 
+                    break;
+                case "customer":
+                    API.get('customer?search='+search.string, token).then((response)=> {
+                        setListCustomerInput(response.data.content);
+                    }).catch((error) =>{
+            
+                    }); 
+                    break;
+                default:
+                    break;
+            }
+        }
+        if(search.bool === true){ getdatas()}
+    }, [search]);
+
     const addToListProduct = (e) => {
         e.preventDefault();  
         if (product.id != 0) {
@@ -92,27 +126,27 @@ function NewInvoice(props) {
             listProducts: listProductCart,
             totalMoney: invoice.totalMoney
         }
-        console.log(data)
-        history.push({
-            pathname: '/invoice',
-            state: { report: 'Đặt hàng thành công' }
-        })
+        // console.log(data)
+        // history.push({
+        //     pathname: '/invoice',
+        //     state: { report: 'Order Success' }
+        // })
     
-        // API.post('invoice', data, token)
-        // .then(response => {
+        API.post('invoice', data, token)
+        .then(response => {
            
-        //     console.log(response.data)
-        //     // alert("Đặt hàng thành công")
-        //     // window.localStorage.removeItem("cart")
-        //     history.push({
-        //         pathname: '/invoice',
-        //         state: { report: 'Đặt hàng thành công' }
-        //     })
+            console.log(response.data)
+            // alert("Đặt hàng thành công")
+            // window.localStorage.removeItem("cart")
+            history.push({
+                pathname: '/invoice',
+                state: { report: 'Đặt hàng thành công' }
+            })
     
-        // })
-        // .catch(errors => {
-        //       console.log(errors)
-        // })
+        })
+        .catch(errors => {
+              console.log(errors)
+        })
     }
 
     
@@ -149,6 +183,7 @@ function NewInvoice(props) {
                                         <span className="input-group-text" id="">Number Product</span>
                                     </div>
                                     
+
                                     <input type="text" className="form-control" placeholder="Number Product"
                                     onChange={e => setProduct({...product ,number : e.target.value})} value={product.number}></input>
                                     

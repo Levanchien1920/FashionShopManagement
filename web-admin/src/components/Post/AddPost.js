@@ -31,7 +31,10 @@ function AddPost(props) {
         API.post('post', data, token)
         .then(response => {
             console.log(response.data)
-            history.push('/posts')
+            history.push({
+                pathname: '/posts',
+                state: { report: 'Add Success Post' }
+            }) 
         })
         .catch(errors => {
             console.log(errors)

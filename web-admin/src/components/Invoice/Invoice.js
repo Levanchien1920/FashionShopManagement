@@ -76,7 +76,7 @@ export default function Invoice() {
         API.delete('invoice/' + id, token)
         .then(response => {       
             console.log(response.data)
-            alert("Xóa review thành công")
+            // alert("Xóa review thành công")
         })
         .catch(errors => {
               console.log(errors)
@@ -108,8 +108,7 @@ export default function Invoice() {
                                         </button>
                                     </div> : <div></div>
                                 }
-                                
-                              
+                                                             
                                 <div className="table-responsive">
                                     <table className="table table-hover">
                                         <thead>

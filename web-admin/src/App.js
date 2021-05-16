@@ -47,6 +47,7 @@ import Customer from './components/Customer/Customer';
 import NewCustomer from './components/Customer/NewCustomer'
 import EditCustomer from './components/Customer/EditCustomer';
 import NewInvoice from './components/Invoice/NewInvoice';
+import ViewPost from './components/Post/ViewPost';
 function App() {
   return (
     <Router>
@@ -69,6 +70,7 @@ function App() {
                 <Route path='/posts' component={Post}/> 
                 <Route path='/add-post' component={AddPost}/> 
                 <Route path='/edit-post/:id' component = {EditPost} />
+                <Route path='/view-post/:id' component = {ViewPost} />
 
                 <Route path='/reviews' > <Review/>  </Route>
                 <Route path='/view-review/:id' component={viewReview} />
