@@ -27,7 +27,7 @@ public interface ProductResponseDto {
 
     String getlink();
 
-    List<Float> getNumberOfStar();
+    Float getNumberOfStar();
 
 
 }
