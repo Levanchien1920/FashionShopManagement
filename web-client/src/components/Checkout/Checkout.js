@@ -16,6 +16,25 @@ function Checkout() {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
     let idUser = localStorage.getItem("id")
+    let fullName = localStorage.getItem("fullname")
+    const [ user, setUser] = useState({
+        username: "",
+        password: "",
+        fullName: "",
+        address: "",
+        email: "",
+        phoneNumber: "",
+})
+    useEffect(() => {
+        let token = {
+            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
+        }
+        API.get(`client/user/${localStorage.getItem("id")}`,token).then((response)=> {
+            setUser(response.data);
+        }).catch((error) =>{
+        });
+    }, [localStorage.getItem("token")])
+
     useEffect(() => {
         let cart = JSON.parse(localStorage.getItem('cart'));
         let keys = [];
@@ -125,8 +144,8 @@ function Checkout() {
             <div className="container-fluid">
                 <ul className="breadcrumb">
                     <li className="breadcrumb-item"><a href="#">Home</a></li>
-                    <li className="breadcrumb-item"><a href="#">Products</a></li>
-                    <li className="breadcrumb-item active">Cart</li>
+                    <li className="breadcrumb-item"><a href="#">Cart</a></li>
+                    <li className="breadcrumb-item active">Checkout</li>
                 </ul>
             </div>
         </div>
@@ -170,9 +189,10 @@ function Checkout() {
                                 <div className="cart-summary">
                                     <div className="cart-content">
                                         <h1>Customer Information</h1>
-                                        <p><b>Address:</b> <span>K97/72 Nguyen Luong Bang - Hoa Khanh </span></p>
-                                        <p><b>Phone:</b> <span>0979897500</span></p>
-                                        <p><b>Email:</b> <span>vietthanhqt123@gmail.com</span></p>
+                                        <p><b>Address:</b> <span>{user.address} </span></p>
+                                        <p><b>Phone:</b> <span>{user.phoneNumber}</span></p>
+                                        <p><b>Full Name:</b> <span>{user.fullName}</span></p>
+                                        <p><b>Email:</b> <span>{user.email}</span></p>
                                         <h1>Order Information</h1>
                                         <p>Sub Total<span><NumberFormat value={total} displayType={'text'} thousandSeparator={true} prefix={'VND'} /></span></p>
                                         <p>Shipping Cost<span></span></p>

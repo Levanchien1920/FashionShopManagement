@@ -1,9 +1,10 @@
 import React , {useState , useEffect, useContext} from 'react'
 import API from '../Config/Api'
 import Pagination from '../Pagination/index'
-import { Link , useHistory } from 'react-router-dom';
+import { Link , useHistory } from 'react-router-dom'
 import queryString from 'query-string'
 import {LoginContext} from '../Context/LoginContext'
+import { useLocation } from "react-router-dom";
 const tableStyle = {
     // border: 1px solid black,
     // table-layout: fixed,
@@ -11,7 +12,7 @@ const tableStyle = {
 }
 
 const thStyle = {
-//   border: '1px solid black',
+
   width: '400px',
   overflow: 'hidden'
 }
@@ -22,9 +23,13 @@ const titleStyle = {
 }
 
 function Post() {
+    const location = useLocation();
     const history = useHistory();
     const [ListPost , setListPost] = useState([]);
     const check = useContext(LoginContext);
+    const [alert, setAlert] = useState({
+        report: ""
+    })
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -39,6 +44,11 @@ function Post() {
     var token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
+
+    useEffect(() => {
+        if(typeof location.state != "undefined")
+            setAlert({...alert, report : location.state.report})
+     }, [location]);
 
     useEffect(() => {
         // const paramsString = queryString.stringify(filters)
@@ -115,6 +125,14 @@ function Post() {
                                 <div className="card-body">
                                         <h4 className="card-title">List Post <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/add-post")}} >New</button></h4>
                                 </div>
+                                {(alert.report != "") ?
+                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                                            {alert.report}
+                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div> : <div></div>
+                                }
                                 <div className="table-responsive">
                                     <table className="table table-hover" style = {tableStyle}>
                                         <thead>
@@ -135,9 +153,11 @@ function Post() {
                                                     {/* <td>{Post.name}</td> */}
                                                     <td>{Post.title}</td>
                                                     {/* <td></td> */}
-                                                    <td>{Post.content}</td>
+                                                    <td ><div className="synopsis-content">{Post.content}</div></td>
                                                     {/* <td ><a href={Post.link} target="_blank">click in here</a></td> */}
-                                                    <td><button className="btn btn-success">View</button> <button className="btn btn-info" onClick ={ e => {history.push(`/edit-post/${Post.id}`)}}>Edit</button> <button className="btn btn-danger" id = {Post.id} onClick={deletePost}>Delete</button></td>
+                                                    <td><button className="btn btn-success" onClick ={ e => {history.push(`/view-post/${Post.id}`)}}>View</button> <button
+                                                    className="btn btn-info" onClick ={ e => {history.push(`/edit-post/${Post.id}`)}}>Edit</button> <button
+                                                    className="btn btn-danger" id = {Post.id} onClick={deletePost}>Delete</button></td>
                                                     
                                                 </tr>
                                             ))}
