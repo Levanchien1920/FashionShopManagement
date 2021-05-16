@@ -86,8 +86,7 @@ export default function Color() {
                                                 <tr key={Color.id}>
                                                     <th scope="row">{Color.id}</th>
                                                     <td>{Color.name}</td>
-                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editColor/${Color.id}`)}}>Edit</button> 
-                                                    <button className="btn btn-danger" onClick={deleteColor.bind(this,Color.id)}>Delete</button></td>
+                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editColor/${Color.id}`)}}>Edit</button> <button className="btn btn-danger" onClick={deleteColor.bind(this,Color.id)}>Delete</button></td>
                                               </tr>
                                             ))}
                                         </tbody>

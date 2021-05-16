@@ -10,6 +10,7 @@ import Products from './components/Product/Products'
 import Brands from './components/Brand/Brand'
 import Categorys from './components/Category/Category'
 import EditCategory from './components/Category/EditCategory'
+import MyAccount from './components/Account/MyAccount'
 
 import Post from './components/Post/Post'
 import EditPost from './components/Post/EditPost'
@@ -27,6 +28,8 @@ import NewBrand from './components/Brand/NewBrand';
 import ProductDetail from './components/Product/ProductDetail';
 import AddCategory from './components/Category/AddCategory'
 // import NewCustomer from './components/New/NewCustomer';
+
+import EditAccount from './components/Account/EditAccount';
 
 import NewProduct from './components/Product/NewProduct';
 import NewImage from './components/Image/NewImage';
@@ -87,8 +90,9 @@ function App() {
 
                 <Route path='/Employee' > <Employee/>  </Route>
                 <Route path='/newbrand' > <NewBrand/>  </Route>
+                <Route path='/myaccount' component={MyAccount} />
 
-                
+
                 <Route path='/newimage' component={NewImage} />
                 <Route path='/newcolor' component={NewColor}/>
                 {/* <Route path='/newpost' > <NewPost/>  </Route> */}
@@ -100,6 +104,7 @@ function App() {
                 <Route path='/editcategory/:id' component={EditCategory}/>
                 <Route path='/editimage/:id' component={EditImage}/>
                 <Route path='/editcolor/:id' component={EditColor}/>
+                <Route path='/editAccount/:id' component={EditAccount}/>
 
                 <Route path='/role' component={Role}/>
 

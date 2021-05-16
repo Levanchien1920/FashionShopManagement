@@ -239,7 +239,7 @@ export default function EditProduct() {
                                 onChange={e => setdataoutput({...dataoutput ,id_gender : 3})}/><label htmlFor="couple"className="idlabel" >Couple</label><br></br>
                             </div>
                             <div className="form-group">
-                                <button type="button" name="example-email" className="btn" onClick={save}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={save}>Save </button>
                             </div>
                         </form>
                     </div>

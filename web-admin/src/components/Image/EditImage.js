@@ -75,7 +75,7 @@ export default function NewImage() {
                                         <p>{message}</p>
                                     )}
                                 <div className="form-group">
-                                    <button type="button" name="example-email" className="btn" onClick={saveImage}>Save </button>
+                                    <button type="button" name="example-email" className="btn btn-info" onClick={saveImage}>Save </button>
                                 </div>
                             </form>
                         </div>

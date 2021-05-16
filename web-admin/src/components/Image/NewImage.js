@@ -59,7 +59,7 @@ export default function NewImage() {
                                     message !== "" ? (<p>you need enter value</p>) :( <></>)
                                 }
                                 <div className="form-group">
-                                    <button type="button" name="example-email" className="btn" onClick={saveImage}>Save </button>
+                                    <button type="button" name="example-email" className="btn btn-info" onClick={saveImage}>Save </button>
                                 </div>
                             </form>
                         </div>

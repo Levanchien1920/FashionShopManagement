@@ -33,7 +33,7 @@ export default function ProductDetail() {
         <div className="page-wrapper">
         <div className="page-breadcrumb">
                 <div className="col-5 align-self-center">
-                    <h4 className="page-title">New Product</h4>
+                    <h4 className="page-title">Product Detail</h4>
                 </div>
         </div>
         <div className="container-fluid">

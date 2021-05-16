@@ -67,7 +67,7 @@ export default function EditBrand() {
                                         <p>{message}</p>
                                     )}
                                     <div className="form-group">
-                                        <button type="button" name="example-email" className="btn" onClick={savebrand}>Save </button>
+                                        <button type="button" name="example-email" className="btn btn-info" onClick={savebrand}>Save </button>
                                     </div>
                                 </form>
                             </div>

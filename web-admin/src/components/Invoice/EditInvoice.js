@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
-import Select from 'react-select-2';
 function EditInvoice(props) {
     const check = useContext(LoginContext);
     const [invoice, setInvoice] = useState({

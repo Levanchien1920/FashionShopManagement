@@ -13,15 +13,15 @@ export default function NewBrand() {
             setmessage("You have not entered enough");
         }else {
             console.log(newvalue)
-            Api.post("v1/brand",newvalue,{
+            Api.post("brand",newvalue,{
                 headers: {
                         'Authorization': `Bearer ${localStorage.getItem("token")}`
                         } 
                 }).then((response)=> {
                 alert(response.data.message);
             }).catch((error) =>{
-                alert(error.message);
-                console.log(error)
+                alert(error.response.data.message);
+                console.log(error.response.data)
             });
         }
     }
@@ -51,7 +51,7 @@ export default function NewBrand() {
                                 </div>
                                 { (message !=="") ? (<p>{message}</p>):(<></>)}
                                 <div className="form-group">
-                                    <button type="button" name="example-email" className="btn" onClick={savebrand}>Save </button>
+                                    <button type="button" name="example-email" className="btn btn-info" onClick={savebrand}>Save </button>
                                 </div>
                             </form>
                         </div>

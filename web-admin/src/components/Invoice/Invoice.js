@@ -1,6 +1,5 @@
 import React , {useState , useEffect, useContext} from 'react'
 import API from '../Config/Api';
-import { Link } from 'react-router-dom'
 import Pagination from '../Pagination/index'
 import queryString from 'query-string'
 import { useHistory } from 'react-router';

@@ -2,6 +2,7 @@ import React, {useState , useContext } from 'react'
 import {Link} from 'react-router-dom'
 function Card(props) {
     const {product} = props;
+    console.log(product);
     var name = product.name.split(' ')
     if (name.length > 5) { product.name = name[0]+" "+name[1]+" "+name[2]+" "+name[3]+" "+name[4]+"..."}
     const [quantity, setquantity] = useState(1);
@@ -21,7 +22,7 @@ function Card(props) {
             <div className="product-item">
                     <div className="product-title">
                         <Link to={`/productdetail/${product.id}`}>
-                           {product.name}
+                           {product.name} ({product.name_Size})
                         </Link>
                         <div className="ratting">
                             <i className={product.numberOfStar >=1 ?"fa fa-star": product.numberOfStar >= 0.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
