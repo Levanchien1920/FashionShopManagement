@@ -1,5 +1,6 @@
 package com.cnpm.fashion_shop.core.post.service;
 
+import com.cnpm.fashion_shop.api.post.dto.PostClientDto;
 import com.cnpm.fashion_shop.api.post.dto.PostDto;
 import com.cnpm.fashion_shop.api.post.dto.PostResponseDto;
 import com.cnpm.fashion_shop.common.response.Response;
@@ -199,4 +200,19 @@ public class PostService {
     public Optional<Post> findByIdOptional(Integer id) {
         return postRepository.findById(id);
     }
+
+    @Transactional
+    public List<PostClientDto> getOneByIdPost(String sort,int id) {
+        List<String> columnsAllow = Arrays.asList(
+                "id",
+               "title",
+                "content",
+                "linkImage"
+        );
+        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+        orderFilterHelperImpl.validate();
+
+        return postRepository.getOneByIdPost(id);
+    }
+
 }

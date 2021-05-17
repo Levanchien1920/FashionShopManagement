@@ -1,5 +1,7 @@
 package com.cnpm.fashion_shop.api.post.controller;
 
+import com.cnpm.fashion_shop.api.invoice.dto.InvoiceCustomerResponseDto;
+import com.cnpm.fashion_shop.api.post.dto.PostClientDto;
 import com.cnpm.fashion_shop.api.post.dto.PostDto;
 import com.cnpm.fashion_shop.api.post.dto.PostResponseDto;
 import com.cnpm.fashion_shop.common.constant.SecurityConstants;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.List;
 
 
 @RestController
@@ -63,9 +66,14 @@ public class PostController {
         return this.postService.deletePost(id);
     }
 
-    @ApiOperation(value = "Get post by id")
-    @GetMapping("/{post_id}")
-    public ResponseEntity getOneBrand(@PathVariable("post_id") Integer id) {
-        return postService.getOne(id);
+
+    @ApiOperation(value = "Get post by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
+    @GetMapping("/{id_post}")
+    public List<PostClientDto> getOneByIdPost(RequestParamsForGettingList requestParamsForGettingList, @PathVariable("id_post") Integer id) {
+        List<PostClientDto> data = postService.getOneByIdPost(
+                requestParamsForGettingList.getSort(),id);
+
+        return data;
     }
+
 }

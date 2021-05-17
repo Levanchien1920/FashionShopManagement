@@ -27,6 +27,7 @@ public class PostDto {
     @Setter
     private Integer id_image;
 
+
     public PostDto(Integer id, @NotNull String title, @NotNull String content, Integer id_image) {
         this.id = id;
         this.title = title;
