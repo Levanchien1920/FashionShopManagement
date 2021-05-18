@@ -17,6 +17,7 @@ import Post from './components/Post/Post';
 import Checkout from './components/Checkout/Checkout'
 import PostDetail from './components/Post/PostDetail';
 import ViewOrder from './components/MyAccount/Order/ViewOrder';
+import CheckoutBuyNow from './components/Checkout/CheckouBuyNow';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
             <Route path='/myaccount' component={MyAccount} />
             <Route path='/contact' component={Contact} /> 
             <Route path='/checkout' component={Checkout} />  
+            <Route path='/checkout-buy-now/:id' component={CheckoutBuyNow} /> 
             <Route path='/productdetail/:id' component={ProductDetail} /> 
             
             <Route path='/post' component={Post} /> 

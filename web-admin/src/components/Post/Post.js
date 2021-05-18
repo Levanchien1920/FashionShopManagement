@@ -12,8 +12,7 @@ const tableStyle = {
 }
 
 const thStyle = {
-
-  width: '400px',
+  width: '300px',
   overflow: 'hidden'
 }
 
@@ -141,8 +140,8 @@ function Post() {
                                                 {/* <th scope="col">Name</th> */}
                                                 <th scope="col" style = {titleStyle}>Title</th>
                                                 <th scope="col" style = {thStyle}>Content</th>
-                                                {/* <th scope="col">Detail</th> */}
-                                                <th scope="col">Action</th>
+                                                <th scope="col">Image</th>
+                                                <th scope="col" style = {thStyle}>Action</th>
                                         
                                             </tr>
                                         </thead>
@@ -154,7 +153,7 @@ function Post() {
                                                     <td>{Post.title}</td>
                                                     {/* <td></td> */}
                                                     <td ><div className="synopsis-content">{Post.content}</div></td>
-                                                    {/* <td ><a href={Post.link} target="_blank">click in here</a></td> */}
+                                                    <td ><a href={Post.link} target="_blank">Click in here</a></td>
                                                     <td><button className="btn btn-success" onClick ={ e => {history.push(`/view-post/${Post.id}`)}}>View</button> <button
                                                     className="btn btn-info" onClick ={ e => {history.push(`/edit-post/${Post.id}`)}}>Edit</button> <button
                                                     className="btn btn-danger" id = {Post.id} onClick={deletePost}>Delete</button></td>

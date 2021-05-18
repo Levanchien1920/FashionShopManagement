@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
-import Select from 'react-select-2';
 function NewInvoice(props) {
     const history = useHistory();
     const id = props.match.params.id
@@ -39,7 +37,7 @@ function NewInvoice(props) {
             setListProductAll(response.data)               
         }).catch((error) =>{
         });
-    });
+    }, []);
 
     useEffect(() => {
         check.checklogin();
@@ -71,6 +69,18 @@ function NewInvoice(props) {
     }, [product]);
 
     useEffect(() => {
+            API.get('product', token).then((response)=> {
+                setListProductInput(response.data.content);
+            }).catch((error) =>{
+    
+            }); 
+            API.get('user/customer', token).then((response)=> {
+                setListCustomerInput(response.data.content);
+            }).catch((error) =>{
+    
+            }); 
+    }, [])
+    useEffect(() => {
         async function getdatas (){
             switch (search.name) {
                 case "product":
@@ -81,8 +91,9 @@ function NewInvoice(props) {
                     }); 
                     break;
                 case "customer":
-                    API.get('customer?search='+search.string, token).then((response)=> {
+                    API.get('user/customer?search='+search.string, token).then((response)=> {
                         setListCustomerInput(response.data.content);
+                        console.log(response.data.content);
                     }).catch((error) =>{
             
                     }); 
@@ -126,11 +137,6 @@ function NewInvoice(props) {
             listProducts: listProductCart,
             totalMoney: invoice.totalMoney
         }
-        // console.log(data)
-        // history.push({
-        //     pathname: '/invoice',
-        //     state: { report: 'Order Success' }
-        // })
     
         API.post('invoice', data, token)
         .then(response => {
@@ -168,8 +174,17 @@ function NewInvoice(props) {
                         <form className="form-horizontal m-t-30" >
                             <div className="form-group" >
                                 <label>Id Customer</label>
-                                <input type="text" className="form-control" onChange={e => setInvoice({...invoice ,id_user : e.target.value})} value={invoice.id_user}/>
-                                    
+                                {/* <input type="text" className="form-control" onChange={e => setInvoice({...invoice ,id_user : e.target.value})} value={invoice.id_user}/> */}
+                                <input list="cat" className="form-control"
+                                        onChange={e => {
+                                            setInvoice({...invoice ,id_user : e.target.value})
+                                            setSearch({...search , bool : true , name : "customer" , string : e.target.value})
+                                            }}></input>
+                                <datalist id="cat">
+                                    {listCustomerInput.map((category) => (
+                                        <option value={category.id} key={category.id}>{category.fullName}</option>
+                                    ))}
+                                </datalist>
                             </div>
                             <div className="form-group" >
                             <div className="table-responsive">
@@ -177,8 +192,18 @@ function NewInvoice(props) {
                                     <div className="input-group-prepend">
                                         <span className="input-group-text" id="">Id Product</span>
                                     </div>
-                                    <input type="text" className="form-control" placeholder="ID Product"
-                                    onChange={e => setProduct({...product ,id : e.target.value})} value={product.id}></input>
+                                    {/* <input type="text" className="form-control" placeholder="ID Product"
+                                    onChange={e => setProduct({...product ,id : e.target.value})} value={product.id}></input> */}
+                                    <input list="cate" className="form-control" placeholder="ID Product" type="text"
+                                        onChange={e => {
+                                            setProduct({...product ,id : e.target.value })
+                                            setSearch({...search , bool : true , name : "product" , string : e.target.value})
+                                            }}></input>
+                                    <datalist id="cate">
+                                        {listProductInput.map((category) => (
+                                           <option value={category.id} key={category.id}>{category.name}</option>
+                                        ))}
+                                    </datalist>
                                     <div className="input-group-prepend">
                                         <span className="input-group-text" id="">Number Product</span>
                                     </div>
