@@ -15,6 +15,7 @@ const Cart = () => {
   const [test,setTest] =useState(false)
   const [empty,setEmpty] =useState(false)
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
+  const [text,setText] =useState(0)
   console.log(isLoggedIn);
   useEffect(()=>{
     if(test) {
@@ -23,6 +24,14 @@ const Cart = () => {
     setTest(false);
     }
   ,[test])
+
+  // useEffect(()=>{
+  //   if(text) {
+  //       setText(0)
+  //   }
+
+  //   }
+  // ,[text])
 
   useEffect(()=>{
     if(empty) {
@@ -243,11 +252,26 @@ const addQty = (product,index) => {
                     <View style={{ left: 5, top: "60%" }}>
                       <TextInput
                         style={{ textAlign: "center" }}
-                       
+                       keyboardType={"numeric"}
                         borderWidth={2}
-                        
-                        onChangeText= {e => handleChangeQty(e,product,index)}
                         value={quantity[index]+""}
+                        onChangeText= {text => { 
+                          if( isNaN(parseInt(text))) {
+                           text=0
+                          }
+                          const temp=[...quantity];
+                          temp[index]=parseInt(text);
+                          setQuantity(temp) ;
+
+                          changeQty(product,temp[index])
+                          
+                          const temp2=[...totalPrice];
+                          temp2[index]= product.price * temp[index];
+                          setTotalPrice(temp2)
+                          
+                        
+                        }}
+                        
                          
                       />
                     </View>

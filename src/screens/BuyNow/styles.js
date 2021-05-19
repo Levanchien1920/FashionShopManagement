@@ -15,6 +15,7 @@ export default StyleSheet.create({
     position:'relative',
     display:'flex',
     alignItems:'center',
+
   },
     
     inputContainer: {
@@ -22,7 +23,7 @@ export default StyleSheet.create({
       flexDirection: 'row',
       width:'85%',
       position: 'absolute',
-      marginLeft: 10,
+      marginLeft: 20,
       top:10,
       paddingHorizontal: 12,
       borderRadius: 2,
@@ -65,7 +66,7 @@ export default StyleSheet.create({
     bodyContainer: {
       marginTop:'5%',
       backgroundColor: 'pink',
-      height:'85%',
+      height:'80%',
     
     },
     linkBtn : {
@@ -77,6 +78,7 @@ export default StyleSheet.create({
    textList : {
       color:'blue',
       fontSize:16,
+      // textAlign:'center'
 
    },
    textList1 : {

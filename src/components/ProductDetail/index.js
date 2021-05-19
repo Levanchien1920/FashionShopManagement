@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { StyleSheet,Alert,Text, View,TextInput, TouchableOpacity,ScrollView ,Image, Button} from 'react-native';
+import { Alert,Text, View,TextInput,ScrollView ,Image, Button} from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
@@ -23,6 +23,11 @@ const ProductDetailComponent = () => {
         size : ""
     });
 
+    const {
+        authDispatch,
+        authState: {error, loading},
+      } = useContext(GlobalContext);
+
     const [OutputReview, setOutputReview] = useState({
         id_user : 1,
         id_product : 1,
@@ -35,7 +40,7 @@ const ProductDetailComponent = () => {
     const [colorSizeXXL , setcolorSizeXXL] = useState("")
     const [quantity, setquantity] = useState(1);
     const {navigate} =useNavigation();
-
+    const [addTC,setAddTC] =useState(false)
     const [test,setTest] =useState(false)
     const [success,setSuccess] =useState(false)
     useEffect(()=>{
@@ -44,6 +49,13 @@ const ProductDetailComponent = () => {
         }
         setTest(false)
     },[test])
+
+    useEffect(()=>{
+        if(addTC) {
+            Alert.alert(`Add to cart success!`)
+        }
+        setAddTC(false)
+    },[addTC])
 
     
     useEffect(()=>{
@@ -60,6 +72,9 @@ const ProductDetailComponent = () => {
         }
         setLogin(false)
     },[login])
+
+
+
 
       useEffect(()=>{
         setquantity(number)
@@ -140,8 +155,12 @@ const ProductDetailComponent = () => {
             if(OutputReview.content==="") {
                 setTest(true)
             }else {
+               
                 axiosInstance.post(`/client/review`, OutputReview).then((response)=> {
                     setSuccess(true);
+                    authDispatch({
+                        type: 'Review',
+                      });
                 }).catch((error) =>{
                     setTest(true)
                 });
@@ -215,7 +234,9 @@ const ProductDetailComponent = () => {
                                    <View style= {{width:40,height:40}}>
                                         <TextInput
                                                 style={{ textAlign:'center',}}
+                                                keyboardType={"numeric"}
                                                 value={number.toString()}
+                                                onChangeText= {text => {onChangeNumber(text)}}
                                             />
                                    </View>
                                    <View style= {{width:40,height:40}}> 
@@ -253,6 +274,7 @@ const ProductDetailComponent = () => {
 
                 <View style= {{left:20,width:100,height:40,top:10}}>
                    <Button color="orange"  title="Add to cart" onPress= {() => {
+                            setAddTC(true)
                               AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
                             const cart=JSON.parse(res);

@@ -1,12 +1,10 @@
 import React, { useContext, useEffect, useState } from "react";
-import {Text,View,ScrollView} from "react-native";
+import {Text,View,ScrollView,Image} from "react-native";
 import axiosInstance from "../../helper/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
-import {GlobalContext} from '../../context/Provider';
 const Invoice = () => {
-  const {authState : {isLoggedIn},}= useContext(GlobalContext);
-  console.log(isLoggedIn);
+ 
   const [invoices,setInvoice] = useState([]);
   useEffect(() => {   
     AsyncStorage.getItem('token')
@@ -19,9 +17,7 @@ const Invoice = () => {
             'Authorization': `Bearer ${res}`
           } 
           }).then((response)=> {
-              setInvoice(response.data);
-              console.log("invoice s");
-              console.log(invoices);
+              setInvoice((response.data).reverse());
           }).catch((error) =>{
           });
         })
@@ -33,30 +29,49 @@ const Invoice = () => {
       <Text style= {{fontSize:30,color:'red',textAlign:'center'}}>Thông tin hóa đơn</Text>
     </View>
     <ScrollView style={styles.bodyContainer}>
-    <ScrollView style={{marginTop:'10%',marginLeft:'10%',marginRight:'10%'}}> 
+    <ScrollView style={{marginTop:'10%',marginLeft:'5%'}}> 
           { Array.isArray(invoices) && invoices.length > 0  ? (
           invoices.map((invoice,index) => (
-            <View key={index} style={{marginTop:20, borderBottomWidth:1,borderColor:"yellow"}}>
-                 <View style= {{flexDirection:'row',top:5}}>
-                      <Text style= {{color:'blue',fontSize:16}}>Họ tên:   </Text> 
-                      <Text>{invoice.name_Customer}</Text>
+            <View key={index} style={{marginTop:20, borderBottomWidth:1,borderColor:"yellow",flexDirection:"row"}}>
+                <View style={{width:200}}>
+                    <View style= {{flexDirection:'row',top:5}}>
+                          <Text style= {{color:'blue',fontSize:16}}>Họ tên:   </Text> 
+                          <Text>{invoice.name_Customer}</Text>
+                    </View>
+                    <View style= {{flexDirection:'row',width:100}}>
+                          <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:   </Text> 
+                          <Text>{invoice.name_Product}</Text>
+                    </View>
+                    <View style= {{flexDirection:'row',width:100}}>
+                          <Text style= {{color:'blue',fontSize:16}}>Size:   </Text> 
+                          <Text>{invoice.nameSize}</Text>
+                    </View>
+
+                    <View style= {{flexDirection:'row',width:100}}>
+                          <Text style= {{color:'blue',fontSize:16}}>Màu sắc:   </Text> 
+                          <Text>{invoice.nameColor}</Text>
+                    </View>
+
+                    <View style= {{flexDirection:'row',width:100}}>
+                      <Text style= {{color:'blue',fontSize:16}}>Giá tiền:   </Text> 
+                        <Text>{invoice.price}</Text>
+                    </View>
+                    <View style= {{flexDirection:'row',width:100}}>
+                      <Text style= {{color:'blue',fontSize:16}}>Tổng tiền:   </Text> 
+                      <Text>{invoice.total_Money}</Text>
+                    </View>
+                    <View style= {{flexDirection:'row',width:100}}>
+                      <Text style= {{color:'blue',fontSize:16}}>Số lượng:   </Text> 
+                      <Text>{invoice.number_Product}</Text>
+                    </View>
                 </View>
-                <View style= {{flexDirection:'row'}}>
-                      <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:   </Text> 
-                      <Text>{invoice.name_Product}</Text>
+
+                <View>
+                      <Image  source={{ uri: invoice.linkImage }}
+                      style={{width: 100, height: 100}}/>
+
                 </View>
-                <View style= {{flexDirection:'row'}}>
-                  <Text style= {{color:'blue',fontSize:16}}>Giá tiền:   </Text> 
-                    <Text>{invoice.price}</Text>
-                </View>
-                <View style= {{flexDirection:'row'}}>
-                  <Text style= {{color:'blue',fontSize:16}}>Tổng tiền:   </Text> 
-                  <Text>{invoice.total_Money}</Text>
-                </View>
-                <View style= {{flexDirection:'row'}}>
-                  <Text style= {{color:'blue',fontSize:16}}>Số lượng sản phẩm:   </Text> 
-                  <Text>{invoice.number_Product}</Text>
-                </View>
+               
                 </View>
                ))): (
                  <View>

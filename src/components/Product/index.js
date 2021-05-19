@@ -178,7 +178,6 @@ switch (c) {
    </View>
         
     <ScrollView horizontal={true} style= {{marginTop:30}} >
-        
         <View style={{width:250}}>
                     <View style={{marginRight:20}}>
                     <Text style={styles.textIndex}>All product</Text>
@@ -187,11 +186,15 @@ switch (c) {
                             {listProduct.map((product,index) => (
                               <View style={{marginLeft:10,marginTop:5}} key={index}>
                                         <Card product={product}></Card>
+                                        <Button title="Buy now" color="red" onPress= {() => {
+                                         navigate('BuyNow', {
+                                            id: product.id ,
+                                          })}}></Button>
                                         <TouchableOpacity onPress= {() => {
                                            navigate('ProductDetail', {
                                             id: product.id ,
                                           })}}>
-                                         <Text style={styles.text} >Chi tiết</Text>
+                                         <Text style={styles.text}>Chi tiết</Text>
                                </TouchableOpacity>
                               </View>
                             ))}  
@@ -204,6 +207,11 @@ switch (c) {
                             {listCategory.map((product,index) => (
                               <View style={{marginLeft:10,marginTop:5}} key={index}>
                                         <Card product={product}></Card>
+        
+                                        <Button title="Buy now" color="red" onPress= {() => {
+                                         navigate('BuyNow', {
+                                            id: product.id ,
+                                          })}}></Button>
                                         <TouchableOpacity onPress= {() => {
                                            navigate('ProductDetail', {
                                             id: product.id ,
@@ -221,6 +229,10 @@ switch (c) {
                             {listBrand.map((product,index) => (
                               <View style={{marginLeft:10,marginTop:5}} key={index}>
                                         <Card product={product}></Card>
+                                        <Button title="Buy now" color="red" onPress= {() => {
+                                         navigate('BuyNow', {
+                                            id: product.id ,
+                                          })}}></Button>
                                         <TouchableOpacity onPress= {() => {
                                            navigate('ProductDetail', {
                                             id: product.id ,

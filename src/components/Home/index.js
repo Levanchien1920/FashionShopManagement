@@ -6,10 +6,12 @@ import {useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {GlobalContext} from '../../context/Provider';
 const HomeComponent = () => {
   const [listProductBest , setlistProductBest] = useState([]);
   const [listProductNew , setlistProductNew] = useState([]);
   const [listBestReview , setlistBestReview] = useState([]);
+  const {authState : {count},}= useContext(GlobalContext);
   useEffect(() => {
            axiosInstance.get('/client/product/best').then((response)=> {
                setlistProductBest(response.data.content);
@@ -25,7 +27,7 @@ const HomeComponent = () => {
          }).catch((error) =>{
        })
 
-  },[])
+  },[count])
 
   const {navigate} =useNavigation();
     return (
@@ -69,6 +71,10 @@ const HomeComponent = () => {
                             {listProductBest.map((product,index) => (
                               <View style={{marginLeft:32}} key={index}>
                                       <Card product={product}></Card>
+                                      <Button title="Buy now" color="red" onPress= {() => {
+                                         navigate('BuyNow', {
+                                            id: product.id ,
+                                          })}}></Button>
                                        <TouchableOpacity onPress= {() => {
                                          navigate('ProductDetail', {
                                             id: product.id ,
@@ -85,6 +91,11 @@ const HomeComponent = () => {
                                     {listProductNew.map((product,index) => (
                                       <View style={{marginLeft:30}} key={index}>
                                     <Card product={product}></Card>
+
+                                    <Button title="Buy now" color="red" onPress= {() => {
+                                         navigate('BuyNow', {
+                                            id: product.id ,
+                                          })}}></Button>
                                               <TouchableOpacity onPress= {() => {navigate('ProductDetail', {
                                                 id: product.id,
                                               })}}>

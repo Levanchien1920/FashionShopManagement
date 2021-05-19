@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react';
 import axiosInstance from '../../helper/axiosInstance';
-import { Text, View,TextInput,Button } from 'react-native';
+import { Text, View,TextInput,Button,Image} from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
@@ -9,23 +9,24 @@ const PostDetail = () => {
     const {navigate} =useNavigation();
     const route = useRoute();
     const [post, setpost] = useState({});
+   
     useEffect(() => {
         const id=route.params.id;
         axiosInstance.get(`/client/post/${id}`).then((response)=> {
-            setpost(response.data);
+            setpost((response.data)[0]);
+         
+           
         }).catch((error) =>{
         });
     }, [])
     return (
-    
-<View>
+        <View>
               <View>
                         <View style={styles.headerContainer}>
                                 <View style={styles.inputContainer}>
                                     <FontAwesome name="search" size={24} color="#969696" />
                                     <TextInput style={styles.inputText} />
                                 </View>
-                             
                         </View>
 
                     <View  style = {styles.createSection}>
@@ -53,20 +54,22 @@ const PostDetail = () => {
               </View>
             </View>
 
-
             <View style={styles.bodyContainer}>
                 <View>
-                     
-
                       <View>
                             <Text style= {{color:'blue',fontSize:16}}>Tiêu đề:</Text> 
                             <Text>{post.title}</Text>
                       </View>
-                      <View>
-                         <Text style= {{color:'blue',fontSize:16}} >Nội dung:</Text> 
+                      <View style={{marginLeft:'30%'}}>
+                                 <Image
+                                  source={{ uri: post.linkImage}}
+                                  style={{ width: 100, height: 100, borderWidth: 1 }}
+                                />
+                              </View>
+                              <View>
+                         <Text style= {{color:'blue',fontSize:16,marginTop:10}} >Nội dung:</Text> 
                          <Text>{post.content}</Text>
                       </View>
-
                      
                       
                  </View>

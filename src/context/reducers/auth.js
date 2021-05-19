@@ -6,7 +6,7 @@ const auth =(state,{type,payload}) => {
           AsyncStorage.setItem("isLoggedIn",JSON.stringify(true));
           return {
             ...state,
-            loading: false,
+            count: 0,
             data: payload,
             isLoggedIn: true,
           };
@@ -14,11 +14,17 @@ const auth =(state,{type,payload}) => {
           AsyncStorage.setItem("isLoggedIn",JSON.stringify(false));
           return {
             ...state,
-            loading: false,
+            count: 0,
             data: payload,
             isLoggedIn: false,
           };
-    
+          case 'Review':
+          return {
+            ...state,
+            count:1,
+            data: payload,
+            isLoggedIn: true,
+          };
         default:
           return state;
       }

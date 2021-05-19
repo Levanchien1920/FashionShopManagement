@@ -10,6 +10,7 @@ import Contact from '../screens/Contact';
 import Post from '../screens/Post';
 import PostDetail from '../screens/PostDetail';
 import Invoice from '../screens/Invoice';
+import BuyNow from '../screens/BuyNow';
 
 const HomeNavigator = () => {
     const HomeStack =createStackNavigator();
@@ -25,6 +26,7 @@ const HomeNavigator = () => {
           <HomeStack.Screen name={'Post'} component= {Post}></HomeStack.Screen>
           <HomeStack.Screen name={'PostDetail'} component= {PostDetail}></HomeStack.Screen>
           <HomeStack.Screen name={'Invoice'} component= {Invoice}></HomeStack.Screen>
+          <HomeStack.Screen name={'BuyNow'} component= {BuyNow}></HomeStack.Screen>
         </HomeStack.Navigator>
 
     );

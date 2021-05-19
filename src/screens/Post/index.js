@@ -57,8 +57,8 @@ const Post = () => {
 
                     <View style={{flexDirection:'row'}}>
                       <View style= {{width:230}}>
-                            <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:</Text> 
-                            <Text>{p.name}</Text>
+                            <Text style= {{color:'blue',fontSize:16}}>Tiêu đề:</Text> 
+                            <Text>{p.title}</Text>
                       </View>
 
                      

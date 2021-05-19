@@ -2,13 +2,21 @@
 import React, { useState,useEffect } from 'react';
 import {useNavigation } from '@react-navigation/native';
 import styles from './styles';
-import {Image, Text, View, Button} from 'react-native';
+import {Image, Text, View, Button,Alert} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 
 const Card = (props) => {
+    const [test,setTest] =useState(false)
+  useEffect(()=>{
+      if(test) {
+          Alert.alert(`Add to cart success!`)
+      }
+      setTest(false)
+  }
+    ,[test])
     const {product} = props;
     const [quantity, setquantity] = useState(1);
     const [star,setStar]=useState(1);
@@ -19,7 +27,9 @@ const Card = (props) => {
     const {navigate} =useNavigation();
     return (
        <View>
-             <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.name}</Text> 
+           <View style={{width:100,height:50}}>
+           <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.name}</Text> 
+           </View>
 
              <Stars
                         default={star}
@@ -36,6 +46,7 @@ const Card = (props) => {
                 style={{width: 100, height: 100}}/>
             <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.price}$</Text>
             <Button color='orange' title="Add to cart" onPress= {() => {
+                         setTest(true)
                         AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
                             const cart=JSON.parse(res);
