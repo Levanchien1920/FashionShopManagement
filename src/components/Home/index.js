@@ -71,16 +71,6 @@ const HomeComponent = () => {
                             {listProductBest.map((product,index) => (
                               <View style={{marginLeft:32}} key={index}>
                                       <Card product={product}></Card>
-                                      <Button title="Buy now" color="red" onPress= {() => {
-                                         navigate('BuyNow', {
-                                            id: product.id ,
-                                          })}}></Button>
-                                       <TouchableOpacity onPress= {() => {
-                                         navigate('ProductDetail', {
-                                            id: product.id ,
-                                          })}}>
-                                         <Text style={styles.text} >Chi tiết</Text>
-                                        </TouchableOpacity>
                                </View> ))}
                           </View>
                        </View>
@@ -91,16 +81,6 @@ const HomeComponent = () => {
                                     {listProductNew.map((product,index) => (
                                       <View style={{marginLeft:30}} key={index}>
                                     <Card product={product}></Card>
-
-                                    <Button title="Buy now" color="red" onPress= {() => {
-                                         navigate('BuyNow', {
-                                            id: product.id ,
-                                          })}}></Button>
-                                              <TouchableOpacity onPress= {() => {navigate('ProductDetail', {
-                                                id: product.id,
-                                              })}}>
-                                                <Text  style={styles.text} >Chi tiết</Text>
-                                            </TouchableOpacity>
                                     </View>
                                     ))}  
                               </View>

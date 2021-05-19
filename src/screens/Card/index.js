@@ -1,14 +1,15 @@
 
-import React, { useState,useEffect } from 'react';
+import React, { useState,useEffect,useContext } from 'react';
 import {useNavigation } from '@react-navigation/native';
 import styles from './styles';
-import {Image, Text, View, Button,Alert} from 'react-native';
+import {Image, Text, View, Button,Alert,TouchableOpacity} from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
-
+import {GlobalContext} from '../../context/Provider';
 
 const Card = (props) => {
+    const {authState : {isLoggedIn},}= useContext(GlobalContext);
     const [test,setTest] =useState(false)
   useEffect(()=>{
       if(test) {
@@ -17,6 +18,15 @@ const Card = (props) => {
       setTest(false)
   }
     ,[test])
+
+    const [logIn,setLogIn] =useState(false)
+    useEffect(()=>{
+        if(logIn) {
+            Alert.alert(`Buy now is failed,please log in!`)
+        }
+        setLogIn(false)
+    }
+      ,[logIn])
     const {product} = props;
     const [quantity, setquantity] = useState(1);
     const [star,setStar]=useState(1);
@@ -27,7 +37,7 @@ const Card = (props) => {
     const {navigate} =useNavigation();
     return (
        <View>
-           <View style={{width:100,height:50}}>
+           <View style={{width:100}}>
            <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.name}</Text> 
            </View>
 
@@ -45,7 +55,10 @@ const Card = (props) => {
              <Image  source={{ uri: product.link }}
                 style={{width: 100, height: 100}}/>
             <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.price}$</Text>
-            <Button color='orange' title="Add to cart" onPress= {() => {
+                <View>
+                    
+               
+                <Button color='orange' title="Add to cart" onPress= {() => {
                          setTest(true)
                         AsyncStorage.getItem('cart').then((res)=> {
                             if(res!=null) {
@@ -67,7 +80,31 @@ const Card = (props) => {
                             }
                         )}} >
                      </Button>
-         </View>
+
+                </View>
+                <View style={{marginTop:5}}>
+                     <Button title="Buy now" color="red" onPress= {() => {
+                         if(isLoggedIn===false) {
+                             setLogIn(true);
+                         }else {
+                            navigate('BuyNow', {
+                                id: product.id ,
+                            })
+                         }
+                                }}></Button>
+
+                </View>
+                <View style={{marginTop:5}}>
+                
+                <TouchableOpacity onPress= {() => {
+                                navigate('ProductDetail', {
+                                    id: product.id ,
+                                })}}>
+                                <Text style={styles.text}>Xem chi tiết</Text>
+                            </TouchableOpacity>
+
+                </View>
+                                    </View>
 
 
     );

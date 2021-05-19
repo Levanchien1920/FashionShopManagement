@@ -3,8 +3,8 @@ import {StyleSheet} from 'react-native';
 
 export default StyleSheet.create({
     text : {
-      color:'red',
-      fontSize:15,
+      color:'green',
+      fontSize:17,
       textAlign:'center'
     } ,
     myStarStyle: {

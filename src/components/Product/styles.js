@@ -78,7 +78,9 @@ export default StyleSheet.create({
     fontSize: 16,
     color: 'red',
     marginVertical: 4,
-    textAlign:'center'
+    textAlign:'center',
+    borderBottomWidth:1,
+    borderWidth:1,
   },
  
 
@@ -92,7 +94,12 @@ export default StyleSheet.create({
       flexDirection: 'row',
       flexWrap: 'wrap',
       maxWidth:800,
-      width:'100%'
+      // width:100,
+      width:'100%',
+     
+      alignItems:'center',
+      marginLeft:60,
+     
     },
     
     itemContainer: {
@@ -126,5 +133,29 @@ export default StyleSheet.create({
       color:'blue',
       fontSize:25,
    },
+   /////
+   container: {
+    justifyContent: 'center',
+    flex: 1,
+  },
+  footer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  loadMoreBtn: {
+    padding: 10,
+    backgroundColor: '#800000',
+    borderRadius: 4,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnText: {
+    color: 'white',
+    fontSize: 14,
+    textAlign: 'center',
+  },
      
 })

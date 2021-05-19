@@ -1,6 +1,6 @@
 
 import React, { useState ,useEffect, useContext} from 'react';
-import { Text, View,TextInput, TouchableOpacity,ScrollView ,Button} from 'react-native';
+import { Text, View,TextInput, TouchableOpacity,ScrollView ,Button, FlatList, ActivityIndicator} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import RNPickerSelect from "react-native-picker-select";
@@ -20,14 +20,56 @@ const ProductComponent = () => {
       search : "",
   });
 
+  
+  const [loading, setLoading] = useState(true);
+  const [offset, setOffset] = useState(0);
+  const [totalPage,setTotalPage] = useState(9);
 
-  useEffect(() => {
-    if (filter.check === 0) {
-      axiosInstance.get('/client/product/all').then((response)=> {
-            setlistProduct(response.data);
+  const [loadingCat, setLoadingCat] = useState(true);
+  const [offsetCat, setOffsetCat] = useState(0);
+  const [totalPageCat,setTotalPageCat] = useState(9);
+
+  const [loadingBra, setLoadingBra] = useState(true);
+  const [offsetBra, setOffsetBra] = useState(0);
+  const [totalPageBra,setTotalPageBra] = useState(9);
+
+  useEffect(() =>{
+  console.log('getData');
+    setLoading(true);
+      axiosInstance.get(`/client/product?page=${offset}`).then((response)=> {
+        setLoading(false)
+        setlistProduct(response.data.content);
+        setTotalPage(response.data.totalPage);
+    }).catch((error) =>{
+    });
+   } , [offset]);
+
+   useEffect(() =>{
+    console.log('getData');
+      setLoadingCat(true);
+        axiosInstance.get(`/client/category?page=${offsetCat}`).then((response)=> {
+          setLoadingCat(false)
+          setlistCategory(response.data.content);
+          setTotalPageCat(response.data.totalPage);
+      }).catch((error) =>{
+      });
+     } , [offsetCat]);
+
+
+     useEffect(() =>{
+        setLoadingBra(true);
+          axiosInstance.get(`/client/brand?page=${offsetBra}`).then((response)=> {
+            setLoadingBra(false)
+            setlistBrand(response.data.content);
+            setTotalPageBra(response.data.totalPage);
         }).catch((error) =>{
         });
-    }
+       } , [offsetBra]);
+   
+
+
+  useEffect(() => {
+    
     if (filter.check === 1){
       axiosInstance.get(`/client/category/relateProduct/${filter.id}`).then((response)=> {
                 setlistProduct(response.data.content);
@@ -91,7 +133,150 @@ switch (c) {
           ...filter, check : c
       });
  }
-    return (
+
+ const renderItem = ({item}) => {
+   return (
+     <View style={{borderBottomWidth:1,borderBottomColor:"yellow"}}>
+          <View style={styles.listItemContainer}>
+              <View style={{marginLeft:10,marginTop:5}}>
+              <Card product={item}></Card>
+    </View>
+    </View>
+     </View>
+   );
+ };
+
+
+const renderFooter = () => {
+  return (
+    <View style={styles.footer}>
+
+        <View>
+        {(offset>0) ? (<TouchableOpacity
+        activeOpacity={0.9}
+        onPress={()=> {
+          setOffset(offset-1)
+        }}
+   
+        style={styles.loadMoreBtn}>
+        <Text style={styles.btnText}>Previous</Text>
+        {loading ? (
+          <ActivityIndicator
+            color="white"
+            style={{marginLeft: 8}} />
+        ) : null}
+      </TouchableOpacity> ):null}
+
+        </View>
+        <View>
+
+        {(totalPage>offset) ? ( <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={()=> {
+                setOffset(offset+1);
+              }}
+              style={styles.loadMoreBtn}>
+              <Text style={styles.btnText}>Load more</Text>
+              {loading ? (
+                <ActivityIndicator
+                  color="white"
+                  style={{marginLeft: 8}} />
+              ) : null}
+            </TouchableOpacity> ):null}
+
+        </View>
+      
+      
+    </View>
+  );
+};
+
+
+
+const renderFooterCategory = () => {
+  return (
+    <View style={styles.footer}>
+
+        <View>
+        {(offsetCat>0) ? (<TouchableOpacity
+        activeOpacity={0.9}
+        onPress={()=> {
+          setOffsetCat(offsetCat-1)
+        }}
+   
+        style={styles.loadMoreBtn}>
+        <Text style={styles.btnText}>Previous</Text>
+        {loadingCat ? (
+          <ActivityIndicator
+            color="white"
+            style={{marginLeft: 8}} />
+        ) : null}
+      </TouchableOpacity> ):null}
+
+        </View>
+        <View>
+
+        {(totalPageCat>offsetCat) ? ( <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={()=> {
+                setOffsetCat(offsetCat+1);
+              }}
+              style={styles.loadMoreBtn}>
+              <Text style={styles.btnText}>Load more</Text>
+              {loadingCat ? (
+                <ActivityIndicator
+                  color="white"
+                  style={{marginLeft: 8}} />
+              ) : null}
+            </TouchableOpacity> ):null}
+        </View>
+    </View>
+  );
+};
+
+const renderFooterBrand = () => {
+  return (
+    <View style={styles.footer}>
+
+        <View>
+        {(offsetBra>0) ? (<TouchableOpacity
+        activeOpacity={0.9}
+        onPress={()=> {
+          setOffsetBra(offsetBra-1)
+        }}
+   
+        style={styles.loadMoreBtn}>
+        <Text style={styles.btnText}>Previous</Text>
+        {loadingBra ? (
+          <ActivityIndicator
+            color="white"
+            style={{marginLeft: 8}} />
+        ) : null}
+      </TouchableOpacity> ):null}
+
+        </View>
+        <View>
+
+        {(totalPageBra>offsetBra) ? ( <TouchableOpacity
+              activeOpacity={0.9}
+              onPress={()=> {
+                setOffsetBra(offsetBra+1);
+              }}
+              style={styles.loadMoreBtn}>
+              <Text style={styles.btnText}>Load more</Text>
+              {loadingBra ? (
+                <ActivityIndicator
+                  color="white"
+                  style={{marginLeft: 8}} />
+              ) : null}
+            </TouchableOpacity> ):null}
+        </View>
+    </View>
+  );
+};
+
+
+ return (
 
  <View style= {{height:'100%',width:'100%'}}>
            <View>
@@ -182,71 +367,45 @@ switch (c) {
                     <View style={{marginRight:20}}>
                     <Text style={styles.textIndex}>All product</Text>
                     </View>
-                      <View style={styles.listItemContainer}>
-                            {listProduct.map((product,index) => (
-                              <View style={{marginLeft:10,marginTop:5}} key={index}>
-                                        <Card product={product}></Card>
-                                        <Button title="Buy now" color="red" onPress= {() => {
-                                         navigate('BuyNow', {
-                                            id: product.id ,
-                                          })}}></Button>
-                                        <TouchableOpacity onPress= {() => {
-                                           navigate('ProductDetail', {
-                                            id: product.id ,
-                                          })}}>
-                                         <Text style={styles.text}>Chi tiết</Text>
-                               </TouchableOpacity>
-                              </View>
-                            ))}  
-                      </View>
+                    <FlatList
+                      data={listProduct}
+                      keyExtractor={(item, index) => index.toString()}
+                      enableEmptySections={true}
+                      renderItem={renderItem}
+                      ListFooterComponent={renderFooter}
+                    />
+
+
 
                       <View style={{marginRight:20}}>
                       <Text style={styles.textIndex}>Category relative</Text>
                       </View>
-                      <View style={styles.listItemContainer}>
-                            {listCategory.map((product,index) => (
-                              <View style={{marginLeft:10,marginTop:5}} key={index}>
-                                        <Card product={product}></Card>
-        
-                                        <Button title="Buy now" color="red" onPress= {() => {
-                                         navigate('BuyNow', {
-                                            id: product.id ,
-                                          })}}></Button>
-                                        <TouchableOpacity onPress= {() => {
-                                           navigate('ProductDetail', {
-                                            id: product.id ,
-                                          })}}>
-                                         <Text style={styles.text} >Chi tiết</Text>
-                               </TouchableOpacity>
-                              </View>
-                            ))}  
-                      </View>
+
+                      <FlatList
+                      data={listCategory}
+                      keyExtractor={(item, index) => index.toString()}
+                      enableEmptySections={true}
+                      renderItem={renderItem}
+                      ListFooterComponent={renderFooterCategory}
+                    />
 
                       <View style={{marginRight:20}}>
                       <Text style={styles.textIndex}>Brand relative</Text>
                       </View>
-                      <View style={styles.listItemContainer}>
-                            {listBrand.map((product,index) => (
-                              <View style={{marginLeft:10,marginTop:5}} key={index}>
-                                        <Card product={product}></Card>
-                                        <Button title="Buy now" color="red" onPress= {() => {
-                                         navigate('BuyNow', {
-                                            id: product.id ,
-                                          })}}></Button>
-                                        <TouchableOpacity onPress= {() => {
-                                           navigate('ProductDetail', {
-                                            id: product.id ,
-                                          })}}>
-                                         <Text style={styles.text} >Chi tiết</Text>
-                               </TouchableOpacity>
-                              </View>
-                            ))}  
-                      </View>
+                      
+                      <FlatList
+                      data={listBrand}
+                      keyExtractor={(item, index) => index.toString()}
+                      enableEmptySections={true}
+                      renderItem={renderItem}
+                      ListFooterComponent={renderFooterBrand}
+                    />
+
 
 
       </View>
 
-       <View style={{width:80}}>
+       <View style={{width:75}}>
               <View>
                       <Text style={{color:'red',fontSize:18}}>Category</Text>
                       {listCategory.map((category,index) => (

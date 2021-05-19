@@ -43,6 +43,15 @@ const ProductDetailComponent = () => {
     const [addTC,setAddTC] =useState(false)
     const [test,setTest] =useState(false)
     const [success,setSuccess] =useState(false)
+    const [isBuyNow,setIsBuyNow] =useState(false)
+
+    useEffect(()=>{
+        if(isBuyNow) {
+            Alert.alert(`Buy now is failed,Please log in !`)
+        }
+        setIsBuyNow(false)
+    },[isBuyNow])
+
     useEffect(()=>{
         if(test) {
             Alert.alert(`Review is failed,Please log in or fill out my review`)
@@ -78,7 +87,7 @@ const ProductDetailComponent = () => {
 
       useEffect(()=>{
         setquantity(number)
-    }
+         }
       ,[number])
 
 
@@ -116,6 +125,7 @@ const ProductDetailComponent = () => {
             setcolorSizeL(response.data.l);
             setcolorSizeXL(response.data.xl);
             setcolorSizeXXL(response.data.xxl);
+
         }).catch((error) =>{
         });
       
@@ -178,9 +188,7 @@ const ProductDetailComponent = () => {
                           <FontAwesome name="search" size={24} color="#969696" />
                           <TextInput style={styles.inputText} />
                       </View>
-                   
               </View>
-
               <View  style = {styles.createSection}>
                 <View style = {styles.btn1}>   
                         <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
@@ -214,18 +222,36 @@ const ProductDetailComponent = () => {
                 <View style={styles.listItemContainer}>
                         <View>
                             <View style={{flexDirection:'row'}}>
-                                    <Text style={styles.textTitle}>Name: </Text>
+                                    <Text style={styles.textTitle}>Name:   </Text>
                                     <Text>{Product.name}</Text>
                             </View>
                             <View style={{flexDirection:'row'}}>
-                                    <Text style={styles.textTitle}>Price: </Text>
+                                    <Text style={styles.textTitle}>Price:   </Text>
                                     <Text>{Product.price}</Text>
                             </View>
                             <View style={{flexDirection:'row'}}>
-                                    <Text style={styles.textTitle}>Brand: </Text>
+                                    <Text style={styles.textTitle}>Brand:   </Text>
                                     <Text>{Product.brandName}</Text>
                             </View>
-                            <View style={{ flexDirection: 'row',left:20}} >
+
+                            <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.textTitle}>Gender:   </Text>
+                                    <Text>{Product.genderName}</Text>
+                            </View>
+
+                            <View style={{ flexDirection: 'row'}}>
+                              
+                                 <View style={{flexDirection:'row'}}>
+                                    <Text style={styles.textTitle}>Color:   </Text>
+                                        {(colorSizeM!=="")?(<Text>{colorSizeM}</Text>):null}
+                                        {(colorSizeL!=="")?(<Text>{colorSizeL}</Text>):null}
+                                        {(colorSizeXL!=="")?(<Text>{colorSizeXL}</Text>):null}
+                                        {(colorSizeXXL!=="")?(<Text>{colorSizeXXL}</Text>):null}
+                                </View>
+                           
+                             </View>
+
+                            <View style={{ flexDirection: 'row',left:20,marginTop:20}} >
                                     <View style= {{width:40,height:40}}>
                                         <Button color='orange'  title="+" onPress= {() => {  onChangeNumber(number+1) 
                                         }}>    
@@ -248,31 +274,8 @@ const ProductDetailComponent = () => {
                                    </View>
                             </View>
 
-                     <View style={{ flexDirection: 'row',top:5}}>
-                                <View style= {{width:40,height:40}}>
-                                <Button  title="M"  onPress={()=> {setfilter({...filter , check : 0 , size : "m" })}}></Button>
-                                </View>
-                           
-                                <View  style= {{left:5,width:40,height:40}}>
-                                        <Button  title="L"  onPress={() => {setfilter({...filter , check : 0 , size : "l" })}}></Button>
-                                </View>
-                           
-                                <View style= {{left:10,width:40,height:40}}>
-                                    <Button  title="XL"  onPress={() => {setfilter({...filter , check : 0 , size : "xl" })}}></Button>
-                                </View>
-                                <View style= {{left:15,width:40,height:40}}>
-                                <Button  title="XXL"  onPress={() => {setfilter({...filter , check : 0 , size : "xxl" })}}></Button>
-                                </View>
-                           
-                            </View>
 
-                            <View style= {{left:20,width:100,height:40,top:10}}>
-                                {color.map((color) => (                       
-                                <Button title={color} ></Button>
-                                ))}
-                            </View>
-
-                <View style= {{left:20,width:100,height:40,top:10}}>
+                <View style= {{left:30,width:100,height:40,top:10}}>
                    <Button color="orange"  title="Add to cart" onPress= {() => {
                             setAddTC(true)
                               AsyncStorage.getItem('cart').then((res)=> {
@@ -286,7 +289,7 @@ const ProductDetailComponent = () => {
                             }
                             if(res==null) {
                                 const cart={};
-                                let id = product.id.toString();
+                                let id = Product.id.toString();
                                 cart[id] = (cart[id] ? cart[id]: 0);
                                 let qty = cart[id] + parseInt(quantity);
                                 cart[id] = qty;
@@ -295,6 +298,18 @@ const ProductDetailComponent = () => {
                             }
                         )}} >
                      </Button>
+                     </View>
+
+                     <View style= {{left:30,width:100,height:40,top:10}}>
+                                   <Button title="Buy now" color="red" onPress= {() => {
+                                       if(isLoggedIn===false) {
+                                           setIsBuyNow(true);
+                                       }else {
+                                        navigate('BuyNow', {
+                                            id: Product.id ,
+                                        })
+                                       }
+                                       }}></Button>
                      </View>
                         </View>
                     </View>
