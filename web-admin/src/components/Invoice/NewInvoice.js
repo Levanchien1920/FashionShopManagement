@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
-import Select from 'react-select-2';
 function NewInvoice(props) {
     const history = useHistory();
     const id = props.match.params.id
