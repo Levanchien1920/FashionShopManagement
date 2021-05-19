@@ -60,7 +60,7 @@ export default function Post() {
         })
     }
     return (
-        <div>
+        <div> 
             <div class="breadcrumb-wrap">
                 <div class="container-fluid">
                     <ul class="breadcrumb">

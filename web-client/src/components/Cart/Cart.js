@@ -11,7 +11,7 @@ function Cart() {
 
 	useEffect(() => {
         let cart = JSON.parse(localStorage.getItem('cart'));
-        
+        console.log(cart)
         let keys = [];
 
         for (var item in cart) {
