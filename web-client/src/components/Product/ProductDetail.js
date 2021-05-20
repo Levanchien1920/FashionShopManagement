@@ -44,6 +44,7 @@ function ProductDetail() {
         let qty = cart[id] + parseInt(quantity);
         cart[id] = qty
         localStorage.setItem('cart', JSON.stringify(cart));
+        Login.countNumberInCart()
     }
     const addQty= (e) => {
         e.preventDefault();

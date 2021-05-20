@@ -9,18 +9,24 @@ function Header() {
     const [searchStr, setsearchStr] = useState("")
     var fullname = login.Fullname;
     const history = useHistory();
+    let numberProductInCart = login.numberProductInCart;
+
     useEffect(() => {
            login.LoginDispatch();
+           
     }, [fullname])
    
     useEffect(() => {
-        let cart = JSON.parse(localStorage.getItem('cart'));
-        let count = 0
-        for (var item in cart) {
-            count++
-        }
-        setCountCart(count)
-    }, [JSON.parse(localStorage.getItem('cart'))])
+        login.countNumberInCart()
+    }, []);
+    // useEffect(() => {
+    //     let cart = JSON.parse(localStorage.getItem('cart'));
+    //     let count = 0
+    //     for (var item in cart) {
+    //         count++
+    //     }
+    //     setCountCart(count)
+    // }, [JSON.parse(localStorage.getItem('cart'))])
 
     const LogoutHandle = () =>{
         login.LogoutDispatch();
@@ -120,7 +126,7 @@ function Header() {
                             <div className="user">
                                 <a href="/cart" className="btn cart">
                                     <i className="fa fa-shopping-cart"></i>
-                                    <span>({countCart})</span>
+                                    <span>({numberProductInCart})</span>
                                 </a>
                             </div>
                         </div>

@@ -1,7 +1,9 @@
 import React, {useState , useContext } from 'react'
 import {Link} from 'react-router-dom'
 import {useHistory} from 'react-router'
+import {LoginContext} from '../../context/LoginContext'
 function Card(props) {
+    const login = useContext(LoginContext);
     const {product} = props;
     let history = useHistory();
     var name = product.name.split(' ')
@@ -17,6 +19,7 @@ function Card(props) {
         let qty = cart[id] + parseInt(quantity);
         cart[id] = qty
         localStorage.setItem('cart', JSON.stringify(cart));
+        login.countNumberInCart();
       }
     return (
         <div className="Product">
