@@ -9,7 +9,7 @@ export default function NewEmployee() {
     const [user , setuser] = useState({
         username: "",
         password: "",
-        fullname: "",
+        fullName: "",
         address: "",
         email: "",
         phoneNumber: "",
@@ -21,6 +21,7 @@ export default function NewEmployee() {
         if( user.fullname === "" || user.phone_number === "" || user.password === "" || user.address === "" || user.email === "" || user.username === "" || RetypePassword ==="" ) {
             setmessage("You have not entered enough");
         }else {
+            console.log(user)
             if(RetypePassword !== user.password){
                 setmessage(" Retype Password Don't Correct ");
             }
@@ -28,11 +29,12 @@ export default function NewEmployee() {
                 let token = {
                     headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
                 }
-                Api.post("admin/user", user , token).then((response)=> {
+                Api.post("admin/user",user ,token).then((response)=> {
                     alert(response.data.message);
                     history.push("/employee")
                 }).catch((error) =>{
                     alert(error.response.data.message);
+                    console.log(error.response.data);
                 });
             }
         }
@@ -59,7 +61,7 @@ export default function NewEmployee() {
                             <div className="form-group">
                                 <label>Full Name</label>
                                 <input type="text" className="form-control"
-                                onChange={e => setuser({...user ,fullname : e.target.value})} value={user.fullName}></input>
+                                onChange={e => setuser({...user ,fullName : e.target.value})} value={user.fullName}></input>
                             </div>
                             <div className="form-group">
                                 <label>User Name</label>
@@ -95,7 +97,7 @@ export default function NewEmployee() {
                                     {message && (
                                         <div className="error-mesage"><h3>{message}</h3></div>
                                     )}
-                                <button type="button" name="example-email" className="btn" onClick={register}>Save </button>
+                                <button type="button" name="example-email" className="btn btn-info" onClick={register}>Save </button>
                             </div>
                         </form>
                     </div>

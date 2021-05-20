@@ -51,7 +51,7 @@ export default function NewColor() {
                                 </div>
                                 { (message !=="") ? (<p>{message}</p>):(<></>)}
                                 <div className="form-group">
-                                    <button type="button" name="example-email" className="btn" onClick={saveColor}>Save </button>
+                                    <button type="button" name="example-email" className="btn btn-info" onClick={saveColor}>Save </button>
                                 </div>
                             </form>
                         </div>

@@ -58,7 +58,7 @@ export default function Image() {
             <div className="page-wrapper">
                 <div className="page-breadcrumb">
                         <div className="col-5 align-self-center">
-                            <h4 className="page-title">image</h4>
+                            <h4 className="page-title">Image</h4>
                         </div>
                 </div>
                 <div className="container-fluid">
@@ -86,8 +86,7 @@ export default function Image() {
                                                     <th scope="row">{image.id}</th>
                                                     <td>{image.name}</td>
                                                     <td><a href={image.link} target="_blank"> click in here </a>  </td>
-                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editimage/${image.id}`)}}>Edit</button> 
-                                                    <button className="btn btn-danger" onClick={deleteimage.bind(this,image.id)}>Delete</button></td>
+                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editimage/${image.id}`)}}>Edit</button> <button className="btn btn-danger" onClick={deleteimage.bind(this,image.id)}>Delete</button></td>
                                               </tr>
                                             ))}
                                         </tbody>

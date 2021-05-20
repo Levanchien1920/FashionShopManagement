@@ -14,7 +14,6 @@ export default function EditEmployee() {
         id_role : 2,
     });
     const [message , setmessage] = useState("")
-    const [RetypePassword, setRetypePassword] = useState("");
     useEffect(() => {
         let token = {
             headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -102,7 +101,7 @@ export default function EditEmployee() {
                                         {message && (
                                             <div className="error-mesage"><h3>{message}</h3></div>
                                         )}
-                                    <button type="button" name="example-email" className="btn" onClick={edit}>Save </button>
+                                    <button type="button" name="example-email" className="btn btn-info" onClick={edit}>Save </button>
                                 </div>
                             </form>
                         </div>

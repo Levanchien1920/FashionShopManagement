@@ -70,8 +70,8 @@ export default function Employee() {
                                                     <td>{Employee.phoneNumber}</td>
                                                     <td>{Employee.email}</td>
                                                     <td>{Employee.address}</td>
-                                                    <td><button className="btn btn-info" onClick ={ e=> {history.push(`/editemployee/${Employee.id}`)}}>edit</button>
-                                                    <button className="btn btn-danger" onClick = {deleteEmployee.bind(this,Employee.id)}>delete</button></td>
+                                                    <td><button className="btn btn-info" onClick ={ e=> {history.push(`/editemployee/${Employee.id}`)}}>edit</button> <button
+                                                     className="btn btn-danger" onClick = {deleteEmployee.bind(this,Employee.id)}>delete</button></td>
                                                 </tr>
                                             ))}
                                         </tbody>

@@ -61,7 +61,7 @@ export default function Brand() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List brand <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>new</button></h4>
+                                        <h4 className="card-title">List Brand <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>new</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -79,8 +79,7 @@ export default function Brand() {
                                                 <tr key={brand.id}>
                                                     <th scope="row">{brand.id}</th>
                                                     <td>{brand.name}</td>
-                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editbrand/${brand.id}`)}}>Edit</button>
-                                                    <button className="btn btn-danger" onClick={deletebrand.bind(this, brand.id)}>Delete</button></td>
+                                                    <td><button className="btn btn-info"  onClick ={e => {history.push(`/editbrand/${brand.id}`)}}>Edit</button> <button className="btn btn-danger" onClick={deletebrand.bind(this, brand.id)}>Delete</button></td>
                                                 
                                                 </tr>
                                             ))}

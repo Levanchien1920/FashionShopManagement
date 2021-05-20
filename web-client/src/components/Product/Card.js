@@ -26,7 +26,7 @@ function Card(props) {
             <div className="product-item">
                     <div className="product-title">
                         <Link to={`/productdetail/${product.id}`}>
-                           {product.name}
+                           {product.name} ({product.name_Size})
                         </Link>
                         <div className="ratting">
                             <i className={product.numberOfStar >=1 ?"fa fa-star": product.numberOfStar >= 0.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
