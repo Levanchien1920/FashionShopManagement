@@ -1,12 +1,13 @@
 
 import React, { useState ,useEffect, useContext} from 'react';
-import { Text, View,TextInput, TouchableOpacity,ScrollView ,Button, FlatList, ActivityIndicator} from 'react-native';
+import { Text, View,TextInput, TouchableOpacity,ScrollView ,Button, FlatList, ActivityIndicator,SafeAreaView} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import RNPickerSelect from "react-native-picker-select";
 import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { LogBox } from 'react-native';
 
 
 const ProductComponent = () => {
@@ -34,7 +35,8 @@ const ProductComponent = () => {
   const [totalPageBra,setTotalPageBra] = useState(9);
 
   useEffect(() =>{
-  console.log('getData');
+    LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
+  
     setLoading(true);
       axiosInstance.get(`/client/product?page=${offset}`).then((response)=> {
         setLoading(false)
@@ -170,7 +172,12 @@ const renderFooter = () => {
         </View>
         <View>
 
-        {(totalPage>offset) ? ( <TouchableOpacity
+        {
+        (totalPage===1) ? 
+        (
+          null
+        ):
+        (totalPage-1>offset) ? ( <TouchableOpacity
               activeOpacity={0.9}
               onPress={()=> {
                 setOffset(offset+1);
@@ -216,7 +223,12 @@ const renderFooterCategory = () => {
         </View>
         <View>
 
-        {(totalPageCat>offsetCat) ? ( <TouchableOpacity
+        {
+         (totalPageCat===1) ? 
+         (
+           null
+         ):
+         (totalPageCat-1>offsetCat) ? ( <TouchableOpacity
               activeOpacity={0.9}
               onPress={()=> {
                 setOffsetCat(offsetCat+1);
@@ -239,7 +251,7 @@ const renderFooterBrand = () => {
     <View style={styles.footer}>
 
         <View>
-        {(offsetBra>0) ? (<TouchableOpacity
+        {(offsetBra>0 ) ? (<TouchableOpacity
         activeOpacity={0.9}
         onPress={()=> {
           setOffsetBra(offsetBra-1)
@@ -257,7 +269,15 @@ const renderFooterBrand = () => {
         </View>
         <View>
 
-        {(totalPageBra>offsetBra) ? ( <TouchableOpacity
+        {
+        (totalPageBra===1) ? 
+         (
+           null
+         ):
+
+        (totalPageBra-1>offsetBra) ? (
+        
+        <TouchableOpacity
               activeOpacity={0.9}
               onPress={()=> {
                 setOffsetBra(offsetBra+1);
@@ -278,7 +298,7 @@ const renderFooterBrand = () => {
 
  return (
 
- <View style= {{height:'100%',width:'100%'}}>
+ <View>
            <View>
                         <View style={styles.headerContainer}>
                                 <View style={styles.inputContainer}>
@@ -348,7 +368,7 @@ const renderFooterBrand = () => {
             }}
               items={[
                { label: "Name (A-Z)", value: 3 },
-               { label: "Name (Z-A)", value: 4 },
+              //  { label: "Name (Z-A)", value: 4 },
                { label: "Price (Low to High)", value: 5 },
                { label: "Price (High to low)", value: 6 },
                      ]} 
@@ -367,6 +387,7 @@ const renderFooterBrand = () => {
                     <View style={{marginRight:20}}>
                     <Text style={styles.textIndex}>All product</Text>
                     </View>
+                    <SafeAreaView>
                     <FlatList
                       data={listProduct}
                       keyExtractor={(item, index) => index.toString()}
@@ -374,13 +395,14 @@ const renderFooterBrand = () => {
                       renderItem={renderItem}
                       ListFooterComponent={renderFooter}
                     />
+                    </SafeAreaView>
 
 
 
                       <View style={{marginRight:20}}>
                       <Text style={styles.textIndex}>Category relative</Text>
                       </View>
-
+                      <SafeAreaView>
                       <FlatList
                       data={listCategory}
                       keyExtractor={(item, index) => index.toString()}
@@ -388,11 +410,14 @@ const renderFooterBrand = () => {
                       renderItem={renderItem}
                       ListFooterComponent={renderFooterCategory}
                     />
+                    </SafeAreaView>
 
                       <View style={{marginRight:20}}>
                       <Text style={styles.textIndex}>Brand relative</Text>
                       </View>
-                      
+
+
+                      <SafeAreaView>
                       <FlatList
                       data={listBrand}
                       keyExtractor={(item, index) => index.toString()}
@@ -400,6 +425,7 @@ const renderFooterBrand = () => {
                       renderItem={renderItem}
                       ListFooterComponent={renderFooterBrand}
                     />
+                    </SafeAreaView>
 
 
 
