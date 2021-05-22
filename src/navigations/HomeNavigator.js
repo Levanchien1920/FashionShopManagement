@@ -1,7 +1,7 @@
 import React from 'react';
 import {createStackNavigator} from '@react-navigation/stack';
 import Home from '../screens/Home';
-import Products from '../screens/Products';
+import Product from '../screens/Products';
 import ProductDetail from '../screens/ProductDetail';
 import Cart from '../screens/Cart';
 import Checkout from '../screens/Checkout';
@@ -17,7 +17,7 @@ const HomeNavigator = () => {
     return (
         <HomeStack.Navigator>
           <HomeStack.Screen name={'Home'} component= {Home} ></HomeStack.Screen>
-          <HomeStack.Screen name={'Products'} component= {Products}></HomeStack.Screen>
+          <HomeStack.Screen name={'Product'} component= {Product}></HomeStack.Screen>
           <HomeStack.Screen name={'ProductDetail'} component= {ProductDetail}></HomeStack.Screen>
           <HomeStack.Screen name={'Cart'} component= {Cart}></HomeStack.Screen>
           <HomeStack.Screen name={'Checkout'} component= {Checkout}></HomeStack.Screen>

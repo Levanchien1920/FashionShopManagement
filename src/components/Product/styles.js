@@ -8,14 +8,16 @@ export default StyleSheet.create({
     width:'100%',
     height:hp('40%')
   },
-  headerContainer: {
-    flexDirection: 'row',
-    paddingTop: 50,
-    backgroundColor: 'pink',
-    position:'relative',
-    display:'flex',
-    alignItems:'center',
-  },
+  
+  createSection : {
+    flexDirection:'row',
+
+ },
+ headerContainer: {
+  top:2,
+  flexDirection: 'row',
+  height:100
+},
     
     inputContainer: {
       backgroundColor: '#fff',
@@ -42,10 +44,7 @@ export default StyleSheet.create({
     },
 
    
-   createSection : {
-    flexDirection:'row',
-    marginTop: 5
- },
+  
       btn1 : {
         marginLeft: 20,
 
@@ -64,9 +63,10 @@ export default StyleSheet.create({
       },
     
     bodyContainer: {
-      marginTop:'5%',
-      padding:wp('5%'),
+     
+      // padding:wp('5%'),
       backgroundColor: 'pink',
+      paddingLeft:10
     },
     linkBtn : {
       borderWidth:0.3,
@@ -156,6 +156,29 @@ export default StyleSheet.create({
     color: 'white',
     fontSize: 14,
     textAlign: 'center',
+  },
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB'
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5'
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9'
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold'
   },
      
 })

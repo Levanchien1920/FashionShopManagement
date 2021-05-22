@@ -1,13 +1,14 @@
 
 import React, { useState ,useEffect, useContext} from 'react';
-import { Text, View,TextInput, TouchableOpacity,ScrollView ,Button, FlatList, ActivityIndicator,SafeAreaView} from 'react-native';
+import { Text, View,TextInput, TouchableOpacity,ScrollView ,Button, FlatList, ActivityIndicator,SafeAreaView,Image} from 'react-native';
 import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import RNPickerSelect from "react-native-picker-select";
 import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import { LogBox } from 'react-native';
+import Icon1 from '../../components/common/Icon';
+import Swiper from 'react-native-swiper'
 
 
 const ProductComponent = () => {
@@ -139,7 +140,7 @@ switch (c) {
  const renderItem = ({item}) => {
    return (
      <View style={{borderBottomWidth:1,borderBottomColor:"yellow"}}>
-          <View style={styles.listItemContainer}>
+          <View>
               <View style={{marginLeft:10,marginTop:5}}>
               <Card product={item}></Card>
     </View>
@@ -298,43 +299,36 @@ const renderFooterBrand = () => {
 
  return (
 
- <View>
+ <View style={{height:'100%',width:'100%'}}>
            <View>
                         <View style={styles.headerContainer}>
-                                <View style={styles.inputContainer}>
-                                    <FontAwesome name="search" size={24} color="#969696" />
-                                    <TextInput style={styles.inputText} />
-                                </View>
-                            
+                        <Swiper style={styles.wrapper} showsButtons={true} autoplay={true}>
+                              <View style={styles.slide1}>
+                              <Image  
+                                 source={require('../../assets/images/b1.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide2}>
+                              <Image  
+                                 source={require('../../assets/images/b2.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide3}>
+                              <Image  
+                                 source={require('../../assets/images/b3.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                      </Swiper>
                         </View>
 
-                        <View  style = {styles.createSection}>
-                              <View style = {styles.btn1}>   
-                                      <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
-                                </View>
-                                <View style = {styles.btn2}>
-                                      <Button  title= "Product" onPress= {() => {navigate('Products')}}>
-                                      </Button>
-                                </View>
-                                  <View style = {styles.btn3}> 
-                                  <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
-                                  </Button>
-                                  </View> 
-                                  <View style = {styles.btn4} >
-                                  <Button  title= "Post" onPress= {() => {navigate('Post')}}>
-                                </Button>
-                                  </View>
-                                  <View style = {styles.btn5}>
-                                  <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
-                                        </Button>
-                                  </View>
-                      </View>
+                       
+                                
               </View>      
               
     <ScrollView style={styles.bodyContainer}>
         <View>
 
-              <View style= {{flexDirection:'row'}}>
+              <View style= {{flexDirection:'row',paddingTop:10}}>
                       <View style= {{width:"70%"}}>
                       <TextInput
                           style={{ 
@@ -368,7 +362,7 @@ const renderFooterBrand = () => {
             }}
               items={[
                { label: "Name (A-Z)", value: 3 },
-              //  { label: "Name (Z-A)", value: 4 },
+               { label: "Name (Z-A)", value: 4 },
                { label: "Price (Low to High)", value: 5 },
                { label: "Price (High to low)", value: 6 },
                      ]} 
@@ -383,11 +377,12 @@ const renderFooterBrand = () => {
    </View>
         
     <ScrollView horizontal={true} style= {{marginTop:30}} >
-        <View style={{width:250}}>
-                    <View style={{marginRight:20}}>
+        <View style={{width:250,borderWidth:1}}>
+                    <View>
+                    <View>
                     <Text style={styles.textIndex}>All product</Text>
                     </View>
-                    <SafeAreaView>
+                   
                     <FlatList
                       data={listProduct}
                       keyExtractor={(item, index) => index.toString()}
@@ -395,37 +390,45 @@ const renderFooterBrand = () => {
                       renderItem={renderItem}
                       ListFooterComponent={renderFooter}
                     />
-                    </SafeAreaView>
+                    </View>
 
 
+                    <View>
+                            <View>
+                            <Text style={styles.textIndex}>Category relative</Text>
+                            </View>
+                            <SafeAreaView>
+                            <FlatList
+                            data={listCategory}
+                            keyExtractor={(item, index) => index.toString()}
+                            enableEmptySections={true}
+                            renderItem={renderItem}
+                            ListFooterComponent={renderFooterCategory}
+                          />
+                          </SafeAreaView>
 
-                      <View style={{marginRight:20}}>
-                      <Text style={styles.textIndex}>Category relative</Text>
-                      </View>
-                      <SafeAreaView>
-                      <FlatList
-                      data={listCategory}
-                      keyExtractor={(item, index) => index.toString()}
-                      enableEmptySections={true}
-                      renderItem={renderItem}
-                      ListFooterComponent={renderFooterCategory}
-                    />
-                    </SafeAreaView>
+                    </View>
 
-                      <View style={{marginRight:20}}>
-                      <Text style={styles.textIndex}>Brand relative</Text>
-                      </View>
+                    <View>
+
+                             <View>
+                              <Text style={styles.textIndex}>Brand relative</Text>
+                              </View>
 
 
-                      <SafeAreaView>
-                      <FlatList
-                      data={listBrand}
-                      keyExtractor={(item, index) => index.toString()}
-                      enableEmptySections={true}
-                      renderItem={renderItem}
-                      ListFooterComponent={renderFooterBrand}
-                    />
-                    </SafeAreaView>
+                              <SafeAreaView>
+                              <FlatList
+                              data={listBrand}
+                              keyExtractor={(item, index) => index.toString()}
+                              enableEmptySections={true}
+                              renderItem={renderItem}
+                              ListFooterComponent={renderFooterBrand}
+                            />
+                            </SafeAreaView>
+
+                    </View>
+
+                     
 
 
 
@@ -458,8 +461,55 @@ const renderFooterBrand = () => {
                   </View>
             </View>
       </ScrollView>
+
       <View style= {{paddingTop:50}}></View>
    </ScrollView>
+
+
+   <View  style = {styles.createSection}>
+                <View style = {styles.btn1}>   
+                            <TouchableOpacity
+                              onPress= {() => {navigate('Home')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="home" />
+                            
+                              </TouchableOpacity>
+                              
+                   </View>
+                   <View style = {styles.btn2}>
+                        <TouchableOpacity
+                              onPress= {() => {navigate('Product')}}>
+                              <Icon1 type="ionicon" style={{padding: 10}} size={30} color="green" name="shirt" />
+                            
+                         </TouchableOpacity>
+
+              
+
+                   </View>
+                    <View style = {styles.btn3}> 
+                         <TouchableOpacity
+                              onPress= {() => {navigate('Contact')}}>
+                              <Icon1 type="material" style={{padding: 10}} size={35} color="green" name="contact-phone" />
+                            
+                              </TouchableOpacity>
+                   
+                    </View> 
+                    <View style = {styles.btn4} >
+                  
+
+                   <TouchableOpacity
+                              onPress= {() => {navigate('Post')}}>
+                              <Icon1 type="ant" style={{padding: 10}} size={30} color="green" name="notification" />
+                            
+                              </TouchableOpacity>
+                    </View>
+                    <View style = {styles.btn5}>
+
+                           <TouchableOpacity
+                              onPress= {() => {navigate('Cart')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              </TouchableOpacity>
+                    </View>
+                  </View>
 </View>
     );
 }

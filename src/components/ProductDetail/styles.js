@@ -86,10 +86,10 @@ export default StyleSheet.create({
    
     listItemContainer: {
       flexDirection: 'row',
-      left:30,
+      height:250,
       flexWrap: 'wrap',
       maxWidth:800,
-      width:300
+      width:50
     },
     textTitle: {
       color:'blue',

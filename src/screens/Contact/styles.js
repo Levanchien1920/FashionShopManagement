@@ -37,15 +37,9 @@ export default StyleSheet.create({
       fontWeight: '500',
       height:30
     },
-    cartContainer: {
-      position: 'absolute',
-      right:10,
-    },
+    
 
-    createSection : {
-      flexDirection:'row',
-      marginTop: 5
-   },
+   
    btn1 : {
     marginLeft: 20,
  
@@ -64,10 +58,10 @@ export default StyleSheet.create({
   },
 
     bodyContainer: {
-      marginTop:'5%',
+  
       padding:wp('10%'),
       backgroundColor: 'pink',
-      height:'80%'
+      height:'72%'
     },
     linkBtn : {
       borderWidth:0.3,
@@ -116,6 +110,40 @@ export default StyleSheet.create({
       color: 'red',
       backgroundColor: 'white',
       textAlign:'center',
-    }
+    },
+    slide1: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#9DD6EB'
+    },
+    slide2: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#97CAE5'
+    },
+    slide3: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#92BBD9'
+    },
+    text: {
+      color: '#fff',
+      fontSize: 30,
+      fontWeight: 'bold'
+    },
+  
+    createSection : {
+      flexDirection:'row',
+      // marginTop: 5
+      backgroundColor:'white'
+   },
+   headerContainer: {
+    top:2,
+    flexDirection: 'row',
+    height:100
+  },
      
 })

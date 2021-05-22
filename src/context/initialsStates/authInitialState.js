@@ -6,6 +6,7 @@ export default {
     //   return result
     // }),
     isLoggedIn:false,
+    count:0,
     data: {},
     error: null,
     loading: false,

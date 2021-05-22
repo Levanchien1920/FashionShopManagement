@@ -63,9 +63,9 @@ export default StyleSheet.create({
   },
 
     bodyContainer: {
-      marginTop:'5%',
+    
       backgroundColor: 'pink',
-      height:'80%',
+      height:'72%',
     
     },
     linkBtn : {
@@ -155,5 +155,41 @@ export default StyleSheet.create({
     seeMoreText: {
       color: '#0e45b4',
     },
+
+    slide1: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#9DD6EB'
+    },
+    slide2: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#97CAE5'
+    },
+    slide3: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#92BBD9'
+    },
+    text: {
+      color: '#fff',
+      fontSize: 30,
+      fontWeight: 'bold'
+    },
+  
+    createSection : {
+      flexDirection:'row',
+      // marginTop: 5
+      backgroundColor:'white'
+   },
+   headerContainer: {
+    top:2,
+    flexDirection: 'row',
+    height:100
+  },
+     
      
 })

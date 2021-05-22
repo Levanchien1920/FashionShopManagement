@@ -44,13 +44,19 @@ const ProductDetailComponent = () => {
     const [test,setTest] =useState(false)
     const [success,setSuccess] =useState(false)
     const [isBuyNow,setIsBuyNow] =useState(false)
+    const [countReview,SetCountReview] =useState(0)
+
+    
+   
 
     useEffect(()=>{
         if(isBuyNow) {
             Alert.alert(`Buy now is failed,Please log in !`)
         }
         setIsBuyNow(false)
+        console.log("Abcde");
     },[isBuyNow])
+    console.log("Abcde");
 
     useEffect(()=>{
         if(test) {
@@ -168,9 +174,10 @@ const ProductDetailComponent = () => {
                
                 axiosInstance.post(`/client/review`, OutputReview).then((response)=> {
                     setSuccess(true);
-                    authDispatch({
-                        type: 'Review',
-                      });
+                  
+                    // authDispatch({
+                    //     type: 'Review',
+                    //   });
                 }).catch((error) =>{
                     setTest(true)
                 });
@@ -214,8 +221,8 @@ const ProductDetailComponent = () => {
               </View>
            </View>
           <ScrollView style={styles.bodyContainer}>
-            <View style= {{flexDirection:'row',height:250, marginTop:"5%", borderBottomWidth: 1}}  >
-                <View style= {{top:5,left:5}}>  
+            <View style= {{flexDirection:'row',height:300, marginTop:"5%", borderBottomWidth: 1}}  >
+                <View style= {{top:5,left:5,width:170,height:250}}>  
                     <Image  source={{ uri: Product.link }}
                             style={{width: 150, height: 220}} />
                 </View>

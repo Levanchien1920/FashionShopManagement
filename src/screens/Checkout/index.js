@@ -1,11 +1,13 @@
 import React, { useContext, useEffect, useState } from "react";
-import {Text,View,TextInput,Image,Button,ScrollView,Alert} from "react-native";
+import {Text,View,TextInput,Image,Button,ScrollView,Alert,TouchableOpacity} from "react-native";
 import axiosInstance from "../../helper/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import styles from "./styles";
 import FontAwesome from "react-native-vector-icons/FontAwesome";
 import { useNavigation } from "@react-navigation/native";
 import {GlobalContext} from '../../context/Provider';
+import Icon1 from '../../components/common/Icon';
+import Swiper from 'react-native-swiper'
 const Checkout = () => {
 
   const [productItem, setProductItem] = useState([]);
@@ -164,56 +166,25 @@ const Checkout = () => {
     <View>
       <View>
         <View style={styles.headerContainer}>
-          <View style={styles.inputContainer}>
-            <FontAwesome name="search" size={24} color="#969696" />
-            <TextInput style={styles.inputText} />
-          </View>
-         
-        </View>
+        <Swiper style={styles.wrapper} showsButtons={true} autoplay={true}>
+                              <View style={styles.slide1}>
+                              <Image  
+                                 source={require('../../assets/images/b1.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide2}>
+                              <Image  
+                                 source={require('../../assets/images/b2.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide3}>
+                              <Image  
+                                 source={require('../../assets/images/b3.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                      </Swiper>
+        
 
-        <View style={styles.createSection}>
-          <View style={styles.btn1}>
-            <Button
-              title="Home"
-              onPress={() => {
-                navigate("Home");
-              }}
-            >
-              {" "}
-            </Button>
-          </View>
-          <View style={styles.btn2}>
-            <Button
-              title="Product"
-              onPress={() => {
-                navigate("Products");
-              }}
-            ></Button>
-          </View>
-          <View style={styles.btn3}>
-            <Button
-              title="Contact"
-              onPress={() => {
-                navigate("Contact");
-              }}
-            ></Button>
-          </View>
-          <View style={styles.btn4}>
-            <Button
-              title="Post"
-              onPress={() => {
-                navigate("Post");
-              }}
-            ></Button>
-          </View>
-          <View style={styles.btn5}>
-            <Button
-              title="Cart"
-              onPress={() => {
-                navigate("Cart");
-              }}
-            ></Button>
-          </View>
         </View>
       </View>
 
@@ -309,6 +280,52 @@ const Checkout = () => {
 
   
       </ScrollView>
+
+
+      <View  style = {styles.createSection}>
+                <View style = {styles.btn1}>   
+                            <TouchableOpacity
+                              onPress= {() => {navigate('Home')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="home" />
+                            
+                              </TouchableOpacity>
+                              
+                   </View>
+                   <View style = {styles.btn2}>
+                        <TouchableOpacity
+                              onPress= {() => {navigate('Product')}}>
+                              <Icon1 type="ionicon" style={{padding: 10}} size={30} color="green" name="shirt" />
+                            
+                         </TouchableOpacity>
+
+              
+
+                   </View>
+                    <View style = {styles.btn3}> 
+                         <TouchableOpacity
+                              onPress= {() => {navigate('Contact')}}>
+                              <Icon1 type="material" style={{padding: 10}} size={35} color="green" name="contact-phone" />
+                            
+                              </TouchableOpacity>
+                   
+                    </View> 
+                    <View style = {styles.btn4} >
+                  
+
+                   <TouchableOpacity
+                              onPress= {() => {navigate('Post')}}>
+                              <Icon1 type="ant" style={{padding: 10}} size={30} color="green" name="notification" />
+                            
+                              </TouchableOpacity>
+                    </View>
+                    <View style = {styles.btn5}>
+
+                           <TouchableOpacity
+                              onPress= {() => {navigate('Cart')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              </TouchableOpacity>
+                    </View>
+                  </View>
 
     
     </View>

@@ -2,17 +2,21 @@
 import React, { useEffect, useState ,useContext} from 'react';
 import {Image, Text, View, FlatList,ScrollView,Button,TextInput,TouchableOpacity,ActivityIndicator,SafeAreaView} from 'react-native';
 import styles from './styles';
-import {useNavigation } from '@react-navigation/native';
+import {useIsFocused, useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
 import Card from '../../screens/Card';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {GlobalContext} from '../../context/Provider';
 import { LogBox } from 'react-native';
+import Stars from 'react-native-stars';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon1 from '../../components/common/Icon';
+import Swiper from 'react-native-swiper'
 const HomeComponent = () => {
   const [listProductBest , setlistProductBest] = useState([]);
   const [listProductNew , setlistProductNew] = useState([]);
   const [listBestReview , setlistBestReview] = useState([]);
   const {authState : {count},}= useContext(GlobalContext);
+  const {navigate} =useNavigation();
 
   const [loading, setLoading] = useState(true);
   const [offset, setOffset] = useState(0);
@@ -21,6 +25,9 @@ const HomeComponent = () => {
   const [loadingNew, setLoadingNew] = useState(true);
   const [offsetNew, setOffsetNew] = useState(0);
   const [totalPageNew,setTotalPageNew] = useState(9);
+
+ const isFocused = useIsFocused();
+
 
   useEffect(() =>{
       LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
@@ -42,13 +49,16 @@ const HomeComponent = () => {
         }).catch((error) =>{
         });
        } , [offsetNew]);
+
   useEffect(() => {
+    console.log({isFocused});
+      if(!isFocused) return
        axiosInstance.get('/client/review/good').then((response)=> {
         setlistBestReview(response.data.content);
          }).catch((error) =>{
        })
-  },[count])
-  const {navigate} =useNavigation();
+  },[isFocused])
+
   const renderFooter = () => {
     return (
       <View style={styles.footer}>
@@ -159,34 +169,31 @@ const HomeComponent = () => {
         <View >
               <View>
               <View style={styles.headerContainer}>
-                      <View style={styles.inputContainer}>
-                          <FontAwesome name="search" size={24} color="#969696" />
-                          <TextInput style={styles.inputText} />
-                      </View>
+                  
+
+
+                      
+                      <Swiper style={styles.wrapper} showsButtons={true} autoplay={true}>
+                              <View style={styles.slide1}>
+                              <Image  
+                                 source={require('../../assets/images/b1.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide2}>
+                              <Image  
+                                 source={require('../../assets/images/b2.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide3}>
+                              <Image  
+                                 source={require('../../assets/images/b3.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                      </Swiper>
                  
               </View>
 
-              <View  style = {styles.createSection}>
-                <View style = {styles.btn1}>   
-                        <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
-                   </View>
-                   <View style = {styles.btn2}>
-                        <Button  title= "Product" onPress= {() => {navigate('Products')}}>
-                        </Button>
-                   </View>
-                    <View style = {styles.btn3}> 
-                    <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
-                    </Button>
-                    </View> 
-                    <View style = {styles.btn4} >
-                    <Button  title= "Post" onPress= {() => {navigate('Post')}}>
-                   </Button>
-                    </View>
-                    <View style = {styles.btn5}>
-                    <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
-                           </Button>
-                    </View>
-                  </View>
+             
               </View>
          
                <ScrollView style={styles.bodyContainer}>
@@ -219,9 +226,9 @@ const HomeComponent = () => {
 
                    <View style = {{flexDirection:'column'}}>
                       <Text style={styles.textIndex}>Review</Text>
-                       <View style={styles.listItemContainer}>
+                       <View style={styles.listItemContainer1}>
                       {listBestReview.map((review,index) => (
-                        <View key= {index} style= {{flexDirection:'column'}}>
+                        <View key= {index} style= {{flexDirection:'column',borderBottomColor:"yellow",borderBottomWidth:1,width:'100%'}}>
 
                           <View style= {{flexDirection:'row'}}>
                             
@@ -231,17 +238,30 @@ const HomeComponent = () => {
                                           style={styles.logoImage}
                                       />
                                   <Text style={{color:'blue',fontSize:16}}>{review.name_User}</Text> 
-                                  
                               </View>
                               
                               <View style= {{flexDirection:'column',margin:10}}>
                                     <View style={{flexDirection:'row'}}>
                                            <Text style={{color:'blue',fontSize:16}}>Tên sản phẩm: </Text>
-                                             <Text>:{review.name_Product}</Text> 
+                                             <Text  style={{color:'black',fontSize:14,width:250}}>{review.name_Product}</Text> 
                                     </View>
+
+                                    <View style={{marginRight:250}}>
+              
+                                       <Stars
+                                        default={review.number_Of_Star}
+                                        spacing={8}
+                                        count={5}
+                                        starSize={50} 
+                                        disabled={true}
+                                        fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
+                                        emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
+                                        halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
+                                    />
+                                   </View>
                                     <View style={{flexDirection:'row'}}>
                                            <Text style={{color:'blue',fontSize:16}}>Nội dung: </Text>
-                                             <Text>:{review.content}</Text> 
+                                             <Text  style={{color:'black',fontSize:14,width:150}}>{review.content}</Text> 
                                     </View>
                               </View>
                           </View>
@@ -255,8 +275,56 @@ const HomeComponent = () => {
                   </View>
 
                   
+
             </ScrollView> 
-      </View>
+
+            
+            <View  style = {styles.createSection}>
+                <View style = {styles.btn1}>   
+                            <TouchableOpacity
+                              onPress= {() => {navigate('Home')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="home" />
+                            
+                              </TouchableOpacity>
+                              
+                   </View>
+                   <View style = {styles.btn2}>
+                        <TouchableOpacity
+                              onPress= {() => {navigate('Product')}}>
+                              <Icon1 type="ionicon" style={{padding: 10}} size={30} color="green" name="shirt" />
+                            
+                         </TouchableOpacity>
+
+              
+
+                   </View>
+                    <View style = {styles.btn3}> 
+                         <TouchableOpacity
+                              onPress= {() => {navigate('Contact')}}>
+                              <Icon1 type="material" style={{padding: 10}} size={35} color="green" name="contact-phone" />
+                            
+                              </TouchableOpacity>
+                   
+                    </View> 
+                    <View style = {styles.btn4} >
+                  
+
+                   <TouchableOpacity
+                              onPress= {() => {navigate('Post')}}>
+                              <Icon1 type="ant" style={{padding: 10}} size={30} color="green" name="notification" />
+                            
+                              </TouchableOpacity>
+                    </View>
+                    <View style = {styles.btn5}>
+
+                           <TouchableOpacity
+                              onPress= {() => {navigate('Cart')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              </TouchableOpacity>
+                    </View>
+                  </View>
+            </View>
+     
     );
  
 }

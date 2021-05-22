@@ -11,6 +11,7 @@ import {GlobalContext} from '../../context/Provider';
 const Card = (props) => {
     const {authState : {isLoggedIn},}= useContext(GlobalContext);
     const [test,setTest] =useState(false)
+  
   useEffect(()=>{
       if(test) {
           Alert.alert(`Add to cart success!`)
@@ -54,16 +55,20 @@ const Card = (props) => {
                                 <Image  source={{ uri: product.link }}
                                     style={{width: 100, height: 100}}/>
                             </View>
+                            <View style={{width:100}}>
+                                <Text style={{color:'blue',fontSize:18,textAlign:'center'}}>{product.price}$</Text> 
+                             </View>
+
             </View>
 
             <View style={{width:100}}>
 
                 
                         <View style={{width:100}}>
-                                <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.name}</Text> 
-                    </View>
-                        <Text style={{color:'blue',fontSize:16,textAlign:'center'}}>{product.price}$</Text>
-                            <View>
+                                <Text style={{color:'blue',fontSize:18,textAlign:'center'}}>{product.name}</Text> 
+                         </View>
+                       
+                            <View style= {{marginTop:5}}>
                                 
                         
                             <Button color='orange' title="Add to cart" onPress= {() => {
@@ -102,7 +107,7 @@ const Card = (props) => {
                                             }}></Button>
 
                             </View>
-                            <View style={{marginTop:5}}>
+                            <View style={{marginTop:15}}>
                             
                             <TouchableOpacity onPress= {() => {
                                             navigate('ProductDetail', {
@@ -114,7 +119,6 @@ const Card = (props) => {
                         </View>
           
              
-
 
             </View>
                                     </View>

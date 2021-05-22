@@ -8,15 +8,7 @@ export default StyleSheet.create({
     width:'100%',
     height:hp('40%')
   },
-  headerContainer: {
-    flexDirection: 'row',
-    paddingTop: 50,
-    backgroundColor: 'pink',
-    position:'relative',
-    display:'flex',
-    alignItems:'center',
 
-  },
     inputContainer: {
       backgroundColor: '#fff',
       flexDirection: 'row',
@@ -41,10 +33,7 @@ export default StyleSheet.create({
       right:10,
     },
 
-    createSection : {
-      flexDirection:'row',
-      marginTop: 5
-   },
+    
    btn1 : {
     marginLeft: 20,
    },
@@ -62,10 +51,10 @@ export default StyleSheet.create({
   },
 
     bodyContainer: {
-      marginTop:'5%',
+  
       padding:wp('10%'),
       backgroundColor: 'pink',
-      height:'80%'
+      height:'72%'
       
     },
     linkBtn : {
@@ -91,6 +80,13 @@ export default StyleSheet.create({
     },
    
     listItemContainer: {
+      flexDirection: 'row',
+      flexWrap: 'wrap',
+      marginLeft:30,
+      maxWidth:800,
+      width:'100%'
+    },
+    listItemContainer1: {
       flexDirection: 'row',
       flexWrap: 'wrap',
       maxWidth:800,
@@ -157,4 +153,55 @@ export default StyleSheet.create({
     fontSize: 14,
     textAlign: 'center',
   },
+  text : {
+    color:'green',
+    fontSize:17,
+    textAlign:'center'
+  } ,
+  myStarStyle: {
+    color: 'yellow',
+    backgroundColor: 'transparent',
+    textShadowColor: 'black',
+    textShadowOffset: {width: 1, height: 1},
+    textShadowRadius: 2,
+  },
+  myEmptyStarStyle: {
+    color: 'white',
+  },
+  ////
+  slide1: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#9DD6EB'
+  },
+  slide2: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#97CAE5'
+  },
+  slide3: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#92BBD9'
+  },
+  text: {
+    color: '#fff',
+    fontSize: 30,
+    fontWeight: 'bold'
+  },
+
+  createSection : {
+    flexDirection:'row',
+    // marginTop: 5
+    backgroundColor:'white'
+ },
+ headerContainer: {
+  top:2,
+  flexDirection: 'row',
+  height:100
+},
+   
 })
