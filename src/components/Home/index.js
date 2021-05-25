@@ -26,6 +26,10 @@ const HomeComponent = () => {
   const [offsetNew, setOffsetNew] = useState(0);
   const [totalPageNew,setTotalPageNew] = useState(9);
 
+  const [loadingRev, setLoadingRev] = useState(true);
+  const [offsetRev, setOffsetRev] = useState(0);
+  const [totalPageRev,setTotalPageRev] = useState(9);
+
  const isFocused = useIsFocused();
 
 
@@ -53,11 +57,15 @@ const HomeComponent = () => {
   useEffect(() => {
     console.log({isFocused});
       if(!isFocused) return
-       axiosInstance.get('/client/review/good').then((response)=> {
+      setLoadingRev(true);
+       axiosInstance.get(`/client/review/good?page=${offsetRev}`).then((response)=> {
         setlistBestReview(response.data.content);
+        setLoadingRev(false);
+        setTotalPageRev(response.data.totalPage);
+
          }).catch((error) =>{
        })
-  },[isFocused])
+  },[isFocused,offsetRev])
 
   const renderFooter = () => {
     return (
@@ -153,6 +161,56 @@ const HomeComponent = () => {
     );
   };
 
+
+  const renderFooterRev = () => {
+    return (
+      <View style={styles.footer}>
+  
+          <View>
+          {(offsetRev>0) ? (<TouchableOpacity
+          activeOpacity={0.9}
+          onPress={()=> {
+            setOffsetRev(offsetRev-1)
+          }}
+     
+          style={styles.loadMoreBtn}>
+          <Text style={styles.btnText}>Previous</Text>
+          {loadingRev ? (
+            <ActivityIndicator
+              color="white"
+              style={{marginLeft: 8}} />
+          ) : null}
+        </TouchableOpacity> ):null}
+  
+          </View>
+          <View>
+  
+          {
+            (totalPageRev===1) ? 
+            (
+              null
+            ):
+            (totalPageRev-1>offsetRev) ? ( <TouchableOpacity
+                activeOpacity={0.9}
+                onPress={()=> {
+                  setOffsetRev(offsetRev+1);
+                }}
+                style={styles.loadMoreBtn}>
+                <Text style={styles.btnText}>Load more</Text>
+                {loadingRev ? (
+                  <ActivityIndicator
+                    color="white"
+                    style={{marginLeft: 8}} />
+                ) : null}
+              </TouchableOpacity> ):null}
+  
+          </View>
+        
+        
+      </View>
+    );
+  };
+
   const renderItem = ({item}) => {
     return (
       <View style={{borderBottomWidth:1,borderBottomColor:"yellow"}}>
@@ -162,6 +220,55 @@ const HomeComponent = () => {
      </View>
      </View>
       </View>
+    );
+  };
+
+  const renderItemRev = ({item}) => {
+    return (
+      <View style={{borderBottomWidth:1,borderBottomColor:"yellow"}}>
+          
+               <View style= {{flexDirection:'column',borderBottomColor:"yellow",borderBottomWidth:1,width:'100%'}}>
+
+<View style= {{flexDirection:'row'}}>
+  
+    <View style= {{flexDirection:'column'}}>
+          <Image
+                source={require('../../assets/images/avt.jpg')}
+                style={styles.logoImage}
+            />
+        <Text style={{color:'blue',fontSize:16}}>{item.name_User}</Text> 
+    </View>
+    
+    <View style= {{flexDirection:'column',margin:10}}>
+          <View style={{flexDirection:'row'}}>
+                 <Text style={{color:'blue',fontSize:16}}>Tên sản phẩm: </Text>
+                   <Text  style={{color:'black',fontSize:14,width:250}}>{item.name_Product}</Text> 
+          </View>
+
+          <View style={{marginRight:250}}>
+
+             <Stars
+              default={item.number_Of_Star}
+              spacing={8}
+              count={5}
+              starSize={50} 
+              disabled={true}
+              fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
+              emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
+              halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
+          />
+         </View>
+          <View style={{flexDirection:'row'}}>
+                 <Text style={{color:'blue',fontSize:16}}>Nội dung: </Text>
+                   <Text  style={{color:'black',fontSize:14,width:150}}>{item.content}</Text> 
+          </View>
+    </View>
+</View>
+
+</View>
+           </View>
+    //  </View>
+    //   </View>
     );
   };
 
@@ -224,55 +331,21 @@ const HomeComponent = () => {
                             </SafeAreaView>
                       </View>
 
-                   <View style = {{flexDirection:'column'}}>
-                      <Text style={styles.textIndex}>Review</Text>
-                       <View style={styles.listItemContainer1}>
-                      {listBestReview.map((review,index) => (
-                        <View key= {index} style= {{flexDirection:'column',borderBottomColor:"yellow",borderBottomWidth:1,width:'100%'}}>
-
-                          <View style= {{flexDirection:'row'}}>
-                            
-                              <View style= {{flexDirection:'column'}}>
-                                    <Image
-                                          source={require('../../assets/images/avt.jpg')}
-                                          style={styles.logoImage}
-                                      />
-                                  <Text style={{color:'blue',fontSize:16}}>{review.name_User}</Text> 
-                              </View>
-                              
-                              <View style= {{flexDirection:'column',margin:10}}>
-                                    <View style={{flexDirection:'row'}}>
-                                           <Text style={{color:'blue',fontSize:16}}>Tên sản phẩm: </Text>
-                                             <Text  style={{color:'black',fontSize:14,width:250}}>{review.name_Product}</Text> 
-                                    </View>
-
-                                    <View style={{marginRight:250}}>
-              
-                                       <Stars
-                                        default={review.number_Of_Star}
-                                        spacing={8}
-                                        count={5}
-                                        starSize={50} 
-                                        disabled={true}
-                                        fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
-                                        emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
-                                        halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
-                                    />
-                                   </View>
-                                    <View style={{flexDirection:'row'}}>
-                                           <Text style={{color:'blue',fontSize:16}}>Nội dung: </Text>
-                                             <Text  style={{color:'black',fontSize:14,width:150}}>{review.content}</Text> 
-                                    </View>
-                              </View>
-                          </View>
-                         
-                        </View>
-
-                        
-                      ))}  
+                      <View >
+                             <Text style={styles.textIndex}>Review</Text>
+                             <SafeAreaView>
+                            <FlatList
+                            data={listBestReview}
+                            keyExtractor={(item, index) => index.toString()}
+                            enableEmptySections={true}
+                            renderItem={renderItemRev}
+                            ListFooterComponent={renderFooterRev}
+                          />
+                            </SafeAreaView>
+                            <View style= {{paddingTop:50}}></View>
                       </View>
-                      <View style= {{paddingTop:50}}></View>
-                  </View>
+
+                  
 
                   
 
@@ -283,7 +356,7 @@ const HomeComponent = () => {
                 <View style = {styles.btn1}>   
                             <TouchableOpacity
                               onPress= {() => {navigate('Home')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="home" />
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="blue" name="home" />
                             
                               </TouchableOpacity>
                               

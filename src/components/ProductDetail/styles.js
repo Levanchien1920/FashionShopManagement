@@ -41,10 +41,7 @@ export default StyleSheet.create({
       right:10,
     },
 
-    createSection : {
-      flexDirection:'row',
-      marginTop: 5
-   },
+  
    btn1 : {
     marginLeft: 20,
    },
@@ -128,10 +125,10 @@ export default StyleSheet.create({
       alignItems: 'center',
     },
     bodyContainer: {
-      marginTop:'5%',
+      // marginTop:'5%',
       // padding:wp('10%'),
       backgroundColor: 'pink',
-      height:'80%'
+      height:'72%'
     }
     ,
     myStarStyle: {
@@ -143,5 +140,38 @@ export default StyleSheet.create({
     },
     myEmptyStarStyle: {
       color: 'white',
-    }
+    }, slide1: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#9DD6EB'
+    },
+    slide2: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#97CAE5'
+    },
+    slide3: {
+      flex: 1,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#92BBD9'
+    },
+    text: {
+      color: '#fff',
+      fontSize: 30,
+      fontWeight: 'bold'
+    },
+  
+    createSection : {
+      flexDirection:'row',
+      // marginTop: 5
+      backgroundColor:'white'
+   },
+   headerContainer: {
+    top:2,
+    flexDirection: 'row',
+    height:100
+  },
 })

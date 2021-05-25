@@ -114,7 +114,7 @@ const Contact = () => {
                     <View style = {styles.btn3}> 
                          <TouchableOpacity
                               onPress= {() => {navigate('Contact')}}>
-                              <Icon1 type="material" style={{padding: 10}} size={35} color="green" name="contact-phone" />
+                              <Icon1 type="material" style={{padding: 10}} size={35} color="blue" name="contact-phone" />
                             
                               </TouchableOpacity>
                    

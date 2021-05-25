@@ -339,7 +339,7 @@ const addQty = (product,index) => {
 
                            <TouchableOpacity
                               onPress= {() => {navigate('Cart')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="blue" name="shopping-cart" />
                               </TouchableOpacity>
                     </View>
                   </View>

@@ -4,7 +4,6 @@ import axiosInstance from '../../helper/axiosInstance';
 import { ScrollView,TouchableOpacity,Text, View,TextInput,Button,Image } from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Icon1 from '../../components/common/Icon';
 import Swiper from 'react-native-swiper'
 const Post = () => {
@@ -117,7 +116,7 @@ const Post = () => {
 
                    <TouchableOpacity
                               onPress= {() => {navigate('Post')}}>
-                              <Icon1 type="ant" style={{padding: 10}} size={30} color="green" name="notification" />
+                              <Icon1 type="ant" style={{padding: 10}} size={30} color="blue" name="notification" />
                             
                               </TouchableOpacity>
                     </View>

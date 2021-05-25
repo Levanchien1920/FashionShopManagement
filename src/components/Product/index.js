@@ -35,6 +35,9 @@ const ProductComponent = () => {
   const [offsetBra, setOffsetBra] = useState(0);
   const [totalPageBra,setTotalPageBra] = useState(9);
 
+  
+
+
   useEffect(() =>{
     LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
   
@@ -48,7 +51,7 @@ const ProductComponent = () => {
    } , [offset]);
 
    useEffect(() =>{
-    console.log('getData');
+ 
       setLoadingCat(true);
         axiosInstance.get(`/client/category?page=${offsetCat}`).then((response)=> {
           setLoadingCat(false)
@@ -72,7 +75,7 @@ const ProductComponent = () => {
 
 
   useEffect(() => {
-    
+
     if (filter.check === 1){
       axiosInstance.get(`/client/category/relateProduct/${filter.id}`).then((response)=> {
                 setlistProduct(response.data.content);
@@ -85,15 +88,16 @@ const ProductComponent = () => {
             }).catch((error) =>{
             });
         }
-
         if (filter.check === 3) {
-          axiosInstance.get(`client/product?search=${searchInput}`).then((response)=> {
+          setLoading(true);
+          axiosInstance.get(`client/product?search=${searchInput}&page=${offset}`).then((response)=> {
               setlistProduct(response.data.content);
-              console.log(response.data.content)
+              setLoading(false)
+              setTotalPage(response.data.totalPage);
           }).catch((error) =>{
           });
         }
-}, [filter]);
+}, [filter,offset]);
 useEffect(() => {
   axiosInstance.get('/client/category').then((response)=> {
       setlistCategory(response.data.content);
@@ -105,11 +109,6 @@ useEffect(() => {
   });
 }, []);
 
-function search(c) {
-  setfilter({
-      ...filter, check : c , search : searchInput
-  });
-}
 
 const {navigate} =useNavigation();
 
@@ -296,6 +295,15 @@ const renderFooterBrand = () => {
   );
 };
 
+const tempData = [];
+listCategory.forEach((data) => {
+  tempData.push({ label: `${data.name}`, value: `${data.id}` });
+});
+
+const tempDataBrand = [];
+listBrand.forEach((data) => {
+  tempDataBrand.push({ label: `${data.name}`, value: `${data.id}` });
+});
 
  return (
 
@@ -328,12 +336,12 @@ const renderFooterBrand = () => {
     <ScrollView style={styles.bodyContainer}>
         <View>
 
-              <View style= {{flexDirection:'row',paddingTop:10}}>
+              <View style= {{flexDirection:'row',paddingTop:10,marginLeft:10}}>
                       <View style= {{width:"70%"}}>
                       <TextInput
                           style={{ 
                               height: 40, 
-                              borderColor: 'yellow', 
+                              borderColor: 'blue', 
                               borderWidth: 1,
                           }}
                           onChangeText={text => setSearchInput(text)}
@@ -342,26 +350,37 @@ const renderFooterBrand = () => {
                       </View>
                           
                       <View style={{left:'15%'}}>
-                              <Button title="Search"  onPress= {()=> {
-                                setfilter({
-                                  ...filter, check : 3 , search : searchInput
-                              });
-                              }}>
+                              
 
-                              </Button>
+                              <TouchableOpacity
+                             onPress= {()=> {
+                              setOffset(0);
+                              setfilter({
+                                ...filter, check : 3 , search : searchInput
+                            });
+                            }}>
+                              <Icon1 type="fontisto" style={{padding: 10}} size={30} color="blue" name="search" />
+                            
+                              </TouchableOpacity>
                       </View>
 
              </View>
+
+
        
-          <View style={{top:20,height:50,width:"70%"}}>
-            
+          <View style={{top:20,flexDirection:'row'}}>
+
+            <View>
+            <Icon1 type="materialCommunity" style={{padding: 10}} size={30} color="black" name="sort" />
+            </View>
+            <View style={{width:200}}>
             <RNPickerSelect pickerProps={{ style: { height: 50, color:"green" } }}
              placeholder={{
               value: 3,
-              label:""
+              label:"Name(A-Z)"
             }}
               items={[
-               { label: "Name (A-Z)", value: 3 },
+              //  { label: "Name (A-Z)", value: 3 },
                { label: "Name (Z-A)", value: 4 },
                { label: "Price (Low to High)", value: 5 },
                { label: "Price (High to low)", value: 6 },
@@ -371,13 +390,57 @@ const renderFooterBrand = () => {
                 }
                }
             />
+            </View>
+        </View>
+
+        <View style={{top:20}}>
+
+          <View style={{width:100,flexDirection:'row'}}>
+
+               <View style={{height:50}}>
+                 <Text style={{fontSize:20}}>Category: </Text>
+               </View>
+
+                <View>
+                <RNPickerSelect pickerProps={{ style: {width:100, height: 50, color:"green" } }}
+                placeholder={{
+                  label:""
+                }}
+                  items={tempData} 
+                    onValueChange={(value) =>  { 
+                          
+                          (setfilter({check : 1 ,id: value}))
+                    }
+                  }
+                />
+                </View>
+
+          </View>
+
+              <View style={{left:20,width:100}}>
+
+                    
+                        
+                        <RNPickerSelect pickerProps={{ style: { height: 50, color:"green" } }}
+                        placeholder={{
+                          label:""
+                        }}
+                          items={tempDataBrand} 
+                            onValueChange={(value) =>  { 
+                                  
+                                  (setfilter({check : 2 ,id: value}))
+                            }
+                          }
+                        />
+
+            </View>
         </View>
 
 
    </View>
         
     <ScrollView horizontal={true} style= {{marginTop:30}} >
-        <View style={{width:250,borderWidth:1}}>
+        <View style={{width:'100%',borderRightWidth:1,borderRightColor:'yellow'}}>
                     <View>
                     <View>
                     <Text style={styles.textIndex}>All product</Text>
@@ -391,8 +454,6 @@ const renderFooterBrand = () => {
                       ListFooterComponent={renderFooter}
                     />
                     </View>
-
-
                     <View>
                             <View>
                             <Text style={styles.textIndex}>Category relative</Text>
@@ -434,7 +495,7 @@ const renderFooterBrand = () => {
 
       </View>
 
-       <View style={{width:75}}>
+       {/* <View style={{width:75}}>
               <View>
                       <Text style={{color:'red',fontSize:18}}>Category</Text>
                       {listCategory.map((category,index) => (
@@ -459,7 +520,7 @@ const renderFooterBrand = () => {
                         </View>
                             ))} 
                   </View>
-            </View>
+            </View> */}
       </ScrollView>
 
       <View style= {{paddingTop:50}}></View>
@@ -478,7 +539,7 @@ const renderFooterBrand = () => {
                    <View style = {styles.btn2}>
                         <TouchableOpacity
                               onPress= {() => {navigate('Product')}}>
-                              <Icon1 type="ionicon" style={{padding: 10}} size={30} color="green" name="shirt" />
+                              <Icon1 type="ionicon" style={{padding: 10}} size={30} color="blue" name="shirt" />
                             
                          </TouchableOpacity>
 

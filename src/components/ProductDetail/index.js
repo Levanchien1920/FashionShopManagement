@@ -1,13 +1,14 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Alert,Text, View,TextInput,ScrollView ,Image, Button} from 'react-native';
+import { Alert,Text, View,TextInput,ScrollView ,Image, Button,TouchableOpacity,TouchableHighlight} from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import {GlobalContext} from '../../context/Provider';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import Icon1 from '../../components/common/Icon';
+import Swiper from 'react-native-swiper'
 const ProductDetailComponent = () => {
     const route = useRoute();
     const [id, setId] = useState("");
@@ -22,7 +23,6 @@ const ProductDetailComponent = () => {
         id  : 0,
         size : ""
     });
-
     const {
         authDispatch,
         authState: {error, loading},
@@ -45,8 +45,6 @@ const ProductDetailComponent = () => {
     const [success,setSuccess] =useState(false)
     const [isBuyNow,setIsBuyNow] =useState(false)
     const [countReview,SetCountReview] =useState(0)
-
-    
    
 
     useEffect(()=>{
@@ -88,14 +86,10 @@ const ProductDetailComponent = () => {
         setLogin(false)
     },[login])
 
-
-
-
       useEffect(()=>{
         setquantity(number)
          }
       ,[number])
-
 
     useEffect(()=>{
         if(!isLoggedIn) return 
@@ -103,7 +97,6 @@ const ProductDetailComponent = () => {
             setId(result);
          });
       },[isLoggedIn])
-
 
     useEffect(() => {
         if (filter.check === 1){
@@ -183,48 +176,91 @@ const ProductDetailComponent = () => {
                 });
             } 
         }
-       
-  
         
     }
     return (
  <View>
             <View>
               <View style={styles.headerContainer}>
-                      <View style={styles.inputContainer}>
-                          <FontAwesome name="search" size={24} color="#969696" />
-                          <TextInput style={styles.inputText} />
-                      </View>
-              </View>
-              <View  style = {styles.createSection}>
-                <View style = {styles.btn1}>   
-                        <Button  title= "Home" onPress= {() => {navigate('Home')}}>  </Button>
-                   </View>
-                   <View style = {styles.btn2}>
-                        <Button  title= "Product" onPress= {() => {navigate('Products')}}>
-                        </Button>
-                   </View>
-                        
-                    <View style = {styles.btn3}> 
-                    <Button   title= "Contact" onPress= {() => {navigate('Contact')}}>
-                    </Button>
-                    </View> 
-
-                    <View style = {styles.btn4} >
-                    <Button  title= "Post" onPress= {() => {navigate('Post')}}>
-                   </Button>
-                    </View>
-                    <View style = {styles.btn5}>
-                    <Button  title= "Cart" onPress= {() => {navigate('Cart')}}>
-                           </Button>
-                    </View>
+              <Swiper style={styles.wrapper} showsButtons={true} autoplay={true}>
+                              <View style={styles.slide1}>
+                              <Image  
+                                 source={require('../../assets/images/b1.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide2}>
+                              <Image  
+                                 source={require('../../assets/images/b2.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                              <View style={styles.slide3}>
+                              <Image  
+                                 source={require('../../assets/images/b3.jpg')}
+                                    style={{height: 100}}/>
+                              </View>
+                      </Swiper>
               </View>
            </View>
           <ScrollView style={styles.bodyContainer}>
-            <View style= {{flexDirection:'row',height:300, marginTop:"5%", borderBottomWidth: 1}}  >
+            <View style= {{flexDirection:'row',height:250, marginTop:"5%", borderBottomWidth: 1,borderColor:'yellow'}}  >
                 <View style= {{top:5,left:5,width:170,height:250}}>  
-                    <Image  source={{ uri: Product.link }}
-                            style={{width: 150, height: 220}} />
+                <View>
+                <Image  source={{ uri: Product.link }}
+                            style={{width: 150, height: 150}} />
+                </View>
+                   
+
+            <View style= {{flexDirection:'row',marginLeft:20,paddingTop:10}}>
+                    <View>
+                     <TouchableOpacity
+                             onPress= {() => {
+                                setAddTC(true)
+                                  AsyncStorage.getItem('cart').then((res)=> {
+                                if(res!=null) {
+                                const cart=JSON.parse(res);
+                                let id = Product.id.toString();
+                                cart[id] = (cart[id] ? cart[id]: 0);
+                                let qty = cart[id] + parseInt(quantity);
+                                cart[id] = qty;
+                                AsyncStorage.setItem('cart', JSON.stringify(cart));
+                                }
+                                if(res==null) {
+                                    const cart={};
+                                    let id = Product.id.toString();
+                                    cart[id] = (cart[id] ? cart[id]: 0);
+                                    let qty = cart[id] + parseInt(quantity);
+                                    cart[id] = qty;
+                                    AsyncStorage.setItem('cart', JSON.stringify(cart));
+                                    }
+                                }
+                            )}} >
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="cart-plus" />
+                              </TouchableOpacity>
+                              </View>
+
+
+                        <View style={{paddingTop:10,width:40,height:40,left:10}}>
+
+                                <TouchableHighlight
+                                activeOpacity={0.6}
+                                underlayColor="red"
+                                onPress= {() => {
+                                    if(isLoggedIn===false) {
+                                        setIsBuyNow(true);
+                                    }else {
+                                     navigate('BuyNow', {
+                                         id: Product.id ,
+                                     })
+                                    }
+                                    }}>
+                                    <Image   source={require('../../assets/images/buynow1.jpg')}
+                                        style={{width: 40, height: 40}}/>
+                                </TouchableHighlight>
+                                
+                                </View>
+
+                                </View>
+
                 </View>
                 <View style={styles.listItemContainer}>
                         <View>
@@ -258,7 +294,7 @@ const ProductDetailComponent = () => {
                            
                              </View>
 
-                            <View style={{ flexDirection: 'row',left:20,marginTop:20}} >
+                            <View style={{ flexDirection: 'row',left:20,paddingTop:10}} >
                                     <View style= {{width:40,height:40}}>
                                         <Button color='orange'  title="+" onPress= {() => {  onChangeNumber(number+1) 
                                         }}>    
@@ -282,42 +318,9 @@ const ProductDetailComponent = () => {
                             </View>
 
 
-                <View style= {{left:30,width:100,height:40,top:10}}>
-                   <Button color="orange"  title="Add to cart" onPress= {() => {
-                            setAddTC(true)
-                              AsyncStorage.getItem('cart').then((res)=> {
-                            if(res!=null) {
-                            const cart=JSON.parse(res);
-                            let id = Product.id.toString();
-                            cart[id] = (cart[id] ? cart[id]: 0);
-                            let qty = cart[id] + parseInt(quantity);
-                            cart[id] = qty;
-                            AsyncStorage.setItem('cart', JSON.stringify(cart));
-                            }
-                            if(res==null) {
-                                const cart={};
-                                let id = Product.id.toString();
-                                cart[id] = (cart[id] ? cart[id]: 0);
-                                let qty = cart[id] + parseInt(quantity);
-                                cart[id] = qty;
-                                AsyncStorage.setItem('cart', JSON.stringify(cart));
-                                }
-                            }
-                        )}} >
-                     </Button>
-                     </View>
+             
 
-                     <View style= {{left:30,width:100,height:40,top:10}}>
-                                   <Button title="Buy now" color="red" onPress= {() => {
-                                       if(isLoggedIn===false) {
-                                           setIsBuyNow(true);
-                                       }else {
-                                        navigate('BuyNow', {
-                                            id: Product.id ,
-                                        })
-                                       }
-                                       }}></Button>
-                     </View>
+                                
                         </View>
                     </View>
             </View>
@@ -382,6 +385,51 @@ const ProductDetailComponent = () => {
                 <View style= {{paddingTop:50}}></View> 
            
         </ScrollView>
+
+        <View  style = {styles.createSection}>
+                <View style = {styles.btn1}>   
+                            <TouchableOpacity
+                              onPress= {() => {navigate('Home')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="home" />
+                            
+                              </TouchableOpacity>
+                              
+                   </View>
+                   <View style = {styles.btn2}>
+                        <TouchableOpacity
+                              onPress= {() => {navigate('Product')}}>
+                              <Icon1 type="ionicon" style={{padding: 10}} size={30} color="green" name="shirt" />
+                            
+                         </TouchableOpacity>
+
+              
+
+                   </View>
+                    <View style = {styles.btn3}> 
+                         <TouchableOpacity
+                              onPress= {() => {navigate('Contact')}}>
+                              <Icon1 type="material" style={{padding: 10}} size={35} color="green" name="contact-phone" />
+                            
+                              </TouchableOpacity>
+                   
+                    </View> 
+                    <View style = {styles.btn4} >
+                  
+
+                   <TouchableOpacity
+                              onPress= {() => {navigate('Post')}}>
+                              <Icon1 type="ant" style={{padding: 10}} size={30} color="green" name="notification" />
+                            
+                              </TouchableOpacity>
+                    </View>
+                    <View style = {styles.btn5}>
+
+                           <TouchableOpacity
+                              onPress= {() => {navigate('Cart')}}>
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              </TouchableOpacity>
+                    </View>
+                  </View>
         
         
 </View>

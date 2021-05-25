@@ -28,16 +28,21 @@ const Invoice = () => {
     <View style={{marginTop:'5%'}}>
       <Text style= {{fontSize:30,color:'red',textAlign:'center'}}>Thông tin hóa đơn</Text>
     </View>
+    { Array.isArray(invoices) && invoices.length > 0  ? ( <View style={{marginTop:'5%'}}>
+      <Text style= {{fontSize:20,color:'blue',textAlign:'center'}}>Họ tên: {invoices[0].name_Customer}</Text>
+    </View>):null
+    }
+   
     <ScrollView style={styles.bodyContainer}>
     <ScrollView style={{marginTop:'10%',marginLeft:'5%'}}> 
           { Array.isArray(invoices) && invoices.length > 0  ? (
           invoices.map((invoice,index) => (
             <View key={index} style={{marginTop:20, borderBottomWidth:1,borderColor:"yellow",flexDirection:"row"}}>
                 <View style={{width:200}}>
-                    <View style= {{flexDirection:'row',top:5}}>
+                    {/* <View style= {{flexDirection:'row',top:5}}>
                           <Text style= {{color:'blue',fontSize:16}}>Họ tên:   </Text> 
                           <Text>{invoice.name_Customer}</Text>
-                    </View>
+                    </View> */}
                     <View style= {{flexDirection:'row',width:100}}>
                           <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:   </Text> 
                           <Text>{invoice.name_Product}</Text>
@@ -69,9 +74,7 @@ const Invoice = () => {
                 <View>
                       <Image  source={{ uri: invoice.linkImage }}
                       style={{width: 100, height: 100}}/>
-
                 </View>
-               
                 </View>
                ))): (
                  <View>
