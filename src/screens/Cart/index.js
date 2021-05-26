@@ -18,6 +18,13 @@ const Cart = () => {
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
   const [text,setText] =useState(0)
   console.log(isLoggedIn);
+  const {
+    authDispatch,
+    authState: {check},
+  } = useContext(GlobalContext);
+
+
+
   useEffect(()=>{
     if(test) {
         Alert.alert(`Checkout is failed,please log in!`)
@@ -34,8 +41,20 @@ const Cart = () => {
     }
   ,[empty])
 
-  useEffect(() => {
+ 
 
+  useEffect(() => {
+    AsyncStorage.setItem('number',0+"");
+    if(check) {
+      authDispatch({
+          type: 'false',
+        });
+  }else {
+      authDispatch({
+          type: 'true',
+        });
+  }
+    
     let keys = [];
     AsyncStorage.getItem("cart").then((res) => {
       if (res != null) {
@@ -255,12 +274,20 @@ const addQty = (product,index) => {
 
                 <View style={{ width: "16%" }}>
                   <View style={{ top: "40%" }}>
-                    <Button
+                    {/* <Button
                       title="Xóa"
                       onPress={() => {
                         removeFromCart(product);
                       }}
-                    ></Button>
+                    ></Button> */}
+
+                              <TouchableOpacity
+                             onPress={() => {
+                              removeFromCart(product);
+                            }}>
+                              <Icon1 type="materialCommunity"  size={30} color="red" name="cart-remove" />
+                            
+                              </TouchableOpacity>
                   </View>
                 </View>
               </View>

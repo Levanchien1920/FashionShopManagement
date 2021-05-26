@@ -25,6 +25,22 @@ const auth =(state,{type,payload}) => {
             data: payload,
             isLoggedIn: true,
           };
+          case 'true':
+            return {
+              ...state,
+              count:1,
+              data: payload,
+              check:true,
+            
+            };
+            case 'false':
+              return {
+                ...state,
+                count:1,
+                data: payload,
+                check:false,
+             
+              };
         default:
           return state;
       }

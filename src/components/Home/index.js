@@ -11,11 +11,12 @@ import Stars from 'react-native-stars';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon1 from '../../components/common/Icon';
 import Swiper from 'react-native-swiper'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const HomeComponent = () => {
   const [listProductBest , setlistProductBest] = useState([]);
   const [listProductNew , setlistProductNew] = useState([]);
   const [listBestReview , setlistBestReview] = useState([]);
-  const {authState : {count},}= useContext(GlobalContext);
+  const {authState : {check},}= useContext(GlobalContext);
   const {navigate} =useNavigation();
 
   const [loading, setLoading] = useState(true);
@@ -31,9 +32,26 @@ const HomeComponent = () => {
   const [totalPageRev,setTotalPageRev] = useState(9);
 
  const isFocused = useIsFocused();
+ const [cartCount,setCartCount] = useState("0");
+ 
+
+ 
+ useEffect(() =>{
+  if(!isFocused) return
+      AsyncStorage.getItem('number')
+      .then((value) => {
+      setCartCount(value)
+      console.log("val:"+value);
+  }
+  )
+  console.log("c+:"+cartCount);
+  
+ } , [isFocused,check]);
+
 
 
   useEffect(() =>{
+    if(!isFocused) return
       LogBox.ignoreLogs(['VirtualizedLists should never be nested']);
       setLoading(true);
         axiosInstance.get(`/client/product/best?page=${offset}`).then((response)=> {
@@ -42,9 +60,10 @@ const HomeComponent = () => {
           setTotalPage(response.data.totalPage);
       }).catch((error) =>{
       });
-     } , [offset]);
+     } , [offset,isFocused]);
   
      useEffect(() =>{
+      if(!isFocused) return
         setLoadingNew(true);
           axiosInstance.get(`/client/product/new?page=${offsetNew}`).then((response)=> {
             setLoadingNew(false)
@@ -52,7 +71,7 @@ const HomeComponent = () => {
             setTotalPageNew(response.data.totalPage);
         }).catch((error) =>{
         });
-       } , [offsetNew]);
+       } , [offsetNew,isFocused]);
 
   useEffect(() => {
     console.log({isFocused});
@@ -95,7 +114,7 @@ const HomeComponent = () => {
                 activeOpacity={0.9}
                 onPress={()=> {
                   setOffset(offset+1);
-                }}
+                }}g
                 style={styles.loadMoreBtn}>
                 <Text style={styles.btnText}>Load more</Text>
                 {loading ? (
@@ -272,6 +291,8 @@ const HomeComponent = () => {
     );
   };
 
+  
+
     return (
         <View >
               <View>
@@ -392,7 +413,34 @@ const HomeComponent = () => {
 
                            <TouchableOpacity
                               onPress= {() => {navigate('Cart')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green"
+                               name="shopping-cart"
+                               containerStyle={{marginHorizontal: 15, position: 'relative',}} />
+                                 {cartCount > 0 ? (
+                  <View
+                    style={{
+                     
+                      position: 'absolute',
+                      backgroundColor: 'red',
+                      width: 16,
+                      height: 16,
+                      borderRadius: 15 / 2,
+                      right: 10,
+                      top: +10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#FFFFFF",
+                        fontSize: 8,
+                      }}>
+                      {cartCount}
+                    </Text>
+                  </View>
+                ) : null}
                               </TouchableOpacity>
                     </View>
                   </View>

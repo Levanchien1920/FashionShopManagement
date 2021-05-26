@@ -12,6 +12,12 @@ import Icon1 from '../../components/common/Icon';
 const Card = (props) => {
     const {authState : {isLoggedIn},}= useContext(GlobalContext);
     const [test,setTest] =useState(false)
+
+
+    const {
+        authDispatch,
+        authState: {check},
+      } = useContext(GlobalContext);
   
   useEffect(()=>{
       if(test) {
@@ -87,7 +93,28 @@ const Card = (props) => {
                                 <TouchableOpacity
                                onPress= {() => {
                                 setTest(true)
+                                AsyncStorage.getItem('number')
+                                .then((value) => {
+                                    console.log("num:"+(parseInt(value)+1)+"");
+                                    AsyncStorage.setItem('number',(parseInt(value)+1)+"");
+                                    if(check) {
+                                        authDispatch({
+                                            type: 'false',
+                                          });
+                                    }else {
+                                        authDispatch({
+                                            type: 'true',
+                                          });
+                                    }
+                            })
+                               
+                               
+                                
+                                
                                 AsyncStorage.getItem('cart').then((res)=> {
+                                   
+                                   
+                                   
                                     if(res!=null) {
                                     const cart=JSON.parse(res);
                                     let id = product.id.toString();
@@ -103,9 +130,18 @@ const Card = (props) => {
                                         let qty = cart[id] + parseInt(quantity);
                                         cart[id] = qty;
                                         AsyncStorage.setItem('cart', JSON.stringify(cart));
+                                       
                                         }
                                     }
-                                )}}>
+
+                                    
+                                )
+                            
+                               
+                            
+                            }
+                                
+                                }>
                               <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="cart-plus" />
                               </TouchableOpacity>
 

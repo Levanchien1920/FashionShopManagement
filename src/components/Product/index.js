@@ -9,6 +9,9 @@ import Card from '../../screens/Card';
 import { LogBox } from 'react-native';
 import Icon1 from '../../components/common/Icon';
 import Swiper from 'react-native-swiper'
+import {GlobalContext} from '../../context/Provider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 
 const ProductComponent = () => {
@@ -21,6 +24,19 @@ const ProductComponent = () => {
       id  : 0,
       search : "",
   });
+  const [cartCount,setCartCount] = useState("0");
+  const {authState : {check},}= useContext(GlobalContext);
+  useEffect(() =>{
+   
+        AsyncStorage.getItem('number')
+        .then((value) => {
+        setCartCount(value)
+        console.log("val:"+value);
+    }
+    )
+    console.log("c+:"+cartCount);
+    
+   } , [check]);
 
   
   const [loading, setLoading] = useState(true);
@@ -77,20 +93,24 @@ const ProductComponent = () => {
   useEffect(() => {
 
     if (filter.check === 1){
-      axiosInstance.get(`/client/category/relateProduct/${filter.id}`).then((response)=> {
+      setLoading(true);
+      axiosInstance.get(`/client/category/relateProduct/${filter.id}?page=${offset}`).then((response)=> {
                 setlistProduct(response.data.content);
+                setLoading(false)
             }).catch((error) =>{
             });
         }
     if (filter.check === 2){
-      axiosInstance.get(`/client/brand/relateProduct/${filter.id}`).then((response)=> {
+      setLoading(true);
+      axiosInstance.get(`/client/brand/relateProduct/${filter.id}?page=${offset}`).then((response)=> {
                 setlistProduct(response.data.content);
+                setLoading(false)
             }).catch((error) =>{
             });
         }
         if (filter.check === 3) {
           setLoading(true);
-          axiosInstance.get(`client/product?search=${searchInput}&page=${offset}`).then((response)=> {
+          axiosInstance.get(`client/product?search=${searchInput}?page=${offset}`).then((response)=> {
               setlistProduct(response.data.content);
               setLoading(false)
               setTotalPage(response.data.totalPage);
@@ -139,7 +159,8 @@ switch (c) {
  const renderItem = ({item}) => {
    return (
      <View style={{borderBottomWidth:1,borderBottomColor:"yellow"}}>
-          <View>
+          <View style={styles.listItemContainer}>
+            
               <View style={{marginLeft:10,marginTop:5}}>
               <Card product={item}></Card>
     </View>
@@ -393,11 +414,11 @@ listBrand.forEach((data) => {
             </View>
         </View>
 
-        <View style={{top:20}}>
+        <View style={{top:20,flexDirection:'row'}}>
 
-          <View style={{width:100,flexDirection:'row'}}>
+          <View style={{flexDirection:'row'}}>
 
-               <View style={{height:50}}>
+               <View style={{height:50,marginTop:10}}>
                  <Text style={{fontSize:20}}>Category: </Text>
                </View>
 
@@ -417,11 +438,17 @@ listBrand.forEach((data) => {
 
           </View>
 
-              <View style={{left:20,width:100}}>
 
-                    
+
+              <View style={{flexDirection:'row'}}>
+
+                      <View style={{height:50,marginTop:10}}>
+                        <Text style={{fontSize:20}}>Brand: </Text>
+                      </View>
                         
-                        <RNPickerSelect pickerProps={{ style: { height: 50, color:"green" } }}
+                        <View>
+
+                        <RNPickerSelect pickerProps={{ style: { width:100,height: 50, color:"green" } }}
                         placeholder={{
                           label:""
                         }}
@@ -433,17 +460,20 @@ listBrand.forEach((data) => {
                           }
                         />
 
+                        </View>
+                       
+
             </View>
         </View>
 
 
    </View>
         
-    <ScrollView horizontal={true} style= {{marginTop:30}} >
-        <View style={{width:'100%',borderRightWidth:1,borderRightColor:'yellow'}}>
+    <ScrollView style= {{marginTop:30}} >
+        <View style={{width:'100%',borderRightWidth:1,borderRightColor:'yellow',borderLeftColor:'yellow',borderLeftWidth:1}}>
                     <View>
                     <View>
-                    <Text style={styles.textIndex}>All product</Text>
+                    <Text style={styles.textIndex}>Product</Text>
                     </View>
                    
                     <FlatList
@@ -456,7 +486,7 @@ listBrand.forEach((data) => {
                     </View>
                     <View>
                             <View>
-                            <Text style={styles.textIndex}>Category relative</Text>
+                            <Text style={styles.textIndex}>Category</Text>
                             </View>
                             <SafeAreaView>
                             <FlatList
@@ -473,7 +503,7 @@ listBrand.forEach((data) => {
                     <View>
 
                              <View>
-                              <Text style={styles.textIndex}>Brand relative</Text>
+                              <Text style={styles.textIndex}>Brand</Text>
                               </View>
 
 
@@ -567,7 +597,34 @@ listBrand.forEach((data) => {
 
                            <TouchableOpacity
                               onPress= {() => {navigate('Cart')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" 
+                                 containerStyle={{marginHorizontal: 15, position: 'relative',}} />
+
+                {cartCount > 0 ? (
+                  <View
+                    style={{
+                     
+                      position: 'absolute',
+                      backgroundColor: 'red',
+                      width: 16,
+                      height: 16,
+                      borderRadius: 15 / 2,
+                      right: 10,
+                      top: +10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#FFFFFF",
+                        fontSize: 8,
+                      }}>
+                      {cartCount}
+                    </Text>
+                  </View>
+                ) : null}
                               </TouchableOpacity>
                     </View>
                   </View>

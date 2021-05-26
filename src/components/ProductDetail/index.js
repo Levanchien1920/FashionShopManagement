@@ -23,10 +23,24 @@ const ProductDetailComponent = () => {
         id  : 0,
         size : ""
     });
-    const {
+    const [cartCount,setCartCount] = useState("0");
+   
+
+      const {
         authDispatch,
-        authState: {error, loading},
+        authState: {check},
       } = useContext(GlobalContext);
+      useEffect(() =>{
+   
+        AsyncStorage.getItem('number')
+        .then((value) => {
+        setCartCount(value)
+        console.log("val:"+value);
+    }
+    )
+    console.log("c+:"+cartCount);
+    
+   } , [check]);
 
     const [OutputReview, setOutputReview] = useState({
         id_user : 1,
@@ -215,6 +229,21 @@ const ProductDetailComponent = () => {
                      <TouchableOpacity
                              onPress= {() => {
                                 setAddTC(true)
+
+                                AsyncStorage.getItem('number')
+                                .then((value) => {
+                                    console.log("num:"+(parseInt(value)+parseInt(quantity))+"");
+                                    AsyncStorage.setItem('number',(parseInt(value)+parseInt(quantity))+"");
+                                    if(check) {
+                                        authDispatch({
+                                            type: 'false',
+                                          });
+                                    }else {
+                                        authDispatch({
+                                            type: 'true',
+                                          });
+                                    }
+                            })
                                   AsyncStorage.getItem('cart').then((res)=> {
                                 if(res!=null) {
                                 const cart=JSON.parse(res);
@@ -426,7 +455,33 @@ const ProductDetailComponent = () => {
 
                            <TouchableOpacity
                               onPress= {() => {navigate('Cart')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" 
+                               containerStyle={{marginHorizontal: 15, position: 'relative',}} />
+                                 {cartCount > 0 ? (
+                  <View
+                    style={{
+                     
+                      position: 'absolute',
+                      backgroundColor: 'red',
+                      width: 16,
+                      height: 16,
+                      borderRadius: 15 / 2,
+                      right: 10,
+                      top: +10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#FFFFFF",
+                        fontSize: 8,
+                      }}>
+                      {cartCount}
+                    </Text>
+                  </View>
+                ) : null}
                               </TouchableOpacity>
                     </View>
                   </View>

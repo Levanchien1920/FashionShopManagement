@@ -64,7 +64,7 @@ export default StyleSheet.create({
     
     bodyContainer: {
      
-      // padding:wp('5%'),
+      padding:wp('5%'),
       backgroundColor: 'pink',
       paddingLeft:10
     },
