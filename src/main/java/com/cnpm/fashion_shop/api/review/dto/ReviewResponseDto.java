@@ -1,5 +1,7 @@
 package com.cnpm.fashion_shop.api.review.dto;
 
+import java.sql.Date;
+
 public interface ReviewResponseDto {
     Integer getId();
 
@@ -12,4 +14,6 @@ public interface ReviewResponseDto {
     String getName_User();
 
     String getEmail();
+
+    Date getTimeReview();
 }

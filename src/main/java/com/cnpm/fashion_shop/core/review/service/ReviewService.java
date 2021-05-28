@@ -57,7 +57,8 @@ public class ReviewService {
                 "number_of_star",
                 "name_product",
                 "name_user",
-                "email"
+                "email",
+                "timeReview"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();
