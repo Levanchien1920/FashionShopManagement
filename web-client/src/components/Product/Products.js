@@ -14,7 +14,7 @@ function Products(props) {
     const [pageIndex, setpageIndex] = useState(0)
     const [totalPage, settotalPage] = useState(0)
     const [searchInput, setsearchInput] = useState( props.location.state.search);
-    var cout = 0
+    const [star, setstar] = useState([])
     useEffect(() => {
         console.log(filter)
         async function get() {
@@ -24,6 +24,10 @@ function Products(props) {
                         setlistProduct(response.data.content);
                         setpageIndex(response.data.pageIndex)
                         settotalPage(response.data.totalPage)
+                    }).catch((error) =>{
+                    });
+                    Api.get('client/product/star').then((response)=> {
+                        setstar(response.data.content);
                     }).catch((error) =>{
                     });
                     break;
@@ -52,6 +56,10 @@ function Products(props) {
                         settotalPage(response.data.totalPage)
                     }).catch((error) =>{
                     });
+                    Api.get(`client/product/star?page=${id}`).then((response)=> {
+                        setstar(response.data.content);
+                    }).catch((error) =>{
+                    });
                     break;
                 case 8 :
                     let id8 = pageIndex+1;
@@ -59,6 +67,10 @@ function Products(props) {
                         setlistProduct(response.data.content);
                         setpageIndex(response.data.pageIndex)
                         settotalPage(response.data.totalPage)
+                    }).catch((error) =>{
+                    });
+                    Api.get(`client/product/star?page=${id8}`).then((response)=> {
+                        setstar(response.data.content);
                     }).catch((error) =>{
                     });
                     break;
@@ -165,7 +177,7 @@ function Products(props) {
                                 </div>
                             </div>
                             {listProduct.map((product) => (
-                                <Card product={product} key={cout++}></Card>
+                                <Card product={product} key={product.id} star={star}></Card>
                             ))} 
                         </div>
                         

@@ -44,7 +44,7 @@ export default function NewProduct() {
                 <div className="row align-items-center product-slider product-slider-4">
                     <Carousel breakPoints={breakPoints}>
                         {listProductNP.map((product) => (
-                                <Card product={product} key={product.id}></Card>
+                                <Card product={product} key={product.id} star={[]}></Card>
                         ))}
                     </Carousel>
                 </div>

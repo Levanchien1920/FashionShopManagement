@@ -4,7 +4,11 @@ import {useHistory} from 'react-router'
 import {LoginContext} from '../../context/LoginContext'
 function Card(props) {
     const login = useContext(LoginContext);
-    const {product} = props;
+    const {product , star} = props;
+    for(const temp of star){
+        if(temp.id === product.id)
+            product.numberOfStar = temp.numberOfStar;
+    }
     let history = useHistory();
     var name = product.name.split(' ')
     if (name.length > 5) { product.name = name[0]+" "+name[1]+" "+name[2]+" "+name[3]+" "+name[4]+"..."}
@@ -26,7 +30,7 @@ function Card(props) {
             <div className="product-item">
                     <div className="product-title">
                         <Link to={`/productdetail/${product.id}`}>
-                           {product.name} ({product.name_Size})
+                           {product.name}
                         </Link>
                         <div className="ratting">
                             <i className={product.numberOfStar >=1 ?"fa fa-star": product.numberOfStar >= 0.5 ? 'fa fa-star-half-o':'fa fa-star-o'}></i>
@@ -42,8 +46,6 @@ function Card(props) {
                         </a>
                         <div className="product-action">
                             <a ><i id={product.id} onClick={addToCart} className="fa fa-cart-plus"></i></a>
-                            <a href="a"><i className="fa fa-heart"></i></a>
-                            <a href="a"><i className="fa fa-search"></i></a>
                         </div>
                     </div>
                     <div className="product-price">

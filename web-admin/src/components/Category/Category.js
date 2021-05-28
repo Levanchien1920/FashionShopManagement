@@ -23,10 +23,10 @@ export default function Category() {
     })
     const history = useHistory()
     const [ListCategory , setListCategory] = useState([]);
-    useEffect(() => {
-        if(typeof location.state != "undefined")
-            setAlert({...alert, report : location.state.report})
-     }, [location]);
+    // useEffect(() => {
+    //     // if(typeof location.state != "undefined")
+    //     //    // setAlert({...alert, report : location.state.report})
+    //  }, [location]);
 
     useEffect(() => {
         async function getData () {

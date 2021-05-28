@@ -223,7 +223,7 @@ function ProductDetail() {
                                     <div id="reviews" className="container tab-pane active">
                                             {review.map((review) => (
                                                 <div className="reviews-submitted" key={review.id}>
-                                                    <div className="reviewer">{review.name_User}</div>
+                                                    <div className="reviewer">{review.name_User} date: {review.timeReview}</div>
                                                     <div className="ratting">
                                                         <i className={review.number_Of_Star >=1 ?"fa fa-star": review.number_Of_Star >= 0.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
                                                         <i className={review.number_Of_Star >=2 ?"fa fa-star": review.number_Of_Star >= 1.5 ? 'fa fa-star-half':'fa fa-star-o'}></i>
@@ -272,7 +272,7 @@ function ProductDetail() {
                                 <div className="row align-items-center product-slider product-slider-4">
                                     <Carousel breakPoints={breakPoints}>
                                         {brandRelated.map((product) => (
-                                                <Card product={product} key={product.id}></Card>
+                                                <Card product={product} key={product.id} star={[]}></Card>
                                         ))}
                                     </Carousel>
                                 </div>
@@ -302,7 +302,7 @@ function ProductDetail() {
                                 <h2 className="title">Related Products (Category)</h2>
                                 <Carousel breakPoints={breakPoints}>
                                     {cateRelated.map((product) => (
-                                            <Card product={product} key={product.id}></Card>
+                                            <Card product={product} key={product.id} star={[]}></Card>
                                     ))}
                                 </Carousel>
                             </div>
