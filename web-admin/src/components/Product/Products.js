@@ -7,10 +7,12 @@ export default function Products() {
     const history =useHistory();
     const [ListProduct , setListProduct] = useState([]);
     const check = useContext(LoginContext);
+    const [searchValue, setsearchValue] = useState("")
     const [filters, setFilters] = useState({
         page: 0,
         id : 0
     })
+    var count = 0
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -29,7 +31,6 @@ export default function Products() {
                     totalPages: response.data.totalPage
                 })
             }).catch((error) =>{
-    
             }); 
         }
         getData();     
@@ -45,6 +46,15 @@ export default function Products() {
         }).catch((error) =>{
 
         }); 
+    }
+    function search (){
+        if (searchValue !== "")
+        Api.get('product?search='+searchValue, token).then((response)=> {
+            console.log(response.data)
+            setListProduct(response.data.content);
+        }).catch((error) =>{
+        }); 
+        
     }
     return (
         <>
@@ -64,7 +74,11 @@ export default function Products() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Product <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/newproduct")}}>New</button></h4>
+                                        <h4 className="card-title">List Product </h4>
+                                            <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
+                                            value={searchValue}></input>
+                                            <button onClick={search}><i className="mdi mdi-account-search" aria-hidden="true"></i></button>
+                                        <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/newproduct")}}>New</button>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
@@ -80,7 +94,7 @@ export default function Products() {
                                         </thead>
                                         <tbody>
                                             {ListProduct.map((product) => (
-                                                <tr key={product.id}>
+                                                <tr key= {count++}>
                                                     <th scope="row">{product.id}</th>
                                                     <td>{product.name}</td>
                                                     <td>{product.number}</td>
