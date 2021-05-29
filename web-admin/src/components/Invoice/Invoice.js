@@ -5,9 +5,9 @@ import queryString from 'query-string'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
 import { useLocation } from "react-router-dom";
+import { success } from '../Helper/Notification';
 export default function Invoice() {
-    // console.log(state.report)
-    const location = useLocation();
+
     const check = useContext(LoginContext);
     const history = useHistory()
     const [alert, setAlert] = useState({
@@ -20,18 +20,14 @@ export default function Invoice() {
     })
 
     const [filters, setFilters] = useState({
-        page: 0
+        page: 0,
+        invoice_delete_id: 0
     })
 
     const [ListInvoice , setListInvoice] = useState([]);
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
-
-    useEffect(() => {
-        if(typeof location.state != "undefined")
-            setAlert({...alert, report : location.state.report})
-     }, [location]);
 
     useEffect(() => {
         async function getData () {
@@ -59,15 +55,11 @@ export default function Invoice() {
     }, [filters])
 
     
-    function handlePageChange(newPage) {
-       
+    function handlePageChange(newPage) {   
         setFilters({
             page: newPage
         })
-        console.log(filters)
-        console.log('New page: ', newPage)
     }
-
 
     const deleteInvoice = (e) => {
         e.preventDefault()
@@ -76,7 +68,9 @@ export default function Invoice() {
         API.delete('invoice/' + id, token)
         .then(response => {       
             console.log(response.data)
-            // alert("Xóa review thành công")
+            setFilters({...filters, invoice_delete_id: id})
+            success('Successfully deleted invoice');
+            
         })
         .catch(errors => {
               console.log(errors)
@@ -100,14 +94,6 @@ export default function Invoice() {
                                 <div className="card-body">
                                     <h4 className="card-title">List Invoice <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-invoice")}}>New</button></h4>
                                 </div>
-                                {(alert.report != "") ?
-                                    <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                                            {alert.report}
-                                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                            <span aria-hidden="true">&times;</span>
-                                        </button>
-                                    </div> : <div></div>
-                                }
                                                              
                                 <div className="table-responsive">
                                     <table className="table table-hover">

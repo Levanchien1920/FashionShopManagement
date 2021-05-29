@@ -4,6 +4,7 @@ import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import {useHistory} from 'react-router-dom'
 import API from '../Config/Api';
+import { success } from '../Helper/Notification';
 export default function EditPost(props) {
     const token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -12,7 +13,8 @@ export default function EditPost(props) {
     const [post, setPost] = useState({
         title : "",
         content : "",
-        id_image : 0
+        id_image : 0,
+        link_image: 0,
     });
     const [listImage, setlistImage] = useState([]);
     const [search, setsearch] = useState(
@@ -28,12 +30,11 @@ export default function EditPost(props) {
             check.checklogin();
           
             API.get('post/' + idPost, token).then((response)=> {
-                let temp = response.data
-                // console.log(response.data)
+                let temp = response.data[0]
+                 console.log(response.data)
                 setPost({...post,
                     title: temp.title,
-                    
-                    id_image: temp.id_image
+                    id_image: temp.linkImage
                 });
                 setPost({...post, 
                     content: temp.content,
@@ -56,6 +57,7 @@ export default function EditPost(props) {
         }
         getdata()
     }, []);
+
     useEffect(() => {
         async function getdatas (){
             switch (search.name) {
@@ -72,6 +74,7 @@ export default function EditPost(props) {
         }
         if(search.bool === true){ getdatas()}
     }, [search]);
+
     const editPost =  (e) =>{
         e.preventDefault();  
         console.log(post)
@@ -86,8 +89,8 @@ export default function EditPost(props) {
             console.log(response.data)
             history.push({
                 pathname: '/posts',
-                state: { report: 'Edit Success Post' }
             }) 
+            success('Edit Success Post');
         }).catch((error) => {
 
         });

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react'
 import API from '../Config/Api'
 import { useHistory } from 'react-router';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 function EditInvoice(props) {
     const check = useContext(LoginContext);
     const [invoice, setInvoice] = useState({
@@ -92,8 +93,10 @@ function EditInvoice(props) {
             console.log(response.data)
             history.push({
                 pathname: '/invoice',
-                state: { report: 'Invoice update successful' }
+                
             }) 
+            success('Invoice status has been updated successfully');
+            
         }).catch((error) => {
 
         });

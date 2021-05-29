@@ -7,6 +7,7 @@ export default function Brand() {
     var token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
+    const [searchValue, setsearchValue] = useState("")
     const check = useContext(LoginContext);
     const [ListBrand , setListBrand] = useState([]);
     const history = useHistory();
@@ -43,6 +44,15 @@ export default function Brand() {
 
         }); 
     }
+    function search (){
+        if (searchValue !== "")
+        Api.get('brand?search='+searchValue, token).then((response)=> {
+            // console.log(response.data)
+            // setListBrand(response.data.content);
+        }).catch((error) =>{
+        }); 
+        
+    }
     return (
         <>
         {(check.IsLogin === false ) ? (
@@ -61,7 +71,11 @@ export default function Brand() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Brand <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>new</button></h4>
+                                        <h4 className="card-title">List Brand</h4>
+                                        <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
+                                        value={searchValue}></input>
+                                        <button onClick={search}><i className="mdi mdi-account-search" aria-hidden="true"></i></button>
+                                        <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>new</button>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">

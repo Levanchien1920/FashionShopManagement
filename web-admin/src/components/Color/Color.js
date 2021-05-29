@@ -7,6 +7,7 @@ import {LoginContext} from '../Context/LoginContext'
 export default function Color() {
     const [ListColor , setListColor] = useState([]);
     const history = useHistory();
+    const [searchValue, setsearchValue] = useState("")
     const check = useContext(LoginContext);
     const [filters, setFilters] = useState({
         page: 0,
@@ -17,11 +18,12 @@ export default function Color() {
         limit: 5,
         totalPages: 1
     })
+    var token =  {headers: {
+        'Authorization': `Bearer ${localStorage.getItem("token")}`
+      } 
+    }
     useEffect(() => {
-        let token =  {headers: {
-              'Authorization': `Bearer ${localStorage.getItem("token")}`
-            } 
-        }
+        
         function getData() {
             Api.get('color?page='+filters.page, token).then((response)=> {
                 setListColor(response.data.content);
@@ -41,14 +43,20 @@ export default function Color() {
         })
     }
     function deleteColor (id) {
-        let token = {
-            headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
-        }
         Api.delete('color/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
         }).catch((error) =>{
 
         }); 
+    }
+    function search (){
+        if (searchValue !== "")
+        Api.get('color?search='+searchValue, token).then((response)=> {
+            console.log(response.data)
+            setListColor(response.data.content);
+        }).catch((error) =>{
+        }); 
+        
     }
     return (
         <>
@@ -68,7 +76,11 @@ export default function Color() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Color <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button></h4>
+                                        <h4 className="card-title">List Color
+                                        <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
+                                        value={searchValue}></input>
+                                        <button onClick={search}><i className="mdi mdi-account-search" aria-hidden="true"></i></button> 
+                                        <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button></h4>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
