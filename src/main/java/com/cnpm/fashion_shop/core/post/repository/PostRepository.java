@@ -27,6 +27,6 @@ public interface PostRepository extends JpaRepository<Post, Long> {
     Optional<Post> findById(@Param("id") Integer id);
 
 
-    @Query(value = "SELECT p.id as id, p.title as title, p.content as content, i.link as linkImage FROM (post p inner join image i on p.id_image = i.id) where p.id =:id AND p.is_deleted = FALSE", nativeQuery = true)
+    @Query(value = "SELECT p.id as id, p.title as title, p.content as content, i.link as linkImage , p.id_image as idImage FROM (post p inner join image i on p.id_image = i.id) where p.id =:id AND p.is_deleted = FALSE", nativeQuery = true)
     List<PostClientDto> getOneByIdPost(@Param("id") Integer id);
 }

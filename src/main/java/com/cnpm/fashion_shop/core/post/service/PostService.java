@@ -207,7 +207,8 @@ public class PostService {
                 "id",
                "title",
                 "content",
-                "linkImage"
+                "linkImage",
+                "idImage"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();

@@ -10,4 +10,6 @@ public interface PostClientDto {
 
     String getLinkImage();
 
+    Integer getIdImage();
+
 }
