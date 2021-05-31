@@ -127,7 +127,8 @@ public class InvoiceService {
         List<String> columnsAllow = Arrays.asList(
                 "id",
                 "is_paid",
-                "id_customer"
+                "id_customer",
+                "name_customer"
         );
         OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
         orderFilterHelperImpl.validate();

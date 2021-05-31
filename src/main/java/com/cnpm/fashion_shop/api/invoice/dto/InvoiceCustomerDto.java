@@ -6,4 +6,6 @@ public interface InvoiceCustomerDto {
     boolean getIs_paid();
 
     Integer getIdCustomer();
+
+    String getNameCustomer();
 }

@@ -27,8 +27,9 @@ public interface InvoiceRepository extends JpaRepository<Invoice, Long> {
             "WHERE LOWER(e.full_name) LIKE %:keyword% AND i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceCustomerResponseDto> findAllByIdCustomer(Pageable pageable, @Param("keyword") String keyword);
 
-    @Query(value = "SELECT i.id as Id , i.is_paid as Is_paid, i.id_customer as idCustomer " +
-            "FROM invoice i " +
+    @Query(value = "SELECT i.id as Id , i.is_paid as Is_paid, i.id_customer as idCustomer , u.full_name as nameCustomer " +
+            "FROM (invoice i " +
+            "inner join user u on u.id = i.id_customer)"+
             "WHERE i.is_deleted = FALSE", nativeQuery = true)
     Page<InvoiceCustomerDto> findAllStatusByIdCustomer(Pageable pageable, @Param("id") String id);
 
