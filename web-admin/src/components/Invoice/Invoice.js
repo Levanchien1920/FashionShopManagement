@@ -10,9 +10,7 @@ export default function Invoice() {
 
     const check = useContext(LoginContext);
     const history = useHistory()
-    const [alert, setAlert] = useState({
-        report: ""
-    })
+
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -36,7 +34,7 @@ export default function Invoice() {
             }
             check.checklogin();
             const paramsString = queryString.stringify(filters)
-            const requestUrl = `/invoice/ByEmployee/status?${paramsString}`
+            const requestUrl = `/invoice/ByCustomer/status?${paramsString}`
             API.get(requestUrl,token).then((response)=> {
                 
                 console.log(response.data.content)
@@ -100,7 +98,7 @@ export default function Invoice() {
                                         <thead>
                                             <tr>
                                                 <th scope="col">Id</th>
-                                                <th scope="col">Employee</th>
+                                                <th scope="col">Customer</th>
                                                 <th scope="col">Status</th>                                                
                                                 <th scope="col">Action</th>
                                             </tr>
@@ -109,7 +107,7 @@ export default function Invoice() {
                                             {ListInvoice.map((Invoice) => (
                                                 <tr key={Invoice.id}>
                                                     <th scope="row">{Invoice.id}</th>
-                                                    <td>{(Invoice.employee) ? Invoice.employee : "Customer"}</td>
+                                                    <td>{(Invoice.nameCustomer)}</td>
                                                     <td>{(Invoice.is_paid) ? "Paid" : "Unpaid"} </td>
 
                                                     <td> <button id = {Invoice.id} onClick ={ e=> {history.push(`/view-invoice/${Invoice.id}`)}} className="btn btn-success">View</button> <button

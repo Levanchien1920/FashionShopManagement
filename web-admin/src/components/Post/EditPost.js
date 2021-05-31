@@ -14,7 +14,7 @@ export default function EditPost(props) {
         title : "",
         content : "",
         id_image : 0,
-        link_image: 0,
+        link_image: "",
     });
     const [listImage, setlistImage] = useState([]);
     const [search, setsearch] = useState(
@@ -34,7 +34,8 @@ export default function EditPost(props) {
                  console.log(response.data)
                 setPost({...post,
                     title: temp.title,
-                    id_image: temp.linkImage
+                    id_image: temp.idImage,
+                    link_image: temp.linkImage
                 });
                 setPost({...post, 
                     content: temp.content,
@@ -132,7 +133,7 @@ export default function EditPost(props) {
                                         {listImage.map((ima) => (
                                            <option value={ima.id} key={ima.id}>{ima.name}</option>
                                         ))}
-                                </datalist>
+                                    </datalist>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="content">Content</label>
