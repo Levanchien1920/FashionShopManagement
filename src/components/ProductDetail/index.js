@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useState} from 'react';
-import { Alert,Text, View,TextInput,ScrollView ,Image, Button,TouchableOpacity,TouchableHighlight} from 'react-native';
+import { Alert,Text, View,TextInput,ScrollView ,Image, Button,TouchableOpacity,TouchableHighlight,FlatList,SafeAreaView,ActivityIndicator} from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
@@ -35,10 +35,10 @@ const ProductDetailComponent = () => {
         AsyncStorage.getItem('number')
         .then((value) => {
         setCartCount(value)
-        console.log("val:"+value);
+     
     }
     )
-    console.log("c+:"+cartCount);
+   
     
    } , [check]);
 
@@ -59,6 +59,23 @@ const ProductDetailComponent = () => {
     const [success,setSuccess] =useState(false)
     const [isBuyNow,setIsBuyNow] =useState(false)
     const [countReview,SetCountReview] =useState(0)
+    const [loadingRev, setLoadingRev] = useState(true);
+    const [offsetRev, setOffsetRev] = useState(0);
+    const [totalPageRev,setTotalPageRev] = useState(9);
+    const [listReview , setlistReview] = useState([]);
+    useEffect(() => {
+            const id=route.params.id;
+          setLoadingRev(true);
+           axiosInstance.get(`/client/review/${id}?page=${offsetRev}`).then((response)=> {
+            setlistReview(response.data.content);
+            setLoadingRev(false);
+            setTotalPageRev(response.data.totalPage);
+    
+             }).catch((error) =>{
+           })
+      },[listReview,offsetRev])
+
+
    
 
     useEffect(()=>{
@@ -66,9 +83,7 @@ const ProductDetailComponent = () => {
             Alert.alert(`Buy now is failed,Please log in !`)
         }
         setIsBuyNow(false)
-        console.log("Abcde");
     },[isBuyNow])
-    console.log("Abcde");
 
     useEffect(()=>{
         if(test) {
@@ -192,6 +207,109 @@ const ProductDetailComponent = () => {
         }
         
     }
+
+    const renderFooterRev = () => {
+        return (
+          <View style={styles.footer}>
+      
+              <View>
+              {(offsetRev>0) ? (<TouchableOpacity
+              activeOpacity={0.9}
+              onPress={()=> {
+                setOffsetRev(offsetRev-1)
+              }}
+         
+              style={styles.loadMoreBtn}>
+              <Text style={styles.btnText}>Previous</Text>
+              {loadingRev ? (
+                <ActivityIndicator
+                  color="white"
+                  style={{marginLeft: 8}} />
+              ) : null}
+            </TouchableOpacity> ):null}
+      
+              </View>
+              <View>
+      
+              {
+                (totalPageRev===1) ? 
+                (
+                  null
+                ):
+                (totalPageRev-1>offsetRev) ? ( <TouchableOpacity
+                    activeOpacity={0.9}
+                    onPress={()=> {
+                      setOffsetRev(offsetRev+1);
+                    }}
+                    style={styles.loadMoreBtn}>
+                    <Text style={styles.btnText}>Load more</Text>
+                    {loadingRev ? (
+                      <ActivityIndicator
+                        color="white"
+                        style={{marginLeft: 8}} />
+                    ) : null}
+                  </TouchableOpacity> ):null}
+      
+              </View>
+            
+            
+          </View>
+        );
+      };
+
+
+      const renderItemRev = ({item}) => {
+        return (
+          <View style={{borderBottomWidth:1,borderBottomColor:"yellow"}}>
+              
+                   <View style= {{flexDirection:'column',borderBottomColor:"yellow",borderBottomWidth:1,width:'100%'}}>
+    
+    <View style= {{flexDirection:'row'}}>
+      
+        <View style= {{flexDirection:'column'}}>
+              <Image
+                    source={require('../../assets/images/avt.jpg')}
+                    style={styles.logoImage}
+                />
+            <Text style={{color:'blue',fontSize:16}}>{item.name_User}</Text> 
+        </View>
+        
+        <View style= {{flexDirection:'column',margin:10}}>
+              <View style={{flexDirection:'row'}}>
+                     <Text style={{color:'blue',fontSize:16}}>Tên sản phẩm: </Text>
+                       <Text  style={{color:'black',fontSize:14,width:250}}>{item.name_Product}</Text> 
+              </View>
+    
+              <View style={{marginRight:250}}>
+    
+                 <Stars
+                  default={item.number_Of_Star}
+                  spacing={8}
+                  count={5}
+                  starSize={50} 
+                  disabled={true}
+                  fullStar={<Icon name={'star'} style={[styles.myStarStyle]}/>}
+                  emptyStar={<Icon name={'star-outline'} style={[styles.myStarStyle, styles.myEmptyStarStyle]}/>}
+                  halfStar={<Icon name={'star-half'} style={[styles.myStarStyle]}/>}
+              />
+             </View>
+              <View style={{flexDirection:'row'}}>
+                     <Text style={{color:'blue',fontSize:16}}>Nội dung: </Text>
+                       <Text  style={{color:'black',fontSize:14,width:150}}>{item.content}</Text> 
+              </View>
+
+              <View style={{flexDirection:'row'}}>
+                     <Text style={{color:'blue',fontSize:16}}>Thời gian: </Text>
+                       <Text  style={{color:'black',fontSize:14,width:150}}>{item.timeReview}</Text> 
+              </View>
+        </View>
+    </View>
+    
+    </View>
+               </View>
+      
+        );
+      };
     return (
  <View>
             <View>
@@ -232,7 +350,6 @@ const ProductDetailComponent = () => {
 
                                 AsyncStorage.getItem('number')
                                 .then((value) => {
-                                    console.log("num:"+(parseInt(value)+parseInt(quantity))+"");
                                     AsyncStorage.setItem('number',(parseInt(value)+parseInt(quantity))+"");
                                     if(check) {
                                         authDispatch({
@@ -356,19 +473,33 @@ const ProductDetailComponent = () => {
 
             <View>
 
-                    <View style={{margin:10}}>
+                    <View>
                             <Text style={{textAlign:'center',fontSize:16,color:'blue'}}>Description</Text>
-                            <Text style={{ textAlign:'center',top:5,borderBottomWidth:1}}>{Product.des}</Text>
+                            <Text style={{ textAlign:'center',top:5,borderBottomWidth:1,borderBottomColor:"yellow"}}>{Product.des}</Text>
+                    </View>
+
+                    <View style={{margin:10}}>
+                    <Text style={{textAlign:'center',fontSize:16,color:'blue'}}>Review product</Text>
+                    <SafeAreaView>
+                            <FlatList
+                            data={listReview}
+                            keyExtractor={(item, index) => index.toString()}
+                            enableEmptySections={true}
+                            renderItem={renderItemRev}
+                            ListFooterComponent={renderFooterRev}
+                          />
+                            </SafeAreaView>
+
                     </View>
 
                 <View style={{top:10}}>
-                <Text style={{ textAlign:'center',fontSize:16,color:'blue'}}>Review</Text>
+                <Text style={{ textAlign:'center',fontSize:16,color:'blue'}}>My review</Text>
             <View style={{marginTop:10}}>
             <Stars
                         default={2.5}
                         update= {(val) => {
                             setStar(val)
-                        console.log(val);}}
+                       }}
                         spacing={8}
                         count={5}
                         // half={true}

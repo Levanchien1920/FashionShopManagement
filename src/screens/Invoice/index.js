@@ -38,12 +38,12 @@ const Invoice = () => {
           { Array.isArray(invoices) && invoices.length > 0  ? (
           invoices.map((invoice,index) => (
             <View key={index} style={{marginTop:20, borderBottomWidth:1,borderColor:"yellow",flexDirection:"row"}}>
-                <View style={{width:200}}>
+                <View style={{width:'70%'}}>
                     {/* <View style= {{flexDirection:'row',top:5}}>
                           <Text style= {{color:'blue',fontSize:16}}>Họ tên:   </Text> 
                           <Text>{invoice.name_Customer}</Text>
                     </View> */}
-                    <View style= {{flexDirection:'row',width:100}}>
+                    <View style= {{flexDirection:'row',width:120}}>
                           <Text style= {{color:'blue',fontSize:16}}>Tên sản phẩm:   </Text> 
                           <Text>{invoice.name_Product}</Text>
                     </View>
@@ -71,7 +71,7 @@ const Invoice = () => {
                     </View>
                 </View>
 
-                <View>
+                <View style={{width:'30%'}}>
                       <Image  source={{ uri: invoice.linkImage }}
                       style={{width: 100, height: 100}}/>
                 </View>

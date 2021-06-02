@@ -27,6 +27,18 @@ const BuyNow = () => {
   const [test,setTest] =useState(false)
   const [fail,setFail] =useState(false)
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
+
+  const [cartCount,setCartCount] = useState("0");
+  const {authState : {check},}= useContext(GlobalContext);
+  useEffect(() =>{
+   
+        AsyncStorage.getItem('number')
+        .then((value) => {
+        setCartCount(value)
+    }
+    )
+    
+   } , [check]);
   console.log(isLoggedIn);
   useEffect(()=>{
     if(test) {
@@ -271,7 +283,34 @@ const BuyNow = () => {
 
                            <TouchableOpacity
                               onPress= {() => {navigate('Cart')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" 
+                              containerStyle={{marginHorizontal: 15, position: 'relative',}}/>
+                              {cartCount > 0 ? (
+                  <View
+                    style={{
+                     
+                      position: 'absolute',
+                      backgroundColor: 'red',
+                      width: 16,
+                      height: 16,
+                      borderRadius: 15 / 2,
+                      right: 10,
+                      top: +10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#FFFFFF",
+                        fontSize: 8,
+                      }}>
+                      {cartCount}
+                    </Text>
+                  </View>
+                ) : null}
+                            
                               </TouchableOpacity>
                     </View>
                   </View>

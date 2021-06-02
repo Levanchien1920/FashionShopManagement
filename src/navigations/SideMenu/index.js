@@ -21,7 +21,7 @@ const SideMenu = ({navigation}) => {
     authState: {error, loading},
   } = useContext(GlobalContext);
 
-  console.log('isloggedinIn:=>' ,isLoggedIn);
+
 
     return (((!isLoggedIn) || fullName==null) ?( 
        <SafeAreaView>

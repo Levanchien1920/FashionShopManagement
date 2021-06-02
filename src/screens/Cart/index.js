@@ -17,7 +17,8 @@ const Cart = () => {
   const [empty,setEmpty] =useState(false)
   const {authState : {isLoggedIn},}= useContext(GlobalContext);
   const [text,setText] =useState(0)
-  console.log(isLoggedIn);
+  
+
   const {
     authDispatch,
     authState: {check},
@@ -62,13 +63,13 @@ const Cart = () => {
         for (var item in cart) {
           if (cart.hasOwnProperty(item)) {
             keys.push(item);
-            console.log(item);
+  
           }
         }
         axiosInstance
           .get("client/product")
           .then((response) => {
-            console.log(response.data.content);
+         
             let total = 0;
             let listProduct = response.data.content;
             let productItem = [];
@@ -94,8 +95,7 @@ const Cart = () => {
                 }
               });
             });
-            console.log("productItem");
-            console.log(productItem);
+          
             for (var i = 0; i < productItem.length; i++) {
               total += productItem[i].price * productItem[i].qty;
             }
@@ -131,7 +131,7 @@ const addQty = (product,index) => {
     const temp2=[...totalPrice];
     temp2[index]= product.price * temp1[index];
     setTotalPrice(temp2)
-    console.log(quantity[index]);
+  
     changeQty(product,parseInt(quantity[index]) + 1)
   };
 
@@ -145,7 +145,7 @@ const addQty = (product,index) => {
       const temp2=[...totalPrice];
       temp2[index]= product.price * temp1[index];
       setTotalPrice(temp2)
-      console.log(totalPrice);
+ 
     }
     changeQty(product,parseInt(quantity[index]) - 1)
   };
@@ -252,8 +252,6 @@ const addQty = (product,index) => {
                           const temp2=[...totalPrice];
                           temp2[index]= product.price * temp[index];
                           setTotalPrice(temp2)
-                          
-                        
                         }}
                         
                          

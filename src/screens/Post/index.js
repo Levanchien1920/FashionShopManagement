@@ -1,11 +1,13 @@
 
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState,useContext } from 'react';
 import axiosInstance from '../../helper/axiosInstance';
 import { ScrollView,TouchableOpacity,Text, View,TextInput,Button,Image } from 'react-native';
 import styles from './styles';
 import {useNavigation, useRoute} from '@react-navigation/native';
 import Icon1 from '../../components/common/Icon';
 import Swiper from 'react-native-swiper'
+import {GlobalContext} from '../../context/Provider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Post = () => {
     const [post, setpost] = useState([]);
     useEffect(() => {
@@ -14,6 +16,19 @@ const Post = () => {
         }).catch((error) =>{
         });
     }, [])
+
+    const [cartCount,setCartCount] = useState("0");
+    const {authState : {check},}= useContext(GlobalContext);
+    useEffect(() =>{
+     
+          AsyncStorage.getItem('number')
+          .then((value) => {
+          setCartCount(value)
+      }
+      )
+      
+     } , [check]);
+
     const {navigate} =useNavigation();
     return (
       <View>
@@ -47,7 +62,7 @@ const Post = () => {
             <View>
               <ScrollView style={styles.listItemContainer}>
                 {post.map((p) => (
-                  <View key={p.id} style= {{borderColor:'yellow',borderBottomWidth:1,margin:8,width:350}}> 
+                  <View key={p.id} style= {{borderColor:'yellow',borderBottomWidth:1,margin:8,width:"100%"}}> 
 
                     <View style={{flexDirection:'row'}}>
                       <View style= {{width:230}}>
@@ -124,7 +139,36 @@ const Post = () => {
 
                            <TouchableOpacity
                               onPress= {() => {navigate('Cart')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green"
+                               name="shopping-cart" 
+                               containerStyle={{marginHorizontal: 15, position: 'relative',}}
+                               />
+                              
+                              {cartCount > 0 ? (
+                  <View
+                    style={{
+                     
+                      position: 'absolute',
+                      backgroundColor: 'red',
+                      width: 16,
+                      height: 16,
+                      borderRadius: 15 / 2,
+                      right: 10,
+                      top: +10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#FFFFFF",
+                        fontSize: 8,
+                      }}>
+                      {cartCount}
+                    </Text>
+                  </View>
+                ) : null}
                               </TouchableOpacity>
                     </View>
                   </View>

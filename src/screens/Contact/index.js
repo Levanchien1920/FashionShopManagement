@@ -1,13 +1,12 @@
 
-import React, { useCallback} from 'react';
+import React, { useCallback, useContext,useState,useEffect} from 'react';
 import { ScrollView, Linking, TouchableOpacity,Text, View,TextInput,Button ,Alert,Image} from 'react-native';
 import styles from './styles';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {useNavigation, useRoute} from '@react-navigation/native';
 import Icon1 from '../../components/common/Icon';
 import Swiper from 'react-native-swiper'
-
-
+import {GlobalContext} from '../../context/Provider';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 const OpenURLButton = ({ url, children }) => {
     const handlePress = useCallback(async () => {
@@ -27,6 +26,17 @@ const Contact = () => {
     const face1 = "https://www.facebook.com/van.hoang.99er";
     const face2 = "https://www.facebook.com/van.hoang.99er";
     const {navigate} =useNavigation();
+    const [cartCount,setCartCount] = useState("0");
+    const {authState : {check},}= useContext(GlobalContext);
+    useEffect(() =>{
+     
+          AsyncStorage.getItem('number')
+          .then((value) => {
+          setCartCount(value)
+      }
+      )
+      
+     } , [check]);
     return (
         <View>
                     <View>
@@ -132,7 +142,36 @@ const Contact = () => {
 
                            <TouchableOpacity
                               onPress= {() => {navigate('Cart')}}>
-                              <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" name="shopping-cart" />
+                             
+                             <Icon1 type="fa5" style={{padding: 10}} size={30} color="green" 
+                             name="shopping-cart" containerStyle={{marginHorizontal: 15, position: 'relative',}} />
+                            
+                                   
+                              {cartCount > 0 ? (
+                  <View
+                    style={{
+                     
+                      position: 'absolute',
+                      backgroundColor: 'red',
+                      width: 16,
+                      height: 16,
+                      borderRadius: 15 / 2,
+                      right: 10,
+                      top: +10,
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}>
+                    <Text
+                      style={{
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        color: "#FFFFFF",
+                        fontSize: 8,
+                      }}>
+                      {cartCount}
+                    </Text>
+                  </View>
+                ) : null}
                               </TouchableOpacity>
                     </View>
                   </View>

@@ -31,10 +31,8 @@ const ProductComponent = () => {
         AsyncStorage.getItem('number')
         .then((value) => {
         setCartCount(value)
-        console.log("val:"+value);
     }
     )
-    console.log("c+:"+cartCount);
     
    } , [check]);
 
@@ -50,8 +48,6 @@ const ProductComponent = () => {
   const [loadingBra, setLoadingBra] = useState(true);
   const [offsetBra, setOffsetBra] = useState(0);
   const [totalPageBra,setTotalPageBra] = useState(9);
-
-  
 
 
   useEffect(() =>{
@@ -525,32 +521,7 @@ listBrand.forEach((data) => {
 
       </View>
 
-       {/* <View style={{width:75}}>
-              <View>
-                      <Text style={{color:'red',fontSize:18}}>Category</Text>
-                      {listCategory.map((category,index) => (
-                        <View key={index}>
-                          <TouchableOpacity  onPress={() => (setfilter({check : 1 ,id: category.id }))}>
-                          <View style={{marginTop:20}}>
-                            <Text style= {{borderBottomWidth:1,fontSize:15}}>{category.name}</Text>
-                            </View>
-                        </TouchableOpacity>
-                        </View>
-                            ))} 
-              </View>
-                <View style={{top:20}}>
-                      <Text style={{color:'red',fontSize:18}}>Brand</Text>
-                      {listBrand.map((brand,index) => (
-                        <View key={index}>
-                              <TouchableOpacity  onPress={() => (setfilter({check : 2 ,id: brand.id }))}>
-                                  <View style={{marginTop:20}}>
-                                  <Text style= {{borderBottomWidth:1,fontSize:15}} >{brand.name}</Text>
-                                  </View>
-                              </TouchableOpacity>
-                        </View>
-                            ))} 
-                  </View>
-            </View> */}
+      
       </ScrollView>
 
       <View style= {{paddingTop:50}}></View>

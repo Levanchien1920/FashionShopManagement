@@ -40,22 +40,27 @@ export default StyleSheet.create({
       position: 'absolute',
       right:10,
     },
+    logoImage: {
+      height:50,
+      width:50,
+      marginTop:10,
+  },
 
   
    btn1 : {
-    marginLeft: 20,
+    marginLeft: 10,
    },
    btn2 : {
-    marginLeft:10,
+    marginLeft:15,
   },
   btn3 : {
-    marginLeft:10,
+    marginLeft:15,
   },
   btn4 : {
-    marginLeft:10,
+    marginLeft:15,
   },
   btn5 : {
-    marginLeft:10,
+    marginLeft:15,
   },
 
     linkBtn : {
@@ -173,5 +178,24 @@ export default StyleSheet.create({
     top:2,
     flexDirection: 'row',
     height:100
+  },
+  footer: {
+    padding: 10,
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+  loadMoreBtn: {
+    padding: 10,
+    backgroundColor: '#800000',
+    borderRadius: 4,
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  btnText: {
+    color: 'white',
+    fontSize: 14,
+    textAlign: 'center',
   },
 })

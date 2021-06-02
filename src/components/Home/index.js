@@ -41,10 +41,8 @@ const HomeComponent = () => {
       AsyncStorage.getItem('number')
       .then((value) => {
       setCartCount(value)
-      console.log("val:"+value);
   }
   )
-  console.log("c+:"+cartCount);
   
  } , [isFocused,check]);
 
@@ -74,7 +72,6 @@ const HomeComponent = () => {
        } , [offsetNew,isFocused]);
 
   useEffect(() => {
-    console.log({isFocused});
       if(!isFocused) return
       setLoadingRev(true);
        axiosInstance.get(`/client/review/good?page=${offsetRev}`).then((response)=> {
@@ -200,10 +197,8 @@ const HomeComponent = () => {
               style={{marginLeft: 8}} />
           ) : null}
         </TouchableOpacity> ):null}
-  
           </View>
           <View>
-  
           {
             (totalPageRev===1) ? 
             (
@@ -222,10 +217,7 @@ const HomeComponent = () => {
                     style={{marginLeft: 8}} />
                 ) : null}
               </TouchableOpacity> ):null}
-  
           </View>
-        
-        
       </View>
     );
   };
@@ -286,8 +278,7 @@ const HomeComponent = () => {
 
 </View>
            </View>
-    //  </View>
-    //   </View>
+
     );
   };
 
@@ -320,8 +311,6 @@ const HomeComponent = () => {
                       </Swiper>
                  
               </View>
-
-             
               </View>
          
                <ScrollView style={styles.bodyContainer}>
@@ -366,10 +355,6 @@ const HomeComponent = () => {
                             <View style= {{paddingTop:50}}></View>
                       </View>
 
-                  
-
-                  
-
             </ScrollView> 
 
             
@@ -386,17 +371,12 @@ const HomeComponent = () => {
                         <TouchableOpacity
                               onPress= {() => {navigate('Product')}}>
                               <Icon1 type="ionicon" style={{padding: 10}} size={30} color="green" name="shirt" />
-                            
                          </TouchableOpacity>
-
-              
-
                    </View>
                     <View style = {styles.btn3}> 
                          <TouchableOpacity
                               onPress= {() => {navigate('Contact')}}>
                               <Icon1 type="material" style={{padding: 10}} size={35} color="green" name="contact-phone" />
-                            
                               </TouchableOpacity>
                    
                     </View> 
