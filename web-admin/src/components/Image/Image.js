@@ -3,6 +3,7 @@ import {useHistory } from 'react-router-dom';
 import Api from '../Config/Api';
 import Pagination from '../Pagination';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 export default function Image() {
     const [Listimage , setListimage] = useState([]);
     const history = useHistory();
@@ -44,6 +45,7 @@ export default function Image() {
     function deleteimage (id) {
         Api.delete(`image/${id}`,token).then((response)=> {
             setFilters({...filters, id :id});
+            success('Deleted category');
         }).catch((error) =>{
         });
     }
@@ -76,8 +78,8 @@ export default function Image() {
                                 <div className="card-body">
                                         <h4 className="card-title">List image </h4>
                                         <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}></input>
-                                        <button onClick={search}><i className="mdi mdi-account-search" aria-hidden="true"></i></button>
+                                        value={searchValue}  className="input-search"></input>
+                                        <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newimage")}}>new</button>
                                 </div>
                                 <div className="table-responsive">

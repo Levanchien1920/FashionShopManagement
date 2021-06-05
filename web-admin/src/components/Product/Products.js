@@ -3,6 +3,7 @@ import {LoginContext} from '../Context/LoginContext'
 import {useHistory } from 'react-router-dom';
 import Pagination from '../Pagination/index'
 import Api from '../Config/Api';
+import { success } from '../Helper/Notification';
 export default function Products() {
     const history =useHistory();
     const [ListProduct , setListProduct] = useState([]);
@@ -43,6 +44,7 @@ export default function Products() {
     function deleteproduct (id) {
         Api.delete('product/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
+            success('Deleted category');
         }).catch((error) =>{
 
         }); 
@@ -76,8 +78,8 @@ export default function Products() {
                                 <div className="card-body">
                                         <h4 className="card-title">List Product </h4>
                                             <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
-                                            value={searchValue}></input>
-                                            <button onClick={search}><i className="mdi mdi-account-search" aria-hidden="true"></i></button>
+                                            value={searchValue}  className="input-search"></input>
+                                            <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
                                         <button className="btn1 btn btn-success" onClick ={ e=> {history.push("/newproduct")}}>New</button>
                                 </div>
                                 <div className="table-responsive">

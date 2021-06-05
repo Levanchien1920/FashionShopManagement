@@ -3,6 +3,7 @@ import Pagination from '../Pagination/index'
 import { useHistory } from 'react-router-dom';
 import Api from '../Config/Api';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 export default function Brand() {
     var token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
@@ -40,6 +41,7 @@ export default function Brand() {
     function deletebrand (id) {
         Api.delete('brand/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
+            success('Deleted category');
         }).catch((error) =>{
 
         }); 
@@ -73,8 +75,8 @@ export default function Brand() {
                                 <div className="card-body">
                                         <h4 className="card-title">List Brand</h4>
                                         <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}></input>
-                                        <button onClick={search}><i className="mdi mdi-account-search" aria-hidden="true"></i></button>
+                                        value={searchValue}  className="input-search"></input>
+                                        <button onClick={search} className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newbrand")}}>new</button>
                                 </div>
                                 <div className="table-responsive">

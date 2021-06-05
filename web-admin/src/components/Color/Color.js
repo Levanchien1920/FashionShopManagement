@@ -3,6 +3,7 @@ import { Link, useHistory } from 'react-router-dom';
 import Api from '../Config/Api';
 import Pagination from '../Pagination';
 import {LoginContext} from '../Context/LoginContext'
+import { success } from '../Helper/Notification';
 
 export default function Color() {
     const [ListColor , setListColor] = useState([]);
@@ -45,6 +46,7 @@ export default function Color() {
     function deleteColor (id) {
         Api.delete('color/'+id, token).then((response)=> {
             setFilters({...filters , id :id });
+            success('Deleted category');
         }).catch((error) =>{
 
         }); 
@@ -76,11 +78,11 @@ export default function Color() {
                         <div className="col-12">
                             <div className="card">
                                 <div className="card-body">
-                                        <h4 className="card-title">List Color
+                                        <h4 className="card-title">List Color</h4>
                                         <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}></input>
-                                        <button onClick={search}><i className="mdi mdi-account-search" aria-hidden="true"></i></button> 
-                                        <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button></h4>
+                                        value={searchValue}  className="input-search"></input>
+                                        <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button> 
+                                        <button className="btn1 btn btn-success" onClick ={e => {history.push("/newColor")}}>new</button>
                                 </div>
                                 <div className="table-responsive">
                                     <table className="table table-hover">
