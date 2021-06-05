@@ -1,17 +1,14 @@
 import React , {useState , useEffect} from 'react'
 import API from '../Config/Api'
 import Pagination from '../Pagination/index'
-import { Link, useHistory } from 'react-router-dom';
-import { useLocation } from "react-router-dom";
+import { useHistory } from 'react-router-dom';
 import { success } from '../Helper/Notification';
 export default function Customer() {
     const [searchValue, setsearchValue] = useState("")
     const history = useHistory();
     const [ListCustomer , setListCustomer] = useState([]);
     const [runuseEff, setrunuseEff] = useState(1)
-    const [alert, setAlert] = useState({
-        report: ""
-    })
+
     const [pagination, setPagination] = useState({
         page: 0,
         limit: 5,
@@ -90,7 +87,7 @@ export default function Customer() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">List Customer <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-customer")}}>New</button></h4>
-                                    <input class="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
+                                    <input className="input-search" placeholder="Search..." onChange={e =>{ setsearchValue(e.target.value)}}
                                         value={searchValue}></input>
                                     <button className="btn-search " onClick={search}><i className="fa fa-search"></i></button>
                                 </div>

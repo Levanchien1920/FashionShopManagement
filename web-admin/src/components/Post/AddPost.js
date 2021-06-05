@@ -9,7 +9,8 @@ function AddPost(props) {
     const [post, setPost] = useState({
         id: "",
         content: "",
-        id_image: null
+        id_image: 0,
+        link_image: ""
     });
 
     const history=useHistory();
