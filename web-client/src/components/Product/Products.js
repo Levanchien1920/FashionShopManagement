@@ -169,16 +169,22 @@ function Products(props) {
                                                         <button onClick={SortName.bind(this,5)}>Price (Low to High)</button>                                                        
                                                         <button onClick={SortName.bind(this,6)}>Price (High to low)</button>
                                                     </div>
-                                                   
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+                                    
+                                { (listProduct.length === 0) && ( <div className="row">
+                                                                    <div className="col-md-6"></div>
+                                                                    <p className="col-md-6" style={{color: "red",marginTop :"20px"}}>No results</p>
+                                                                    </div>)
+                                        }
                                 </div>
                             </div>
                             {listProduct.map((product) => (
                                 <Card product={product} key={product.id} star={star}></Card>
                             ))} 
+                          
                         </div>
                         
                         <div className="col-md-12">

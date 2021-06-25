@@ -67,7 +67,7 @@ function Sidebar() {
                                         activeStyle={{
                                             color : 'while'
                                         }} exact>
-                                            <i class="mdi mdi-reproduction"></i>
+                                            <i className="mdi mdi-reproduction"></i>
                                             <span className="hide-menu">Products</span>
                                         </NavLink>
                                     </li>
@@ -172,7 +172,7 @@ function Sidebar() {
                                            color : 'while'
                                         }} exact>
                                             <i className="mdi mdi-human"></i>
-                                            <span className="hide-menu">Employer</span>
+                                            <span className="hide-menu">Employee</span>
                                         </NavLink>
                                     </li>
                                 </ul> 
