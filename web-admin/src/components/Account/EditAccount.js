@@ -1,6 +1,8 @@
 import React , {useState , useEffect, useContext} from 'react'
 import {LoginContext} from '../Context/LoginContext'
 import API from '../Config/Api';
+import { success } from '../Helper/Notification';
+import { useHistory } from 'react-router';
 export default function EditAccount() {
     const check = useContext(LoginContext);
     const [userUpdate , setuserUpdate] = useState({
@@ -12,6 +14,7 @@ export default function EditAccount() {
         phoneNumber: "",
         id_role : 2
     });
+    const history=useHistory();
     const [retypePass, setretypePass] = useState("")
     const [mess, setmess] = useState("")
     var token ={headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} }
@@ -37,7 +40,8 @@ export default function EditAccount() {
         if( userUpdate.password !== "" && retypePass !== ""){
             if(userUpdate.password === retypePass) {
                 API.patch(`user/${localStorage.id}`, userUpdate , token).then((response)=> {
-                    alert(response.data.message);
+                    success('Edit Success Category');
+                    history.push("/myaccount");
                 }).catch((error) =>{
                     console.log(error.response.data);
                 });    
