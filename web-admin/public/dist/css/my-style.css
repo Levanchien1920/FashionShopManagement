@@ -22,4 +22,18 @@
   button.btn-search:hover {
     background: #0b7dda;
   }
+
+  .header__cart-notice {
+    opacity: 1;
+    position: absolute;
+    top: 10px;
+    right: 130px;
+    padding: 1px 5px;
+    font-size: 0.9rem;
+    border-radius: 10px;
+    border: 2px solid #d8d1d3;
+    background-color: #d8d1d3;
+    color: #fa5838;
+    line-height: 0.9rem;
+}
   
