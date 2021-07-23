@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom';
 import Api from '../Config/Api'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
 function Register() {
     const history=useHistory();
     const [user , setuser] = useState({
