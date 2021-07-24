@@ -3,39 +3,50 @@ import Api from '../Config/Api'
 import {useHistory } from 'react-router-dom';
 import {LoginContext} from '../Context/LoginContext'
 import { success } from '../Helper/Notification';
+import Pagination from '../Pagination';
+import Search from '../Search';
 
 export default function Employee() {
     const history = useHistory();
     const check = useContext(LoginContext);
     const [ListEmployee , setListEmployee] = useState([]);
-    const [searchValue, setsearchValue] = useState("")
     const [runuseEff, setrunuseEff] = useState(1)
+    const [pagination, setPagination] = useState({
+        page: 0,
+        limit: 5,
+        totalPages: 1
+    })
+    const [toggle, settoggle] = useState(false)
+    const [filters, setFilters] = useState({
+        page: 0,
+        id : 0
+    })
+
     let token = {
         headers: {'Authorization': `Bearer ${localStorage.getItem("token")}`} 
     }
     useEffect(() => {
         Api.get('admin/user/employee',token).then((response)=> {
                 setListEmployee(response.data.content);
-                console.log(response.data.content);
+                setPagination({
+                    page: response.data.pageIndex,
+                    totalPages: response.data.totalPage
+                })
             }).catch((error) =>{
             });
     }, [runuseEff])
+    function handlePageChange(newPage) {
+        setFilters({ ...filters ,
+            page: newPage
+        })
+    }
     function deleteEmployee (id) {
         Api.delete(`admin/user/${id}`,token).then((response)=> {
             setrunuseEff(id)
-            success('Deleted category');
+            success('Deleted employee successfully');
         }).catch((error) =>{
             alert(error.data)
         });
-    }
-    function search (){
-        if (searchValue !== "")
-        Api.get('admin/user/employee?search='+searchValue, token).then((response)=> {
-            console.log(response.data)
-            setListEmployee(response.data.content);
-        }).catch((error) =>{
-        }); 
-        
     }
     return (
         <>
@@ -44,7 +55,7 @@ export default function Employee() {
                 <h3 style={{textAlign : "center"}}>you need login</h3>
             </div>
         ) : (
-            <div className="page-wrapper">
+            <div className="page-wrapper" onClick={()=> settoggle(false)}>
                 <div className="page-breadcrumb">
                     <div className="col-5 align-self-center">
                         <h4 className="page-title">Employee</h4>
@@ -56,9 +67,7 @@ export default function Employee() {
                             <div className="card">
                                 <div className="card-body">
                                         <h4 className="card-title">List Employee </h4>
-                                        <input placeholder="search" onChange={e =>{ setsearchValue(e.target.value)}}
-                                        value={searchValue}  className="input-search"></input>
-                                        <button onClick={search}className="btn-search "><i  className="fa fa-search" aria-hidden="true"></i></button>
+                                        <Search token={token} setList= {setListEmployee} toggle={toggle} settoggle={settoggle} endpoint = {"admin/user/employee"}></Search>
                                         <button className="btn1 btn btn-success" onClick ={e => {history.push("/newemployee")}}>new</button>
                                 </div>
                                 <div className="table-responsive">
@@ -90,6 +99,10 @@ export default function Employee() {
                                         </tbody>
                                     </table>
                                 </div>
+                                <Pagination
+                                    pagination={pagination}
+                                    onPageChange={handlePageChange}
+                                />
                             </div>
                         </div>
                     </div>
