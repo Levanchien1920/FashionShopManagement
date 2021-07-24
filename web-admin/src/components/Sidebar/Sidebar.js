@@ -17,14 +17,11 @@ function Sidebar() {
 
     useEffect(() => {
         check.checklogin();
-        // const requestUrl = `/invoice/ByCustomer/status?${paramsString}`
         let roleName = localStorage.getItem("roleNames")
         const apiUrl = '/invoice/ByCustomer/all'
         let count = 0
         if (roleName === "employee") {
             API.get(apiUrl,token).then((response)=> {   
-            
-                console.log(response.data)
                 let dataInvoice = response.data
                 let listIdInvoice = [] 
                 dataInvoice.forEach(element => {
@@ -36,14 +33,13 @@ function Sidebar() {
                         count++;
                     }
                 });
-    
-                console.log(listIdInvoice)
                 setCountInvoiceUnPaid(count)
                 
             }).catch((error) =>{
             });
         }
     }, [checkStatusInvoice.isChange]);
+
     return (
         <div className="left-sidebar" data-sidebarbg="skin5">
             <div className="scroll-sidebar">
