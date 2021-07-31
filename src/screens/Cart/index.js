@@ -202,11 +202,12 @@ const addQty = (product,index) => {
             productItem.map((product, index) => (
               <View
                 style={{
+                  display:"flex",
                   flexDirection: "row",
                   borderBottomWidth: 1,
                   borderBottomColor:'yellow',
                   justifyContent: "space-between",
-                  width: 340,
+                  width: "100%",
                   margin: 10,
                 }}
                 key={index}

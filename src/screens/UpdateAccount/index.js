@@ -127,7 +127,7 @@ const UpdateAccount = () => {
                   } 
                   }).then((response)=> {
                   setSuccess(true)
-                   navigate('MyAccount');
+                   navigate('Home');
                 }).catch((error) =>{
                   setTest(true);
                     console.log("loi roi");

@@ -116,25 +116,13 @@ export default StyleSheet.create({
       color: '#0e45b4',
     },
     createSection : {
+      width:"100%",
+      display:"flex",
       flexDirection:'row',
-      marginTop: 5
+      justifyContent:"space-between",
+      backgroundColor:'white'
    },
-   btn1 : {
-    marginLeft: 20,
- 
-   },
-   btn2 : {
-    marginLeft:10,
-  },
-  btn3 : {
-    marginLeft:10,
-  },
-  btn4 : {
-    marginLeft:10,
-  },
-  btn5 : {
-    marginLeft:10,
-  },
+
   slide1: {
     flex: 1,
     justifyContent: 'center',
@@ -160,8 +148,10 @@ export default StyleSheet.create({
   },
 
   createSection : {
+    width:"100%",
+    display:"flex",
     flexDirection:'row',
-    // marginTop: 5
+    justifyContent:"space-between",
     backgroundColor:'white'
  },
  headerContainer: {

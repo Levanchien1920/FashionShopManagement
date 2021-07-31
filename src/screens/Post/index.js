@@ -81,7 +81,7 @@ const Post = () => {
                       </View>
                       <View style={{}}>
                          <Text style= {{color:'blue',fontSize:16}} >Nội dung:</Text> 
-                         <Text>{p.content}</Text>
+                         <Text  style={{ width: 400 }}>{p.content}</Text>
                       </View>
                       
                   <TouchableOpacity onPress= {() => {navigate('PostDetail', {

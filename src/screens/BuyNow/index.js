@@ -194,16 +194,20 @@ const BuyNow = () => {
           
               <View
                 style={{
+                  width: "100%",
+                  display:"flex",
                   flexDirection: "row",
                   borderBottomWidth: 1,
                   justifyContent: "space-between",
-                  width: 340,
-                  margin: 10,
+                 
+                 
                 }}
               
               >
                 <View style={{ width: "30%", textAlign: "center" }}>
-                      <View style={{ flexDirection: "column" }}>
+                      <View style={{ 
+                        display:"flex",
+                        flexDirection: "column" }}>
                         <Text style={styles.textList}>{productItem.name}</Text>
                         <Image
                           source={{uri: productItem.link}}

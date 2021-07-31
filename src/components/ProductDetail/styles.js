@@ -47,22 +47,6 @@ export default StyleSheet.create({
   },
 
   
-   btn1 : {
-    marginLeft: 10,
-   },
-   btn2 : {
-    marginLeft:15,
-  },
-  btn3 : {
-    marginLeft:15,
-  },
-  btn4 : {
-    marginLeft:15,
-  },
-  btn5 : {
-    marginLeft:15,
-  },
-
     linkBtn : {
       borderWidth:0.3,
       paddingRight: 30,
@@ -170,8 +154,10 @@ export default StyleSheet.create({
     },
   
     createSection : {
+      width:"100%",
+      display:"flex",
       flexDirection:'row',
-      // marginTop: 5
+      justifyContent:"space-between",
       backgroundColor:'white'
    },
    headerContainer: {
