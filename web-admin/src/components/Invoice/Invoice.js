@@ -111,8 +111,9 @@ export default function Invoice() {
                                                     <td>{(Invoice.is_paid) ? "Paid" : "Unpaid"} </td>
 
                                                     <td> <button id = {Invoice.id} onClick ={ e=> {history.push(`/view-invoice/${Invoice.id}`)}} className="btn btn-success">View</button> {(!Invoice.is_paid) ? <button
-                                                                 id = {Invoice.id} onClick ={ e=> {history.push(`/edit-invoice/${Invoice.id}`)}} className="btn btn-info">Edit</button> : ""}  <button 
-                                                                id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button></td>
+                                                                 id = {Invoice.id} onClick ={ e=> {history.push(`/edit-invoice/${Invoice.id}`)}} className="btn btn-info">Edit</button>  : ""} {(!Invoice.is_paid) ? <button  
+                                                                 id = {Invoice.id} onClick={deleteInvoice} className="btn btn-danger">Delete</button>  : ""} </td>
+                                                                 
                                                 </tr>
                                             ))}
                                         </tbody>
