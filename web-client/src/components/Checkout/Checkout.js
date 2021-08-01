@@ -202,7 +202,7 @@ function Checkout() {
 
                                             <div className="cart-btn ">
                                                 {/* <button>Update Cart</button> */}
-                                                <button><Link to="/checkout" id = {id} style={{color: "black"}} onClick={addBill}>Pay</Link></button>
+                                                <button><Link to="/checkout" id = {id} style={{color: "black"}} onClick={addBill}>Confirm To Pay</Link></button>
                                             </div>
                                         </div>
                                     </div>

@@ -94,7 +94,7 @@ export default function Invoice() {
                             <div className="card">
                                 <div className="card-body">
                                     <h4 className="card-title">List Invoice </h4>
-                                    <Search token={token} setList= {setListInvoice} toggle={toggle} settoggle={settoggle} endpoint = {"invoice/ByCustomer/status"}></Search>
+                                    <Search token={token} setList= {setListInvoice} toggle={toggle} settoggle={settoggle} endpoint = {"invoice/ByCustomer/status"} setPagination={setPagination}></Search>
                                     <button className="btn1 btn btn-success" onClick ={e => {history.push("/new-invoice")}}>New</button>
                                 </div>
                                                              
