@@ -121,8 +121,7 @@ function Header() {
                         <div className="col-md-3">
                             <div className="logo">
                                 <Link to="/">
-                                    {/* <img src={logo} alt="Logo"></img> */}
-                                    <h1>ESTORE</h1>
+                                    <img src={logo} alt="Logo"></img>
                                 </Link>
                             </div>
                         </div>
