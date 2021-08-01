@@ -71,6 +71,7 @@ export default function Invoice() {
             console.log(response.data)
             setFilters({...filters, invoice_delete_id: id})
             success('Successfully deleted invoice');
+            checkStatusInvoice.changeStatusInvoice();
             
         })
         .catch(errors => {
