@@ -18,12 +18,17 @@ const auth =(state,{type,payload}) => {
             data: payload,
             isLoggedIn: false,
           };
-          case 'Review':
+          case 'reload_true':
           return {
             ...state,
-            count:1,
             data: payload,
-            isLoggedIn: true,
+            isLoad:true
+          };
+          case 'reload_false':
+          return {
+            ...state,
+            data: payload,
+            isLoad:false
           };
           case 'true':
             return {

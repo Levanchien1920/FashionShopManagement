@@ -240,7 +240,7 @@ const HomeComponent = () => {
                 source={require("../../assets/images/avt.jpg")}
                 style={styles.logoImage}
               />
-              <Text style={{ color: "blue", fontSize: 16 }}>
+              <Text style={{ color: "blue", fontSize: 16 ,width:60}}>
                 {item.name_User}
               </Text>
             </View>

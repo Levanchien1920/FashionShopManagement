@@ -7,13 +7,16 @@ import {useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
 import {GlobalContext} from '../../context/Provider';
 
-
 const UpdateAccount = () => {
   const validator = require('validator');
     const [form, setForm] = useState({});
     const {navigate} = useNavigation();
     const [test,setTest] =useState(false)
     const [success,setSuccess] =useState(false)
+    // const {
+    //   authDispatch,
+    //   authState: {isLoad},
+    // } = useContext(GlobalContext);
     useEffect(()=>{
         if(test) {
             Alert.alert(`Update account is failed,please try again!!`)
@@ -33,7 +36,7 @@ const UpdateAccount = () => {
     const [errors, setErrors] = useState({});
     const {
       authDispatch,
-      authState: {error, loading, data},
+      authState: {error, loading, data,isLoad},
     } = useContext(GlobalContext);
 
     const onChange = ({name, value}) => {
@@ -126,11 +129,24 @@ const UpdateAccount = () => {
                     'Authorization': `Bearer ${res}`
                   } 
                   }).then((response)=> {
+                    console.log("update:");
+                    console.log(response.data);
+                    // AsyncStorage.setItem("fullname", response.data.fullName);
+                    if(isLoad) {
+                      authDispatch({
+                          type: 'reload_false',
+                        });
+                        
+                  }else {
+                      authDispatch({
+                          type: 'reload_true',
+                        });
+                  }
                   setSuccess(true)
                    navigate('Home');
                 }).catch((error) =>{
                   setTest(true);
-                    console.log("loi roi");
+                    console.log("loi roi a");
                 });     
             });
           })

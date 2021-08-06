@@ -10,13 +10,15 @@ const SideMenu = ({ navigation }) => {
   const {
     authState: { isLoggedIn },
   } = useContext(GlobalContext);
+  // const {
+  //   authState: {isLoad},
+  // } = useContext(GlobalContext);
   useEffect(() => {
     if (!isLoggedIn) return;
     AsyncStorage.getItem("fullname", (err, result) => {
       setFullName(result);
     });
   }, [isLoggedIn]);
-
   const {
     authDispatch,
     authState: { error, loading },
@@ -56,7 +58,7 @@ const SideMenu = ({ navigation }) => {
 
       <View>
         <View>
-          <Text style={styles.text}>Welcome {fullName}</Text>
+          <Text style={styles.text}></Text>
         </View>
 
         <View style={{ margin: 20 }}>

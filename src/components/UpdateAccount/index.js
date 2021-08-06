@@ -1,5 +1,5 @@
-
 import React, { useEffect, useState } from 'react';
+
 import { Text, View} from 'react-native';
 import Container from '../common/Container';
 import Input from '../common/Input';
@@ -8,11 +8,13 @@ import styles from './styles';
 import {useNavigation } from '@react-navigation/native';
 import axiosInstance from '../../helper/axiosInstance';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+
 const UpdateAccountComponent = ({
     onSubmit,
     onChange,
     errors,
   }) => {
+
     const {navigate} =useNavigation();
 
     const [ account, setaccount] = useState({
@@ -42,6 +44,7 @@ useEffect(() => {
               } 
               }).then((response)=> {
                   setaccount(response.data);
+                
               }).catch((error) =>{
               });
             })
@@ -106,9 +109,6 @@ useEffect(() => {
                 onChange({name:"username",value});
             }}
             error={errors.username}
-          
-
-            
            />
 
              <Input

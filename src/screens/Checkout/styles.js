@@ -17,7 +17,6 @@ export default StyleSheet.create({
     alignItems:'center',
 
   },
-    
     inputContainer: {
       backgroundColor: '#fff',
       flexDirection: 'row',
@@ -37,23 +36,6 @@ export default StyleSheet.create({
       fontWeight: '500',
       height:30
     },
-   
-   btn1 : {
-    marginLeft: 20,
- 
-   },
-   btn2 : {
-    marginLeft:10,
-  },
-  btn3 : {
-    marginLeft:10,
-  },
-  btn4 : {
-    marginLeft:10,
-  },
-  btn5 : {
-    marginLeft:10,
-  },
 
     bodyContainer: {
 
@@ -98,7 +80,6 @@ export default StyleSheet.create({
       height: 130,
       borderRadius: 4,
     },
-    //
     filterContainer: {
       flexDirection: 'row',
       marginTop: 10,
@@ -148,7 +129,6 @@ export default StyleSheet.create({
     seeMoreText: {
       color: '#0e45b4',
     },
-      ////
   slide1: {
     flex: 1,
     justifyContent: 'center',
@@ -172,10 +152,11 @@ export default StyleSheet.create({
     fontSize: 30,
     fontWeight: 'bold'
   },
-
   createSection : {
+    width:"100%",
+    display:"flex",
     flexDirection:'row',
-    // marginTop: 5
+    justifyContent:"space-between",
     backgroundColor:'white'
  },
  headerContainer: {
