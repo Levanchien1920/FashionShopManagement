@@ -320,6 +320,7 @@ public class UserService {
                     .badRequest()
                     .body(Response.badRequest("This customer is deleted already"));
         }
+//        tim user delete xem neu no la admin thi ko cho delete
         UserDetailDto employeeRole = userRepository.getUserDetailsWithRoleUser(user.getId(), RoleEnum.admin.name());
         if (employeeRole != null) {
             return ResponseEntity

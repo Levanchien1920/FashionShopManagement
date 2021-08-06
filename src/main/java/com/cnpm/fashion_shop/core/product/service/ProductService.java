@@ -149,7 +149,7 @@ public class ProductService {
         review = reviewRepository.findById_Product(product.getId_product());
 
 
-        // lay cac id color cua 1 sp cu the size XXL
+        // lay cac id color va number tuong ung voi tung id color cua 1 sp cu the size XXL
         List<ProductColor> idColorForXXLs;
         idColorForXXLs = productRepository.getAllIdColorForXXL(product.getName());
         ColorDto colorForXXL;
@@ -213,6 +213,7 @@ public class ProductService {
             Integer idXXL = idColorForXXLs.get(i).getId_Color();
             colorForXXL = colorProductRepository.findNameByIdColor(idXXL);
             Integer numberXXL = idColorForXXLs.get(i).getNumber();
+//            number tuong ung cho moi color trong XXL
             numberColorXXL += numberXXL + " ";
             ColorXXL += colorForXXL.getName_Color() + " ";
         }

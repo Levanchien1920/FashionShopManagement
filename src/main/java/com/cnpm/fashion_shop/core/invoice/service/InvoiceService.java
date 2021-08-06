@@ -220,7 +220,7 @@ public class InvoiceService {
 
         invoice = invoiceOpt.get();
         invoice.set_paid(true);
-
+//        invoice.setId_customer();
         try {
             invoiceRepository.save(invoice);
             return ResponseEntity.ok(SuccessfulResponse.UPDATED);

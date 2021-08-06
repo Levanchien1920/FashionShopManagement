@@ -44,26 +44,26 @@ public class ColorService {
         return colorRepository.findAllByName(pageable, search);
     }
 
-    @Transactional
-    public Page<ProductResponseDto> findAllProductbyColor(Integer id,int size, int page, String sort, String search) {
-        List<String> columnsAllow = Arrays.asList(
-                "id",
-                "name",
-                "price",
-                "number",
-                "des",
-                "Name_Color",
-                "Name_Category",
-                "Name_Gender",
-                "Name_Image",
-                "link"
-        );
-        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
-        orderFilterHelperImpl.validate();
-
-        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
-        return colorRepository.findAllByNameColor(pageable, search,id);
-    }
+//    @Transactional
+//    public Page<ProductResponseDto> findAllProductbyColor(Integer id,int size, int page, String sort, String search) {
+//        List<String> columnsAllow = Arrays.asList(
+//                "id",
+//                "name",
+//                "price",
+//                "number",
+//                "des",
+//                "Name_Color",
+//                "Name_Category",
+//                "Name_Gender",
+//                "Name_Image",
+//                "link"
+//        );
+//        OrderFilterHelperImpl orderFilterHelperImpl = new OrderFilterHelperImpl(sort, columnsAllow);
+//        orderFilterHelperImpl.validate();
+//
+//        Pageable pageable = PageRequest.of(size, page, orderFilterHelperImpl.getSort());
+//        return colorRepository.findAllByNameColor(pageable, search,id);
+//    }
 
     public ResponseEntity getOne(Integer id) {
         Optional<Color> optionalColor = colorRepository.findById_Color(id);

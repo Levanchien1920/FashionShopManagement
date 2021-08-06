@@ -88,7 +88,6 @@ public class InvoiceController {
         return data;
     }
 
-
 //    xac nhan thanh toan cho khach hang
     @ApiOperation(value = "Create invoice", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
     @PostMapping
@@ -120,7 +119,6 @@ public class InvoiceController {
                 requestParamsForGettingList.getSize(),
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch(), id);
-
         return new PaginationResponse<>(data);
     }
     @ApiOperation(value = "Get invoice by id", authorizations = {@Authorization(value = SecurityConstants.SECURITY_JWT_NAME)})
@@ -129,7 +127,6 @@ public class InvoiceController {
         List<InvoiceCustomerResponseDto> data = invoiceService.getOneByIdCustomer(
                 requestParamsForGettingList.getSort(),
                 requestParamsForGettingList.getSearch(),id);
-
         return data;
     }
 

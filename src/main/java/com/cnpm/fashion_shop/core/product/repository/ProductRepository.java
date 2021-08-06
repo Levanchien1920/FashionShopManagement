@@ -38,6 +38,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "WHERE LOWER(product.name) LIKE %:keyword% AND product.is_deleted= false AND image.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND color.is_deleted = false", nativeQuery = true)
     List<ProductResponseDto> findAllByName(@Param("keyword") String keyword);
 
+//    nen tim avg star cua product trong query nay
     @Query(value = "SELECT * FROM product p WHERE p.id = :id AND p.is_deleted = FALSE", nativeQuery = true)
     Optional<Product> findById(@Param("id") Integer id);
 
@@ -84,14 +85,15 @@ public interface ProductRepository extends JpaRepository<Product, Long> {//phai 
             "INNER JOIN gender on product.id_gender = gender.id )\n"+
             "INNER JOIN info_for_each as info on info.id_product = product.id )\n"+
             "INNER JOIN color on color.id = product.id_color )\n"+
-            "INNER JOIN review on product.id = review.id_product )\n"+
-            "Where product.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND image.is_deleted = false  GROUP By product.id Order by sum(info.number) DESC limit 4) as c1", nativeQuery = true)
+            "LEFT JOIN review on product.id = review.id_product )\n"+
+            "Where product.is_deleted = false AND brand.is_deleted = false AND category.is_deleted = false AND image.is_deleted = false  " +
+            "GROUP By product.id Order by sum(info.number) DESC limit 4) as c1", nativeQuery = true)
     Page<ProductResponseDto> findBestProducts(Pageable pageable, @Param("keyword") String keyword);
 
 
     @Query(value = "SELECT product.id,avg(review.number_of_star) as numberOfStar\n" +
             "FROM (product \n" +
-            "INNER JOIN review on product.id = review.id_product )\n"+
+            "LEFT JOIN review on product.id = review.id_product )\n"+
             "Where product.is_deleted = false and review.is_deleted =false group by review.id_product", nativeQuery = true)
     Page<ProductStarResponseDto> findNumberOfStarForProducts(Pageable pageable);
 }

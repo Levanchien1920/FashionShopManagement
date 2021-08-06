@@ -40,4 +40,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Query(value = "SELECT e.id as id, e.username as UserName, e.address as address, e.full_name as fullName, e.phone_number as phoneNumber, e.email as email FROM user e WHERE LOWER(e.username) LIKE %:keyword% AND e.is_deleted = FALSE AND e.id_role =2 ", nativeQuery = true)
     Page<UserResponseDto> findAllByUsername(Pageable pageable, @Param("keyword") String keyword);
+
+//    @Query(value = "SELECT e.id as id, e.username as UserName, e.address as address," +
+//            " e.full_name as fullName, e.phone_number as phoneNumber, e.email as email FROM user e inner join role r on r.id = e.role_id" +
+//            "WHERE LOWER(e.username) LIKE %:keyword% AND e.is_deleted = FALSE AND r.name ='employee' ", nativeQuery = true)
+//    Page<UserResponseDto> findAllByUsername1(Pageable pageable, @Param("keyword") String keyword);
 }
