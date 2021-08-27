@@ -5,8 +5,6 @@ import {
   View,
   FlatList,
   ScrollView,
-  Button,
-  TextInput,
   TouchableOpacity,
   ActivityIndicator,
   SafeAreaView,
@@ -29,6 +27,7 @@ const HomeComponent = () => {
   const {
     authState: { check },
   } = useContext(GlobalContext);
+
   const { navigate } = useNavigation();
 
   const [loading, setLoading] = useState(true);
@@ -44,7 +43,7 @@ const HomeComponent = () => {
   const [totalPageRev, setTotalPageRev] = useState(9);
 
   const isFocused = useIsFocused();
-  const [cartCount, setCartCount] = useState("0");
+  const [cartCount, setCartCount] = useState(0);
 
   useEffect(() => {
     if (!isFocused) return;
@@ -53,9 +52,10 @@ const HomeComponent = () => {
     });
   }, [isFocused, check]);
 
+  LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+
   useEffect(() => {
     if (!isFocused) return;
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
     setLoading(true);
     axiosInstance
       .get(`/client/product/best?page=${offset}`)
@@ -63,6 +63,7 @@ const HomeComponent = () => {
         setLoading(false);
         setlistProductBest(response.data.content);
         setTotalPage(response.data.totalPage);
+        2;
       })
       .catch((error) => {});
   }, [offset, isFocused]);
@@ -119,7 +120,6 @@ const HomeComponent = () => {
               onPress={() => {
                 setOffset(offset + 1);
               }}
-              g
               style={styles.loadMoreBtn}
             >
               <Text style={styles.btnText}>Load more</Text>
@@ -240,7 +240,7 @@ const HomeComponent = () => {
                 source={require("../../assets/images/avt.jpg")}
                 style={styles.logoImage}
               />
-              <Text style={{ color: "blue", fontSize: 16 ,width:60}}>
+              <Text style={{ color: "blue", fontSize: 16, width: 60 }}>
                 {item.name_User}
               </Text>
             </View>
@@ -440,7 +440,7 @@ const HomeComponent = () => {
                   height: 16,
                   borderRadius: 15 / 2,
                   right: 10,
-                  top: +10,
+                  top: 10,
                   alignItems: "center",
                   justifyContent: "center",
                 }}

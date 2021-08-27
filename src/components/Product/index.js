@@ -5,7 +5,6 @@ import {
   TextInput,
   TouchableOpacity,
   ScrollView,
-  Button,
   FlatList,
   ActivityIndicator,
   SafeAreaView,
@@ -32,7 +31,7 @@ const ProductComponent = () => {
     id: 0,
     search: "",
   });
-  const [cartCount, setCartCount] = useState("0");
+  const [cartCount, setCartCount] = useState(0);
   const {
     authState: { check },
   } = useContext(GlobalContext);
@@ -54,9 +53,9 @@ const ProductComponent = () => {
   const [offsetBra, setOffsetBra] = useState(0);
   const [totalPageBra, setTotalPageBra] = useState(9);
 
-  useEffect(() => {
-    LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
+  LogBox.ignoreLogs(["VirtualizedLists should never be nested"]);
 
+  useEffect(() => {
     setLoading(true);
     axiosInstance
       .get(`/client/product?page=${offset}`)
@@ -116,10 +115,10 @@ const ProductComponent = () => {
     if (filter.check === 3) {
       setLoading(true);
       axiosInstance
-        .get(`client/product?search=${searchInput}?page=${offset}`)
+        .get(`client/product?search=${searchInput}&page=${offset}`)
         .then((response) => {
-          setlistProduct(response.data.content);
           setLoading(false);
+          setlistProduct(response.data.content);
           setTotalPage(response.data.totalPage);
         })
         .catch((error) => {});
@@ -335,22 +334,21 @@ const ProductComponent = () => {
 
       <ScrollView style={styles.bodyContainer}>
         <View>
-          <View
-            style={{ flexDirection: "row", paddingTop: 10, marginLeft: 10 }}
-          >
-            <View style={{ width: "70%" }}>
+          <View style={{ paddingTop: 10, marginLeft: 10 }}>
+            <View style={{ width: "100%" }}>
               <TextInput
                 style={{
                   height: 40,
                   borderColor: "blue",
                   borderWidth: 1,
+                  position:'relative'
                 }}
                 onChangeText={(text) => setSearchInput(text)}
                 placeholder="Search"
               />
-            </View>
 
-            <View style={{ left: "15%" }}>
+
+            <View style={{position:'absolute',right:0,top:0,zIndex:100,backgroundColor:'gray' }}>
               <TouchableOpacity
                 onPress={() => {
                   setOffset(0);
@@ -363,13 +361,16 @@ const ProductComponent = () => {
               >
                 <Icon1
                   type="fontisto"
-                  style={{ padding: 10 }}
-                  size={30}
+                  style={{ padding: 10}}
+                  size={20}
                   color="blue"
                   name="search"
                 />
               </TouchableOpacity>
             </View>
+            </View>
+
+          
           </View>
 
           <View style={{ top: 20, flexDirection: "row" }}>
@@ -382,7 +383,7 @@ const ProductComponent = () => {
                 name="sort"
               />
             </View>
-            <View style={{ width: 200 }}>
+            <View style={{ width: 300 }}>
               <RNPickerSelect
                 pickerProps={{ style: { height: 50, color: "green" } }}
                 placeholder={{
@@ -403,7 +404,7 @@ const ProductComponent = () => {
           <View style={{ top: 20, flexDirection: "row" }}>
             <View style={{ flexDirection: "row" }}>
               <View style={{ height: 50, marginTop: 10 }}>
-                <Text style={{ fontSize: 20 }}>Category: </Text>
+                <Text style={{ fontSize: 20 }}>category: </Text>
               </View>
 
               <View>
@@ -424,7 +425,7 @@ const ProductComponent = () => {
 
             <View style={{ flexDirection: "row" }}>
               <View style={{ height: 50, marginTop: 10 }}>
-                <Text style={{ fontSize: 20 }}>Brand: </Text>
+                <Text style={{ fontSize: 20 }}>brand: </Text>
               </View>
 
               <View>
@@ -449,10 +450,8 @@ const ProductComponent = () => {
           <View
             style={{
               width: "100%",
-              borderRightWidth: 1,
-              borderRightColor: "yellow",
-              borderLeftColor: "yellow",
-              borderLeftWidth: 1,
+              borderRightWidth: 0,
+              borderLeftWidth: 0,
             }}
           >
             <View>

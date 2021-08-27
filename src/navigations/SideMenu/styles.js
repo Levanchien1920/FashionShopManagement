@@ -14,7 +14,6 @@ export default StyleSheet.create({
         marginRight:'20%',
         textAlign:'center',
         marginTop:20,
-
     },
     text: {
         color:'blue',

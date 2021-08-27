@@ -15,7 +15,6 @@ const Home = () => {
             toggleDrawer();
           }}>
          <Icon type="material" style={{padding: 10}} size={25} name="menu" />
-      
         </TouchableOpacity>
       ),
     });

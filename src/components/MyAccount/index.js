@@ -3,26 +3,24 @@ import { Text, View, TouchableOpacity, Button } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import axiosInstance from "../../helper/axiosInstance";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import {GlobalContext} from '../../context/Provider';
-import {useContext} from 'react';
+import { GlobalContext } from "../../context/Provider";
+import { useContext } from "react";
 
 const MyAccountComponent = () => {
   const { navigate } = useNavigation();
   const [account, setaccount] = useState({
-    "id": 0,
-    "username": "",
-    "password": "",
-    "fullname": "",
-    "address": "",
-    "email": "",
-    "phoneNumber": "",
-
+    id: 0,
+    username: "",
+    password: "",
+    fullname: "",
+    address: "",
+    email: "",
+    phoneNumber: "",
   });
 
   const {
-    authState: {isLoad},
+    authState: { isLoad },
   } = useContext(GlobalContext);
-
 
   useEffect(() => {
     AsyncStorage.getItem("token").then((res) => {
@@ -35,7 +33,6 @@ const MyAccountComponent = () => {
           })
           .then((response) => {
             setaccount(response.data);
-           
           })
           .catch((error) => {});
       });
@@ -53,7 +50,9 @@ const MyAccountComponent = () => {
           marginTop: "20%",
           marginLeft: "30%",
           marginRight: "30%",
+          paddingBottom:20,
           borderBottomWidth: 1,
+          borderBottomColor:"yellow"
         }}
       >
         <View style={{ flexDirection: "row" }}>
@@ -85,11 +84,6 @@ const MyAccountComponent = () => {
           title="Update account"
           onPress={() => navigate("UpdateAccount")}
         ></Button>
-      </View>
-      <View style={{ left: "10%" }}>
-        <TouchableOpacity onPress={() => navigate("Home")}>
-          <Text style={{ fontSize: 20, color: "red" }}>Trở về trang chủ</Text>
-        </TouchableOpacity>
       </View>
     </View>
   );

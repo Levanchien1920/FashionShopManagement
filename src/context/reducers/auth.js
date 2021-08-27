@@ -36,7 +36,6 @@ const auth =(state,{type,payload}) => {
               count:1,
               data: payload,
               check:true,
-            
             };
             case 'false':
               return {
@@ -44,7 +43,6 @@ const auth =(state,{type,payload}) => {
                 count:1,
                 data: payload,
                 check:false,
-             
               };
         default:
           return state;

@@ -131,7 +131,7 @@ const Register = () => {
              }
 
    
-        console.log(register);
+        // console.log(register);
     
         axiosInstance.post("/client/register/user", register).then((response)=> {
           navigate('LogIn');

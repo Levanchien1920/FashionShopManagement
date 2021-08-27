@@ -4,21 +4,47 @@ import Container from "../../components/common/Container";
 import styles from "./styles";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { GlobalContext } from "../../context/Provider";
+import axiosInstance from "../../helper/axiosInstance";
+
 
 const SideMenu = ({ navigation }) => {
   const [fullName, setFullName] = useState("");
   const {
     authState: { isLoggedIn },
   } = useContext(GlobalContext);
-  // const {
-  //   authState: {isLoad},
-  // } = useContext(GlobalContext);
+  const {
+    authState: {isLoad},
+  } = useContext(GlobalContext);
+
+
+  const [account, setaccount] = useState({
+    "id": 0,
+    "username": "",
+    "password": "",
+    "fullname": "",
+    "address": "",
+    "email": "",
+    "phoneNumber": "",
+  });
+
   useEffect(() => {
     if (!isLoggedIn) return;
-    AsyncStorage.getItem("fullname", (err, result) => {
-      setFullName(result);
+    AsyncStorage.getItem("token").then((res) => {
+      AsyncStorage.getItem("id").then((value) => {
+        axiosInstance
+          .get(`/client/user/${value}`, {
+            headers: {
+              Authorization: `Bearer ${res}`,
+            },
+          })
+          .then((response) => {
+            setaccount(response.data);
+          })
+          .catch((error) => {});
+      });
     });
-  }, [isLoggedIn]);
+  }, [isLoad,isLoggedIn]);
+ 
   const {
     authDispatch,
     authState: { error, loading },
@@ -58,7 +84,7 @@ const SideMenu = ({ navigation }) => {
 
       <View>
         <View>
-          <Text style={styles.text}></Text>
+          <Text style={styles.text}>Wellcome to {account.fullName}</Text>
         </View>
 
         <View style={{ margin: 20 }}>
